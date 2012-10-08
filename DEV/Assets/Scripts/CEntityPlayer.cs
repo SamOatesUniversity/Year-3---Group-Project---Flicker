@@ -21,6 +21,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	private PlayerState		m_playerState = PlayerState.Standing;	//!< The current player state
 	
+	private bool			m_colliding = false;					//!< Is the player colliding with anything
+	
 	/* ----------------
 	    Public Members 
 	   ---------------- */
@@ -53,8 +55,12 @@ public class CEntityPlayer : CEntityPlayerBase {
 	public override void Update () {
 					
 		// handle movement to the left and right
-		if (m_playerState != PlayerState.Jumping)
+		if (!m_colliding)
+		{
 			m_volocity = Input.GetAxis("Horizontal");
+			if (m_playerState == PlayerState.Jumping)
+				m_volocity *= 0.5f;
+		}
 		
 		m_playerPositionAlpha -= m_volocity;
 					
@@ -81,14 +87,36 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		base.Update();
 		
+		
+		
 	}
 	 
-	void OnCollisionEnter(Collision collision) {
-		
+	void OnCollisionEnter(Collision collision) {		
 		if (m_playerState == PlayerState.Jumping) {
 			m_playerState = PlayerState.Standing;	
 		}
-		
 	}
+	
+	void OnCollisionExit(Collision collision) {
+		m_playerState = PlayerState.Jumping;
+		m_colliding = false;
+	}
+	
+	 void OnCollisionStay(Collision collision) {
+		if (m_colliding)
+			return;
+		
+        foreach (ContactPoint contact in collision.contacts) {
+            Debug.DrawRay(contact.point, contact.normal, Color.red);
+			if (contact.normal.y < 0.9 && contact.normal.y > -0.9)
+			{
+				print("Normal :" + contact.normal.y);
+				m_volocity *= -0.5f;
+				m_colliding = true;
+				m_body.AddForce(new Vector3(0.0f, -75.0f, 0.0f));
+				return;
+			}
+        }
+    }
 	
 }

@@ -32,8 +32,6 @@ public class CEntityPlayerBase : MonoBehaviour {
 	public virtual void Update () {
 	
 		transform.position = m_position;
-		
-		Debug.Log(name + ": " + transform.position);
-		
+				
 	}
 }
