@@ -74,6 +74,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 			m_playerState = PlayerState.Jumping;
 		}
 		
+		Vector3 lookat = new Vector3(0.0f, transform.position.y, 0.0f);
+		
 		// position the camera
 		CCamera cameraClass = MainCamera.GetComponent<CCamera>();
 		MainCamera.transform.position = new Vector3(
@@ -81,7 +83,10 @@ public class CEntityPlayer : CEntityPlayerBase {
 			transform.position.y,
 			Mathf.Cos(m_playerPositionAlpha * Mathf.Deg2Rad) * (cameraClass.DistanceFromPlayer + PlayerPathRadius)	
 		);
-		MainCamera.transform.LookAt(new Vector3(0.0f, transform.position.y, 0.0f));
+		MainCamera.transform.LookAt(lookat);
+		
+		// rotate the collision box
+		m_body.transform.LookAt(lookat);
 		
 		base.Update();
 	}
