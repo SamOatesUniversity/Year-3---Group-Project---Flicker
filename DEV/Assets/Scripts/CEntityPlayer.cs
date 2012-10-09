@@ -32,6 +32,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 	public float			InitialAlphaPosition = 0.0f;	//!< The initial point on the circle where the player will start
 	
 	public Camera			MainCamera = null;				//!< The main viewport camera, which will follow the player
+	
+	public float			PlayerJumpHeight = 250.0f;
 		
 
 	/*
@@ -70,7 +72,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		// handle jumping
 		if (m_playerState != PlayerState.Jumping && Input.GetKeyDown(KeyCode.Space) && !m_colliding) {
-			m_body.AddForce(new Vector3(0.0f, 250.0f, 0.0f));	
+			m_body.AddForce(new Vector3(0.0f, PlayerJumpHeight , 0.0f));	
 			m_playerState = PlayerState.Jumping;
 		}
 		
