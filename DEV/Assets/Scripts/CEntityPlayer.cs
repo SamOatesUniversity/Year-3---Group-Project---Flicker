@@ -57,9 +57,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		// handle movement to the left and right
 		if (!m_colliding)
 		{
-			m_volocity = Input.GetAxis("Horizontal");
-			if (m_playerState == PlayerState.Jumping)
-				m_volocity *= 0.5f;
+			m_volocity = Input.GetAxis("Horizontal") * 0.5f;
 		}
 		
 		m_playerPositionAlpha -= m_volocity;
@@ -71,7 +69,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		);
 		
 		// handle jumping
-		if (m_playerState != PlayerState.Jumping && Input.GetKeyUp(KeyCode.Space)) {
+		if (m_playerState != PlayerState.Jumping && Input.GetKeyUp(KeyCode.Space) && !m_colliding) {
 			m_body.AddForce(new Vector3(0.0f, 250.0f, 0.0f));	
 			m_playerState = PlayerState.Jumping;
 		}
@@ -86,37 +84,29 @@ public class CEntityPlayer : CEntityPlayerBase {
 		MainCamera.transform.LookAt(new Vector3(0.0f, transform.position.y, 0.0f));
 		
 		base.Update();
-		
-		
-		
 	}
 	 
 	void OnCollisionEnter(Collision collision) {		
 		if (m_playerState == PlayerState.Jumping) {
 			m_playerState = PlayerState.Standing;	
 		}
-	}
-	
-	void OnCollisionExit(Collision collision) {
-		m_playerState = PlayerState.Jumping;
-		m_colliding = false;
-	}
-	
-	 void OnCollisionStay(Collision collision) {
+		
 		if (m_colliding)
 			return;
 		
         foreach (ContactPoint contact in collision.contacts) {
             Debug.DrawRay(contact.point, contact.normal, Color.red);
-			if (contact.normal.y < 0.9 && contact.normal.y > -0.9)
+			if (contact.normal.y < 0.95 && contact.normal.y > -0.95)
 			{
-				print("Normal :" + contact.normal.y);
-				m_volocity *= -0.5f;
+				m_volocity *= -0.05f;
 				m_colliding = true;
-				m_body.AddForce(new Vector3(0.0f, -75.0f, 0.0f));
 				return;
 			}
         }
-    }
+	}
+	
+	void OnCollisionExit(Collision collision) {
+		m_colliding = false;
+	}
 	
 }
