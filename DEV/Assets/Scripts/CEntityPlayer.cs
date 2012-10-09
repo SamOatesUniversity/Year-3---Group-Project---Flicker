@@ -69,7 +69,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		);
 		
 		// handle jumping
-		if (m_playerState != PlayerState.Jumping && Input.GetKeyUp(KeyCode.Space) && !m_colliding) {
+		if (m_playerState != PlayerState.Jumping && Input.GetKeyDown(KeyCode.Space) && !m_colliding) {
 			m_body.AddForce(new Vector3(0.0f, 250.0f, 0.0f));	
 			m_playerState = PlayerState.Jumping;
 		}
