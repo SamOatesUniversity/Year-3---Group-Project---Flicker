@@ -91,10 +91,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 			Mathf.Cos(m_playerPositionAlpha * Mathf.Deg2Rad) * (cameraClass.DistanceFromPlayer + PlayerPathRadius)	
 		);
 		MainCamera.transform.LookAt(lookat);
-		
-		// rotate the collision box
-		m_body.transform.LookAt(lookat);
-		
+				
 		base.Update();
 		
 		// decelorate
@@ -128,6 +125,23 @@ public class CEntityPlayer : CEntityPlayerBase {
 	void OnCollisionExit(Collision collision) {
 		// we are no longer colliding
 		m_colliding = false;
+	}
+	
+	/*
+	 * \brief Called whilst a collision is taking place
+	*/
+	void OnCollisionStay(Collision collision) {
+		
+		foreach (ContactPoint contact in collision.contacts) {
+			Debug.Log(contact.normal);
+			Debug.DrawRay(contact.point, contact.normal);
+			// slide down slopes
+			if (contact.normal.y >= 0.1f && contact.normal.y < 0.95f) {
+				float direction = contact.normal.x < 0.0f ? -1.0f : 1.0f;
+				m_volocity += (((1 - contact.normal.y) * 0.25f) * direction);	
+			}
+		}
+		
 	}
 	
 }

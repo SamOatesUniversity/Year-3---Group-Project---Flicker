@@ -31,6 +31,9 @@ public class CEntityPlayerBase : MonoBehaviour {
 	*/
 	public virtual void Update () {
 	
+		// rotate the collision box
+		Vector3 lookat = new Vector3(0.0f, transform.position.y, 0.0f);
+		rigidbody.transform.LookAt(lookat);
 		transform.position = m_position;
 				
 	}
