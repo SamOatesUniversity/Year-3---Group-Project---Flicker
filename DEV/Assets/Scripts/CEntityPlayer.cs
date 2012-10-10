@@ -33,7 +33,11 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	public Camera			MainCamera = null;				//!< The main viewport camera, which will follow the player
 	
-	public float			PlayerJumpHeight = 250.0f;
+	public float			PlayerJumpHeight = 250.0f;		//!< The amount of force (in the y-axis) jump is represented by
+	
+	public float			AccelerationRate = 0.05f;		//!< 
+	
+	public float			MaxSpeed = 1.0f;
 		
 
 	/*
@@ -59,7 +63,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		// handle movement to the left and right
 		if (!m_colliding)
 		{
-			m_volocity = Input.GetAxis("Horizontal") * 0.5f;
+			m_volocity = Mathf.Clamp(m_volocity + (Input.GetAxis("Horizontal") * AccelerationRate), -MaxSpeed, MaxSpeed);
 		}
 		
 		m_playerPositionAlpha -= m_volocity;
@@ -91,6 +95,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_body.transform.LookAt(lookat);
 		
 		base.Update();
+		
+		if (!m_colliding)
+			m_volocity -= (m_volocity * AccelerationRate);
 	}
 	 
 	void OnCollisionEnter(Collision collision) {		
