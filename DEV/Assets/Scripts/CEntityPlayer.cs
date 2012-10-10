@@ -35,10 +35,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	public float			PlayerJumpHeight = 250.0f;		//!< The amount of force (in the y-axis) jump is represented by
 	
-	public float			AccelerationRate = 0.05f;		//!< 
+	public float			AccelerationRate = 0.05f;		//!< The rate of acceleration
 	
-	public float			MaxSpeed = 1.0f;
-		
+	public float			MaxSpeed = 0.5f;				//!< The maximum speed of the player 		
 
 	/*
 	 * \brief Called when the object is created. At the start.
@@ -63,7 +62,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 		// handle movement to the left and right
 		if (!m_colliding)
 		{
-			m_volocity = Mathf.Clamp(m_volocity + (Input.GetAxis("Horizontal") * AccelerationRate), -MaxSpeed, MaxSpeed);
+			m_volocity += Input.GetAxis("Horizontal") * AccelerationRate;
+			if (m_volocity > MaxSpeed) m_volocity = MaxSpeed;
+			if (m_volocity < -MaxSpeed) m_volocity = -MaxSpeed;
 		}
 		
 		m_playerPositionAlpha -= m_volocity;
@@ -96,30 +97,36 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		base.Update();
 		
+		// decelorate
 		if (!m_colliding)
-			m_volocity -= (m_volocity * AccelerationRate);
+			m_volocity -= ((m_volocity * AccelerationRate) * 2.0f);
 	}
 	 
-	void OnCollisionEnter(Collision collision) {		
-		if (m_playerState == PlayerState.Jumping) {
-			m_playerState = PlayerState.Standing;	
-		}
-		
-		if (m_colliding)
-			return;
-		
+	/*
+	 * \brief Called when this first collides with something
+	*/
+	void OnCollisionEnter(Collision collision) {			
+		// spin through all the points of contact
         foreach (ContactPoint contact in collision.contacts) {
-            Debug.DrawRay(contact.point, contact.normal, Color.red);
-			if (contact.normal.y < 0.95 && contact.normal.y > -0.95)
+			// check the normal to see if the collision is in the horizontal plain
+			if (!m_colliding && (contact.normal.y < 0.1 && contact.normal.y > -0.1))
 			{
+				// send them back the other way
 				m_volocity *= -0.05f;
 				m_colliding = true;
-				return;
 			}
+			
+			if (contact.normal.y >= 0.2) {
+				m_playerState = PlayerState.Standing;
+			}	
         }
 	}
 	
+	/*
+	 * \brief Called when this leaves a collosion
+	*/
 	void OnCollisionExit(Collision collision) {
+		// we are no longer colliding
 		m_colliding = false;
 	}
 	
