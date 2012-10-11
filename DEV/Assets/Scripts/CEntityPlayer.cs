@@ -137,8 +137,14 @@ public class CEntityPlayer : CEntityPlayerBase {
 			Debug.DrawRay(contact.point, contact.normal);
 			// slide down slopes
 			if (contact.normal.y >= 0.1f && contact.normal.y < 0.95f) {
+				
+				CSceneObject sceneObject = contact.otherCollider.GetComponent<CSceneObject>();
+				float scale = 1.0f;
+				if (sceneObject != null)
+					scale = sceneObject.ExtraSlide;
+				
 				float direction = contact.normal.x < 0.0f ? -1.0f : 1.0f;
-				m_volocity += (((1 - contact.normal.y) * 0.25f) * direction);	
+				m_volocity += ((((1 - contact.normal.y) * 0.25f) * direction) * scale);	
 			}
 		}
 		
