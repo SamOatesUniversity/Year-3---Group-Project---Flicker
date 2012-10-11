@@ -22,6 +22,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	private PlayerState		m_playerState = PlayerState.Standing;	//!< The current player state
 	
 	private bool			m_colliding = false;					//!< Is the player colliding with anything
+    private CCamera m_cameraClass = null;
 	
 	/* ----------------
 	    Public Members 
@@ -51,7 +52,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_name = "Player";
 		
 		m_body = GetComponent<Rigidbody>();
-		
+        m_cameraClass = MainCamera.GetComponent<CCamera>();
 	}
 	
 	/*
@@ -81,16 +82,19 @@ public class CEntityPlayer : CEntityPlayerBase {
 			m_playerState = PlayerState.Jumping;
 		}
 		
+        //position the lookat
 		Vector3 lookat = new Vector3(0.0f, transform.position.y, 0.0f);
-		
 		// position the camera
-		CCamera cameraClass = MainCamera.GetComponent<CCamera>();
-		MainCamera.transform.position = new Vector3(
-			Mathf.Sin(m_playerPositionAlpha * Mathf.Deg2Rad) * (cameraClass.DistanceFromPlayer + PlayerPathRadius),
+	    Vector3 camPostion = new Vector3(
+            Mathf.Sin(m_playerPositionAlpha * Mathf.Deg2Rad) * (m_cameraClass.DistanceFromPlayer + PlayerPathRadius),
 			transform.position.y,
-			Mathf.Cos(m_playerPositionAlpha * Mathf.Deg2Rad) * (cameraClass.DistanceFromPlayer + PlayerPathRadius)	
+            Mathf.Cos(m_playerPositionAlpha * Mathf.Deg2Rad) * (m_cameraClass.DistanceFromPlayer + PlayerPathRadius)	
 		);
-		MainCamera.transform.LookAt(lookat);
+
+        m_cameraClass.SetPosition(camPostion);
+        m_cameraClass.SetLookAt(lookat);
+
+		//MainCamera.transform.LookAt(lookat);
 				
 		base.Update();
 		
