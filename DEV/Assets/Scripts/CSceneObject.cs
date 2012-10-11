@@ -12,14 +12,19 @@ public class CSceneObject : MonoBehaviour {
 	public bool CanGrapple				= false; 			//!< Can the player wall jump upon this object?
 	
 	public float ExtraSlide				= 1.0f; 			//!< Can the player wall jump upon this object?
+
+
 	
 	// Use this for initialization
-	void Start () {
+	void Start() 
+    {
 	
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update() 
+    {
 	
 	}
+
 }
