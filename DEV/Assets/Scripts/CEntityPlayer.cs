@@ -112,7 +112,25 @@ public class CEntityPlayer : CEntityPlayerBase {
 		if (!m_colliding)
 			m_volocity -= ((m_volocity * AccelerationRate) * 2.0f);
 	}
-	 
+	
+	/*
+	 * \brief public function to disable jumping
+	*/
+	public void SetJumping()
+	{
+		m_playerState = PlayerState.Jumping;
+	}
+	
+	public void AddHorizontalForce(float force)
+	{
+		m_volocity += force;
+	}
+	
+	public float GetVelocity()
+	{
+		return m_volocity;
+	}
+	
 	/*
 	 * \brief Called when this first collides with something
 	*/
@@ -200,7 +218,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		
 	}
-	
 
 	
 	
