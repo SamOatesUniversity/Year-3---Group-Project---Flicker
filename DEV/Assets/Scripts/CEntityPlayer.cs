@@ -27,6 +27,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	private bool 			m_canWallJump = false;					//!< Todo: Haydn fill these in.
 	
+	private int				m_direction = 0;						//!< Stores the direction, 0 = not moving, 1 = left, -1 = right
+	
 	
 	/* ----------------
 	    Public Members 
@@ -67,9 +69,12 @@ public class CEntityPlayer : CEntityPlayerBase {
 		// handle movement to the left and right
 		if (!m_colliding)
 		{
-			m_volocity += Input.GetAxis("Horizontal") * AccelerationRate;
+			float input = Input.GetAxis("Horizontal");
+			m_volocity += input * AccelerationRate;
 			if (m_volocity > MaxSpeed) m_volocity = MaxSpeed;
 			if (m_volocity < -MaxSpeed) m_volocity = -MaxSpeed;
+			
+			m_direction = m_volocity != 0 ? m_volocity > 0 ? 1 : -1 : 0;
 		}
 		
 		m_playerPositionAlpha -= m_volocity;
@@ -142,22 +147,16 @@ public class CEntityPlayer : CEntityPlayerBase {
 			// check the normal to see if the collision is in the horizontal plain
 			if (!m_colliding && (contact.normal.y < 0.1 && contact.normal.y > -0.1))
 			{
+				
 				// send them back the other way
-				m_volocity *= -0.05f;
+				m_volocity = (-m_volocity) * 0.25f;
 				m_colliding = true;
 			}
 			
 			if (contact.normal.y >= 0.2) {
 				m_playerState = PlayerState.Standing;
 			}
-			
-			if (contact.point.y > transform.position.y)
-			{
-				Debug.Log("Hit head");
-				
-				break;
-			}
-		
+					
         }
 		
 		
@@ -193,16 +192,12 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		
 		foreach (ContactPoint contact in collision.contacts) {
-			//Debug.Log(contact.normal);
-			Debug.Log(contact.point);
+			Debug.Log(contact.normal);
+			//Debug.Log(contact.point);
 			
 			Debug.DrawRay(contact.point, contact.normal);
 			// slide down slopes
-			const float yOffset = 0.2f;
-			
-		
-			
-			if (contact.normal.y >= 0.1f && contact.normal.y < 0.95f ) {
+			if (contact.normal.x != 0.0f || contact.normal.z != 0.0f ) {
 			
 				CSceneObject sceneObject = contact.otherCollider.GetComponent<CSceneObject>();
 				float scale = 1.0f;
