@@ -144,8 +144,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	 * \brief Called when this first collides with something
 	*/
 	void OnCollisionEnter(Collision collision) {
-		
-		
+
 		// spin through all the points of contact
         foreach (ContactPoint contact in collision.contacts) {
 			// check the normal to see if the collision is in the horizontal plain
@@ -160,14 +159,11 @@ public class CEntityPlayer : CEntityPlayerBase {
 			if (contact.normal.y >= 0.2) {
 				m_playerState = PlayerState.Standing;
 				m_lastWallkJump = null;
-			}
-					
+			}			
         }
-		
-		
+
 		CSceneObject sObject = collision.gameObject.GetComponent<CSceneObject>();
-		
-		if ((m_lastWallkJump == null || m_lastWallkJump != sObject) && sObject.CanWallJump)
+		if (sObject && (m_lastWallkJump == null || m_lastWallkJump != sObject) && sObject.CanWallJump)
 		{
 			m_canWallJump = true;
 			m_lastWallkJump = sObject;
@@ -180,7 +176,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 	void OnCollisionExit(Collision collision) {
 		
 		m_canWallJump = false;
-		// we are no longer colliding
 		m_colliding = false;
 	}
 	
@@ -188,7 +183,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 	 * \brief Called whilst a collision is taking place
 	*/
 	void OnCollisionStay(Collision collision) {
-		
 		
 		if (m_colliding && m_startWallTime == 10)
 		{
@@ -198,28 +192,49 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_startWallTime++;
 		
 		foreach (ContactPoint contact in collision.contacts) {
-			Debug.Log(contact.normal);
-			//Debug.Log(contact.point);
+			Debug.DrawRay(contact.point, contact.normal, Color.green);
+	
+			// don't slide on points that arnt on the floor
+			float yContact = collision.transform.position.y - contact.point.y;
+			if (yContact >= 0.5f)
+				continue;
 			
-			Debug.DrawRay(contact.point, contact.normal);
 			// slide down slopes
-			if (contact.normal.x != 0.0f || contact.normal.z != 0.0f ) {
-			
+			if (!isNearly(contact.normal.x, 0.0f) || !isNearly(contact.normal.z, 0.0f) ) {
 				CSceneObject sceneObject = contact.otherCollider.GetComponent<CSceneObject>();
 				float scale = 1.0f;
 				if (sceneObject != null)
 					scale = sceneObject.ExtraSlide;
 				
 				float direction = contact.normal.x < 0.0f ? -1.0f : 1.0f;
-				m_volocity += ((((1 - contact.normal.y) * 0.25f) * direction) * scale);	
+				m_volocity = ((((1 - contact.normal.y) * 0.25f) * direction) * scale);	
+				return;
 			}
 		}
 		
-		
-		
+		if (!m_canWallJump) {
+			foreach (ContactPoint contact in collision.contacts) {
+				float yContact = collision.transform.position.y - contact.point.y;
+				if (yContact < 0.5f)
+					continue;
+				
+				// we must be colliding if we are in this method
+				m_colliding = true;
+				m_volocity = (-m_direction) * 0.1f;
+				return;			
+			}
+		}
 		
 	}
-
 	
+	/*
+	 * \brief Works out if a value is almost another value (for floating point accuracy)
+	*/
+	private bool isNearly(float x, float amount) {
 	
+		if (x < amount - 0.01f) return false;
+		if (x > amount + 0.01f) return false;
+		return true;
+		
+	}
 }
