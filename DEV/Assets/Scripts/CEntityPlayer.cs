@@ -29,6 +29,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	private int				m_direction = 0;						//!< Stores the direction, 0 = not moving, 1 = left, -1 = right
 	
+	private CSceneObject	m_lastWallkJump = null;
+	
+	private int				m_startWallTime = 0;
 	
 	/* ----------------
 	    Public Members 
@@ -93,7 +96,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		if (m_canWallJump && Input.GetKeyDown(KeyCode.Space))
 		{
-			m_body.AddForce(new Vector3(0.0f, PlayerJumpHeight , 0.0f));	
+			m_body.AddForce(new Vector3(0.0f, PlayerJumpHeight * 1.1f, 0.0f));	
+			m_volocity = (-m_direction) * 0.5f;
 			m_playerState = PlayerState.Jumping;
 		}
 		
@@ -147,23 +151,26 @@ public class CEntityPlayer : CEntityPlayerBase {
 			// check the normal to see if the collision is in the horizontal plain
 			if (!m_colliding && (contact.normal.y < 0.1 && contact.normal.y > -0.1))
 			{
-				
 				// send them back the other way
-				m_volocity = (-m_volocity) * 0.25f;
+				m_volocity = 0.0f;
 				m_colliding = true;
+				m_startWallTime = 0;
 			}
 			
 			if (contact.normal.y >= 0.2) {
 				m_playerState = PlayerState.Standing;
+				m_lastWallkJump = null;
 			}
 					
         }
 		
 		
 		CSceneObject sObject = collision.gameObject.GetComponent<CSceneObject>();
-		if (sObject)
+		
+		if ((m_lastWallkJump == null || m_lastWallkJump != sObject) && sObject.CanWallJump)
 		{
-			m_canWallJump = sObject.CanWallJump;
+			m_canWallJump = true;
+			m_lastWallkJump = sObject;
 		}
 	}
 	
@@ -183,13 +190,12 @@ public class CEntityPlayer : CEntityPlayerBase {
 	void OnCollisionStay(Collision collision) {
 		
 		
-		CSceneObject sObject = collision.gameObject.GetComponent<CSceneObject>();
-		if (sObject)
+		if (m_colliding && m_startWallTime == 10)
 		{
-			m_canWallJump = sObject.CanWallJump;
+			m_volocity = (-m_direction) * 0.1f;
+			m_startWallTime = -1;	
 		}
-		
-		
+		m_startWallTime++;
 		
 		foreach (ContactPoint contact in collision.contacts) {
 			Debug.Log(contact.normal);
