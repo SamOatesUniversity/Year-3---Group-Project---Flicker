@@ -207,7 +207,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 					scale = sceneObject.ExtraSlide;
 				
 				float direction = contact.normal.x < 0.0f ? -1.0f : 1.0f;
-				m_volocity = ((((1 - contact.normal.y) * 0.25f) * direction) * scale);	
+				m_volocity += ((((1 - contact.normal.y) * 0.25f) * direction) * scale);	
 				return;
 			}
 		}
