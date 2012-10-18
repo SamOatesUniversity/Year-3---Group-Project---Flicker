@@ -202,6 +202,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 	*/
 	void OnCollisionStay(Collision collision) {
 		
+		m_canJump = true;
+		
 		if (m_colliding && m_startWallTime == 10)
 		{
 			m_volocity = (-m_direction) * 0.1f;
@@ -226,7 +228,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 				
 				float direction = contact.normal.x < 0.0f ? -1.0f : 1.0f;
 				m_volocity += ((((1 - contact.normal.y) * 0.25f) * direction) * scale);	
-				m_canJump = true;
 				return;
 			}
 		}
