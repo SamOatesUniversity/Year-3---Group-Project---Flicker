@@ -29,9 +29,11 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	private int				m_direction = 0;						//!< Stores the direction, 0 = not moving, 1 = left, -1 = right
 	
-	private CSceneObject	m_lastWallkJump = null;
+	private CSceneObject	m_lastWallJumpObject = null;
 	
 	private int				m_startWallTime = 0;
+	
+	private bool			m_canJump = false;
 	
 	/* ----------------
 	    Public Members 
@@ -89,7 +91,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		);
 		
 		// handle jumping
-		if (m_playerState != PlayerState.Jumping && Input.GetKeyDown(KeyCode.Space) && !m_colliding) {
+		if (m_playerState != PlayerState.Jumping && Input.GetKeyDown(KeyCode.Space) && !m_colliding && m_canJump) {
 			m_body.AddForce(new Vector3(0.0f, PlayerJumpHeight , 0.0f));	
 			m_playerState = PlayerState.Jumping;
 		}
@@ -164,16 +166,18 @@ public class CEntityPlayer : CEntityPlayerBase {
 			
 			if (contact.normal.y >= 0.2) {
 				m_playerState = PlayerState.Standing;
-				m_lastWallkJump = null;
+				m_lastWallJumpObject = null;
 			}			
         }
 
 		CSceneObject sObject = collision.gameObject.GetComponent<CSceneObject>();
-		if (sObject && (m_lastWallkJump == null || m_lastWallkJump != sObject) && sObject.CanWallJump)
+		if (sObject && (m_lastWallJumpObject == null || m_lastWallJumpObject != sObject) && sObject.CanWallJump)
 		{
 			m_canWallJump = true;
-			m_lastWallkJump = sObject;
+			m_lastWallJumpObject = sObject;
 		}
+		
+		m_canJump = true;
 	}
 	
 	/*
@@ -190,6 +194,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		m_canWallJump = false;
 		m_colliding = false;
+		m_canJump = false;
 	}
 	
 	/*
@@ -221,6 +226,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 				
 				float direction = contact.normal.x < 0.0f ? -1.0f : 1.0f;
 				m_volocity += ((((1 - contact.normal.y) * 0.25f) * direction) * scale);	
+				m_canJump = true;
 				return;
 			}
 		}
