@@ -49,7 +49,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	public float			AccelerationRate = 0.05f;		//!< The rate of acceleration
 	
-	public float			MaxSpeed = 0.5f;				//!< The maximum speed of the player 		
+	public float			MaxSpeed = 0.5f;				//!< The maximum speed of the player 	
+	
+	public float			WallJumpScaler = 1.0f;
 
 	/*
 	 * \brief Called when the object is created. At the start.
@@ -98,8 +100,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		if (m_canWallJump && Input.GetKeyDown(KeyCode.Space))
 		{
-			m_body.AddForce(new Vector3(0.0f, PlayerJumpHeight * 1.1f, 0.0f));	
-			m_volocity = (-m_direction) * 0.5f;
+			m_body.AddForce(new Vector3(0.0f, PlayerJumpHeight * WallJumpScaler, 0.0f));	
+			m_volocity = (-m_direction) * (WallJumpScaler * 0.5f);
 			m_playerState = PlayerState.Jumping;
 		}
 		
@@ -204,6 +206,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		m_canJump = true;
 		
+		// push the user off the wall, cos they didnt jump in time
 		if (m_colliding && m_startWallTime == 10)
 		{
 			m_volocity = (-m_direction) * 0.1f;
