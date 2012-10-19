@@ -148,12 +148,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	 * \brief Called when this first collides with something
 	*/
 	void OnCollisionEnter(Collision collision) {
-		CRope mount = collision.gameObject.GetComponent<CRope>();
-		if (mount)
-		{
-			CRopeMount m = mount.parent;
-			m.SetPlayerAttached(true);
-		}
+	
 
 		// spin through all the points of contact
         foreach (ContactPoint contact in collision.contacts) {
@@ -187,12 +182,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	*/
 	void OnCollisionExit(Collision collision) {
 		
-		CRope mount = collision.gameObject.GetComponent<CRope>();
-		if (mount)
-		{
-			CRopeMount m = mount.parent;
-		//	m.SetPlayerAttached(false);
-		}
+		
 		
 		m_canWallJump = false;
 		m_colliding = false;
