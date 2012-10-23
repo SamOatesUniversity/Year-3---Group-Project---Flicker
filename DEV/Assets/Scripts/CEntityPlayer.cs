@@ -90,8 +90,13 @@ public class CEntityPlayer : CEntityPlayerBase {
 
         m_cameraClass.SetPosition(camPostion);
         m_cameraClass.SetLookAt(lookat);
-
+		
 		base.Update();
+
+		if (m_physics.Direction > 0)
+			this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));
+		else if (m_physics.Direction < 0)
+			this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 90, 0));
 	}
 	
 	/*
