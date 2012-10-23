@@ -9,7 +9,7 @@ public class CRopeMount : MonoBehaviour {
 	public float SwingSpeed = 1.0f;
 	public float MaxAngle = 90.0f;
 	
-	private CRopeLink[] m_ropeLinks = null;
+	//private CRopeLink[] m_ropeLinks = null;
 	private bool m_isPlayerAttached = false;
 	
 	// Use this for initialization
