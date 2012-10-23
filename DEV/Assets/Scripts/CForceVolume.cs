@@ -21,25 +21,25 @@ public class CForceVolume : MonoBehaviour {
         Rigidbody rBody = collider.gameObject.GetComponent<Rigidbody>();
 		rBody.AddForce(ForceToApply);
 		CEntityPlayer player = collider.gameObject.GetComponent<CEntityPlayer>();
-		if(player)
+		if (player)
 		{
-			player.SetJumping();
+			player.SetPlayerState(PlayerState.Jumping);
 		}
     }
 	
 	void OnTriggerStay(Collider collider) {
 		Rigidbody rBody = collider.gameObject.GetComponent<Rigidbody>();
-		if(rBody.velocity.y < MaximumVelocity.y)
+		if (rBody.velocity.y < MaximumVelocity.y)
 		{
 			rBody.AddForce(new Vector3(0.0f, ForceToApply.y, 0.0f));	
 		}
 		
 		CEntityPlayer player = collider.gameObject.GetComponent<CEntityPlayer>();
-		if(player)
+		if (player)
 		{
-			if(player.GetVelocity() < MaximumVelocity.x)
+			if(player.Physics.Velocity < MaximumVelocity.x)
 			{
-				player.AddHorizontalForce(ForceToApply.x);	
+				player.Physics.Velocity += ForceToApply.x;	
 			}
 		}
 	}

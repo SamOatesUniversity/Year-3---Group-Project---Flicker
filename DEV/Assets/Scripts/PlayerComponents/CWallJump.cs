@@ -31,13 +31,13 @@ public class CWallJump : MonoBehaviour {
 	/*
 	 * \brief called by the players update method
 	*/	
-	public void onUpdate (ref Rigidbody playerBody, ref float volocity, float direction, ref CEntityPlayer.PlayerState playerState)
+	public void onUpdate (ref CPlayerPhysics physics, ref PlayerState playerState)
 	{
 		if (m_canWallJump && Input.GetKeyDown(KeyCode.Space))
 		{
-			playerBody.AddForce(new Vector3(0.0f, PlayerWallJumpHeight, 0.0f));	
-			volocity = (-direction) * 0.5f;
-			playerState = CEntityPlayer.PlayerState.Jumping;
+			physics.Body.AddForce(new Vector3(0.0f, PlayerWallJumpHeight, 0.0f));	
+			physics.Velocity = (-physics.Direction) * 0.5f;
+			playerState = PlayerState.Jumping;
 		}
 	}
 		
@@ -75,13 +75,13 @@ public class CWallJump : MonoBehaviour {
 	/*
 	 * \brief Called whilst a collision is taking place
 	*/
-	public void CallOnCollisionStay(Collision collision, bool isPlayerColliding, ref float playerVolocity, float direction)
+	public void CallOnCollisionStay(Collision collision, ref CPlayerPhysics physics)
 	{
 		// push the user off the wall, cos they didnt jump in time
 		float ms = (Time.time - m_startWallTime) * 1000.0f;
-		if (isPlayerColliding && ms >= WallHangTime)
+		if (physics.IsColliding && ms >= WallHangTime)
 		{
-			playerVolocity = (-direction) * 0.1f;
+			physics.Velocity = (-physics.Direction) * 0.1f;
 			m_startWallTime = Time.time;	
 		}
 	}
