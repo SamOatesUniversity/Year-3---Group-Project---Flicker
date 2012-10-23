@@ -76,11 +76,16 @@ public class CEntityPlayer : CEntityPlayerBase {
 				
         //position the lookat
 		Vector3 lookat = new Vector3(0.0f, transform.position.y, 0.0f);
+		
+		m_cameraClass.TendToMaxOffset(m_physics.Direction);
+		
+		float cameraAlpha = (m_playerPositionAlpha - m_cameraClass.CameraOffset) * Mathf.Deg2Rad;
+		
 		// position the camera
 	    Vector3 camPostion = new Vector3(
-            Mathf.Sin(m_playerPositionAlpha * Mathf.Deg2Rad) * (m_cameraClass.DistanceFromPlayer + PlayerPathRadius),
+            Mathf.Sin(cameraAlpha) * (m_cameraClass.DistanceFromPlayer + PlayerPathRadius),
 			transform.position.y,
-            Mathf.Cos(m_playerPositionAlpha * Mathf.Deg2Rad) * (m_cameraClass.DistanceFromPlayer + PlayerPathRadius)	
+            Mathf.Cos(cameraAlpha) * (m_cameraClass.DistanceFromPlayer + PlayerPathRadius)	
 		);
 
         m_cameraClass.SetPosition(camPostion);
@@ -121,7 +126,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 			}			
         }
 		
-		m_wallJump.CallOnCollisionEnter(collision);	
+		m_wallJump.CallOnCollisionEnter(collision, m_playerState);	
 		
 		m_physics.CanJump = true;
 	}

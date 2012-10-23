@@ -54,8 +54,11 @@ public class CWallJump : MonoBehaviour {
 	/*
 	 * \brief Called when the player enters a collosion
 	*/
-	public void CallOnCollisionEnter(Collision collision)
+	public void CallOnCollisionEnter(Collision collision, PlayerState playerState)
 	{
+		if (playerState != PlayerState.Jumping)
+			return;
+		
 		CSceneObject sceneObject = collision.gameObject.GetComponent<CSceneObject>();
 		if (sceneObject && (m_lastWallJumpObject == null || m_lastWallJumpObject != sceneObject) && sceneObject.CanWallJump)
 		{
