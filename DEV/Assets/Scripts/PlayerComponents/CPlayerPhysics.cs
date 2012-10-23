@@ -172,7 +172,7 @@ public class CPlayerPhysics : MonoBehaviour {
 				
 				// we must be colliding if we are in this method
 				m_colliding = true;
-				m_velocity = (-m_direction) * 0.1f;
+				m_velocity = (-m_direction) * 0.3f;
 				return;			
 			}
 		}

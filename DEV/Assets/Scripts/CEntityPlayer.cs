@@ -27,6 +27,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	private CWallJump		m_wallJump = null;						//!< 
 	
+	private Animation		m_animation = null;
+	
 	/* ----------------
 	    Public Members 
 	   ---------------- */
@@ -54,6 +56,8 @@ public class CEntityPlayer : CEntityPlayerBase {
         m_cameraClass = MainCamera.GetComponent<CCamera>();
 		
 		m_wallJump = GetComponent<CWallJump>();
+		
+		m_animation = GetComponentInChildren<Animation>();
 	}
 	
 	/*
@@ -97,6 +101,14 @@ public class CEntityPlayer : CEntityPlayerBase {
 			this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));
 		else if (m_physics.Direction < 0)
 			this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 90, 0));
+	
+		if (m_physics.Velocity != 0) {
+			if (!m_animation.IsPlaying("walk"))
+				m_animation.Play("walk");
+			m_animation["walk"].speed = Mathf.Abs(m_physics.Velocity) * 2.0f;
+		} else {
+			m_animation.Stop();	
+		}
 	}
 	
 	/*
