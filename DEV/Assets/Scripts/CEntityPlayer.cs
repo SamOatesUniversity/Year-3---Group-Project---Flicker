@@ -1,9 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
+[RequireComponent (typeof (CWallJump))]
+
 public class CEntityPlayer : CEntityPlayerBase {
 	
-	private enum PlayerState {
+	public enum PlayerState {
 		Standing,
 		Walking,
 		Jumping
@@ -25,15 +27,11 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
     private CCamera 		m_cameraClass = null;					//!< Todo: Haydn fill these in.
 	
-	private bool 			m_canWallJump = false;					//!< Todo: Haydn fill these in.
-	
 	private int				m_direction = 0;						//!< Stores the direction, 0 = not moving, 1 = left, -1 = right
 	
-	private CSceneObject	m_lastWallJumpObject = null;
+	private bool			m_canJump = false;						//!< 
 	
-	private int				m_startWallTime = 0;
-	
-	private bool			m_canJump = false;
+	private CWallJump		m_wallJump = null;						//!< 
 	
 	/* ----------------
 	    Public Members 
@@ -51,8 +49,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	public float			MaxSpeed = 0.5f;				//!< The maximum speed of the player 	
 	
-	public float			WallJumpScaler = 1.0f;
-
 	/*
 	 * \brief Called when the object is created. At the start.
 	 *        Only called once per instaniation.
@@ -66,6 +62,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		m_body = GetComponent<Rigidbody>();
         m_cameraClass = MainCamera.GetComponent<CCamera>();
+		m_wallJump = GetComponent<CWallJump>();
 	}
 	
 	/*
@@ -98,13 +95,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 			m_playerState = PlayerState.Jumping;
 		}
 		
-		if (m_canWallJump && Input.GetKeyDown(KeyCode.Space))
-		{
-			m_body.AddForce(new Vector3(0.0f, PlayerJumpHeight * WallJumpScaler, 0.0f));	
-			m_volocity = (-m_direction) * (WallJumpScaler * 0.5f);
-			m_playerState = PlayerState.Jumping;
-		}
-		
+		// Handle wall jumping. TODO: get a class that stores 'physics' memebers and pass that around like a dirty whore
+		m_wallJump.onUpdate(ref m_body, ref m_volocity, m_direction, ref m_playerState);
+				
         //position the lookat
 		Vector3 lookat = new Vector3(0.0f, transform.position.y, 0.0f);
 		// position the camera
@@ -117,8 +110,6 @@ public class CEntityPlayer : CEntityPlayerBase {
         m_cameraClass.SetPosition(camPostion);
         m_cameraClass.SetLookAt(lookat);
 
-		//MainCamera.transform.LookAt(lookat);
-				
 		base.Update();
 		
 		// decelorate
@@ -148,32 +139,24 @@ public class CEntityPlayer : CEntityPlayerBase {
 	 * \brief Called when this first collides with something
 	*/
 	void OnCollisionEnter(Collision collision) {
-	
-
 		// spin through all the points of contact
         foreach (ContactPoint contact in collision.contacts) {
+			
 			// check the normal to see if the collision is in the horizontal plain
 			if (!m_colliding && (contact.normal.y < 0.1 && contact.normal.y > -0.1))
 			{
 				// send them back the other way
 				m_volocity = 0.0f;
 				m_colliding = true;
-				m_startWallTime = 0;
 			}
 			
 			if (contact.normal.y >= 0.2) {
 				m_playerState = PlayerState.Standing;
-				m_lastWallJumpObject = null;
+				m_wallJump.Reset();
 			}			
         }
-
-		CSceneObject sObject = collision.gameObject.GetComponent<CSceneObject>();
-		if (sObject && (m_lastWallJumpObject == null || m_lastWallJumpObject != sObject) && sObject.CanWallJump)
-		{
-			m_canWallJump = true;
-			m_lastWallJumpObject = sObject;
-		}
 		
+		m_wallJump.CallOnCollisionEnter(collision);		
 		m_canJump = true;
 	}
 	
@@ -181,10 +164,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	 * \brief Called when this leaves a collosion
 	*/
 	void OnCollisionExit(Collision collision) {
-		
-		
-		
-		m_canWallJump = false;
+		m_wallJump.CallOnCollisionExit(collision);
 		m_colliding = false;
 		m_canJump = false;
 	}
@@ -196,13 +176,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		m_canJump = true;
 		
-		// push the user off the wall, cos they didnt jump in time
-		if (m_colliding && m_startWallTime == 10)
-		{
-			m_volocity = (-m_direction) * 0.1f;
-			m_startWallTime = -1;	
-		}
-		m_startWallTime++;
+		m_wallJump.CallOnCollisionStay(collision, m_colliding, ref m_volocity, m_direction);
 		
 		foreach (ContactPoint contact in collision.contacts) {
 			Debug.DrawRay(contact.point, contact.normal, Color.green);
@@ -225,7 +199,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 			}
 		}
 		
-		if (!m_canWallJump) {
+		if (!m_wallJump.GetCanWallJump()) {
 			foreach (ContactPoint contact in collision.contacts) {
 				float yContact = collision.transform.position.y - contact.point.y;
 				if (yContact < 0.5f)
