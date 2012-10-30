@@ -7,7 +7,7 @@ public class CRopeMount : MonoBehaviour {
 	public float RopeLength = 2.0f;
 	public int RopeSegments = 10;
 	public float SwingSpeed = 1.0f;
-	public float MaxAngle = 1.0f;
+	public float MaxAngle = 0.1f;
 	
 	private CRopeLink[] m_ropeLinks = null;
 	//private bool m_isPlayerAttached = false;
@@ -61,38 +61,39 @@ public class CRopeMount : MonoBehaviour {
 		
 		//start node position
 		Vector3 startNode = this.transform.position;
-		
-		
-		//last node position
-		//Vector3 endNode = startNode + new Vector3(0,-RopeLength,0); //TODO CALCULATE THIS
-					
-		
+
+		//last node position		
 		Vector3 endNode = new Vector3(			
 			(Mathf.Sin(m_ropeTheta * Mathf.Deg2Rad) * PlayerPathRadius) - startNode.x,
-			startNode.y -RopeLength,
+			(startNode.y - RopeLength),
 			(Mathf.Cos(m_ropeTheta * Mathf.Deg2Rad) * PlayerPathRadius) - startNode.z
 		);		
 		
-		if (m_ropeInitialTheta + MaxAngle < m_ropeTheta  )
+		// get the direction of the rope
+		Vector3 direction = endNode - startNode;
+		Vector3 stepSize = direction / RopeSegments;
+		float distance = (direction).magnitude;
+		
+		// if the distance from the last node to the first node i bigger than the length
+		// of the rope, shrink it down.
+		while (distance > RopeLength) {
+			endNode -= (stepSize * 0.01f);
+			direction = endNode - startNode;
+			stepSize = direction / RopeSegments;
+			distance = (direction).magnitude;
+		}
+			
+		if (m_ropeInitialTheta + MaxAngle < m_ropeTheta)
 		{
-			Debug.Log ("Go back");
 			m_direction = -1;
 		}
 		else if(m_ropeInitialTheta - MaxAngle > m_ropeTheta)
 		{
-			Debug.Log ("Go forward");
 			m_direction = 1;
 		}
-		
-		Debug.Log(m_ropeTheta);
-		
-		m_ropeTheta += (1 * m_direction);
-		
-		Vector3 direction = endNode - startNode;
-		
-		Vector3 stepSize = direction / RopeSegments;
-		
-		
+
+		m_ropeTheta += (SwingSpeed * m_direction);
+					
 		for (int i = 0; i < RopeSegments; i++)
 		{
 			m_ropeLinks[i].transform.position = startNode + (stepSize * i);
