@@ -12,7 +12,7 @@ public class CRopeMount : MonoBehaviour {
 	private CRopeLink[] m_ropeLinks = null;
 	//private bool m_isPlayerAttached = false;
 	private Transform m_transform;
-	private float PlayerPathRadius = 5.5f;
+	private float PlayerPathRadius = 11.0f;
 	private float m_ropeAlpha  = 0.0f;
 	private float m_ropeTheta = 0.0f;
 	private float m_ropeInitialTheta = 0.0f;
@@ -26,7 +26,7 @@ public class CRopeMount : MonoBehaviour {
 	{
 		m_transform = this.transform;
 		
-		m_ropeInitialTheta = 180.0f - (Mathf.Tan(-this.transform.position.x / -PlayerPathRadius) * Mathf.Rad2Deg); //;
+		m_ropeInitialTheta = 180.0f - (Mathf.Tan(-this.transform.position.x / -(PlayerPathRadius*0.5f)) * Mathf.Rad2Deg); //;
 		m_ropeTheta = m_ropeInitialTheta;
 		
 		m_ropeLinks = new CRopeLink[ RopeSegments ];
