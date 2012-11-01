@@ -10,6 +10,7 @@ public class CPlayerLight : MonoBehaviour {
 	public float MaxIntensity = 0.1f;
 	public float MinIntensity = 0.0f;
 	public float FlickerSpeed = 0.5f;
+	public float LightCharge = 100.0f;
 
 	// 2 = 2% chance
 	public int FlickerFrequency = 2;
@@ -20,12 +21,26 @@ public class CPlayerLight : MonoBehaviour {
 	private int m_reverse = 1;
 	private float m_currentRange = 0;
 	private float m_currentIntensity = 0;
-
+	private float m_currentLightCharge = 0;
+	
+	
+	
+	
+	void ChargeLight(float ammount)
+	{
+		if (m_currentLightCharge > LightCharge)
+		{
+			m_currentLightCharge += ammount;
+		}	
+	}
+	
+	
 	// Use this for initialization
 	void Start () {
 		m_currentRange = MaxRange;
 		m_currentIntensity = MaxIntensity;
 		m_stepSize = FlickerSpeed;
+		m_currentLightCharge = LightCharge;
 		
 		if (LightPrefab)
 		{
