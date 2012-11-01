@@ -18,9 +18,6 @@ public class CRopeMount : MonoBehaviour {
 	private float m_ropeInitialTheta = 0.0f;
 	private int m_direction = -1;
 	
-	
-	
-	
 	// Use this for initialization
 	void Start () 
 	{
@@ -95,6 +92,7 @@ public class CRopeMount : MonoBehaviour {
 		for (int i = 0; i < RopeSegments; i++)
 		{
 			m_ropeLinks[i].transform.position = startNode + (stepSize * i);
+			m_ropeLinks[i].transform.LookAt(startNode);
 		}
 		
 	}
