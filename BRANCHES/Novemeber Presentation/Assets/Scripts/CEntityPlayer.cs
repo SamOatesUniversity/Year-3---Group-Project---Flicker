@@ -16,7 +16,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 	/* -----------------
 	    Private Members 
 	   ----------------- */
-		
+
+    private CPlayerLight    m_playerLight;
+
 	private float			m_playerPositionAlpha = 0.0f;			//!< How far around the tower are we (in degrees)
 		
 	private PlayerState		m_playerState = PlayerState.Standing;	//!< The current player state
@@ -38,6 +40,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 	public float			InitialAlphaPosition = 0.0f;	//!< The initial point on the circle where the player will start
 	
 	public Camera			MainCamera = null;				//!< The main viewport camera, which will follow the player
+
+    public GameObject       Bulb = null;
 		
 	/*
 	 * \brief Called when the object is created. At the start.
@@ -58,6 +62,15 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_wallJump = GetComponent<CWallJump>();
 		
 		m_animation = GetComponentInChildren<Animation>();
+
+
+        if (Bulb)
+        {
+            GameObject obj = (GameObject)Instantiate( Bulb, this.m_position, Quaternion.identity);
+            m_playerLight = obj.GetComponent<CPlayerLight>();
+            m_playerLight.transform.parent = this.transform;
+        }
+
 	}
 	
 	/*
