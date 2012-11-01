@@ -4,13 +4,14 @@ using System.Collections;
 public class CPlayerLight : MonoBehaviour {
 	
 	public GameObject LightPrefab = null;
-	public float MaxRange = 2.0f;
-	public float MinRange = 0.0f;
+	public float MaxRange = 3.0f;
+	public float MinRange = 2.5f;
 	public Color LightColor = new Color(1,1,1);
-	public float MaxIntensity = 0.1f;
-	public float MinIntensity = 0.0f;
+	public float MaxIntensity = 0.7f;
+	public float MinIntensity = 0.1f;
 	public float FlickerSpeed = 0.5f;
 	public float LightCharge = 100.0f;
+	public float LightDecharge = 10.0f;
 
 	// 2 = 2% chance
 	public int FlickerFrequency = 2;
@@ -26,9 +27,9 @@ public class CPlayerLight : MonoBehaviour {
 	
 	
 	
-	void ChargeLight(float ammount)
+	public void ChargeLight(float ammount)
 	{
-		if (m_currentLightCharge > LightCharge)
+		if (m_currentLightCharge < LightCharge)
 		{
 			m_currentLightCharge += ammount;
 		}	
@@ -51,8 +52,7 @@ public class CPlayerLight : MonoBehaviour {
 			m_light.color = LightColor;
 			m_light.range = MaxRange;
 			m_light.intensity = MaxIntensity;
-		}
-				
+		}				
 	}
 	
 	// Update is called once per frame
@@ -67,17 +67,23 @@ public class CPlayerLight : MonoBehaviour {
 			m_reverse = 1;
 		}
 		
-		m_currentRange += (m_stepSize * Time.deltaTime) * m_reverse;
+		m_currentRange +=  (m_stepSize * Time.deltaTime) * m_reverse;
+		
 		m_light.range = m_currentRange;
 		
 		
-		m_light.intensity = MaxIntensity;
-		if (Random.Range(0,200) < FlickerFrequency)	
+		m_light.intensity = MaxIntensity * ( m_currentLightCharge / LightCharge );
+		
+		if (Random.Range(0,200) < FlickerFrequency && m_currentLightCharge > 0)	
 		{
 			float rand = Random.Range(MinIntensity, MaxIntensity);
 			m_light.intensity = rand;
 		}
 		
-		
+		if ( m_currentLightCharge > -1)
+		{
+			m_currentLightCharge -= LightDecharge * Time.deltaTime;
+		}
+			
 	}
 }
