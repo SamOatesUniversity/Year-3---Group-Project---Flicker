@@ -162,8 +162,10 @@ public class CEntityPlayer : CEntityPlayerBase {
 	 * \called when player health drops to zero
 	*/
 	void OnDeath() {
+		//TODO: Position variables are pulled from a spawn point - one for each scene
 		m_playerPositionAlpha = InitialAlphaPosition;
 		m_playerHealth = Health;
+		transform.position = new Vector3(0.0f, 1.0f, 0.0f);
 	}
 		
 	/*
