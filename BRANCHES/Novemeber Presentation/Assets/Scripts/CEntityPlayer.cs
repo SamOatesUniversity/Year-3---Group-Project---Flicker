@@ -31,6 +31,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	private Animation		m_animation = null;
 	
+	private int 			m_playerHealth = 0;
+	
 	/* ----------------
 	    Public Members 
 	   ---------------- */
@@ -62,6 +64,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_wallJump = GetComponent<CWallJump>();
 		
 		m_animation = GetComponentInChildren<Animation>();
+		
+		m_playerHealth = Health;
 
 
         if (Bulb)
@@ -122,6 +126,19 @@ public class CEntityPlayer : CEntityPlayerBase {
 		} else {
 			m_animation.Stop();	
 		}
+		
+		
+		if(m_playerHealth <= 0)
+		{
+			OnDeath();
+		}	
+	}
+		
+	/*
+	 * \called to deal damage to the player
+	*/
+	public void DoDamage(int damage) {
+		m_playerHealth -= damage;
 	}
 	
 	/*
@@ -139,6 +156,14 @@ public class CEntityPlayer : CEntityPlayerBase {
 		get {
 			return m_physics;	
 		}
+	}
+	
+	/*
+	 * \called when player health drops to zero
+	*/
+	void OnDeath() {
+		m_playerPositionAlpha = InitialAlphaPosition;
+		m_playerHealth = Health;
 	}
 		
 	/*
