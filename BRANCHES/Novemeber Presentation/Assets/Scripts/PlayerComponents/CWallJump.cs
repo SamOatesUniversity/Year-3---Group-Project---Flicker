@@ -13,6 +13,8 @@ public class CWallJump : MonoBehaviour {
 	
 	private bool 			m_canWallJump = false;					//!< States wheter a player can wall jump
 	
+	private Vector3			m_wallJumpPoint = Vector3.zero;			//!< 
+	
 	/* ----------------
 	    Public Members 
 	   ---------------- */	
@@ -26,6 +28,10 @@ public class CWallJump : MonoBehaviour {
 	*/		
 	public bool GetCanWallJump() {
 		return m_canWallJump;	
+	}
+	
+	public Vector3 GetWallJumpPoint() {
+		return m_wallJumpPoint;
 	}
 	
 	/*
@@ -54,7 +60,7 @@ public class CWallJump : MonoBehaviour {
 	/*
 	 * \brief Called when the player enters a collosion
 	*/
-	public void CallOnCollisionEnter(Collision collision, PlayerState playerState)
+	public void CallOnCollisionEnter(CEntityPlayer player, Collision collision, PlayerState playerState)
 	{
 		if (playerState != PlayerState.Jumping)
 			return;
@@ -64,6 +70,11 @@ public class CWallJump : MonoBehaviour {
 		{
 			m_canWallJump = true;
 			m_lastWallJumpObject = sceneObject;
+			m_wallJumpPoint = player.transform.position;
+		}
+		else
+		{
+			m_canWallJump = false;	
 		}
 	}
 	

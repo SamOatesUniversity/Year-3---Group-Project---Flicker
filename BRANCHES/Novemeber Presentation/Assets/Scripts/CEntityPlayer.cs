@@ -67,7 +67,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		m_playerHealth = MaxHealth;
 
-
         if (Bulb)
         {
             GameObject obj = (GameObject)Instantiate( Bulb, this.m_position, Quaternion.identity);
@@ -97,17 +96,23 @@ public class CEntityPlayer : CEntityPlayerBase {
 				
 		m_playerPositionAlpha -= m_physics.Velocity;
 					
+		float yPos = transform.position.y;
+		if (m_wallJump.GetCanWallJump()) {
+			yPos = m_wallJump.GetWallJumpPoint().y;
+			transform.transform.position = new Vector3(transform.transform.position.x, yPos, transform.transform.position.z);	
+		}
+		
 		m_position = new Vector3(
 			Mathf.Sin(m_playerPositionAlpha * Mathf.Deg2Rad) * PlayerPathRadius,
-			transform.position.y,
+			yPos,
 			Mathf.Cos(m_playerPositionAlpha * Mathf.Deg2Rad) * PlayerPathRadius
 		);
 		
-		// Handle wall jumping. TODO: get a class that stores 'physics' memebers and pass that around like a dirty whore
+		// Handle wall jumping.
 		m_wallJump.onUpdate(ref m_physics, ref m_playerState);
 				
         //position the lookat
-		Vector3 lookat = new Vector3(0.0f, transform.position.y, 0.0f);
+		Vector3 lookat = new Vector3(0.0f, yPos, 0.0f);
 		
 		m_cameraClass.TendToMaxOffset(m_physics.Direction);
 		
@@ -116,13 +121,13 @@ public class CEntityPlayer : CEntityPlayerBase {
 		// position the camera
 	    Vector3 camPostion = new Vector3(
             Mathf.Sin(cameraAlpha) * (m_cameraClass.DistanceFromPlayer + PlayerPathRadius),
-			transform.position.y,
+			yPos,
             Mathf.Cos(cameraAlpha) * (m_cameraClass.DistanceFromPlayer + PlayerPathRadius)	
 		);
 
         m_cameraClass.SetPosition(camPostion);
         m_cameraClass.SetLookAt(lookat);
-		
+	
 		base.Update();
 
 		if (m_physics.Direction > 0)
@@ -130,6 +135,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		else if (m_physics.Direction < 0)
 			this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 90, 0));
 	
+		// move animation stuff to a class
 		if (m_physics.Velocity != 0) {
 			if (!m_animation.IsPlaying("walk"))
 				m_animation.Play("walk");
@@ -137,12 +143,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 		} else {
 			m_animation.Stop();	
 		}
-		
-		
-		if(m_playerHealth <= 0)
-		{
-			OnDeath();
-		}	
 	}
 		
 	/*
@@ -150,6 +150,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 	*/
 	public void DoDamage(int damage) {
 		m_playerHealth -= damage;
+		if (m_playerHealth <= 0)
+			OnDeath();
 	}
 	
 	/*
@@ -194,7 +196,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 			}			
         }
 		
-		m_wallJump.CallOnCollisionEnter(collision, m_playerState);	
+		m_wallJump.CallOnCollisionEnter(this, collision, m_playerState);	
 		
 		m_physics.CanJump = true;
 	}
