@@ -31,7 +31,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	private Animation		m_animation = null;
 	
-	private int 			m_playerHealth = 0;
+
 	
 	/* ----------------
 	    Public Members 
@@ -65,7 +65,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		m_animation = GetComponentInChildren<Animation>();
 		
-		m_playerHealth = Health;
+		m_playerHealth = MaxHealth;
 
 
         if (Bulb)
@@ -76,6 +76,17 @@ public class CEntityPlayer : CEntityPlayerBase {
         }
 
 	}
+	
+	public int GetCurrentHealth()
+	{
+		return m_playerHealth;
+	}
+	
+	public int GetMaxHealth()
+	{
+		return MaxHealth;
+	}
+	
 	
 	/*
 	 * \brief Called once per frame
@@ -164,7 +175,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	void OnDeath() {
 		//TODO: Position variables are pulled from a spawn point - one for each scene
 		m_playerPositionAlpha = InitialAlphaPosition;
-		m_playerHealth = Health;
+		m_playerHealth = MaxHealth;
 		transform.position = new Vector3(0.0f, 1.0f, 0.0f);
 	}
 		

@@ -15,7 +15,10 @@ public class CEntityPlayerBase : MonoBehaviour {
 	    Public Members 
 	   ---------------- */
 	
-	public int				Health = 100;			//!< The health of the entity
+	public int				MaxHealth = 100;
+	
+	protected int 			m_playerHealth = 0;
+	
 
 	/*
 	 * \brief Called when the object is created. At the start.
