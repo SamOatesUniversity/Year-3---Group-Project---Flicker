@@ -29,10 +29,17 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	private CWallJump		m_wallJump = null;						//!< 
 	
-	private Animation		m_animation = null;
+	private Animation		m_animation = null;	
 	
+	//////////////////////////
+	// Move to animation class
+	
+	string[] 				m_idleAnimations = new string[4]; 
+	
+	int						m_idleAnimID = 0;
+	
+	////////////////////////
 
-	
 	/* ----------------
 	    Public Members 
 	   ---------------- */
@@ -73,6 +80,11 @@ public class CEntityPlayer : CEntityPlayerBase {
             m_playerLight = obj.GetComponent<CPlayerLight>();
             m_playerLight.transform.parent = this.transform;
         }
+		
+		m_idleAnimations[0] = "idle";
+		m_idleAnimations[1] = "idle1";
+		m_idleAnimations[2] = "idle2";
+		m_idleAnimations[3] = "idle3";
 
 	}
 	
@@ -130,18 +142,29 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 		base.Update();
 
-		if (m_physics.Direction > 0)
+		if (m_physics.Direction >= 0)
 			this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));
 		else if (m_physics.Direction < 0)
 			this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 90, 0));
 	
 		// move animation stuff to a class
-		if (m_physics.Velocity != 0) {
+		if (m_playerState == PlayerState.Walking) 
+		{	
 			if (!m_animation.IsPlaying("walk"))
-				m_animation.Play("walk");
+				m_animation.CrossFade("walk", 0.25f);
 			m_animation["walk"].speed = Mathf.Abs(m_physics.Velocity) * 2.0f;
-		} else {
-			m_animation.Stop();	
+		}
+		else if (m_playerState == PlayerState.Standing)
+		{
+			if (!m_animation.IsPlaying(m_idleAnimations[m_idleAnimID])) {
+				m_animation.CrossFade(m_idleAnimations[m_idleAnimID]);
+				m_idleAnimID = Random.Range(0, 4);
+			}
+		}
+		else if (m_playerState == PlayerState.Jumping)
+		{
+			if (!m_animation.IsPlaying("jump"))
+				m_animation.CrossFade("jump");
 		}
 	}
 		

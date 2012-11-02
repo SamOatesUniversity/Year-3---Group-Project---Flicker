@@ -60,6 +60,18 @@ public class CPlayerPhysics : MonoBehaviour {
 		// decelorate
 		if (!m_colliding)
 			m_velocity -= ((m_velocity * AccelerationRate) * 2.0f);
+		
+		if (playerState != PlayerState.Jumping)
+		{
+			if (!isNearly(m_velocity, 0, 0.1f)) 
+			{
+				playerState = PlayerState.Walking;
+			}
+			else
+			{
+				playerState = PlayerState.Standing;
+			}
+		}
 	}	
 	
 	/*
@@ -151,7 +163,7 @@ public class CPlayerPhysics : MonoBehaviour {
 				continue;
 			
 			// slide down slopes
-			if (!isNearly(contact.normal.x, 0.0f) || !isNearly(contact.normal.z, 0.0f) ) {
+			if (!isNearly(contact.normal.x, 0.0f, 0.01f) || !isNearly(contact.normal.z, 0.0f, 0.01f) ) {
 				CSceneObject sceneObject = contact.otherCollider.GetComponent<CSceneObject>();
 				float scale = 1.0f;
 				if (sceneObject != null)
@@ -180,10 +192,10 @@ public class CPlayerPhysics : MonoBehaviour {
 	/*
 	 * \brief Works out if a value is almost another value (for floating point accuracy)
 	*/
-	public static bool isNearly(float x, float amount) {
+	public static bool isNearly(float x, float amount, float varience) {
 	
-		if (x < amount - 0.01f) return false;
-		if (x > amount + 0.01f) return false;
+		if (x < amount - varience) return false;
+		if (x > amount + varience) return false;
 		return true;
 		
 	}
