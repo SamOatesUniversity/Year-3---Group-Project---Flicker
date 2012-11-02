@@ -48,7 +48,7 @@ public class CPlayerPhysics : MonoBehaviour {
 			if (m_velocity > MaxSpeed) m_velocity = MaxSpeed;
 			if (m_velocity < -MaxSpeed) m_velocity = -MaxSpeed;
 			
-			m_direction = (input != 0) ? (m_velocity > 0) ? 1 : -1 : 0;
+			m_direction = (m_velocity != 0) ? (m_velocity > 0) ? 1 : -1 : 0;
 		}	
 		
 		// handle jumping
@@ -121,7 +121,6 @@ public class CPlayerPhysics : MonoBehaviour {
 		// check the normal to see if the collision is in the horizontal plain
 		if (!m_colliding && (contact.normal.y < 0.1 && contact.normal.y > -0.1))
 		{
-			// send them back the other way
 			m_velocity = 0.0f;
 			m_colliding = true;
 		}
@@ -172,7 +171,7 @@ public class CPlayerPhysics : MonoBehaviour {
 				
 				// we must be colliding if we are in this method
 				m_colliding = true;
-				m_velocity = (-m_direction) * 0.3f;
+				m_velocity = (-m_direction) * 0.25f;
 				return;			
 			}
 		}
