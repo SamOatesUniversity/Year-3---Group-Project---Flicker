@@ -5,7 +5,8 @@ using System.Collections;
 public enum PlayerState {
 	Standing,				//!< The player is stood still
 	Walking,				//!< The player is walking
-	Jumping					//!< The player is jumping
+	Jumping,				//!< The player is jumping
+	WallJumping				//!< The player is on a wall
 };
 
 [RequireComponent (typeof (CWallJump))]
@@ -225,7 +226,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 			}			
         }
 		
-		m_wallJump.CallOnCollisionEnter(this, collision, m_playerState);	
+		m_wallJump.CallOnCollisionEnter(this, collision, ref m_playerState);	
 		
 		m_physics.CanJump = true;
 	}
@@ -234,7 +235,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	 * \brief Called when this leaves a collosion
 	*/
 	void OnCollisionExit(Collision collision) {
-		m_wallJump.CallOnCollisionExit(collision);
+		m_wallJump.CallOnCollisionExit(collision, ref m_playerState);
 		m_physics.CallOnCollisionExit(collision);
 	}
 	
@@ -242,7 +243,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	 * \brief Called whilst a collision is taking place
 	*/
 	void OnCollisionStay(Collision collision) {			
-		m_wallJump.CallOnCollisionStay(collision, ref m_physics);
+		m_wallJump.CallOnCollisionStay(collision, ref m_physics, ref m_playerState);
 		m_physics.CallOnCollisionStay(collision, ref m_wallJump);		
 	}
 }

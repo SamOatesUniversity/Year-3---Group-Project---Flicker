@@ -39,10 +39,10 @@ public class CWallJump : MonoBehaviour {
 	*/	
 	public void onUpdate (ref CPlayerPhysics physics, ref PlayerState playerState)
 	{
-		if (m_canWallJump && Input.GetKeyDown(KeyCode.Space))
+		if (m_canWallJump && Input.GetKeyDown(KeyCode.Space) && m_lastWallJumpObject != null)
 		{
-			physics.Body.AddForce(new Vector3(0.0f, PlayerWallJumpHeight, 0.0f));	
-			physics.Velocity = (-physics.Direction) * 0.5f;
+			physics.Body.AddForce(new Vector3(0.0f, PlayerWallJumpHeight, 0.0f), ForceMode.Impulse);	
+			physics.Velocity = (-physics.Direction);
 			playerState = PlayerState.Jumping;
 		}
 	}
@@ -60,7 +60,7 @@ public class CWallJump : MonoBehaviour {
 	/*
 	 * \brief Called when the player enters a collosion
 	*/
-	public void CallOnCollisionEnter(CEntityPlayer player, Collision collision, PlayerState playerState)
+	public void CallOnCollisionEnter(CEntityPlayer player, Collision collision, ref PlayerState playerState)
 	{
 		if (playerState != PlayerState.Jumping)
 			return;
@@ -71,6 +71,7 @@ public class CWallJump : MonoBehaviour {
 			m_canWallJump = true;
 			m_lastWallJumpObject = sceneObject;
 			m_wallJumpPoint = player.transform.position;
+			playerState = PlayerState.WallJumping;
 		}
 		else
 		{
@@ -81,15 +82,17 @@ public class CWallJump : MonoBehaviour {
 	/*
 	 * \brief Called when the player leaves a collosion
 	*/
-	public void CallOnCollisionExit(Collision collision)
+	public void CallOnCollisionExit(Collision collision, ref PlayerState playerState)
 	{
 		m_canWallJump = false;	
+		m_startWallTime = Time.time;
+		m_lastWallJumpObject = null;
 	}
 	
 	/*
 	 * \brief Called whilst a collision is taking place
 	*/
-	public void CallOnCollisionStay(Collision collision, ref CPlayerPhysics physics)
+	public void CallOnCollisionStay(Collision collision, ref CPlayerPhysics physics, ref PlayerState playerState)
 	{
 		// push the user off the wall, cos they didnt jump in time
 		float ms = (Time.time - m_startWallTime) * 1000.0f;
@@ -97,6 +100,7 @@ public class CWallJump : MonoBehaviour {
 		{
 			physics.Velocity = (-physics.Direction) * 0.1f;
 			m_startWallTime = Time.time;	
+			playerState = PlayerState.Standing;
 		}
 	}
 }
