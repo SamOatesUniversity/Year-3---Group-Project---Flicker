@@ -21,7 +21,7 @@ public class CPlayerPhysics : MonoBehaviour {
 	    Public Members 
 	   ---------------- */		
 	
-	public float			PlayerJumpHeight = 250.0f;		//!< The amount of force (in the y-axis) jump is represented by
+	public float			PlayerJumpHeight = 5.0f;		//!< The amount of force (in the y-axis) jump is represented by
 	
 	public float			AccelerationRate = 0.05f;		//!< The rate of acceleration
 	
@@ -53,7 +53,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		
 		// handle jumping
 		if (playerState != PlayerState.Jumping && Input.GetKeyDown(KeyCode.Space) && !m_colliding && m_canJump) {
-			m_body.AddForce(new Vector3(0.0f, PlayerJumpHeight , 0.0f));	
+			m_body.AddForce(new Vector3(0.0f, PlayerJumpHeight , 0.0f), ForceMode.Impulse);	
 			playerState = PlayerState.Jumping;
 		}
 		
@@ -153,7 +153,7 @@ public class CPlayerPhysics : MonoBehaviour {
 	public void CallOnCollisionStay(Collision collision, ref CWallJump wallJump)
 	{
 		m_canJump = true;
-		
+
 		foreach (ContactPoint contact in collision.contacts) {
 			Debug.DrawRay(contact.point, contact.normal, Color.green);
 	
