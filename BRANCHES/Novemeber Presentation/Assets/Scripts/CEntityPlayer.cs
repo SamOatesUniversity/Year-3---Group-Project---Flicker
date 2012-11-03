@@ -39,6 +39,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 	int						m_idleAnimID = 0;
 	
 	////////////////////////
+	
+	AudioSource				m_footSteps = null;
 
 	/* ----------------
 	    Public Members 
@@ -85,7 +87,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_idleAnimations[1] = "idle1";
 		m_idleAnimations[2] = "idle2";
 		m_idleAnimations[3] = "idle3";
-
+		
+		m_footSteps = GetComponent<AudioSource>();
 	}
 	
 	public int GetCurrentHealth()
@@ -153,6 +156,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 			if (!m_animation.IsPlaying("walk"))
 				m_animation.CrossFade("walk", 0.25f);
 			m_animation["walk"].speed = Mathf.Abs(m_physics.Velocity) * 2.0f;
+			
+			if (!m_footSteps.isPlaying)
+				m_footSteps.Play();			
 		}
 		else if (m_playerState == PlayerState.Standing)
 		{
@@ -160,11 +166,17 @@ public class CEntityPlayer : CEntityPlayerBase {
 				m_animation.CrossFade(m_idleAnimations[m_idleAnimID]);
 				m_idleAnimID = Random.Range(0, 4);
 			}
+			
+			if (!m_footSteps.isPlaying)
+				m_footSteps.Stop();
 		}
 		else if (m_playerState == PlayerState.Jumping)
 		{
 			if (!m_animation.IsPlaying("jump"))
 				m_animation.CrossFade("jump");
+			
+			if (!m_footSteps.isPlaying)
+				m_footSteps.Stop();
 		}
 	}
 		
