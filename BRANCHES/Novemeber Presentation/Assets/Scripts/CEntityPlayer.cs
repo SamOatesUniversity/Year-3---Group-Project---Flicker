@@ -53,7 +53,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	public Camera			MainCamera = null;				//!< The main viewport camera, which will follow the player
 
-    public GameObject       Bulb = null;
 		
 	/*
 	 * \brief Called when the object is created. At the start.
@@ -76,13 +75,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_animation = GetComponentInChildren<Animation>();
 		
 		m_playerHealth = MaxHealth;
-
-        if (Bulb)
-        {
-            GameObject obj = (GameObject)Instantiate( Bulb, this.m_position, Quaternion.identity);
-            m_playerLight = obj.GetComponent<CPlayerLight>();
-            m_playerLight.transform.parent = this.transform;
-        }
 		
 		m_idleAnimations[0] = "idle";
 		m_idleAnimations[1] = "idle1";
