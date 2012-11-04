@@ -153,7 +153,8 @@ public class CPlayerPhysics : MonoBehaviour {
 	public void CallOnCollisionStay(Collision collision, ref CWallJump wallJump)
 	{
 		m_canJump = true;
-
+		
+		/*
 		foreach (ContactPoint contact in collision.contacts) {
 			Debug.DrawRay(contact.point, contact.normal, Color.green);
 	
@@ -174,6 +175,7 @@ public class CPlayerPhysics : MonoBehaviour {
 				return;
 			}
 		}
+		*/
 		
 		if (!wallJump.GetCanWallJump()) {
 			foreach (ContactPoint contact in collision.contacts) {
