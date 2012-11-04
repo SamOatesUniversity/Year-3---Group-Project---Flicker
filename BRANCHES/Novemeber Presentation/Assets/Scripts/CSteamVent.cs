@@ -39,13 +39,15 @@ public class CSteamVent : MonoBehaviour
 			m_collisionBox.renderer.enabled = false;
 		
 			
-			GameObject obj = (GameObject)Instantiate(SteamParticleSystem, transform.position - new Vector3(0,0.8f,0), Quaternion.identity);
+			GameObject obj = (GameObject)Instantiate(SteamParticleSystem, transform.position - new Vector3(0,0.2f,0), Quaternion.identity);
 			m_pSystem = obj.GetComponent<ParticleSystem>();
+			m_pSystem.transform.parent = m_collisionBox.transform;
 			m_pSystem.transform.rotation = Quaternion.LookRotation( m_collisionBox.transform.position, Vector3.up);	
+			m_pSystem.name = "VENTSYSTEM";
 			
 			
 			
-			//m_pSystem.enableEmission = true;
+			m_pSystem.enableEmission = true;
 		}
 		else
 		{
@@ -58,7 +60,7 @@ public class CSteamVent : MonoBehaviour
 	{
 		
 		//Break out early if it's setting the same value again.
-		//if (toggle == m_streamOn) { return; }
+		if (toggle == m_streamOn) { return; }
 			
 		m_streamOn = toggle;
 		
