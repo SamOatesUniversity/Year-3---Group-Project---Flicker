@@ -165,6 +165,12 @@ public class CEntityPlayer : CEntityPlayerBase {
 			if (!m_footSteps.isPlaying)
 				m_footSteps.Stop();
 		}
+		
+		//debug scene reset - probably want this somewhere else (also worth being able to toggle debug controls on and off)
+		if(Input.GetKeyDown(KeyCode.F5))
+		{
+			OnDeath();	
+		}
 	}
 		
 	/*
