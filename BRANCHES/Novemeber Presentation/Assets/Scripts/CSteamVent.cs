@@ -21,6 +21,7 @@ public class CSteamVent : MonoBehaviour
 	public float SteamIntervals = 10.0f;
 	private float m_timeSinceLastBurst = 0;
 	private int m_timeIncrement = 1;
+	private bool m_lockStream = false;
 	
 	
 	
@@ -28,26 +29,19 @@ public class CSteamVent : MonoBehaviour
 		
 		if (SteamParticleSystem)
 		{		
-			//m_pSystem.transform.RotateAround(new Vector3(0,0,0),new Vector3(1,0,0), 180);
-		//	m_pSystem.transform.Translate(new Vector3(0,0,0));
-			
 			m_collisionBox =  (GameObject)Instantiate(SteamCollisionBox, transform.position, Quaternion.identity);
 			m_collisionBox.transform.parent = this.transform;
 			m_collisionBox.transform.rotation = this.transform.rotation;
 			m_collisionBox.transform.Translate( new Vector3(0,0,-3.7f));
 			m_collisionBox.transform.localScale = m_colliderScale;
 			m_collisionBox.renderer.enabled = false;
-		
 			
-			GameObject obj = (GameObject)Instantiate(SteamParticleSystem, transform.position - new Vector3(0,0.2f,0), Quaternion.identity);
+			GameObject obj = (GameObject)Instantiate(SteamParticleSystem, m_collisionBox.transform.position, Quaternion.identity);
 			m_pSystem = obj.GetComponent<ParticleSystem>();
 			m_pSystem.transform.parent = m_collisionBox.transform;
-			m_pSystem.transform.rotation = Quaternion.LookRotation( m_collisionBox.transform.position, Vector3.up);	
-			m_pSystem.name = "VENTSYSTEM";
-			
-			
-			
+			m_pSystem.transform.rotation = Quaternion.LookRotation( m_collisionBox.transform.position, Vector3.up);
 			m_pSystem.enableEmission = true;
+			
 		}
 		else
 		{
@@ -78,8 +72,31 @@ public class CSteamVent : MonoBehaviour
 	}
 	
 	
+	
+	public void ToggleStreamLock(bool toggle)
+	{
+		m_lockStream = toggle;
+	}
+	
+	public bool GetLockStatus()
+	{
+		return m_lockStream;
+	}
+	
+	
+	
 	public void Update () 
 	{
+		
+		
+		if (m_lockStream)
+		{
+			ToggleStream(false);
+			return;
+		}
+		
+		
+		
 		
 		if ( m_timeSinceLastBurst < SteamIntervals)
 		{
