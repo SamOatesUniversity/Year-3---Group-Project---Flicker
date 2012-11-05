@@ -21,22 +21,28 @@ public class CDamageVolume : MonoBehaviour {
 	
 	//called if a collidable object triggers the volume
 	 void OnTriggerEnter(Collider collider) {
-		CEntityPlayer player = collider.gameObject.GetComponent<CEntityPlayer>();
-		if (player)
+		if (m_enabled)
 		{
-			player.DoDamage(Damage);
-			m_timeDamaged = Time.time;
+			CEntityPlayer player = collider.gameObject.GetComponent<CEntityPlayer>();
+			if (player)
+			{
+				player.DoDamage(Damage);
+				m_timeDamaged = Time.time;
+			}
 		}
     }
 	
 	void OnTriggerStay(Collider collider) {
-		CEntityPlayer player = collider.gameObject.GetComponent<CEntityPlayer>();
-		if (player)
+		if (m_enabled)
 		{
-			if (Time.time >= (m_timeDamaged+TickTimer))
+			CEntityPlayer player = collider.gameObject.GetComponent<CEntityPlayer>();
+			if (player)
 			{
-				player.DoDamage(Damage);
-				m_timeDamaged = Time.time;
+				if (Time.time >= (m_timeDamaged+TickTimer))
+				{
+					player.DoDamage(Damage);
+					m_timeDamaged = Time.time;
+				}
 			}
 		}
 	}
