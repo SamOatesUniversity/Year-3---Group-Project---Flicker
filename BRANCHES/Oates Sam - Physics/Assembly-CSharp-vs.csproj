@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{E40F9B98-4E87-43C2-604A-62E28BD60643}</ProjectGuid>
+	<ProjectGuid>{2F7A33E7-A517-6AF6-8062-1ABFE5845488}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -56,6 +56,7 @@
      <Compile Include="Assets\Scripts\CRopeMount.cs" />
      <Compile Include="Assets\Scripts\CSceneObject.cs" />
      <Compile Include="Assets\Scripts\CSteamVent.cs" />
+     <Compile Include="Assets\Scripts\PlayerComponents\CPlayerAnimation.cs" />
      <Compile Include="Assets\Scripts\PlayerComponents\CPlayerPhysics.cs" />
      <Compile Include="Assets\Scripts\PlayerComponents\CWallJump.cs" />
      <Compile Include="Assets\Scripts\Triggers\CSteamVentTrigger.cs" />
@@ -132,7 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
-      <Project>{3E71508A-7C01-D9D8-6FDB-C4CD25B3E84D}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
+      <Project>{6FF709F2-C6D5-35B9-31D4-5F3FAE2CFE5C}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
