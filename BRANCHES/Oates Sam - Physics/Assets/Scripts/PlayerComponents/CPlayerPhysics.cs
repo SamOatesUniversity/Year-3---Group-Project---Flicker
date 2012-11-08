@@ -146,13 +146,20 @@ public class CPlayerPhysics : MonoBehaviour {
 	/*
 	 * \brief Called whilst a collision is taking place
 	*/
-	public void CallOnCollisionStay(Collision collision)
-	{
+	public void CallOnCollisionStay(Collision collision, ref PlayerState playerState)
+	{		
 		m_collisionState = CollisionState.None;
 		
 		foreach (ContactPoint contact in collision)
 		{
-			if (isNearly(contact.normal.y, 1.0f, 0.2f))
+			float yContact = contact.point.y - m_body.position.y;
+			if (yContact >= 0.2 && yContact <= 0.25)
+			{
+				Debug.DrawRay(contact.point, contact.normal);
+				playerState = PlayerState.LedgeHang;
+				m_body.constraints = RigidbodyConstraints.FreezeAll;
+			}
+			else if (isNearly(contact.normal.y, 1.0f, 0.2f))
 			{
 				m_collisionState = CollisionState.OnFloor;
 			}
@@ -177,10 +184,26 @@ public class CPlayerPhysics : MonoBehaviour {
 	*/
 	public void OnFixedUpdate(ref PlayerState playerState)
 	{
-		if (!(m_collisionState == CollisionState.OnWall && m_jumpState == JumpState.Jumping))
-			m_velocity = Input.GetAxis("Horizontal") * MaxSpeed;	
+		float velocity = Input.GetAxis("Horizontal") * MaxSpeed;
+		int direction = isNearly(velocity, 0.0f, 0.1f) ? 0 : velocity > 0 ? 1 : -1;
 		
-		m_direction = isNearly(m_velocity, 0.0f, 0.1f) ? 0 : m_velocity > 0 ? 1 : -1;
+		if (playerState == PlayerState.LedgeHang) {
+			if (direction != 0 && direction != m_movingDirection) {
+				m_velocity = velocity;
+				playerState = PlayerState.Walking;
+				m_body.constraints = RigidbodyConstraints.FreezeRotationX & RigidbodyConstraints.FreezeRotationZ;
+			} 
+			else
+			{
+				m_velocity = 0.0f;
+			}
+			return;
+		}
+		
+		if (!(m_collisionState == CollisionState.OnWall && m_jumpState == JumpState.Jumping))
+			m_velocity = velocity;	
+		
+		m_direction = direction;
 		
 		if (m_collisionState != CollisionState.None && m_jumpState != JumpState.Jumping)
 		{

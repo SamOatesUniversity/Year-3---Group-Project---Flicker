@@ -27,6 +27,11 @@ public class CPlayerAnimation : MonoBehaviour {
 			if (!m_animation.IsPlaying("jump"))
 				m_animation.CrossFade("jump");
 		}
+		else if (playerState == PlayerState.LedgeHang)
+		{
+			if (!m_animation.IsPlaying("ledgehang"))
+				m_animation.CrossFade("ledgehang");
+		}
 	}
 	
 }

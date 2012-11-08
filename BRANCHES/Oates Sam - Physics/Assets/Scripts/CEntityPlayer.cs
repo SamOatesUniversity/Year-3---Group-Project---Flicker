@@ -7,7 +7,7 @@ public enum PlayerState {
 	Walking,				//!< The player is walking
 	Jumping,				//!< The player is jumping
 	WallJumping,			//!< The player is on a wall
-	WallHang
+	LedgeHang
 };
 
 [RequireComponent (typeof (CWallJump))]
@@ -195,7 +195,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	*/
 	void OnCollisionStay(Collision collision)
 	{		
-		m_physics.CallOnCollisionStay(collision);
+		m_physics.CallOnCollisionStay(collision, ref m_playerState);
 		if (m_physics.CollisionType == CollisionState.OnWall)
 		{
 			m_playerPositionAlpha = m_lastPlayerPositionAlpha;
