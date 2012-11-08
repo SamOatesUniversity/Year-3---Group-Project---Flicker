@@ -13,6 +13,8 @@ public class CWallJump : MonoBehaviour {
 	
 	private bool 			m_canWallJump = false;					//!< States wheter a player can wall jump
 	
+	private Vector3			m_wallJumpPoint = Vector3.zero;			//!< 
+	
 	/* ----------------
 	    Public Members 
 	   ---------------- */	
@@ -28,15 +30,19 @@ public class CWallJump : MonoBehaviour {
 		return m_canWallJump;	
 	}
 	
+	public Vector3 GetWallJumpPoint() {
+		return m_wallJumpPoint;
+	}
+	
 	/*
 	 * \brief called by the players update method
 	*/	
 	public void onUpdate (ref CPlayerPhysics physics, ref PlayerState playerState)
 	{
-		if (m_canWallJump && Input.GetKeyDown(KeyCode.Space))
+		if (m_canWallJump && Input.GetKeyDown(KeyCode.Space) && m_lastWallJumpObject != null)
 		{
-			physics.Body.AddForce(new Vector3(0.0f, PlayerWallJumpHeight, 0.0f));	
-			physics.Velocity = (-physics.Direction) * 0.5f;
+			physics.Body.AddForce(new Vector3(0.0f, PlayerWallJumpHeight, 0.0f), ForceMode.Impulse);	
+			physics.Velocity = (-physics.Direction);
 			playerState = PlayerState.Jumping;
 		}
 	}
@@ -54,7 +60,7 @@ public class CWallJump : MonoBehaviour {
 	/*
 	 * \brief Called when the player enters a collosion
 	*/
-	public void CallOnCollisionEnter(Collision collision, PlayerState playerState)
+	public void CallOnCollisionEnter(CEntityPlayer player, Collision collision, ref PlayerState playerState)
 	{
 		if (playerState != PlayerState.Jumping)
 			return;
@@ -64,21 +70,29 @@ public class CWallJump : MonoBehaviour {
 		{
 			m_canWallJump = true;
 			m_lastWallJumpObject = sceneObject;
+			m_wallJumpPoint = player.transform.position;
+			playerState = PlayerState.WallJumping;
+		}
+		else
+		{
+			m_canWallJump = false;	
 		}
 	}
 	
 	/*
 	 * \brief Called when the player leaves a collosion
 	*/
-	public void CallOnCollisionExit(Collision collision)
+	public void CallOnCollisionExit(Collision collision, ref PlayerState playerState)
 	{
 		m_canWallJump = false;	
+		m_startWallTime = Time.time;
+		m_lastWallJumpObject = null;
 	}
 	
 	/*
 	 * \brief Called whilst a collision is taking place
 	*/
-	public void CallOnCollisionStay(Collision collision, ref CPlayerPhysics physics)
+	public void CallOnCollisionStay(Collision collision, ref CPlayerPhysics physics, ref PlayerState playerState)
 	{
 		// push the user off the wall, cos they didnt jump in time
 		float ms = (Time.time - m_startWallTime) * 1000.0f;
@@ -86,6 +100,7 @@ public class CWallJump : MonoBehaviour {
 		{
 			physics.Velocity = (-physics.Direction) * 0.1f;
 			m_startWallTime = Time.time;	
+			playerState = PlayerState.Standing;
 		}
 	}
 }

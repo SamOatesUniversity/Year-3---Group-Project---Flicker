@@ -21,7 +21,7 @@ public class CPlayerPhysics : MonoBehaviour {
 	    Public Members 
 	   ---------------- */		
 	
-	public float			PlayerJumpHeight = 250.0f;		//!< The amount of force (in the y-axis) jump is represented by
+	public float			PlayerJumpHeight = 5.0f;		//!< The amount of force (in the y-axis) jump is represented by
 	
 	public float			AccelerationRate = 0.05f;		//!< The rate of acceleration
 	
@@ -48,18 +48,30 @@ public class CPlayerPhysics : MonoBehaviour {
 			if (m_velocity > MaxSpeed) m_velocity = MaxSpeed;
 			if (m_velocity < -MaxSpeed) m_velocity = -MaxSpeed;
 			
-			m_direction = (input != 0) ? (m_velocity > 0) ? 1 : -1 : 0;
+			m_direction = (m_velocity != 0) ? (m_velocity > 0) ? 1 : -1 : 0;
 		}	
 		
 		// handle jumping
 		if (playerState != PlayerState.Jumping && Input.GetKeyDown(KeyCode.Space) && !m_colliding && m_canJump) {
-			m_body.AddForce(new Vector3(0.0f, PlayerJumpHeight , 0.0f));	
+			m_body.AddForce(new Vector3(0.0f, PlayerJumpHeight , 0.0f), ForceMode.Impulse);	
 			playerState = PlayerState.Jumping;
 		}
 		
 		// decelorate
 		if (!m_colliding)
 			m_velocity -= ((m_velocity * AccelerationRate) * 2.0f);
+		
+		if (playerState != PlayerState.Jumping)
+		{
+			if (!isNearly(m_velocity, 0, 0.1f)) 
+			{
+				playerState = PlayerState.Walking;
+			}
+			else
+			{
+				playerState = PlayerState.Standing;
+			}
+		}
 	}	
 	
 	/*
@@ -121,7 +133,6 @@ public class CPlayerPhysics : MonoBehaviour {
 		// check the normal to see if the collision is in the horizontal plain
 		if (!m_colliding && (contact.normal.y < 0.1 && contact.normal.y > -0.1))
 		{
-			// send them back the other way
 			m_velocity = 0.0f;
 			m_colliding = true;
 		}
@@ -143,6 +154,7 @@ public class CPlayerPhysics : MonoBehaviour {
 	{
 		m_canJump = true;
 		
+		/*
 		foreach (ContactPoint contact in collision.contacts) {
 			Debug.DrawRay(contact.point, contact.normal, Color.green);
 	
@@ -152,7 +164,7 @@ public class CPlayerPhysics : MonoBehaviour {
 				continue;
 			
 			// slide down slopes
-			if (!isNearly(contact.normal.x, 0.0f) || !isNearly(contact.normal.z, 0.0f) ) {
+			if (!isNearly(contact.normal.x, 0.0f, 0.01f) || !isNearly(contact.normal.z, 0.0f, 0.01f) ) {
 				CSceneObject sceneObject = contact.otherCollider.GetComponent<CSceneObject>();
 				float scale = 1.0f;
 				if (sceneObject != null)
@@ -163,6 +175,7 @@ public class CPlayerPhysics : MonoBehaviour {
 				return;
 			}
 		}
+		*/
 		
 		if (!wallJump.GetCanWallJump()) {
 			foreach (ContactPoint contact in collision.contacts) {
@@ -172,7 +185,7 @@ public class CPlayerPhysics : MonoBehaviour {
 				
 				// we must be colliding if we are in this method
 				m_colliding = true;
-				m_velocity = (-m_direction) * 0.3f;
+				m_velocity = (-m_direction) * 0.25f;
 				return;			
 			}
 		}
@@ -181,10 +194,10 @@ public class CPlayerPhysics : MonoBehaviour {
 	/*
 	 * \brief Works out if a value is almost another value (for floating point accuracy)
 	*/
-	public static bool isNearly(float x, float amount) {
+	public static bool isNearly(float x, float amount, float varience) {
 	
-		if (x < amount - 0.01f) return false;
-		if (x > amount + 0.01f) return false;
+		if (x < amount - varience) return false;
+		if (x > amount + varience) return false;
 		return true;
 		
 	}

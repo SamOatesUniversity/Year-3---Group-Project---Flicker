@@ -5,7 +5,8 @@ using System.Collections;
 public enum PlayerState {
 	Standing,				//!< The player is stood still
 	Walking,				//!< The player is walking
-	Jumping					//!< The player is jumping
+	Jumping,				//!< The player is jumping
+	WallJumping				//!< The player is on a wall
 };
 
 [RequireComponent (typeof (CWallJump))]
@@ -16,7 +17,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 	/* -----------------
 	    Private Members 
 	   ----------------- */
-		
+
+    private CPlayerLight    m_playerLight;
+
 	private float			m_playerPositionAlpha = 0.0f;			//!< How far around the tower are we (in degrees)
 		
 	private PlayerState		m_playerState = PlayerState.Standing;	//!< The current player state
@@ -27,8 +30,19 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	private CWallJump		m_wallJump = null;						//!< 
 	
-	private Animation		m_animation = null;
+	private Animation		m_animation = null;	
 	
+	//////////////////////////
+	// Move to animation class
+	
+	string[] 				m_idleAnimations = new string[4]; 
+	
+	int						m_idleAnimID = 0;
+	
+	////////////////////////
+	
+	AudioSource				m_footSteps = null;
+
 	/* ----------------
 	    Public Members 
 	   ---------------- */
@@ -38,6 +52,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	public float			InitialAlphaPosition = 0.0f;	//!< The initial point on the circle where the player will start
 	
 	public Camera			MainCamera = null;				//!< The main viewport camera, which will follow the player
+
 		
 	/*
 	 * \brief Called when the object is created. At the start.
@@ -58,7 +73,27 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_wallJump = GetComponent<CWallJump>();
 		
 		m_animation = GetComponentInChildren<Animation>();
+		
+		m_playerHealth = MaxHealth;
+		
+		m_idleAnimations[0] = "idle";
+		m_idleAnimations[1] = "idle1";
+		m_idleAnimations[2] = "idle2";
+		m_idleAnimations[3] = "idle3";
+		
+		m_footSteps = GetComponent<AudioSource>();
 	}
+	
+	public int GetCurrentHealth()
+	{
+		return m_playerHealth;
+	}
+	
+	public int GetMaxHealth()
+	{
+		return MaxHealth;
+	}
+	
 	
 	/*
 	 * \brief Called once per frame
@@ -75,7 +110,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 			Mathf.Cos(m_playerPositionAlpha * Mathf.Deg2Rad) * PlayerPathRadius
 		);
 		
-		// Handle wall jumping. TODO: get a class that stores 'physics' memebers and pass that around like a dirty whore
+		// Handle wall jumping.
 		m_wallJump.onUpdate(ref m_physics, ref m_playerState);
 				
         //position the lookat
@@ -94,21 +129,57 @@ public class CEntityPlayer : CEntityPlayerBase {
 
         m_cameraClass.SetPosition(camPostion);
         m_cameraClass.SetLookAt(lookat);
-		
+	
 		base.Update();
 
-		if (m_physics.Direction > 0)
+		if (m_physics.Direction >= 0)
 			this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));
 		else if (m_physics.Direction < 0)
 			this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 90, 0));
 	
-		if (m_physics.Velocity != 0) {
+		// move animation stuff to a class
+		if (m_playerState == PlayerState.Walking) 
+		{	
 			if (!m_animation.IsPlaying("walk"))
-				m_animation.Play("walk");
+				m_animation.CrossFade("walk", 0.25f);
 			m_animation["walk"].speed = Mathf.Abs(m_physics.Velocity) * 2.0f;
-		} else {
-			m_animation.Stop();	
+			
+			if (!m_footSteps.isPlaying)
+				m_footSteps.Play();			
 		}
+		else if (m_playerState == PlayerState.Standing)
+		{
+			if (!m_animation.IsPlaying(m_idleAnimations[m_idleAnimID])) {
+				m_animation.CrossFade(m_idleAnimations[m_idleAnimID]);
+				m_idleAnimID = Random.Range(0, 4);
+			}
+			
+			if (!m_footSteps.isPlaying)
+				m_footSteps.Stop();
+		}
+		else if (m_playerState == PlayerState.Jumping)
+		{
+			if (!m_animation.IsPlaying("jump"))
+				m_animation.CrossFade("jump");
+			
+			if (!m_footSteps.isPlaying)
+				m_footSteps.Stop();
+		}
+		
+		//debug scene reset - probably want this somewhere else (also worth being able to toggle debug controls on and off)
+		if(Input.GetKeyDown(KeyCode.F5))
+		{
+			OnDeath();	
+		}
+	}
+		
+	/*
+	 * \called to deal damage to the player
+	*/
+	public void DoDamage(int damage) {
+		m_playerHealth -= damage;
+		if (m_playerHealth <= 0)
+			OnDeath();
 	}
 	
 	/*
@@ -127,6 +198,16 @@ public class CEntityPlayer : CEntityPlayerBase {
 			return m_physics;	
 		}
 	}
+	
+	/*
+	 * \called when player health drops to zero
+	*/
+	void OnDeath() {
+		//TODO: Position variables are pulled from a spawn point - one for each scene
+		m_playerPositionAlpha = InitialAlphaPosition;
+		m_playerHealth = MaxHealth;
+		transform.position = new Vector3(0.0f, 1.0f, 0.0f);
+	}
 		
 	/*
 	 * \brief Called when this first collides with something
@@ -143,7 +224,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 			}			
         }
 		
-		m_wallJump.CallOnCollisionEnter(collision, m_playerState);	
+		m_wallJump.CallOnCollisionEnter(this, collision, ref m_playerState);	
 		
 		m_physics.CanJump = true;
 	}
@@ -152,7 +233,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	 * \brief Called when this leaves a collosion
 	*/
 	void OnCollisionExit(Collision collision) {
-		m_wallJump.CallOnCollisionExit(collision);
+		m_wallJump.CallOnCollisionExit(collision, ref m_playerState);
 		m_physics.CallOnCollisionExit(collision);
 	}
 	
@@ -160,7 +241,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	 * \brief Called whilst a collision is taking place
 	*/
 	void OnCollisionStay(Collision collision) {			
-		m_wallJump.CallOnCollisionStay(collision, ref m_physics);
+		m_wallJump.CallOnCollisionStay(collision, ref m_physics, ref m_playerState);
 		m_physics.CallOnCollisionStay(collision, ref m_wallJump);		
 	}
 }
