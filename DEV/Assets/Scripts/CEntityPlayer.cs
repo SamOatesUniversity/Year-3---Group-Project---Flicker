@@ -35,7 +35,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	//////////////////////////
 	// Move to animation class
 	
-	string[] 				m_idleAnimations = new string[4]; 
+	string[] 				m_idleAnimations = new string[3]; 
 	
 	int						m_idleAnimID = 0;
 	
@@ -77,9 +77,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_playerHealth = MaxHealth;
 		
 		m_idleAnimations[0] = "idle";
-		m_idleAnimations[1] = "idle1";
-		m_idleAnimations[2] = "idle2";
-		m_idleAnimations[3] = "idle3";
+		m_idleAnimations[1] = "idle0";
+		m_idleAnimations[2] = "idle1";
 		
 		m_footSteps = GetComponent<AudioSource>();
 	}
@@ -140,9 +139,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 		// move animation stuff to a class
 		if (m_playerState == PlayerState.Walking) 
 		{	
-			if (!m_animation.IsPlaying("walk"))
-				m_animation.CrossFade("walk", 0.25f);
-			m_animation["walk"].speed = Mathf.Abs(m_physics.Velocity) * 2.0f;
+			if (!m_animation.IsPlaying("run"))
+				m_animation.CrossFade("run", 0.25f);
+			m_animation["run"].speed = Mathf.Abs(m_physics.Velocity) * 2.0f;
 			
 			if (!m_footSteps.isPlaying)
 				m_footSteps.Play();			
@@ -151,7 +150,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		{
 			if (!m_animation.IsPlaying(m_idleAnimations[m_idleAnimID])) {
 				m_animation.CrossFade(m_idleAnimations[m_idleAnimID]);
-				m_idleAnimID = Random.Range(0, 4);
+				m_idleAnimID = Random.Range(0, 3);
 			}
 			
 			if (!m_footSteps.isPlaying)
