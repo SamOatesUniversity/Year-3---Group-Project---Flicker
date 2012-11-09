@@ -172,13 +172,16 @@ public class CPlayerPhysics : MonoBehaviour {
 			}
 			else
 			{
-				m_collisionState = CollisionState.OnWall;
+				if (isFacingCollision(m_movingDirection, m_body.transform.position, contact.point, playerAlpha)) {
+					m_collisionState = CollisionState.OnWall;
+					break;
+				}
 			}
 		}	
 		
 		if (m_collisionState == CollisionState.OnWall && m_jumpState == JumpState.Jumping)
 		{
-			m_velocity = -(m_movingDirection * 0.1f);
+			m_velocity = -(m_movingDirection * 0.25f);
 		}
 	}
 	
@@ -218,6 +221,8 @@ public class CPlayerPhysics : MonoBehaviour {
 					m_jumpState = JumpState.Jumping;
 					playerState = PlayerState.Jumping;
 					m_collisionState = CollisionState.None;
+					m_movingDirection *= -1;
+					m_direction *= -1;
 				}
 				return;
 			}
@@ -273,8 +278,6 @@ public class CPlayerPhysics : MonoBehaviour {
 		Vector3 collisionVector = (playerPosition - collisionPoint);
 		collisionVector.Normalize();
 		float collisionDir = Mathf.Atan2(collisionVector.z, collisionVector.x);
-	
-		Debug.Log(collisionDir);
 		
 		if (collisionDir < 0) collisionDir = -1; else collisionDir = 1;
 		
