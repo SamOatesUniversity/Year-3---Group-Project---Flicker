@@ -128,7 +128,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 			);
 			
 	        m_cameraClass.SetPosition(camPostion);
-	        m_cameraClass.SetLookAt(new Vector3(0.0f, transform.position.y, 0.0f));
+	        m_cameraClass.SetLookAt(transform.position);
 		}
 		
 		// Animate and position the player model mesh
@@ -207,7 +207,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	*/
 	void OnCollisionStay(Collision collision)
 	{		
-		m_physics.CallOnCollisionStay(collision, ref m_playerState);
+		m_physics.CallOnCollisionStay(collision, ref m_playerState, m_playerPositionAlpha);
 		if (m_physics.CollisionType == CollisionState.OnWall)
 		{
 			m_playerPositionAlpha = m_lastPlayerPositionAlpha;

@@ -146,7 +146,7 @@ public class CPlayerPhysics : MonoBehaviour {
 	/*
 	 * \brief Called whilst a collision is taking place
 	*/
-	public void CallOnCollisionStay(Collision collision, ref PlayerState playerState)
+	public void CallOnCollisionStay(Collision collision, ref PlayerState playerState, float playerAlpha)
 	{		
 		m_collisionState = CollisionState.None;
 		
@@ -156,8 +156,11 @@ public class CPlayerPhysics : MonoBehaviour {
 			if (yContact >= 0.2 && yContact <= 0.25)
 			{
 				Debug.DrawRay(contact.point, contact.normal);
-				playerState = PlayerState.LedgeHang;
-				m_body.constraints = RigidbodyConstraints.FreezeAll;
+				if (isFacingCollision(m_movingDirection, m_body.transform.position, contact.point, playerAlpha))
+				{
+					playerState = PlayerState.LedgeHang;
+					m_body.constraints = RigidbodyConstraints.FreezeAll;
+				}
 			}
 			else if (isNearly(contact.normal.y, 1.0f, 0.2f))
 			{
@@ -187,10 +190,12 @@ public class CPlayerPhysics : MonoBehaviour {
 		float velocity = Input.GetAxis("Horizontal") * MaxSpeed;
 		int direction = isNearly(velocity, 0.0f, 0.1f) ? 0 : velocity > 0 ? 1 : -1;
 		
+		// Ledge hanging code start
 		if (playerState == PlayerState.LedgeHang || playerState == PlayerState.LedgeClimb || playerState == PlayerState.LedgeClimbComplete) {
 			
 			m_velocity = 0.0f;
 			
+			// If we are trying to move in the opposite way of the wall, fall off the wall
 			if (direction != 0 && direction != m_movingDirection) {
 				m_velocity = velocity;
 				playerState = PlayerState.Walking;
@@ -198,14 +203,28 @@ public class CPlayerPhysics : MonoBehaviour {
 				return;
 			} 
 			
-			if (Input.GetKeyDown(KeyCode.Space) && playerState != PlayerState.LedgeClimb)
+			// if the player is not already climbing the wall, check keys
+			if (playerState != PlayerState.LedgeClimb)
 			{
-				playerState = PlayerState.LedgeClimb;
+				// if the user pressed up, climb the wall
+				if (Input.GetKeyDown(KeyCode.UpArrow)) {
+					playerState = PlayerState.LedgeClimb;
+				}
+				// if the user pressed space, jump off the wall
+				else if (Input.GetKeyDown(KeyCode.Space)) {
+					m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+					m_velocity = -(m_movingDirection); // kick it away from the wall
+					m_body.AddForce(new Vector3(0, PlayerJumpHeight, 0), ForceMode.Impulse);	
+					m_jumpState = JumpState.Jumping;
+					playerState = PlayerState.Jumping;
+					m_collisionState = CollisionState.None;
+				}
 				return;
 			}
 
 			return;
 		}
+		// Ledge hanging code end
 		
 		if (!(m_collisionState == CollisionState.OnWall && m_jumpState == JumpState.Jumping))
 			m_velocity = velocity;	
@@ -224,8 +243,6 @@ public class CPlayerPhysics : MonoBehaviour {
 				playerState = PlayerState.Walking;	
 			}
 		}
-		
-
 	}
 	
 	public void OnUpdate(ref PlayerState playerState)
@@ -245,6 +262,27 @@ public class CPlayerPhysics : MonoBehaviour {
 	{
 		if (x < amount - varience) return false;
 		if (x > amount + varience) return false;
-		return true;	
+		return true;
+	}
+
+	/*
+	 * \brief Work out if a point is in the same direction as the player
+	*/
+	public static bool isFacingCollision(int playerDirection, Vector3 playerPosition, Vector3 collisionPoint, float alpha)
+	{
+		Vector3 collisionVector = (playerPosition - collisionPoint);
+		collisionVector.Normalize();
+		float collisionDir = Mathf.Atan2(collisionVector.z, collisionVector.x);
+	
+		Debug.Log(collisionDir);
+		
+		if (collisionDir < 0) collisionDir = -1; else collisionDir = 1;
+		
+		if (alpha > 180 && alpha < 360)
+			return collisionDir == playerDirection;
+		else 
+			return collisionDir != playerDirection;
+		
+		return false;
 	}
 }
