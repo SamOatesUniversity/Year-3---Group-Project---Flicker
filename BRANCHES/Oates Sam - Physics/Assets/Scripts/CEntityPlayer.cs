@@ -7,7 +7,9 @@ public enum PlayerState {
 	Walking,				//!< The player is walking
 	Jumping,				//!< The player is jumping
 	WallJumping,			//!< The player is on a wall
-	LedgeHang
+	LedgeHang,
+	LedgeClimb,
+	LedgeClimbComplete
 };
 
 [RequireComponent (typeof (CWallJump))]
@@ -98,10 +100,20 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_physics.OnFixedUpdate(ref m_playerState);
 		
 		m_playerPositionAlpha -= m_physics.Velocity;
+		
+		float additionalY = 0.0f;
+		if (m_playerState == PlayerState.LedgeClimbComplete)
+		{
+			m_playerPositionAlpha -= m_physics.MovingDirection * 4;	
+			m_lastPlayerPositionAlpha = m_playerPositionAlpha;
+			additionalY += 0.6f;
+			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+			m_playerState = PlayerState.Standing;
+		}
 				
 		m_position = new Vector3(
 			Mathf.Sin(m_playerPositionAlpha * Mathf.Deg2Rad) * PlayerPathRadius,
-			transform.position.y,
+			transform.position.y + additionalY,
 			Mathf.Cos(m_playerPositionAlpha * Mathf.Deg2Rad) * PlayerPathRadius
 		);
 		
@@ -111,7 +123,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 			
 		    Vector3 camPostion = new Vector3(
 	            Mathf.Sin(cameraAlpha) * (m_cameraClass.DistanceFromPlayer + PlayerPathRadius),
-				transform.position.y,
+				m_position.y,
 	            Mathf.Cos(cameraAlpha) * (m_cameraClass.DistanceFromPlayer + PlayerPathRadius)	
 			);
 			
@@ -126,7 +138,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 			else if (m_physics.Direction < 0)
 				this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 90, 0));
 			
-			m_animation.OnFixedUpdate(m_playerState);
+			m_animation.OnFixedUpdate(ref m_playerState);
 		}
 		
 		base.FixedUpdate();

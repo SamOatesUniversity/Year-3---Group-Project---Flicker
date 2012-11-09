@@ -187,16 +187,23 @@ public class CPlayerPhysics : MonoBehaviour {
 		float velocity = Input.GetAxis("Horizontal") * MaxSpeed;
 		int direction = isNearly(velocity, 0.0f, 0.1f) ? 0 : velocity > 0 ? 1 : -1;
 		
-		if (playerState == PlayerState.LedgeHang) {
+		if (playerState == PlayerState.LedgeHang || playerState == PlayerState.LedgeClimb || playerState == PlayerState.LedgeClimbComplete) {
+			
+			m_velocity = 0.0f;
+			
 			if (direction != 0 && direction != m_movingDirection) {
 				m_velocity = velocity;
 				playerState = PlayerState.Walking;
-				m_body.constraints = RigidbodyConstraints.FreezeRotationX & RigidbodyConstraints.FreezeRotationZ;
+				m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+				return;
 			} 
-			else
+			
+			if (Input.GetKeyDown(KeyCode.Space) && playerState != PlayerState.LedgeClimb)
 			{
-				m_velocity = 0.0f;
+				playerState = PlayerState.LedgeClimb;
+				return;
 			}
+
 			return;
 		}
 		
