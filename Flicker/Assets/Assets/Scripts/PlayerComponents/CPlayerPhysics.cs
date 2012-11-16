@@ -157,20 +157,25 @@ public class CPlayerPhysics : MonoBehaviour {
 		
 		foreach (ContactPoint contact in collision)
 		{
+			CSceneObject obj = contact.otherCollider.gameObject.GetComponent<CSceneObject>();
+						
 			float yContact = contact.point.y - m_body.position.y;
 			if (yContact >= 0.2f && yContact <= 0.3f && playerState != PlayerState.LedgeHang)
 			{
-				Debug.DrawRay(contact.point, contact.normal);
-				if (isFacingCollision(m_movingDirection, m_body.transform.position, contact.point, playerAlpha))
-				{
-					m_velocity = 0;
-					playerState = PlayerState.LedgeHang;
-					m_body.constraints = RigidbodyConstraints.FreezeAll;
-					m_jumpState = JumpState.Landed;
-										
-					m_ledgeOffset.x = m_movingDirection > 0 ? 0.1f : -0.1f;
-					m_ledgeOffset.y = -(0.28f + (yContact * 0.75f));
-					transform.Find("Player").localPosition = m_ledgeOffset;
+				if (obj == null || obj.CanWallJump != true)
+				{				
+					if (isFacingCollision(m_movingDirection, m_body.transform.position, contact.point, playerAlpha))
+					{
+						Debug.DrawRay(contact.point, contact.normal);
+						m_velocity = 0;
+						playerState = PlayerState.LedgeHang;
+						m_body.constraints = RigidbodyConstraints.FreezeAll;
+						m_jumpState = JumpState.Landed;
+											
+						m_ledgeOffset.x = m_movingDirection > 0 ? 0.1f : -0.1f;
+						m_ledgeOffset.y = -(0.28f + (yContact * 0.75f));
+						transform.Find("Player").localPosition = m_ledgeOffset;
+					}
 				}
 			}
 			else if (isNearly(contact.normal.y, 1.0f, 0.2f))
