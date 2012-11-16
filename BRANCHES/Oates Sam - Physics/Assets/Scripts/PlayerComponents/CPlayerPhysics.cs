@@ -181,7 +181,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		
 		if (m_collisionState == CollisionState.OnWall && m_jumpState == JumpState.Jumping)
 		{
-			m_velocity = -(m_movingDirection * 0.25f);
+			m_velocity = -(m_movingDirection * 0.15f);
 		}
 	}
 	
@@ -202,6 +202,7 @@ public class CPlayerPhysics : MonoBehaviour {
 			if (direction != 0 && direction != m_movingDirection) {
 				m_velocity = velocity;
 				playerState = PlayerState.Walking;
+				m_jumpState = JumpState.Landed;
 				m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 				return;
 			} 
@@ -212,6 +213,7 @@ public class CPlayerPhysics : MonoBehaviour {
 				// if the user pressed up, climb the wall
 				if (Input.GetKeyDown(KeyCode.UpArrow)) {
 					playerState = PlayerState.LedgeClimb;
+					m_jumpState = JumpState.Landed;
 				}
 				// if the user pressed space, jump off the wall
 				else if (Input.GetKeyDown(KeyCode.Space)) {
@@ -223,6 +225,7 @@ public class CPlayerPhysics : MonoBehaviour {
 					m_collisionState = CollisionState.None;
 					m_movingDirection *= -1;
 					m_direction *= -1;
+					m_jumpState = JumpState.Landed;
 				}
 				return;
 			}
