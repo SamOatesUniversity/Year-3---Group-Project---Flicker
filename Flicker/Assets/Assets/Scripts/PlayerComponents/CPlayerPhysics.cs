@@ -1,6 +1,18 @@
 using UnityEngine;
 using System.Collections;
 
+public enum CollisionState {
+	None,
+	OnFloor,
+	OnWall,
+	OnRoof
+}
+
+public enum JumpState {
+	Landed,
+	Jumping
+}
+
 public class CPlayerPhysics : MonoBehaviour {
 	
 	/* -----------------
@@ -11,12 +23,18 @@ public class CPlayerPhysics : MonoBehaviour {
 	
 	private Rigidbody		m_body = null;							//!< The rigid body component of this entity 
 	
-	private bool			m_colliding = false;					//!< Is the player colliding with anything
-	
 	private int				m_direction = 0;						//!< Stores the direction, 0 = not moving, 1 = left, -1 = right
 	
-	private bool			m_canJump = false;						//!< Can the player jump
+	private int				m_movingDirection = 0;					//!< Stores the direction, 0 = not moving, 1 = left, -1 = right
+
+	private CollisionState	m_collisionState = CollisionState.None;	//!< 
 	
+	private JumpState		m_jumpState = JumpState.Landed;			//!< 
+	
+	private CEntityPlayer	m_player = null;
+	
+	private Vector3			m_ledgeOffset = new Vector3(0.0f, -0.42f, 0.0f);
+
 	/* ----------------
 	    Public Members 
 	   ---------------- */		
@@ -30,49 +48,11 @@ public class CPlayerPhysics : MonoBehaviour {
 	/*
 	 * \brief Initialise anything we don't know at construct time
 	*/
-	public void Create(Rigidbody body)
+	public void Create(CEntityPlayer player, Rigidbody body)
 	{
 		m_body = body;
+		m_player = player;
 	}
-	
-	/*
-	 * \brief Called on player update
-	*/
-	public void OnUpdate(ref PlayerState playerState)
-	{
-		// handle movement to the left and right
-		if (!m_colliding)
-		{
-			float input = Input.GetAxis("Horizontal");
-			m_velocity += input * AccelerationRate;
-			if (m_velocity > MaxSpeed) m_velocity = MaxSpeed;
-			if (m_velocity < -MaxSpeed) m_velocity = -MaxSpeed;
-			
-			m_direction = (m_velocity != 0) ? (m_velocity > 0) ? 1 : -1 : 0;
-		}	
-		
-		// handle jumping
-		if (playerState != PlayerState.Jumping && Input.GetKeyDown(KeyCode.Space) && !m_colliding && m_canJump) {
-			m_body.AddForce(new Vector3(0.0f, PlayerJumpHeight , 0.0f), ForceMode.Impulse);	
-			playerState = PlayerState.Jumping;
-		}
-		
-		// decelorate
-		if (!m_colliding)
-			m_velocity -= ((m_velocity * AccelerationRate) * 2.0f);
-		
-		if (playerState != PlayerState.Jumping)
-		{
-			if (!isNearly(m_velocity, 0, 0.1f)) 
-			{
-				playerState = PlayerState.Walking;
-			}
-			else
-			{
-				playerState = PlayerState.Standing;
-			}
-		}
-	}	
 	
 	/*
 	 * \brief Gets tand sets the players velocity
@@ -96,14 +76,11 @@ public class CPlayerPhysics : MonoBehaviour {
 	}
 	
 	/*
-	 * \brief Gets and sets if the player can jump
+	 * \brief Gets the players last known moving direction
 	*/
-	public bool CanJump {
+	public float MovingDirection {
 		get {
-			return m_canJump;
-		}
-		set {
-			m_canJump = value;	
+			return m_movingDirection;
 		}
 	}
 	
@@ -119,22 +96,47 @@ public class CPlayerPhysics : MonoBehaviour {
 	/*
 	 * \brief Returns if we are currently in a collision
 	*/
-	public bool IsColliding {
+	public CollisionState CollisionType {
 		get {
-			return m_colliding;
+			return m_collisionState;
+		}
+	}
+	
+	/*
+	 * \brief Gets the players last known moving direction
+	*/
+	public JumpState JumpType {
+		get {
+			return m_jumpState;
 		}
 	}
 	
 	/*
 	 * \brief Works out if a value is almost another value (for floating point accuracy)
 	*/
-	public void CallOnCollisionContactEnter(ContactPoint contact)
+	public void CallOnCollisionEnter(Collision collision)
 	{
-		// check the normal to see if the collision is in the horizontal plain
-		if (!m_colliding && (contact.normal.y < 0.1 && contact.normal.y > -0.1))
+		m_collisionState = CollisionState.None;
+		
+		foreach (ContactPoint contact in collision)
 		{
-			m_velocity = 0.0f;
-			m_colliding = true;
+			if (isNearly(contact.normal.y, 1.0f, 0.2f))
+			{
+				m_collisionState = CollisionState.OnFloor;
+			}
+			else if (isNearly(contact.normal.y, -1.0f, 0.2f))
+			{
+				m_collisionState = CollisionState.OnRoof;
+			}
+			else
+			{
+				m_collisionState = CollisionState.OnWall;
+			}
+		}
+		
+		if (m_collisionState == CollisionState.OnFloor)
+		{
+			m_jumpState = JumpState.Landed;	
 		}
 	}
 	
@@ -143,62 +145,166 @@ public class CPlayerPhysics : MonoBehaviour {
 	*/
 	public void CallOnCollisionExit(Collision collision)
 	{
-		m_colliding = false;
-		m_canJump = false;
+		m_collisionState = CollisionState.None;
 	}
 	
 	/*
 	 * \brief Called whilst a collision is taking place
 	*/
-	public void CallOnCollisionStay(Collision collision, ref CWallJump wallJump)
-	{
-		m_canJump = true;
+	public void CallOnCollisionStay(Collision collision, ref PlayerState playerState, ref float playerAlpha)
+	{		
+		m_collisionState = CollisionState.None;
 		
-		/*
-		foreach (ContactPoint contact in collision.contacts) {
-			Debug.DrawRay(contact.point, contact.normal, Color.green);
+		foreach (ContactPoint contact in collision)
+		{
+			float yContact = contact.point.y - m_body.position.y;
+			if (yContact >= 0.2f && yContact <= 0.3f && playerState != PlayerState.LedgeHang)
+			{
+				Debug.DrawRay(contact.point, contact.normal);
+				if (isFacingCollision(m_movingDirection, m_body.transform.position, contact.point, playerAlpha))
+				{
+					m_velocity = 0;
+					playerState = PlayerState.LedgeHang;
+					m_body.constraints = RigidbodyConstraints.FreezeAll;
+					m_jumpState = JumpState.Landed;
+										
+					m_ledgeOffset.x = m_movingDirection > 0 ? 0.1f : -0.1f;
+					m_ledgeOffset.y = -(0.28f + (yContact * 0.75f));
+					transform.Find("Player").localPosition = m_ledgeOffset;
+				}
+			}
+			else if (isNearly(contact.normal.y, 1.0f, 0.2f))
+			{
+				m_collisionState = CollisionState.OnFloor;
+			}
+			else if (isNearly(contact.normal.y, -1.0f, 0.2f))
+			{
+				m_collisionState = CollisionState.OnRoof;
+			}
+			else
+			{
+				if (isFacingCollision(m_movingDirection, m_body.transform.position, contact.point, playerAlpha)) {
+					m_collisionState = CollisionState.OnWall;
+					break;
+				}
+			}
+		}	
+		
+		if (m_collisionState == CollisionState.OnWall && m_jumpState == JumpState.Jumping)
+		{
+			m_velocity = -(m_movingDirection * 0.15f);
+		}
+	}
 	
-			// don't slide on points that arnt on the floor
-			float yContact = collision.transform.position.y - contact.point.y;
-			if (yContact >= 0.5f)
-				continue;
+	/*
+	 * \brief Called on player update
+	*/
+	public void OnFixedUpdate(ref PlayerState playerState)
+	{
+		float velocity = Input.GetAxis("Horizontal") * MaxSpeed;
+		int direction = isNearly(velocity, 0.0f, 0.1f) ? 0 : velocity > 0 ? 1 : -1;
+		
+		// Ledge hanging code start
+		if (playerState == PlayerState.LedgeHang || playerState == PlayerState.LedgeClimb || playerState == PlayerState.LedgeClimbComplete) {
 			
-			// slide down slopes
-			if (!isNearly(contact.normal.x, 0.0f, 0.01f) || !isNearly(contact.normal.z, 0.0f, 0.01f) ) {
-				CSceneObject sceneObject = contact.otherCollider.GetComponent<CSceneObject>();
-				float scale = 1.0f;
-				if (sceneObject != null)
-					scale = sceneObject.ExtraSlide;
-				
-				float direction = contact.normal.x < 0.0f ? -1.0f : 1.0f;
-				m_velocity += ((((1 - contact.normal.y) * 0.25f) * direction) * scale);	
+			m_velocity = 0.0f;
+			
+			// If we are trying to move in the opposite way of the wall, fall off the wall
+			if (direction != 0 && direction != m_movingDirection) {
+				m_velocity = velocity;
+				playerState = PlayerState.Walking;
+				m_jumpState = JumpState.Landed;
+				m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+				transform.Find("Player").localPosition = new Vector3(0.0f, -0.28f, 0.0f);
+				return;
+			} 
+			
+			// if the player is not already climbing the wall, check keys
+			if (playerState != PlayerState.LedgeClimb)
+			{
+				// if the user pressed up, climb the wall
+				if (Input.GetKeyDown(KeyCode.UpArrow)) {
+					playerState = PlayerState.LedgeClimb;
+					m_jumpState = JumpState.Landed;
+					transform.Find("Player").localPosition = new Vector3(0.0f, -0.28f, 0.0f);
+				}
+				// if the user pressed space, jump off the wall
+				else if (Input.GetKeyDown(KeyCode.Space)) {
+					m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+					m_velocity = -(m_movingDirection); // kick it away from the wall
+					m_body.AddForce(new Vector3(0, PlayerJumpHeight, 0), ForceMode.Impulse);	
+					m_jumpState = JumpState.Jumping;
+					playerState = PlayerState.Jumping;
+					m_collisionState = CollisionState.None;
+					m_movingDirection *= -1;
+					m_direction *= -1;
+					m_jumpState = JumpState.Landed;
+					transform.Find("Player").localPosition = new Vector3(0.0f, -0.28f, 0.0f);
+				}
 				return;
 			}
+
+			return;
 		}
-		*/
+		// Ledge hanging code end
 		
-		if (!wallJump.GetCanWallJump()) {
-			foreach (ContactPoint contact in collision.contacts) {
-				float yContact = collision.transform.position.y - contact.point.y;
-				if (yContact < 0.5f)
-					continue;
-				
-				// we must be colliding if we are in this method
-				m_colliding = true;
-				m_velocity = (-m_direction) * 0.25f;
-				return;			
+		if (!(m_collisionState == CollisionState.OnWall && m_jumpState == JumpState.Jumping))
+			m_velocity = velocity;	
+		
+		m_direction = direction;
+		
+		if (m_collisionState != CollisionState.None && m_jumpState != JumpState.Jumping)
+		{
+			if (m_direction == 0)
+			{
+				playerState = PlayerState.Standing;
+			}
+			else
+			{
+				m_movingDirection = m_direction;
+				playerState = PlayerState.Walking;	
 			}
 		}
+	}
+	
+	public void OnUpdate(ref PlayerState playerState)
+	{
+		if (Input.GetKeyDown(KeyCode.Space) && m_jumpState == JumpState.Landed && m_collisionState == CollisionState.OnFloor)
+		{
+			m_body.AddForce(new Vector3(0, PlayerJumpHeight, 0), ForceMode.Impulse);	
+			m_jumpState = JumpState.Jumping;
+			playerState = PlayerState.Jumping;
+		}		
 	}
 	
 	/*
 	 * \brief Works out if a value is almost another value (for floating point accuracy)
 	*/
-	public static bool isNearly(float x, float amount, float varience) {
-	
+	public static bool isNearly(float x, float amount, float varience) 
+	{
 		if (x < amount - varience) return false;
 		if (x > amount + varience) return false;
 		return true;
+	}
+
+	/*
+	 * \brief Work out if a point is in the same direction as the player
+	*/
+	public static bool isFacingCollision(int playerDirection, Vector3 playerPosition, Vector3 collisionPoint, float alpha)
+	{
+		return true;
 		
+		Vector3 collisionVector = (playerPosition - collisionPoint);
+		collisionVector.Normalize();
+		float collisionDir = Mathf.Atan2(collisionVector.z, collisionVector.x);
+		
+		if (collisionDir < 0) collisionDir = -1; else collisionDir = 1;
+		
+		if (alpha > 180 && alpha < 360)
+			return collisionDir == playerDirection;
+		else 
+			return collisionDir != playerDirection;
+		
+		return false;
 	}
 }

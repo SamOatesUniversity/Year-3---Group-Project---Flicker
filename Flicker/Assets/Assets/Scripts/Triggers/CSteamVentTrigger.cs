@@ -17,8 +17,8 @@ public class CSteamVentTrigger : CTriggerBase
 		
 	public void Start () 
 	{
-		m_playerEntity = PlayerEntity.GetComponent<CEntityPlayer>();
-		m_steamVent = SteamVent.GetComponent<CSteamVent>();
+		//m_playerEntity = PlayerEntity.GetComponent<CEntityPlayer>();
+		//m_steamVent = SteamVent.GetComponent<CSteamVent>();
 			
 	}
 	
@@ -30,7 +30,7 @@ public class CSteamVentTrigger : CTriggerBase
 		
 	public void Update () 
 	{
-		if ( RangeFromTrigger > CheckRange( m_playerEntity.transform.position, this.transform.position) && !m_steamVent.GetLockStatus())
+		/*if ( RangeFromTrigger > CheckRange( m_playerEntity.transform.position, this.transform.position) && !m_steamVent.GetLockStatus())
 		{
 			m_showText = true;
 			if (CheckContextButton())
@@ -44,7 +44,7 @@ public class CSteamVentTrigger : CTriggerBase
 		else
 		{
 			m_showText = false;
-		}
+		}*/
 	}
 }
 

@@ -32,12 +32,19 @@ public class CEntityPlayerBase : MonoBehaviour {
 	/*
 	 * \brief Called once per frame
 	*/
-	public virtual void Update () {
+	public virtual void FixedUpdate() {
 	
 		// rotate the collision box
 		Vector3 lookat = new Vector3(0.0f, transform.position.y, 0.0f);
 		rigidbody.transform.LookAt(lookat);
 		transform.position = m_position;
 				
+	}
+	
+	/*
+	 * \brief Called in sync with frame delta timing
+	*/
+	public virtual void Update() {
+					
 	}
 }
