@@ -37,6 +37,8 @@ public class CPlayerPhysics : MonoBehaviour {
 	
 	private CWallJump		m_wallJump = null;						//!< 
 	
+	private bool 			m_isJumpDown = false;
+	
 
 	/* ----------------
 	    Public Members 
@@ -245,7 +247,7 @@ public class CPlayerPhysics : MonoBehaviour {
 					transform.Find("Player").localPosition = new Vector3(0.0f, -0.28f, 0.0f);
 				}
 				// if the user pressed space, jump off the wall
-				else if (Input.GetKeyDown(KeyCode.Space)) {
+				else if (m_isJumpDown) {
 					m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 					m_velocity = -(m_movingDirection); // kick it away from the wall
 					m_body.AddForce(new Vector3(0, PlayerJumpHeight, 0), ForceMode.Impulse);	
@@ -265,14 +267,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		// wall jump code start
 		if (playerState == PlayerState.WallJumpStart)
 		{
-			if ((Time.time * 1000.0f) - m_wallJump.StartHangTime > m_wallJump.WallHangTime) {
-				Debug.Log("FALL OFF WALL");	
-				m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-				m_velocity = -m_movingDirection;
-				playerState = PlayerState.Walking;
-				m_jumpState = JumpState.Landed;
-			}
-			else if (Input.GetKeyDown(KeyCode.Space)) {
+			if (m_isJumpDown) {
 				m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 				m_velocity = -(m_movingDirection); // kick it away from the wall
 				m_body.AddForce(new Vector3(0, PlayerJumpHeight * 1.1f, 0), ForceMode.Impulse);	
@@ -280,6 +275,12 @@ public class CPlayerPhysics : MonoBehaviour {
 				m_collisionState = CollisionState.None;
 				m_movingDirection *= -1;
 				m_direction *= -1;	
+			} else if ((Time.time * 1000.0f) - m_wallJump.StartHangTime > m_wallJump.WallHangTime) {
+				Debug.Log("FALL OFF WALL");	
+				m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+				m_velocity = -m_movingDirection;
+				playerState = PlayerState.Walking;
+				m_jumpState = JumpState.Landed;
 			}
 			return;
 		}
@@ -305,6 +306,8 @@ public class CPlayerPhysics : MonoBehaviour {
 	
 	public void OnUpdate(ref PlayerState playerState)
 	{
+		m_isJumpDown = Input.GetKeyDown(KeyCode.Space);
+		
 		if (Input.GetKeyDown(KeyCode.Space) && m_jumpState == JumpState.Landed && m_collisionState == CollisionState.OnFloor)
 		{
 			m_body.AddForce(new Vector3(0, PlayerJumpHeight, 0), ForceMode.Impulse);	
