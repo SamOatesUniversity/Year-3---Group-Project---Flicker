@@ -34,6 +34,9 @@ public class CPlayerPhysics : MonoBehaviour {
 	private CEntityPlayer	m_player = null;
 	
 	private Vector3			m_ledgeOffset = new Vector3(0.0f, -0.42f, 0.0f);
+	
+	private CWallJump		m_wallJump = null;						//!< 
+	
 
 	/* ----------------
 	    Public Members 
@@ -52,6 +55,7 @@ public class CPlayerPhysics : MonoBehaviour {
 	{
 		m_body = body;
 		m_player = player;
+		m_wallJump = player.GetComponent<CWallJump>();
 	}
 	
 	/*
@@ -158,25 +162,32 @@ public class CPlayerPhysics : MonoBehaviour {
 		foreach (ContactPoint contact in collision)
 		{
 			CSceneObject obj = contact.otherCollider.gameObject.GetComponent<CSceneObject>();
-						
 			float yContact = contact.point.y - m_body.position.y;
-			if (yContact >= 0.2f && yContact <= 0.3f && playerState != PlayerState.LedgeHang)
+			
+			// ledge grabbing
+			if (yContact >= 0.05f && yContact <= 0.3f && playerState != PlayerState.LedgeHang && contact.normal.y > -0.5f)
 			{
 				if (obj == null || obj.CanWallJump != true)
 				{				
 					if (isFacingCollision(m_movingDirection, m_body.transform.position, contact.point, playerAlpha))
 					{
-						Debug.DrawRay(contact.point, contact.normal);
 						m_velocity = 0;
 						playerState = PlayerState.LedgeHang;
 						m_body.constraints = RigidbodyConstraints.FreezeAll;
-						m_jumpState = JumpState.Landed;
-											
+						m_jumpState = JumpState.Landed;						
 						m_ledgeOffset.x = m_movingDirection > 0 ? 0.1f : -0.1f;
-						m_ledgeOffset.y = -(0.28f + (yContact * 0.75f));
 						transform.Find("Player").localPosition = m_ledgeOffset;
 					}
 				}
+			}
+			else if (obj != null && obj.CanWallJump == true && playerState == PlayerState.Jumping)
+			{
+				Debug.Log("WALL JUMP");
+				m_collisionState = CollisionState.OnWall;
+				playerState = PlayerState.WallJumpStart;
+				m_body.constraints = RigidbodyConstraints.FreezeAll;
+				m_velocity = 0.0f;
+				m_wallJump.StartHangTime = Time.time * 1000.0f;
 			}
 			else if (isNearly(contact.normal.y, 1.0f, 0.2f))
 			{
@@ -195,7 +206,7 @@ public class CPlayerPhysics : MonoBehaviour {
 			}
 		}	
 		
-		if (m_collisionState == CollisionState.OnWall && m_jumpState == JumpState.Jumping)
+		if (m_collisionState == CollisionState.OnWall && m_jumpState == JumpState.Jumping && playerState != PlayerState.WallJumpStart)
 		{
 			m_velocity = -(m_movingDirection * 0.15f);
 		}
@@ -238,12 +249,10 @@ public class CPlayerPhysics : MonoBehaviour {
 					m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 					m_velocity = -(m_movingDirection); // kick it away from the wall
 					m_body.AddForce(new Vector3(0, PlayerJumpHeight, 0), ForceMode.Impulse);	
-					m_jumpState = JumpState.Jumping;
 					playerState = PlayerState.Jumping;
 					m_collisionState = CollisionState.None;
 					m_movingDirection *= -1;
 					m_direction *= -1;
-					m_jumpState = JumpState.Landed;
 					transform.Find("Player").localPosition = new Vector3(0.0f, -0.28f, 0.0f);
 				}
 				return;
@@ -252,6 +261,28 @@ public class CPlayerPhysics : MonoBehaviour {
 			return;
 		}
 		// Ledge hanging code end
+		
+		// wall jump code start
+		if (playerState == PlayerState.WallJumpStart)
+		{
+			if ((Time.time * 1000.0f) - m_wallJump.StartHangTime > m_wallJump.WallHangTime) {
+				Debug.Log("FALL OFF WALL");	
+				m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+				m_velocity = -m_movingDirection;
+				playerState = PlayerState.Walking;
+				m_jumpState = JumpState.Landed;
+			}
+			else if (Input.GetKeyDown(KeyCode.Space)) {
+				m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+				m_velocity = -(m_movingDirection); // kick it away from the wall
+				m_body.AddForce(new Vector3(0, PlayerJumpHeight * 1.1f, 0), ForceMode.Impulse);	
+				playerState = PlayerState.Jumping;
+				m_collisionState = CollisionState.None;
+				m_movingDirection *= -1;
+				m_direction *= -1;	
+			}
+			return;
+		}
 		
 		if (!(m_collisionState == CollisionState.OnWall && m_jumpState == JumpState.Jumping))
 			m_velocity = velocity;	
@@ -297,8 +328,6 @@ public class CPlayerPhysics : MonoBehaviour {
 	*/
 	public static bool isFacingCollision(int playerDirection, Vector3 playerPosition, Vector3 collisionPoint, float alpha)
 	{
-		return true;
-		
 		Vector3 collisionVector = (playerPosition - collisionPoint);
 		collisionVector.Normalize();
 		float collisionDir = Mathf.Atan2(collisionVector.z, collisionVector.x);
@@ -307,9 +336,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		
 		if (alpha > 180 && alpha < 360)
 			return collisionDir == playerDirection;
-		else 
-			return collisionDir != playerDirection;
 		
-		return false;
+		return collisionDir != playerDirection;
 	}
 }

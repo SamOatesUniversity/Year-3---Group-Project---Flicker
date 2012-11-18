@@ -9,7 +9,8 @@ public enum PlayerState {
 	WallJumping,			//!< The player is on a wall
 	LedgeHang,
 	LedgeClimb,
-	LedgeClimbComplete
+	LedgeClimbComplete,
+	WallJumpStart
 };
 
 [RequireComponent (typeof (CWallJump))]
@@ -32,8 +33,6 @@ public class CEntityPlayer : CEntityPlayerBase {
     private CCamera 			m_cameraClass = null;					//!< Todo: Haydn fill these in.
 		
 	private CPlayerPhysics		m_physics = null;						//!< 
-	
-	private CWallJump			m_wallJump = null;						//!< 
 	
 	private CPlayerAnimation 	m_animation = null;						//!<
 	
@@ -67,9 +66,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_physics.Create(this, GetComponent<Rigidbody>());
 		
         m_cameraClass = MainCamera.GetComponent<CCamera>();
-		
-		m_wallJump = GetComponent<CWallJump>();
-		
+				
 		m_animation = GetComponent<CPlayerAnimation>();
 		m_animation.OnStart(GetComponentInChildren<Animation>());
 			
