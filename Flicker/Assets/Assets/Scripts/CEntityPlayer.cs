@@ -107,6 +107,10 @@ public class CEntityPlayer : CEntityPlayerBase {
 			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 			m_playerState = PlayerState.Standing;
 		}
+		
+		if (m_physics.LadderClimb.State != LadderState.None) {
+			additionalY += m_physics.LadderClimb.Offset;
+		}
 				
 		m_position = new Vector3(
 			Mathf.Sin(m_playerPositionAlpha * Mathf.Deg2Rad) * PlayerPathRadius,
@@ -209,5 +213,13 @@ public class CEntityPlayer : CEntityPlayerBase {
 		{
 			m_playerPositionAlpha = m_lastPlayerPositionAlpha;
 		}
+	}
+	
+	void OnTriggerStay(Collider collision) {
+    	m_physics.CallOnTriggerStay(collision, ref m_playerState);
+    }
+	
+	void OnTriggerExit(Collider collision) {
+		m_physics.CallOnTriggerExit(collision, ref m_playerState);
 	}
 }

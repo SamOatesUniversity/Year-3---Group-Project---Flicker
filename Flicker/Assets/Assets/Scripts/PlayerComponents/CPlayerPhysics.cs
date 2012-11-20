@@ -37,10 +37,11 @@ public class CPlayerPhysics : MonoBehaviour {
 	
 	private CWallJump		m_wallJump = null;						//!< 
 	
-	private bool 			m_isJumpDown = false;
+	private bool 			m_isJumpDown = false;					//!< 
 	
-	private int				m_invert = 1;
+	private int				m_invert = 1;							//!< 	
 	
+	private CLadderClimb	m_ladderClimb = null;					//!< 
 
 	/* ----------------
 	    Public Members 
@@ -60,6 +61,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		m_body = body;
 		m_player = player;
 		m_wallJump = player.GetComponent<CWallJump>();
+		m_ladderClimb = new CLadderClimb();
 		
 		m_invert = player.MainCamera.GetComponent<CCamera>().DistanceFromPlayer > 0 ? 1 : -1;
 	}
@@ -73,6 +75,12 @@ public class CPlayerPhysics : MonoBehaviour {
 		}
 		set {
 			m_velocity = value;	
+		}
+	}
+	
+	public CLadderClimb LadderClimb {
+		get {
+			return m_ladderClimb;	
 		}
 	}
 	
@@ -158,6 +166,34 @@ public class CPlayerPhysics : MonoBehaviour {
 		m_collisionState = CollisionState.None;
 	}
 	
+	public void CallOnTriggerStay(Collider collider, ref PlayerState playerState)
+	{
+		CSceneObject obj = collider.gameObject.GetComponent<CSceneObject>();
+		if (obj == null) {
+			GameObject parent = collider.gameObject.transform.parent.gameObject;
+			if (parent != null) {
+				obj = parent.GetComponent<CSceneObject>();
+			}
+		}
+					
+		if (obj != null && obj.IsLadder) {
+			m_ladderClimb.CallOnTriggerStay(collider, ref playerState);
+			m_collisionState = CollisionState.OnFloor;
+			if (m_ladderClimb.State != LadderState.None) {
+				m_body.constraints = RigidbodyConstraints.FreezeAll;	
+			}
+			return;
+		}
+	}
+	
+	public void CallOnTriggerExit(Collider collider, ref PlayerState playerState)
+	{
+		if (m_ladderClimb.State != LadderState.None) {
+			m_ladderClimb.CallOnTriggerExit(collider, ref playerState);
+			m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+		}
+	}
+	
 	/*
 	 * \brief Called whilst a collision is taking place
 	*/
@@ -168,12 +204,19 @@ public class CPlayerPhysics : MonoBehaviour {
 		foreach (ContactPoint contact in collision)
 		{
 			CSceneObject obj = contact.otherCollider.gameObject.GetComponent<CSceneObject>();
+			if (obj == null) {
+				GameObject parent = contact.otherCollider.gameObject.transform.parent.gameObject;
+				if (parent != null) {
+					obj = parent.GetComponent<CSceneObject>();
+				}
+			}
+			
 			float yContact = contact.point.y - m_body.position.y;
 			
 			// ledge grabbing
 			if (yContact >= 0.05f && yContact <= 0.3f && playerState != PlayerState.LedgeHang && contact.normal.y > -0.5f)
 			{
-				if (obj == null || obj.CanWallJump != true)
+				if (obj == null || obj.CanWallJump == false)
 				{				
 					if (isFacingCollision(m_movingDirection, m_body.transform.position, contact.point, playerAlpha))
 					{
@@ -221,7 +264,7 @@ public class CPlayerPhysics : MonoBehaviour {
 	 * \brief Called on player update
 	*/
 	public void OnFixedUpdate(ref PlayerState playerState)
-	{
+	{		
 		float velocity = (Input.GetAxis("Horizontal") * MaxSpeed) * m_invert;
 		int direction = isNearly(velocity, 0.0f, 0.1f) ? 0 : velocity > 0 ? 1 : -1;
 		
@@ -312,7 +355,10 @@ public class CPlayerPhysics : MonoBehaviour {
 			m_body.AddForce(new Vector3(0, PlayerJumpHeight, 0), ForceMode.Impulse);	
 			m_jumpState = JumpState.Jumping;
 			playerState = PlayerState.Jumping;
-		}			
+		}		
+		
+		m_ladderClimb.CallOnUpdate(m_collisionState);
+		
 	}
 	
 	/*
