@@ -39,6 +39,8 @@ public class CPlayerPhysics : MonoBehaviour {
 	
 	private bool 			m_isJumpDown = false;
 	
+	private int				m_invert = 1;
+	
 
 	/* ----------------
 	    Public Members 
@@ -58,6 +60,8 @@ public class CPlayerPhysics : MonoBehaviour {
 		m_body = body;
 		m_player = player;
 		m_wallJump = player.GetComponent<CWallJump>();
+		
+		m_invert = player.MainCamera.GetComponent<CCamera>().DistanceFromPlayer > 0 ? 1 : -1;
 	}
 	
 	/*
@@ -218,7 +222,7 @@ public class CPlayerPhysics : MonoBehaviour {
 	*/
 	public void OnFixedUpdate(ref PlayerState playerState)
 	{
-		float velocity = Input.GetAxis("Horizontal") * MaxSpeed;
+		float velocity = (Input.GetAxis("Horizontal") * MaxSpeed) * m_invert;
 		int direction = isNearly(velocity, 0.0f, 0.1f) ? 0 : velocity > 0 ? 1 : -1;
 		
 		// Ledge hanging code start
