@@ -287,7 +287,7 @@ public class CPlayerPhysics : MonoBehaviour {
 			if (playerState != PlayerState.LedgeClimb)
 			{
 				// if the user pressed up, climb the wall
-				if (Input.GetKeyDown(KeyCode.UpArrow)) {
+				if (Input.GetAxis("Vertical")>0) {
 					playerState = PlayerState.LedgeClimb;
 					m_jumpState = JumpState.Landed;
 					transform.Find("Player").localPosition = new Vector3(0.0f, -0.28f, 0.0f);
@@ -317,7 +317,7 @@ public class CPlayerPhysics : MonoBehaviour {
 				m_velocity = -m_movingDirection;
 				playerState = PlayerState.Walking;
 				m_jumpState = JumpState.Landed;
-			} else if (Input.GetKeyDown(KeyCode.Space) && direction != 0 && direction != m_movingDirection) {
+			} else if (Input.GetButton("Jump") && direction != 0 && direction != m_movingDirection) {
 				m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 				m_velocity = -(m_movingDirection); // kick it away from the wall
 				m_body.AddForce(new Vector3(0, PlayerJumpHeight * 1.1f, 0), ForceMode.Impulse);	
@@ -350,7 +350,7 @@ public class CPlayerPhysics : MonoBehaviour {
 	
 	public void OnUpdate(ref PlayerState playerState)
 	{	
-		if (Input.GetKeyDown(KeyCode.Space) && m_jumpState == JumpState.Landed && m_collisionState == CollisionState.OnFloor)
+		if (Input.GetButton("Jump") && m_jumpState == JumpState.Landed && m_collisionState == CollisionState.OnFloor)
 		{
 			m_body.AddForce(new Vector3(0, PlayerJumpHeight, 0), ForceMode.Impulse);	
 			m_jumpState = JumpState.Jumping;
@@ -376,7 +376,7 @@ public class CPlayerPhysics : MonoBehaviour {
 	*/
 	public static bool isFacingCollision(int playerDirection, Vector3 playerPosition, Vector3 collisionPoint, float alpha)
 	{
-		return true;
+		//return true;
 		
 		Vector3 collisionVector = (playerPosition - collisionPoint);
 		collisionVector.Normalize();
