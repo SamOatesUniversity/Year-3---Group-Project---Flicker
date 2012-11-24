@@ -42,6 +42,8 @@ public class CPlayerPhysics : MonoBehaviour {
 	private int				m_invert = 1;							//!< 	
 	
 	private CLadderClimb	m_ladderClimb = null;					//!< 
+	
+	private float			m_jumpTimer = 0;						//!< The time the player last jumped
 
 	/* ----------------
 	    Public Members 
@@ -52,6 +54,8 @@ public class CPlayerPhysics : MonoBehaviour {
 	public float			AccelerationRate = 0.05f;		//!< The rate of acceleration
 	
 	public float			MaxSpeed = 0.5f;				//!< The maximum speed of the player 
+	
+	public int				JumpDelayMS = 500;				//!< The minimum required time to pass between jumps in miliseconds
 	
 	/*
 	 * \brief Initialise anything we don't know at construct time
@@ -214,22 +218,22 @@ public class CPlayerPhysics : MonoBehaviour {
 			float yContact = contact.point.y - m_body.position.y;
 			
 			// ledge grabbing
-			if (yContact >= 0.05f && yContact <= 0.3f && playerState != PlayerState.LedgeHang && contact.normal.y > -0.5f)
-			{
-				if (obj == null || obj.CanWallJump == false)
-				{				
-					if (isFacingCollision(m_movingDirection, m_body.transform.position, contact.point, playerAlpha))
-					{
-						m_velocity = 0;
-						playerState = PlayerState.LedgeHang;
-						m_body.constraints = RigidbodyConstraints.FreezeAll;
-						m_jumpState = JumpState.Landed;						
-						m_ledgeOffset.x = m_movingDirection > 0 ? 0.1f : -0.1f;
-						transform.Find("Player").localPosition = m_ledgeOffset;
-					}
+			if (yContact >= 0.05f && yContact <= 0.3f && playerState != PlayerState.LedgeHang && contact.normal.y > -0.5f && (obj != null && obj.CanLedgeGrab))
+			{			
+				if (isFacingCollision(m_movingDirection, m_body.transform.position, contact.point, playerAlpha))
+				{
+					m_velocity = 0;
+					playerState = PlayerState.LedgeHang;
+					m_body.constraints = RigidbodyConstraints.FreezeAll;
+					m_jumpState = JumpState.Landed;						
+					m_ledgeOffset.x = m_movingDirection > 0 ? 0.1f : -0.1f;
+					transform.Find("Player").localPosition = m_ledgeOffset;
+					continue;
 				}
 			}
-			else if (obj != null && obj.CanWallJump == true && playerState == PlayerState.Jumping)
+			
+			// wall jumping
+			if (obj != null && obj.CanWallJump == true && playerState == PlayerState.Jumping && !isNearly(contact.normal.y, 1.0f, 0.2f) && !isNearly(contact.normal.y, -1.0f, 0.1f))
 			{
 				m_collisionState = CollisionState.OnWall;
 				playerState = PlayerState.WallJumpStart;
@@ -237,14 +241,17 @@ public class CPlayerPhysics : MonoBehaviour {
 				m_velocity = 0.0f;
 				m_wallJump.StartHangTime = Time.time * 1000.0f;
 			}
+			// floor check
 			else if (isNearly(contact.normal.y, 1.0f, 0.2f))
 			{
 				m_collisionState = CollisionState.OnFloor;
 			}
-			else if (isNearly(contact.normal.y, -1.0f, 0.2f))
+			// head check
+			else if (isNearly(contact.normal.y, -1.0f, 0.1f))
 			{
 				m_collisionState = CollisionState.OnRoof;
 			}
+			// wall check
 			else
 			{
 				if (isFacingCollision(m_movingDirection, m_body.transform.position, contact.point, playerAlpha)) {
@@ -352,9 +359,13 @@ public class CPlayerPhysics : MonoBehaviour {
 	{	
 		if (Input.GetButton("Jump") && m_jumpState == JumpState.Landed && m_collisionState == CollisionState.OnFloor)
 		{
-			m_body.AddForce(new Vector3(0, PlayerJumpHeight, 0), ForceMode.Impulse);	
-			m_jumpState = JumpState.Jumping;
-			playerState = PlayerState.Jumping;
+			if ((Time.time * 1000.0f) - m_jumpTimer > JumpDelayMS)
+			{
+				m_jumpTimer = (Time.time * 1000.0f);
+				m_body.AddForce(new Vector3(0, PlayerJumpHeight, 0), ForceMode.Impulse);	
+				m_jumpState = JumpState.Jumping;
+				playerState = PlayerState.Jumping;
+			}
 		}		
 		
 		m_ladderClimb.CallOnUpdate(m_collisionState);
@@ -375,8 +386,8 @@ public class CPlayerPhysics : MonoBehaviour {
 	 * \brief Work out if a point is in the same direction as the player
 	*/
 	public static bool isFacingCollision(int playerDirection, Vector3 playerPosition, Vector3 collisionPoint, float alpha)
-	{
-		//return true;
+	{		
+		return true; // disabled funtion for now, the maths is a little off
 		
 		Vector3 collisionVector = (playerPosition - collisionPoint);
 		collisionVector.Normalize();

@@ -12,6 +12,8 @@ public class CSceneObject : MonoBehaviour {
 	public bool IsLadder				= false; 			//!< Is the object a ladder?
 	
 	public float ExtraSlide				= 1.0f; 			//!< Can the player wall jump upon this object?
+	
+	public bool CanLedgeGrab			= false;			//!< Can the player ledge grab on the object?
 
 	// Use this for initialization
 	void Start() 
