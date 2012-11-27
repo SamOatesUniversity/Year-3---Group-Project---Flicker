@@ -5,22 +5,29 @@ public class CSteamVent : MonoBehaviour
 {
 	public GameObject SteamParticleSystem = null;
 	
-	private ParticleSystem m_pSystem = null;
-	
 	public GameObject SteamCollisionBox = null;
 	
-	private GameObject m_collisionBox = null;
-	
-	
-	private Vector3 m_colliderScale = new Vector3(1f,0.5f,0.5f);
-	
-	
-	private bool m_streamOn = false;
 	public float SteamDuration = 3.0f;
-	private float m_currentSteam = 0.0f;
+	
 	public float SteamIntervals = 10.0f;
+	
+	
+	
+	
+	private ParticleSystem m_pSystem = null;
+	
+	private GameObject m_collisionBox = null;
+		
+	private Vector3 m_colliderScale = new Vector3(1f,0.5f,0.5f);
+		
+	private bool m_streamOn = false;
+	
+	private float m_currentSteam = 0.0f;
+	
 	private float m_timeSinceLastBurst = 0;
+	
 	private int m_timeIncrement = 1;
+	
 	private bool m_lockStream = false;
 	
 	
@@ -54,14 +61,15 @@ public class CSteamVent : MonoBehaviour
 	{
 		
 		//Break out early if it's setting the same value again.
-		if (toggle == m_streamOn) { return; }
+		if (toggle == m_streamOn) 
+			return;
 			
 		m_streamOn = toggle;
 		
 		if (m_streamOn)
 		{
 			m_pSystem.enableEmission = true;
-			m_collisionBox.collider.transform.localScale = m_colliderScale;
+			m_collisionBox.collider.transform.localScale = m_colliderScale;			
 		}
 		else
 		{
@@ -71,7 +79,11 @@ public class CSteamVent : MonoBehaviour
 		
 	}
 	
-	
+	public bool StreamOn {
+		get {
+			return m_streamOn;	
+		}
+	}
 	
 	public void ToggleStreamLock(bool toggle)
 	{

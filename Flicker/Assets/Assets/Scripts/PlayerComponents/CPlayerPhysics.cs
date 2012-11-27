@@ -133,6 +133,12 @@ public class CPlayerPhysics : MonoBehaviour {
 		}
 	}
 	
+	public int Invert {
+		get { 
+			return m_invert;
+		}
+	}
+	
 	/*
 	 * \brief Works out if a value is almost another value (for floating point accuracy)
 	*/
@@ -272,6 +278,9 @@ public class CPlayerPhysics : MonoBehaviour {
 	*/
 	public void OnFixedUpdate(ref PlayerState playerState)
 	{		
+		if (playerState == PlayerState.FallingFromTower)
+			return;
+			
 		float velocity = (Input.GetAxis("Horizontal") * MaxSpeed) * m_invert;
 		int direction = isNearly(velocity, 0.0f, 0.1f) ? 0 : velocity > 0 ? 1 : -1;
 		

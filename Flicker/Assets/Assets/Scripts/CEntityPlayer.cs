@@ -10,7 +10,8 @@ public enum PlayerState {
 	LedgeHang,
 	LedgeClimb,
 	LedgeClimbComplete,
-	WallJumpStart
+	WallJumpStart,
+	FallingFromTower		//!< The player has been pushed of the tower
 };
 
 [RequireComponent (typeof (CWallJump))]
@@ -26,6 +27,7 @@ public class CEntityPlayer : CEntityPlayerBase {
     private CPlayerLight    	m_playerLight = null;
 
 	private float				m_playerPositionAlpha = 0.0f;			//!< How far around the tower are we (in degrees)
+	
 	private float 				m_lastPlayerPositionAlpha = 0.0f;		//!< 
 		
 	private PlayerState			m_playerState = PlayerState.Standing;	//!< The current player state
@@ -35,6 +37,20 @@ public class CEntityPlayer : CEntityPlayerBase {
 	private CPlayerPhysics		m_physics = null;						//!< 
 	
 	private CPlayerAnimation 	m_animation = null;						//!<
+	
+	private float				m_additionalRadius = 0.0f;
+	
+	private Vector3				m_spawnPoint;
+	
+	// dying vars
+	
+	struct DyingValues {
+		public float y;
+		public float time;
+	};
+	
+	private DyingValues	m_dead;
+	
 	
 	////////////////////////
 	
@@ -75,6 +91,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_footSteps = GetComponent<AudioSource>();
 		
 		this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));
+	
+		m_spawnPoint = this.transform.position;
 	}
 	
 	public int GetCurrentHealth()
@@ -111,11 +129,17 @@ public class CEntityPlayer : CEntityPlayerBase {
 		if (m_physics.LadderClimb.State != LadderState.None) {
 			additionalY += m_physics.LadderClimb.Offset;
 		}
+		
+		if (m_playerState == PlayerState.FallingFromTower) {		
+			m_additionalRadius += (0.025f * m_physics.Invert);
+			m_additionalRadius = Mathf.Clamp(m_additionalRadius, -3.0f, 3.0f);
+			m_playerPositionAlpha = m_lastPlayerPositionAlpha;			
+		}
 				
 		m_position = new Vector3(
-			Mathf.Sin(m_playerPositionAlpha * Mathf.Deg2Rad) * PlayerPathRadius,
+			Mathf.Sin(m_playerPositionAlpha * Mathf.Deg2Rad) * (PlayerPathRadius + m_additionalRadius),
 			transform.position.y + additionalY,
-			Mathf.Cos(m_playerPositionAlpha * Mathf.Deg2Rad) * PlayerPathRadius
+			Mathf.Cos(m_playerPositionAlpha * Mathf.Deg2Rad) * (PlayerPathRadius + m_additionalRadius)
 		);
 		
 		// Camera Positioning
@@ -127,6 +151,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 				m_position.y,
 	            Mathf.Cos(cameraAlpha) * (m_cameraClass.DistanceFromPlayer + PlayerPathRadius)	
 			);
+			
+			if (m_playerState == PlayerState.FallingFromTower)
+				camPostion.y = m_dead.y;
 			
 	        m_cameraClass.SetPosition(camPostion);
 	        m_cameraClass.SetLookAt(transform.position);
@@ -142,11 +169,20 @@ public class CEntityPlayer : CEntityPlayerBase {
 			m_animation.OnFixedUpdate(ref m_playerState);
 		}
 		
+		
+		if (m_playerState == PlayerState.FallingFromTower && (Time.time * 1000.0f) - m_dead.time > 3000)
+		{
+			OnDeath();
+		}
+		
 		base.FixedUpdate();
 	}
 	
 	public override void Update()
 	{
+		if (m_playerState == PlayerState.FallingFromTower)
+			return;
+		
 		m_physics.OnUpdate(ref m_playerState);
 	}
 		
@@ -182,9 +218,11 @@ public class CEntityPlayer : CEntityPlayerBase {
 	void OnDeath() 
 	{
 		//TODO: Position variables are pulled from a spawn point - one for each scene
-		m_playerPositionAlpha = InitialAlphaPosition;
+		m_lastPlayerPositionAlpha = m_playerPositionAlpha = InitialAlphaPosition;
 		m_playerHealth = MaxHealth;
-		transform.position = new Vector3(0.0f, 1.0f, 0.0f);
+		m_playerState = PlayerState.Standing;
+		m_additionalRadius = 0.0f;
+		transform.position = m_spawnPoint;
 	}
 		
 	/*
@@ -192,6 +230,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 	*/
 	void OnCollisionEnter(Collision collision)
 	{
+		if (m_playerState == PlayerState.FallingFromTower)
+			return;
+		
 		m_physics.CallOnCollisionEnter(collision);
 	}
 	
@@ -208,6 +249,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 	*/
 	void OnCollisionStay(Collision collision)
 	{		
+		if (m_playerState == PlayerState.FallingFromTower)
+			return;
+		
 		m_physics.CallOnCollisionStay(collision, ref m_playerState, ref m_playerPositionAlpha);
 		if (m_physics.CollisionType == CollisionState.OnWall)
 		{
@@ -216,10 +260,31 @@ public class CEntityPlayer : CEntityPlayerBase {
 	}
 	
 	void OnTriggerStay(Collider collision) {
-    	m_physics.CallOnTriggerStay(collision, ref m_playerState);
+		
+		if (m_playerState == PlayerState.FallingFromTower)
+			return;
+						
+		if (collision.gameObject.name == "VentCollision") {
+			GameObject parent = collision.gameObject.transform.parent.gameObject;	
+			if (parent != null) {
+				CSteamVent vent = parent.GetComponent<CSteamVent>();
+				if (vent != null && vent.StreamOn) {
+					m_playerState = PlayerState.FallingFromTower;
+					m_dead.y = transform.position.y;
+					m_dead.time = Time.time * 1000.0f;
+					return;
+				}
+			}
+		}
+		
+		m_physics.CallOnTriggerStay(collision, ref m_playerState);
     }
 	
 	void OnTriggerExit(Collider collision) {
+		
+		if (m_playerState == PlayerState.FallingFromTower)
+			return;
+		
 		m_physics.CallOnTriggerExit(collision, ref m_playerState);
 	}
 }
