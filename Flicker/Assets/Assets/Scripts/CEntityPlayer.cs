@@ -89,10 +89,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_playerHealth = MaxHealth;
 		
 		m_footSteps = GetComponent<AudioSource>();
-		
-		this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));
-	
-		m_spawnPoint = this.transform.position;
+				
+		this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));		
 	}
 	
 	public int GetCurrentHealth()
