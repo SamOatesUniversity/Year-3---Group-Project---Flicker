@@ -234,6 +234,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_playerState = PlayerState.Standing;
 		m_additionalRadius = 0.0f;
 		m_dead.didDie = true;
+		rigidbody.velocity = Vector3.zero;
 	}
 		
 	/*
