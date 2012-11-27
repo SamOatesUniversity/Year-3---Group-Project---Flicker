@@ -179,7 +179,7 @@ public class CPlayerPhysics : MonoBehaviour {
 	public void CallOnTriggerStay(Collider collider, ref PlayerState playerState)
 	{
 		CSceneObject obj = collider.gameObject.GetComponent<CSceneObject>();
-		if (obj == null) {
+		if (obj == null && collider.gameObject != null && collider.gameObject.transform.parent != null) {
 			GameObject parent = collider.gameObject.transform.parent.gameObject;
 			if (parent != null) {
 				obj = parent.GetComponent<CSceneObject>();

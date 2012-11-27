@@ -40,13 +40,14 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	private float				m_additionalRadius = 0.0f;
 	
-	private Vector3				m_spawnPoint;
+	private CCheckPoint			m_lastCheckpoint = null;	
 	
 	// dying vars
 	
 	struct DyingValues {
 		public float y;
 		public float time;
+		public bool didDie;
 	};
 	
 	private DyingValues	m_dead;
@@ -65,6 +66,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 	public float			InitialAlphaPosition = 0.0f;	//!< The initial point on the circle where the player will start
 	
 	public Camera			MainCamera = null;				//!< The main viewport camera, which will follow the player
+	
+	public CCheckPoint		StartCheckPoint = null;			//!< The start point check point
 
 		
 	/*
@@ -90,7 +93,11 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		m_footSteps = GetComponent<AudioSource>();
 				
-		this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));		
+		this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));	
+		
+		m_lastCheckpoint = StartCheckPoint;
+		
+		m_dead.didDie = false;
 	}
 	
 	public int GetCurrentHealth()
@@ -134,9 +141,15 @@ public class CEntityPlayer : CEntityPlayerBase {
 			m_playerPositionAlpha = m_lastPlayerPositionAlpha;			
 		}
 				
+		float yPosition = transform.position.y + additionalY;
+		if (m_dead.didDie) {
+			yPosition = m_lastCheckpoint.transform.position.y;
+			m_dead.didDie = false;
+		}
+		
 		m_position = new Vector3(
 			Mathf.Sin(m_playerPositionAlpha * Mathf.Deg2Rad) * (PlayerPathRadius + m_additionalRadius),
-			transform.position.y + additionalY,
+			yPosition,
 			Mathf.Cos(m_playerPositionAlpha * Mathf.Deg2Rad) * (PlayerPathRadius + m_additionalRadius)
 		);
 		
@@ -220,7 +233,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_playerHealth = MaxHealth;
 		m_playerState = PlayerState.Standing;
 		m_additionalRadius = 0.0f;
-		transform.position = m_spawnPoint;
+		m_dead.didDie = true;
 	}
 		
 	/*
