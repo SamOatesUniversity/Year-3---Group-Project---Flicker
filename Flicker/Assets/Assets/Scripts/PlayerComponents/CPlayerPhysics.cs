@@ -377,8 +377,16 @@ public class CPlayerPhysics : MonoBehaviour {
 			}
 		}		
 		
-		m_ladderClimb.CallOnUpdate(m_collisionState);
+		if (m_jumpState == JumpState.Jumping)
+		{
+			if ((Time.time * 1000.0f) - m_jumpTimer > 500.0f)
+			{
+				playerState = PlayerState.FallJumping;
+			}
+		}
 		
+		m_ladderClimb.CallOnUpdate(m_collisionState);
+				
 	}
 	
 	/*

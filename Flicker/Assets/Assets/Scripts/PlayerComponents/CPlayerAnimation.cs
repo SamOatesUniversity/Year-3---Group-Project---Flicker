@@ -29,10 +29,15 @@ public class CPlayerAnimation : MonoBehaviour {
 			if (!m_animation.IsPlaying("running jump"))
 				m_animation.CrossFade("running jump");
 		}
+		else if (playerState == PlayerState.FallJumping)
+		{
+			if (!m_animation.IsPlaying("falling loop"))
+				m_animation.CrossFade("falling loop");
+		}
 		else if (playerState == PlayerState.LedgeHang)
 		{
-			if (!m_animation.IsPlaying("free hang idle")) {
-				m_animation.CrossFade("free hang idle");
+			if (!m_animation.IsPlaying("wall hang idle")) {
+				m_animation.CrossFade("wall hang idle");
 				m_startedLedgeClimb = false;
 			}
 		}
@@ -46,6 +51,11 @@ public class CPlayerAnimation : MonoBehaviour {
 				playerState = PlayerState.LedgeClimbComplete;
 				m_startedLedgeClimb= false;
 			}
+		}
+		else if (playerState == PlayerState.FallingFromTower)
+		{
+			if (!m_animation.IsPlaying("falling loop"))
+				m_animation.CrossFade("falling loop");
 		}
 	}
 	

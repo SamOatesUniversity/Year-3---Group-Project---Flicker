@@ -6,6 +6,7 @@ public enum PlayerState {
 	Standing,				//!< The player is stood still
 	Walking,				//!< The player is walking
 	Jumping,				//!< The player is jumping
+	FallJumping,			//!< The player is falling or has jumped for a long time
 	WallJumping,			//!< The player is on a wall
 	LedgeHang,
 	LedgeClimb,
