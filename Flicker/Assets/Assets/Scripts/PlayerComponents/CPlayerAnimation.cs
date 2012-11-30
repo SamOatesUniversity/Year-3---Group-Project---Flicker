@@ -21,28 +21,28 @@ public class CPlayerAnimation : MonoBehaviour {
 		}
 		else if (playerState == PlayerState.Standing)
 		{
-			if (!m_animation.IsPlaying("idle"))
-				m_animation.CrossFade("idle");
+			if (!m_animation.IsPlaying("idle simple"))
+				m_animation.CrossFade("idle simple");
 		}
 		else if (playerState == PlayerState.Jumping)
 		{
-			if (!m_animation.IsPlaying("jump"))
-				m_animation.CrossFade("jump");
+			if (!m_animation.IsPlaying("running jump"))
+				m_animation.CrossFade("running jump");
 		}
 		else if (playerState == PlayerState.LedgeHang)
 		{
-			if (!m_animation.IsPlaying("ledgehang")) {
-				m_animation.CrossFade("ledgehang");
+			if (!m_animation.IsPlaying("free hang idle")) {
+				m_animation.CrossFade("free hang idle");
 				m_startedLedgeClimb = false;
 			}
 		}
 		else if (playerState == PlayerState.LedgeClimb)
 		{
-			if (!m_animation.IsPlaying("ledgeclimb") && !m_startedLedgeClimb) {
-				m_animation.CrossFade("ledgeclimb");
+			if (!m_animation.IsPlaying("climb from free hang") && !m_startedLedgeClimb) {
+				m_animation.CrossFade("climb from free hang");
 				m_startedLedgeClimb = true;
 			}	
-			else if (m_startedLedgeClimb == true && !m_animation.IsPlaying("ledgeclimb")) {
+			else if (m_startedLedgeClimb == true && !m_animation.IsPlaying("climb from free hang")) {
 				playerState = PlayerState.LedgeClimbComplete;
 				m_startedLedgeClimb= false;
 			}
