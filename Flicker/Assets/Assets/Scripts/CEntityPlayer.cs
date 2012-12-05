@@ -97,6 +97,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));	
 		
 		m_lastCheckpoint = StartCheckPoint;
+		m_lastCheckpoint.PlayerCheckPointAlpha = m_playerPositionAlpha;
 		
 		m_dead.didDie = false;
 	}
@@ -109,6 +110,18 @@ public class CEntityPlayer : CEntityPlayerBase {
 	public int GetMaxHealth()
 	{
 		return MaxHealth;
+	}
+	
+	public CCheckPoint LastCheckPoint {
+		set {
+			m_lastCheckpoint = value;	
+		}
+	}
+	
+	public float CurrentPlayerAlpha {
+		get {
+			return m_playerPositionAlpha;
+		}
 	}
 		
 	/*
@@ -236,7 +249,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	void OnDeath() 
 	{
 		//TODO: Position variables are pulled from a spawn point - one for each scene
-		m_lastPlayerPositionAlpha = m_playerPositionAlpha = InitialAlphaPosition;
+		m_lastPlayerPositionAlpha = m_playerPositionAlpha = m_lastCheckpoint.PlayerCheckPointAlpha;
 		m_playerHealth = MaxHealth;
 		m_playerState = PlayerState.Standing;
 		m_additionalRadius = 0.0f;
