@@ -5,7 +5,8 @@ public enum CollisionState {
 	None,
 	OnFloor,
 	OnWall,
-	OnRoof
+	OnRoof,
+	OnLadder
 }
 
 public enum JumpState {
@@ -192,9 +193,13 @@ public class CPlayerPhysics : MonoBehaviour {
 					
 		if (obj != null && obj.IsLadder) {
 			m_ladderClimb.CallOnTriggerStay(collider, ref playerState);
-			m_collisionState = CollisionState.OnFloor;
 			if (m_ladderClimb.State != LadderState.None) {
+				m_collisionState = CollisionState.OnLadder;
 				m_body.constraints = RigidbodyConstraints.FreezeAll;	
+			}
+			else
+			{
+				m_collisionState = CollisionState.OnFloor;	
 			}
 			return;
 		}
