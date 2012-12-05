@@ -192,6 +192,12 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	public override void Update()
 	{
+		if (Input.GetButton("Reset"))
+		{
+			OnDeath();
+			return;
+		}		
+		
 		if (m_playerState == PlayerState.FallingFromTower)
 			return;
 		
