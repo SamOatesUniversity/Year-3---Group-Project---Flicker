@@ -134,6 +134,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_physics.OnFixedUpdate(ref m_playerState);
 		
 		m_playerPositionAlpha -= m_physics.Velocity;
+		m_playerPositionAlpha -= m_physics.PlatformVelocity * 1500;
+		// reset platformVelocity
+		m_physics.PlatformVelocity = 0.0f;
 		
 		float additionalY = 0.0f;
 		if (m_playerState == PlayerState.LedgeClimbComplete)

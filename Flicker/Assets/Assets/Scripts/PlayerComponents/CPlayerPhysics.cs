@@ -87,6 +87,15 @@ public class CPlayerPhysics : MonoBehaviour {
 		}
 	}
 	
+	public float PlatformVelocity {
+		get {
+			return m_platformVelocity;
+		}
+		set {
+			m_platformVelocity = value;	
+		}
+	}
+	
 	public CollisionState CurrentCollisionState {
 		get {
 			return m_collisionState;
@@ -302,6 +311,7 @@ public class CPlayerPhysics : MonoBehaviour {
 			CSceneObjectPlatform platform = contact.otherCollider.gameObject.GetComponent<CSceneObjectPlatform>();
 			if (platform != null) {
 				m_platformVelocity += platform.DeltaA;
+				platform.resetDeltaA();
 				//print( "m_platformVelocity: " + m_platformVelocity );
 			}
 		}	
@@ -321,17 +331,14 @@ public class CPlayerPhysics : MonoBehaviour {
 	{		
 		if (playerState == PlayerState.FallingFromTower)
 			return;
-			
-		float velocity = ((Input.GetAxis("Horizontal") * MaxSpeed) * m_invert) + m_platformVelocity;
+
+		float velocity = (Input.GetAxis("Horizontal") * MaxSpeed) * m_invert;
 		if ((Time.time * 1000.0f) - m_velocityLockTimer < 100)
 		{
 			velocity = m_velocity;
 		}
 		
 		int direction = isNearly(velocity, 0.0f, 0.1f) ? 0 : velocity > 0 ? 1 : -1;
-		
-		// reset platformVelocity
-		m_platformVelocity = 0.0f;
 		
 		// Ledge hanging code start
 		if (playerState == PlayerState.LedgeHang || playerState == PlayerState.LedgeClimb || playerState == PlayerState.LedgeClimbComplete) {
