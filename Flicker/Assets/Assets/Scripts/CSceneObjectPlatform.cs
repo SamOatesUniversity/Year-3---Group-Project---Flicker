@@ -19,7 +19,7 @@ public class CSceneObjectPlatform : CSceneObject {
 	void Start() 
     {
 		m_lastPos = gameObject.transform.position;
-		m_lastRotY = gameObject.transform.rotation.y;
+		m_lastRotY = gameObject.transform.rotation.eulerAngles.y;
 	}
 	
 	// Update is called once per frame
@@ -32,7 +32,7 @@ public class CSceneObjectPlatform : CSceneObject {
 		}
 		Vector3 currentPos = platAnim.transform.position;
 		
-		float rotY = platAnim.transform.rotation.y;
+		float rotY = platAnim.transform.rotation.eulerAngles.y;
 		m_deltaA += rotY - m_lastRotY;
 		m_lastRotY = rotY;
 		
