@@ -239,10 +239,11 @@ public class CPlayerPhysics : MonoBehaviour {
 			}
 			
 			// wall jumping
-			if (obj != null && obj.CanWallJump == true && playerState == PlayerState.Jumping && !isNearly(contact.normal.y, 1.0f, 0.2f) && !isNearly(contact.normal.y, -1.0f, 0.1f))
+			if (obj != null && obj.CanWallJump == true && m_jumpState != JumpState.Landed && !isNearly(contact.normal.y, 1.0f, 0.2f) && !isNearly(contact.normal.y, -1.0f, 0.1f))
 			{
 				m_collisionState = CollisionState.OnWall;
 				playerState = PlayerState.WallJumpStart;
+				m_jumpTimer = (Time.time * 1000.0f); 
 				m_body.constraints = RigidbodyConstraints.FreezeAll;
 				m_velocity = 0.0f;
 				m_wallJump.StartHangTime = Time.time * 1000.0f;
@@ -338,6 +339,7 @@ public class CPlayerPhysics : MonoBehaviour {
 				m_velocity = -(m_movingDirection); // kick it away from the wall
 				m_body.AddForce(new Vector3(0, PlayerJumpHeight * 1.1f, 0), ForceMode.Impulse);	
 				playerState = PlayerState.Jumping;
+				m_jumpTimer = (Time.time * 1000.0f); 
 				m_collisionState = CollisionState.None;
 				m_movingDirection *= -1;
 				m_direction *= -1;	
