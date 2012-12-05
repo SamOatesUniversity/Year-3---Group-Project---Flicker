@@ -177,9 +177,9 @@ public class CPlayerPhysics : MonoBehaviour {
 		
 		foreach (ContactPoint contact in collision)
 		{			
-			CSceneObjectPlatform platform = contact.otherCollider.gameObject.GetComponent<CSceneObjectPlatform>();
-			if (platform != null) {
-				platform.resetDeltaA();
+			m_platform = contact.otherCollider.gameObject.GetComponent<CSceneObjectPlatform>();
+			if (m_platform != null) {
+				m_platform.resetDeltaA();
 			}
 			if (isNearly(contact.normal.y, 1.0f, 0.2f))
 			{
@@ -207,6 +207,7 @@ public class CPlayerPhysics : MonoBehaviour {
 	public void CallOnCollisionExit(Collision collision)
 	{
 		m_collisionState = CollisionState.None;
+		m_platform = null;
 	}
 	
 	public void CallOnTriggerStay(Collider collider, ref PlayerState playerState)
@@ -309,13 +310,6 @@ public class CPlayerPhysics : MonoBehaviour {
 					break;
 				}
 			}
-			
-			CSceneObjectPlatform platform = contact.otherCollider.gameObject.GetComponent<CSceneObjectPlatform>();
-			if (platform != null) {
-				m_platformVelocity += platform.DeltaA;
-				platform.resetDeltaA();
-				//print( "m_platformVelocity: " + m_platformVelocity );
-			}
 		}	
 		
 		if (m_collisionState == CollisionState.OnWall && m_jumpState == JumpState.Jumping && playerState != PlayerState.WallJumpStart)
@@ -341,6 +335,12 @@ public class CPlayerPhysics : MonoBehaviour {
 		}
 		
 		int direction = isNearly(velocity, 0.0f, 0.1f) ? 0 : velocity > 0 ? 1 : -1;
+		
+		//platform update
+		if(m_platform) {
+			m_platformVelocity += m_platform.DeltaA;
+			m_platform.resetDeltaA();
+		}
 		
 		// Ledge hanging code start
 		if (playerState == PlayerState.LedgeHang || playerState == PlayerState.LedgeClimb || playerState == PlayerState.LedgeClimbComplete) {
