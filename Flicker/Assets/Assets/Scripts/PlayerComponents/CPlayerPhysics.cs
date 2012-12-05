@@ -47,6 +47,8 @@ public class CPlayerPhysics : MonoBehaviour {
 	private CLadderClimb	m_ladderClimb = null;					//!< 
 	
 	private float			m_jumpTimer = 0;						//!< The time the player last jumped
+	
+	private float 			m_velocityLockTimer = 0;				//!< The time that velocity was locked
 
 	/* ----------------
 	    Public Members 
@@ -229,9 +231,15 @@ public class CPlayerPhysics : MonoBehaviour {
 	public void CallOnCollisionStay(Collision collision, ref PlayerState playerState, ref float playerAlpha)
 	{		
 		m_collisionState = CollisionState.None;
+		
+		int noofContacts = 0;
+		foreach (ContactPoint contact in collision)
+			noofContacts++;
 				
 		foreach (ContactPoint contact in collision)
 		{
+			Debug.DrawRay(contact.point, contact.normal);
+			
 			CSceneObject obj = contact.otherCollider.gameObject.GetComponent<CSceneObject>();
 			if (obj == null) {
 				GameObject parent = contact.otherCollider.gameObject.transform.parent.gameObject;
@@ -268,9 +276,14 @@ public class CPlayerPhysics : MonoBehaviour {
 				m_wallJump.StartHangTime = Time.time * 1000.0f;
 			}
 			// floor check
-			else if (isNearly(contact.normal.y, 1.0f, 0.2f))
+			else if (isNearly(contact.normal.y, 1.0f, 0.8f))
 			{
 				m_collisionState = CollisionState.OnFloor;
+				if (!isNearly(contact.normal.y, 1.0f, 0.15f) && noofContacts == 1)
+				{
+					m_velocity = (m_movingDirection * 0.15f);
+					m_velocityLockTimer = (Time.time * 1000.0f); 
+				}
 			}
 			// head check
 			else if (isNearly(contact.normal.y, -1.0f, 0.1f))
@@ -310,6 +323,11 @@ public class CPlayerPhysics : MonoBehaviour {
 			return;
 			
 		float velocity = ((Input.GetAxis("Horizontal") * MaxSpeed) * m_invert) + m_platformVelocity;
+		if ((Time.time * 1000.0f) - m_velocityLockTimer < 100)
+		{
+			velocity = m_velocity;
+		}
+		
 		int direction = isNearly(velocity, 0.0f, 0.1f) ? 0 : velocity > 0 ? 1 : -1;
 		
 		// reset platformVelocity
