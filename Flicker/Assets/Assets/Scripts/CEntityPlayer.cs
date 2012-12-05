@@ -248,8 +248,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 	*/
 	void OnDeath() 
 	{
-		//TODO: Position variables are pulled from a spawn point - one for each scene
 		m_lastPlayerPositionAlpha = m_playerPositionAlpha = m_lastCheckpoint.PlayerCheckPointAlpha;
+		m_physics.Direction = m_lastCheckpoint.Direction;
 		m_playerHealth = MaxHealth;
 		m_playerState = PlayerState.Standing;
 		m_additionalRadius = 0.0f;

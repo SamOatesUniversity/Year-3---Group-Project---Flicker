@@ -4,11 +4,10 @@ using System.Collections;
 public class CCheckPoint : MonoBehaviour {
 
 	private float m_playerAlpha = 0.0f;
+	private int m_direction = 1;
 	
 	void OnTriggerEnter(Collider collision) {
-		
-		Debug.Log ("Entered a checkpoint");
-		
+				
 		GameObject gObject = collision.collider.gameObject;		
 		CEntityPlayer player = gObject.GetComponent<CEntityPlayer>();
 		
@@ -16,6 +15,7 @@ public class CCheckPoint : MonoBehaviour {
 		{
 			player.LastCheckPoint = this;
 			m_playerAlpha = player.CurrentPlayerAlpha;
+			m_direction = player.Physics.Direction;
 		}	
 		
 	}
@@ -30,6 +30,12 @@ public class CCheckPoint : MonoBehaviour {
 		set {
 			m_playerAlpha = value;	
 		}
+	}
+	
+	public int Direction {
+		get {
+			return m_direction;	
+		}	
 	}
 		
 }

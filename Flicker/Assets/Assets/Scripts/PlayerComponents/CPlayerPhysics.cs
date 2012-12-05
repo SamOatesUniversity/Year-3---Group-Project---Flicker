@@ -91,9 +91,13 @@ public class CPlayerPhysics : MonoBehaviour {
 	/*
 	 * \brief Gets the players last known direction
 	*/
-	public float Direction {
+	public int Direction {
 		get {
 			return m_direction;
+		}
+		set {
+			m_direction = value;
+			m_movingDirection = value;
 		}
 	}
 	
