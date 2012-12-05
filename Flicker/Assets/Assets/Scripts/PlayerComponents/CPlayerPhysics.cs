@@ -22,6 +22,8 @@ public class CPlayerPhysics : MonoBehaviour {
 	
 	private float			m_velocity = 0.0f;						//!< The current speed of the player
 	
+	private float			m_platformVelocity = 0.0f;				//!< The velocity of a platform the player is standing on, if any
+	
 	private Rigidbody		m_body = null;							//!< The rigid body component of this entity 
 	
 	private int				m_direction = 0;						//!< Stores the direction, 0 = not moving, 1 = left, -1 = right
@@ -283,12 +285,20 @@ public class CPlayerPhysics : MonoBehaviour {
 					break;
 				}
 			}
+			
+			CSceneObjectPlatform platform = contact.otherCollider.gameObject.GetComponent<CSceneObjectPlatform>();
+			if (platform != null) {
+				m_platformVelocity += platform.DeltaA;
+				//print( "m_platformVelocity: " + m_platformVelocity );
+			}
 		}	
 		
 		if (m_collisionState == CollisionState.OnWall && m_jumpState == JumpState.Jumping && playerState != PlayerState.WallJumpStart)
 		{
 			m_velocity = -(m_movingDirection * 0.15f);
 		}
+		
+		//print ( "m_velocity is: " + m_velocity );
 	}
 	
 	/*
@@ -299,8 +309,11 @@ public class CPlayerPhysics : MonoBehaviour {
 		if (playerState == PlayerState.FallingFromTower)
 			return;
 			
-		float velocity = (Input.GetAxis("Horizontal") * MaxSpeed) * m_invert;
+		float velocity = ((Input.GetAxis("Horizontal") * MaxSpeed) * m_invert) + m_platformVelocity;
 		int direction = isNearly(velocity, 0.0f, 0.1f) ? 0 : velocity > 0 ? 1 : -1;
+		
+		// reset platformVelocity
+		m_platformVelocity = 0.0f;
 		
 		// Ledge hanging code start
 		if (playerState == PlayerState.LedgeHang || playerState == PlayerState.LedgeClimb || playerState == PlayerState.LedgeClimbComplete) {
