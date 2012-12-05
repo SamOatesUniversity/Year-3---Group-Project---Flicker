@@ -25,6 +25,11 @@ public class CSceneObjectPlatform : CSceneObject {
 	// Update is called once per frame
 	void Update() 
     {
+		
+	}
+	
+	void FixedUpdate()
+	{
 		Animation platAnim = gameObject.GetComponent<Animation>();
 		if (platAnim != null)
 		{

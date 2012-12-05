@@ -49,6 +49,8 @@ public class CPlayerPhysics : MonoBehaviour {
 	private float			m_jumpTimer = 0;						//!< The time the player last jumped
 	
 	private float 			m_velocityLockTimer = 0;				//!< The time that velocity was locked
+	
+	private CSceneObjectPlatform	m_platform = null;				//!< The platform, if any, the player is standing on
 
 	/* ----------------
 	    Public Members 
@@ -175,6 +177,10 @@ public class CPlayerPhysics : MonoBehaviour {
 		
 		foreach (ContactPoint contact in collision)
 		{			
+			CSceneObjectPlatform platform = contact.otherCollider.gameObject.GetComponent<CSceneObjectPlatform>();
+			if (platform != null) {
+				platform.resetDeltaA();
+			}
 			if (isNearly(contact.normal.y, 1.0f, 0.2f))
 			{
 				m_collisionState = CollisionState.OnFloor;
