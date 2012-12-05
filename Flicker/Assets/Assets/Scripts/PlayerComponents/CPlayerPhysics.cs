@@ -83,6 +83,12 @@ public class CPlayerPhysics : MonoBehaviour {
 		}
 	}
 	
+	public CollisionState CurrentCollisionState {
+		get {
+			return m_collisionState;
+		}
+	}
+	
 	public CLadderClimb LadderClimb {
 		get {
 			return m_ladderClimb;	
@@ -152,7 +158,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		m_collisionState = CollisionState.None;
 		
 		foreach (ContactPoint contact in collision)
-		{
+		{			
 			if (isNearly(contact.normal.y, 1.0f, 0.2f))
 			{
 				m_collisionState = CollisionState.OnFloor;
@@ -194,7 +200,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		if (obj != null && obj.IsLadder) {
 			m_ladderClimb.CallOnTriggerStay(collider, ref playerState);
 			if (m_ladderClimb.State != LadderState.None) {
-				m_collisionState = CollisionState.OnLadder;
+				//m_collisionState = CollisionState.OnLadder;
 				m_body.constraints = RigidbodyConstraints.FreezeAll;	
 			}
 			else
@@ -219,7 +225,7 @@ public class CPlayerPhysics : MonoBehaviour {
 	public void CallOnCollisionStay(Collision collision, ref PlayerState playerState, ref float playerAlpha)
 	{		
 		m_collisionState = CollisionState.None;
-		
+				
 		foreach (ContactPoint contact in collision)
 		{
 			CSceneObject obj = contact.otherCollider.gameObject.GetComponent<CSceneObject>();

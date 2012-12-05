@@ -273,7 +273,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	*/
 	void OnCollisionExit(Collision collision)
 	{
-
+		m_physics.CallOnCollisionExit(collision);
 	}
 	
 	/*
