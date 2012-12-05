@@ -10,6 +10,8 @@ public class CSteamVent : MonoBehaviour
 	public float SteamDuration = 3.0f;
 	
 	public float SteamIntervals = 10.0f;
+
+    public float SteamOffset = 0.0f;
 	
 	
 	
@@ -48,6 +50,12 @@ public class CSteamVent : MonoBehaviour
 			m_pSystem.transform.parent = m_collisionBox.transform;
 			m_pSystem.transform.rotation = Quaternion.LookRotation( m_collisionBox.transform.position, Vector3.up);
 			m_pSystem.enableEmission = true;
+
+            if (SteamIntervals == 0)
+            {
+                SteamIntervals = SteamDuration;
+                Debug.LogWarning("Do not set steam vent duration to zero, it removes collision");
+            }
 			
 		}
 		else

@@ -4,10 +4,9 @@ using System.Collections;
 public class CTriggerBase : MonoBehaviour 
 {
 	
-	
 	protected bool CheckContextButton()
 	{
-		return Input.GetKeyDown(KeyCode.R);
+        return Input.GetButton("Action");
 	}
 	
 	protected float CheckRange(Vector3 _from, Vector3 _to)
