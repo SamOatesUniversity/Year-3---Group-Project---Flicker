@@ -250,6 +250,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 	{
 		m_lastPlayerPositionAlpha = m_playerPositionAlpha = m_lastCheckpoint.PlayerCheckPointAlpha;
 		m_physics.Direction = m_lastCheckpoint.Direction;
+		m_playerState = PlayerState.Standing;
+		m_physics.JumpType = JumpState.Landed;
+		m_physics.LadderClimb.State = LadderState.None;
 		m_playerHealth = MaxHealth;
 		m_playerState = PlayerState.Standing;
 		m_additionalRadius = 0.0f;

@@ -5,7 +5,8 @@ public enum LadderState {
 	None,
 	AtBase,
 	AtMiddle,
-	AtTop
+	AtTop,
+	JumpOff
 }
 
 public class CLadderClimb : MonoBehaviour {
@@ -17,6 +18,9 @@ public class CLadderClimb : MonoBehaviour {
 	public LadderState State {
 		get {
 			return m_ladderState;	
+		}
+		set {
+			m_ladderState = value;	
 		}
 	}
 
@@ -46,6 +50,11 @@ public class CLadderClimb : MonoBehaviour {
 		}
 		
 		if (collisionState == CollisionState.OnFloor && Offset < 0.0f) {
+			Offset = 0.0f;	
+		}
+		
+		if (Input.GetButton("Jump") && m_ladderState != LadderState.None) {
+			m_ladderState = LadderState.JumpOff;
 			Offset = 0.0f;	
 		}
 	}
