@@ -396,7 +396,7 @@ public class CPlayerPhysics : MonoBehaviour {
 			}
 		}		
 		
-		if (m_jumpState == JumpState.Jumping)
+		if (m_jumpState == JumpState.Jumping && playerState == PlayerState.Jumping)
 		{
 			if ((Time.time * 1000.0f) - m_jumpTimer > 500.0f)
 			{
@@ -404,17 +404,20 @@ public class CPlayerPhysics : MonoBehaviour {
 			}
 		}
 		
-		m_ladderClimb.CallOnUpdate(m_collisionState);
-		if (m_ladderClimb.State == LadderState.JumpOff && m_jumpState != JumpState.Jumping)
+		if (m_ladderClimb != null)
 		{
-			m_jumpTimer = (Time.time * 1000.0f);
-			m_body.AddForce(new Vector3(0, PlayerJumpHeight, 0), ForceMode.Impulse);	
-			m_jumpState = JumpState.Jumping;
-			playerState = PlayerState.Jumping;
-			m_ladderClimb.State = LadderState.None;
-			m_velocity = m_direction;
-			m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-			Debug.Log("Jump Twat");
+			m_ladderClimb.CallOnUpdate(m_collisionState);
+			if (m_ladderClimb.State == LadderState.JumpOff && m_jumpState != JumpState.Jumping)
+			{
+				m_jumpTimer = (Time.time * 1000.0f);
+				m_body.AddForce(new Vector3(0, PlayerJumpHeight, 0), ForceMode.Impulse);	
+				m_jumpState = JumpState.Jumping;
+				playerState = PlayerState.Jumping;
+				m_ladderClimb.State = LadderState.None;
+				m_velocity = m_direction;
+				m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+				Debug.Log("Jump Twat");
+			}
 		}
 		
 				
