@@ -278,7 +278,7 @@ public class CPlayerPhysics : MonoBehaviour {
 			}
 			
 			// wall jumping
-			if (obj != null && obj.CanWallJump == true && m_jumpState != JumpState.Landed && !isNearly(contact.normal.y, 1.0f, 0.2f) && !isNearly(contact.normal.y, -1.0f, 0.1f))
+			if ((obj == null || (obj != null && obj.CanWallJump == true)) && m_jumpState != JumpState.Landed && !isNearly(contact.normal.y, 1.0f, 0.2f) && !isNearly(contact.normal.y, -1.0f, 0.1f))
 			{
 				m_collisionState = CollisionState.OnWall;
 				playerState = PlayerState.WallJumpStart;
