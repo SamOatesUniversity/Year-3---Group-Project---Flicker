@@ -7,7 +7,7 @@ public class CPlayerLight : MonoBehaviour {
 	public float MaxRange = 3.0f;
 	public float MinRange = 2.5f;
 	public Color LightColor = new Color(1,1,1);
-	public float MaxIntensity = 0.7f;
+	public float MaxIntensity = 0.95f;
 	public float MinIntensity = 0.1f;
 	public float FlickerSpeed = 0.5f;
 	public float LightCharge = 100.0f;
@@ -45,7 +45,7 @@ public class CPlayerLight : MonoBehaviour {
 		
 		if (LightPrefab)
 		{
-			Transform parentTransform = this.GetComponent<CEntityPlayer>().transform;
+			Transform parentTransform = GameObject.Find("Backpack").GetComponent<SkinnedMeshRenderer>().bones[0].transform ;
 			GameObject obj =  (GameObject)Instantiate(LightPrefab,transform.position,Quaternion.identity);
 			m_light = obj.GetComponent<Light>().light;
 			m_light.transform.parent = parentTransform;
