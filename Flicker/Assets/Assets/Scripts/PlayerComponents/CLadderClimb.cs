@@ -39,7 +39,7 @@ public class CLadderClimb : MonoBehaviour {
 		if (m_ladderState != LadderState.None) 
 		{
 			float climb = Input.GetAxis("Vertical");
-			Offset = (climb * 0.05f); 
+			Offset = (climb * 0.025f); 
 		}
 		else {
 			Offset = 0.0f;	

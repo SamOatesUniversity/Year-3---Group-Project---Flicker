@@ -272,7 +272,10 @@ public class CPlayerPhysics : MonoBehaviour {
 					m_body.constraints = RigidbodyConstraints.FreezeAll;
 					m_jumpState = JumpState.Landed;						
 					m_ledgeOffset.x = m_movingDirection > 0 ? 0.1f : -0.1f;
-					transform.Find("Player").localPosition = m_ledgeOffset;
+					
+					Transform player = transform.Find("Player");
+					if (player != null)
+						player.localPosition = m_ledgeOffset;
 					continue;
 				}
 			}
@@ -446,6 +449,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		
 		if (m_ladderClimb.State != LadderState.None)
 		{
+			playerState = PlayerState.UpALadder;
 			m_ladderClimb.CallOnUpdate(m_collisionState);
 			if (m_ladderClimb.State == LadderState.JumpOff && m_jumpState != JumpState.Jumping)
 			{

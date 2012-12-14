@@ -12,7 +12,9 @@ public enum PlayerState {
 	LedgeClimb,
 	LedgeClimbComplete,
 	WallJumpStart,
-	FallingFromTower		//!< The player has been pushed of the tower
+	FallingFromTower,		//!< The player has been pushed of the tower
+	UpALadder,
+	DownALadder
 };
 
 [RequireComponent (typeof (CWallJump))]
@@ -189,10 +191,17 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		// Animate and position the player model mesh
 		{
-			if (m_physics.Direction > 0)
-				this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));
-			else if (m_physics.Direction < 0)
-				this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 90, 0));
+			if (m_playerState != PlayerState.UpALadder)
+			{
+				if (m_physics.Direction > 0)
+					this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));
+				else if (m_physics.Direction < 0)
+					this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 90, 0));
+			}
+			else
+			{
+				this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 180, 0));		
+			}
 			
 			m_animation.OnFixedUpdate(ref m_playerState);
 		}
