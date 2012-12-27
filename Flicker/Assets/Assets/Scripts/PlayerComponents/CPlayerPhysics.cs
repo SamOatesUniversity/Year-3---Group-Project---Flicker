@@ -356,7 +356,9 @@ public class CPlayerPhysics : MonoBehaviour {
 				playerState = PlayerState.Walking;
 				m_jumpState = JumpState.Landed;
 				m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-				transform.Find("Player").localPosition = new Vector3(0.0f, -0.28f, 0.0f);
+				Transform playerTransform = transform.Find("Player");
+				if (playerTransform != null)
+					playerTransform.localPosition = new Vector3(0.0f, -0.28f, 0.0f);
 				return;
 			} 
 			
@@ -367,7 +369,9 @@ public class CPlayerPhysics : MonoBehaviour {
 				if (Input.GetAxis("Vertical")>0) {
 					playerState = PlayerState.LedgeClimb;
 					m_jumpState = JumpState.Landed;
-					transform.Find("Player").localPosition = new Vector3(0.0f, -0.28f, 0.0f);
+					Transform playerTransform = transform.Find("Player");
+					if (playerTransform != null)
+						playerTransform.localPosition = new Vector3(0.0f, -0.28f, 0.0f);
 				}
 				// if the user pressed space, jump off the wall
 				else if (m_isJumpDown) {
@@ -378,7 +382,9 @@ public class CPlayerPhysics : MonoBehaviour {
 					m_collisionState = CollisionState.None;
 					m_movingDirection *= -1;
 					m_direction *= -1;
-					transform.Find("Player").localPosition = new Vector3(0.0f, -0.28f, 0.0f);
+					Transform playerTransform = transform.Find("Player");
+					if (playerTransform != null)
+						playerTransform.localPosition = new Vector3(0.0f, -0.28f, 0.0f);
 				}
 				return;
 			}
