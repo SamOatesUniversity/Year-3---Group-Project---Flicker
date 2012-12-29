@@ -27,10 +27,17 @@ public class CSceneObject : MonoBehaviour {
 	
 	}
 	
-	public static void CheckLedgeGrab(Collision collision) {
+	public static bool CheckLedgeGrab(Collision collision) {
 		foreach (ContactPoint contact in collision)
 		{
+			Collider ledgeGrab = null;
 			if (contact.otherCollider != null && contact.otherCollider.gameObject.name == "Ledge_Grab_Detection")
+				ledgeGrab = contact.otherCollider;
+			
+			if (contact.thisCollider != null && contact.thisCollider.gameObject.name == "Ledge_Grab_Detection")
+				ledgeGrab = contact.thisCollider;
+			
+			if (ledgeGrab != null)
 			{
 				if (CPlayerPhysics.isNearly(contact.normal.normalized.y, -1.0f, 0.1f))
 				{
@@ -48,16 +55,19 @@ public class CSceneObject : MonoBehaviour {
 							CPlayerPhysics phy = playerEntity.Physics;
 							phy.SetLedgeGrabState(playerEntity, PlayerState.LedgeHang);
 							contact.otherCollider.enabled = false;
-							return;
+							return true;
 						}
 					}
 				}
 				else
 				{
-					contact.otherCollider.enabled = false;
+					ledgeGrab.enabled = false;
+					return false;
 				}
 			}
-		}		
+		}
+		
+		return false;
 	}
 	
 	void OnCollisionEnter(Collision collision) {

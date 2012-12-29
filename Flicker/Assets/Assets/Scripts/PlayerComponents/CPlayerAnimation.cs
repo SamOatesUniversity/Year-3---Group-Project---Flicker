@@ -21,6 +21,7 @@ public class CPlayerAnimation : MonoBehaviour {
 		}
 		else if (playerState == PlayerState.Standing)
 		{
+			m_animation["Idle Simple"].speed = 0.2f;
 			if (!m_animation.IsPlaying("Idle Simple"))
 				m_animation.CrossFade("Idle Simple");
 		}
