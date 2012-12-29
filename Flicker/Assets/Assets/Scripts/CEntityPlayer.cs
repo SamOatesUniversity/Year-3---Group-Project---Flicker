@@ -216,7 +216,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 				m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 180, 0));		
 			}
 			
-			m_animation.OnFixedUpdate(ref m_playerState);
+			m_animation.OnFixedUpdate(ref m_playerState, m_physics.LadderClimb.State);
 		}
 		
 		

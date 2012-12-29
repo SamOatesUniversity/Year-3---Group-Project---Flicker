@@ -12,7 +12,7 @@ public class CPlayerAnimation : MonoBehaviour {
 		m_animation = animation;
 	}
 	
-	public void OnFixedUpdate(ref PlayerState playerState)
+	public void OnFixedUpdate(ref PlayerState playerState, LadderState ladderState)
 	{
 		if (playerState == PlayerState.Walking)
 		{
@@ -61,7 +61,7 @@ public class CPlayerAnimation : MonoBehaviour {
 		else if (playerState == PlayerState.UpALadder)
 		{
 			float upDown = Input.GetAxis("Vertical");
-			if (upDown != 0.0f)
+			if ((upDown != 0.0f && ladderState != LadderState.AtTop) || (ladderState == LadderState.AtTop && upDown < 0))
 			{
 				bool forceAnimationChange = upDown > 0.0f && m_animation["Ladder Up"].speed > 0.0f ? false : true;
 				if (!m_animation.IsPlaying("Ladder Up") || forceAnimationChange)
@@ -73,6 +73,8 @@ public class CPlayerAnimation : MonoBehaviour {
 			else
 			{
 				m_animation["Ladder Up"].speed = 0.0f;
+				if (!m_animation.IsPlaying("Ladder Up"))
+					m_animation.Play("Ladder Up");
 			}
 		}
 	}

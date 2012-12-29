@@ -36,6 +36,9 @@ public class CLadderClimb : MonoBehaviour {
 
 	public void CallOnUpdate(CollisionState collisionState) 
 	{
+		if (m_ladderState == LadderState.JumpOff)
+			return;
+		
 		if (m_ladderState != LadderState.None) 
 		{
 			float climb = Input.GetAxis("Vertical");
@@ -61,6 +64,9 @@ public class CLadderClimb : MonoBehaviour {
 	
 	public void CallOnTriggerStay(Collider collider, ref PlayerState playerState)
 	{
+		if (m_ladderState == LadderState.JumpOff)
+			return;
+		
 		string state = collider.gameObject.name;
 				
 		if (state == "LadderBASE") {
@@ -74,6 +80,9 @@ public class CLadderClimb : MonoBehaviour {
 	
 	public void CallOnTriggerExit(Collider collider, ref PlayerState playerState)
 	{
+		if (m_ladderState == LadderState.JumpOff)
+			return;
+		
 		if (Offset == 0.0f) {
 			m_ladderState = LadderState.None;	
 		}
