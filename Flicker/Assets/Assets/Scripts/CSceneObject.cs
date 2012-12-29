@@ -26,5 +26,46 @@ public class CSceneObject : MonoBehaviour {
     {
 	
 	}
+	
+	public static void CheckLedgeGrab(Collision collision) {
+		foreach (ContactPoint contact in collision)
+		{
+			if (contact.otherCollider != null && contact.otherCollider.gameObject.name == "Ledge_Grab_Detection")
+			{
+				if (CPlayerPhysics.isNearly(contact.normal.normalized.y, -1.0f, 0.1f))
+				{
+					// player hit the ledge grab area	
+					GameObject player = contact.otherCollider.gameObject.transform.parent.gameObject;
+					if (player != null)
+					{
+						CEntityPlayer playerEntity = player.GetComponent<CEntityPlayer>();	
+						if ( playerEntity != null && 
+							playerEntity.GetPlayerState() != PlayerState.LedgeHang && 
+							playerEntity.GetPlayerState() != PlayerState.LedgeClimb &&
+							playerEntity.GetPlayerState() != PlayerState.LedgeClimbComplete
+						)
+						{
+							CPlayerPhysics phy = playerEntity.Physics;
+							phy.SetLedgeGrabState(playerEntity, PlayerState.LedgeHang);
+							contact.otherCollider.enabled = false;
+							return;
+						}
+					}
+				}
+				else
+				{
+					contact.otherCollider.enabled = false;
+				}
+			}
+		}		
+	}
+	
+	void OnCollisionEnter(Collision collision) {
+		CheckLedgeGrab(collision);
+	}
+	
+	void OnCollisionStay(Collision collision) {
+		CheckLedgeGrab(collision);
+	}
 
 }

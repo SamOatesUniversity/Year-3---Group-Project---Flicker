@@ -51,6 +51,8 @@ public class CPlayerPhysics : MonoBehaviour {
 	private float 			m_velocityLockTimer = 0;				//!< The time that velocity was locked
 	
 	private CSceneObjectPlatform	m_platform = null;				//!< The platform, if any, the player is standing on
+	
+	private GameObject		m_ledgeGrabBox = null;
 
 	/* ----------------
 	    Public Members 
@@ -73,6 +75,8 @@ public class CPlayerPhysics : MonoBehaviour {
 		m_player = player;
 		m_wallJump = player.GetComponent<CWallJump>();
 		m_ladderClimb = new CLadderClimb();
+		
+		m_ledgeGrabBox = transform.Find("Ledge_Grab_Detection").gameObject;
 		
 		m_invert = player.MainCamera.GetComponent<CCamera>().DistanceFromPlayer > 0 ? 1 : -1;
 	}
@@ -198,6 +202,8 @@ public class CPlayerPhysics : MonoBehaviour {
 		if (m_collisionState == CollisionState.OnFloor)
 		{
 			m_jumpState = JumpState.Landed;	
+			m_player.SetPlayerState(PlayerState.Standing);
+			m_ledgeGrabBox.collider.enabled = true;
 		}
 	}
 	
@@ -262,22 +268,16 @@ public class CPlayerPhysics : MonoBehaviour {
 			
 			float yContact = contact.point.y - m_body.position.y;
 			
-			// ledge grabbing
-			if (yContact >= 0.05f && yContact <= 0.3f && playerState != PlayerState.LedgeHang && contact.normal.y > -0.5f && (obj != null && obj.CanLedgeGrab))
-			{			
-				if (isFacingCollision(m_movingDirection, m_body.transform.position, contact.point, playerAlpha))
-				{
-					m_velocity = 0;
-					playerState = PlayerState.LedgeHang;
-					m_body.constraints = RigidbodyConstraints.FreezeAll;
-					m_jumpState = JumpState.Landed;						
-					m_ledgeOffset.x = m_movingDirection > 0 ? 0.1f : -0.1f;
-					
-					Transform player = transform.Find("Player");
-					if (player != null)
-						player.localPosition = m_ledgeOffset;
-					continue;
-				}
+			if (contact.thisCollider != null && contact.thisCollider.gameObject.name == "Ledge_Grab_Detection")
+			{
+				CSceneObject.CheckLedgeGrab(collision);
+				continue;
+			}
+			
+			if (contact.otherCollider != null && contact.otherCollider.gameObject.name == "Ledge_Grab_Detection")
+			{
+				CSceneObject.CheckLedgeGrab(collision);
+				continue;
 			}
 			
 			// wall jumping
@@ -356,9 +356,7 @@ public class CPlayerPhysics : MonoBehaviour {
 				playerState = PlayerState.Walking;
 				m_jumpState = JumpState.Landed;
 				m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-				Transform playerTransform = transform.Find("Player");
-				if (playerTransform != null)
-					playerTransform.localPosition = new Vector3(0.0f, -0.28f, 0.0f);
+				m_ledgeGrabBox.collider.enabled = true;
 				return;
 			} 
 			
@@ -369,9 +367,7 @@ public class CPlayerPhysics : MonoBehaviour {
 				if (Input.GetAxis("Vertical")>0) {
 					playerState = PlayerState.LedgeClimb;
 					m_jumpState = JumpState.Landed;
-					Transform playerTransform = transform.Find("Player");
-					if (playerTransform != null)
-						playerTransform.localPosition = new Vector3(0.0f, -0.28f, 0.0f);
+					m_ledgeGrabBox.collider.enabled = true;
 				}
 				// if the user pressed space, jump off the wall
 				else if (m_isJumpDown) {
@@ -382,9 +378,7 @@ public class CPlayerPhysics : MonoBehaviour {
 					m_collisionState = CollisionState.None;
 					m_movingDirection *= -1;
 					m_direction *= -1;
-					Transform playerTransform = transform.Find("Player");
-					if (playerTransform != null)
-						playerTransform.localPosition = new Vector3(0.0f, -0.28f, 0.0f);
+					m_ledgeGrabBox.collider.enabled = true;
 				}
 				return;
 			}
@@ -447,7 +441,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		
 		if (m_jumpState == JumpState.Jumping && playerState == PlayerState.Jumping)
 		{
-			if ((Time.time * 1000.0f) - m_jumpTimer > 500.0f)
+			if ((Time.time * 1000.0f) - m_jumpTimer > 2000.0f)
 			{
 				playerState = PlayerState.FallJumping;
 			}
@@ -476,8 +470,8 @@ public class CPlayerPhysics : MonoBehaviour {
 	*/
 	public static bool isNearly(float x, float amount, float varience) 
 	{
-		if (x < amount - varience) return false;
-		if (x > amount + varience) return false;
+		if (x <= amount - varience) return false;
+		if (x >= amount + varience) return false;
 		return true;
 	}
 
@@ -499,4 +493,16 @@ public class CPlayerPhysics : MonoBehaviour {
 		
 		return collisionDir != playerDirection;
 	}
+	
+	public void SetLedgeGrabState (CEntityPlayer player, PlayerState state)
+	{
+		if (state == PlayerState.LedgeHang)
+		{
+			m_velocity = 0;
+			player.SetPlayerState(PlayerState.LedgeHang);
+			m_body.constraints = RigidbodyConstraints.FreezeAll;
+			m_jumpState = JumpState.Landed;				
+		}
+	}
+	
 }

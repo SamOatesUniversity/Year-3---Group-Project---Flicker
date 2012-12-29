@@ -55,6 +55,10 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	private DyingValues	m_dead;
 	
+	private Transform			m_characterMesh = null;
+	
+	private Transform			m_ledgeGrabBox = null;
+	
 	
 	////////////////////////
 	
@@ -96,7 +100,10 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		m_footSteps = GetComponent<AudioSource>();
 				
-		this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));	
+		m_characterMesh = this.transform.Find("Player_Mesh");
+		m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));	
+		
+		m_ledgeGrabBox = this.transform.Find("Ledge_Grab_Detection");
 		
 		m_lastCheckpoint = StartCheckPoint;
 		m_lastCheckpoint.PlayerCheckPointAlpha = m_playerPositionAlpha;
@@ -194,13 +201,19 @@ public class CEntityPlayer : CEntityPlayerBase {
 			if (m_playerState != PlayerState.UpALadder)
 			{
 				if (m_physics.Direction > 0)
-					this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));
+				{
+					m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));
+					m_ledgeGrabBox.localPosition = new Vector3(0.18f, m_ledgeGrabBox.localPosition.y, m_ledgeGrabBox.localPosition.z);
+				}
 				else if (m_physics.Direction < 0)
-					this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 90, 0));
+				{
+					m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 90, 0));
+					m_ledgeGrabBox.localPosition = new Vector3(-0.18f, m_ledgeGrabBox.localPosition.y, m_ledgeGrabBox.localPosition.z);
+				}
 			}
 			else
 			{
-				this.transform.GetChild(0).transform.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 180, 0));		
+				m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 180, 0));		
 			}
 			
 			m_animation.OnFixedUpdate(ref m_playerState);
@@ -244,6 +257,14 @@ public class CEntityPlayer : CEntityPlayerBase {
 	public void SetPlayerState(PlayerState newState)
 	{
 		m_playerState = newState;
+	}
+	
+	/*
+	 * \brief External access to get a players state
+	*/
+	public PlayerState GetPlayerState()
+	{
+		return m_playerState;
 	}
 	
 	/*
