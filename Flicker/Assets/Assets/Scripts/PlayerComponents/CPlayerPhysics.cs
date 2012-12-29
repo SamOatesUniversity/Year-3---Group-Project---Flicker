@@ -258,11 +258,15 @@ public class CPlayerPhysics : MonoBehaviour {
 		{
 			Debug.DrawRay(contact.point, contact.normal);
 			
-			CSceneObject obj = contact.otherCollider.gameObject.GetComponent<CSceneObject>();
-			if (obj == null && contact.otherCollider.gameObject.transform.parent != null) {
-				GameObject parent = contact.otherCollider.gameObject.transform.parent.gameObject;
-				if (parent != null) {
-					obj = parent.GetComponent<CSceneObject>();
+			CSceneObject obj = null;
+			if (contact.otherCollider)
+			{
+				obj = contact.otherCollider.gameObject.GetComponent<CSceneObject>();
+				if (obj == null && contact.otherCollider.gameObject.transform.parent != null) {
+					GameObject parent = contact.otherCollider.gameObject.transform.parent.gameObject;
+					if (parent != null) {
+						obj = parent.GetComponent<CSceneObject>();
+					}
 				}
 			}
 			

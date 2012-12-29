@@ -45,7 +45,8 @@ public class CPlayerLight : MonoBehaviour {
 		
 		if (LightPrefab)
 		{
-			Transform parentTransform = GameObject.Find("Backpack").GetComponent<SkinnedMeshRenderer>().bones[0].transform ;
+			SkinnedMeshRenderer mesh = GameObject.Find("Backpack").GetComponent<SkinnedMeshRenderer>();
+			Transform parentTransform = mesh.bones[0].transform;
 			GameObject obj =  (GameObject)Instantiate(LightPrefab,transform.position,Quaternion.identity);
 			m_light = obj.GetComponent<Light>().light;
 			m_light.transform.parent = parentTransform;
