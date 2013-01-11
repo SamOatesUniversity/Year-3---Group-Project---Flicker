@@ -382,7 +382,7 @@ public class CPlayerPhysics : MonoBehaviour {
 				if (Input.GetAxis("Vertical") > 0 && playerState != PlayerState.LedgeClimbComplete) {
 					playerState = PlayerState.LedgeClimb;
 					m_jumpState = JumpState.Landed;
-					m_ledgeGrabBox.collider.enabled = true;
+					m_ledgeGrabBox.collider.enabled = false;
 				}
 				// if the user pressed space, jump off the wall
 				else if (m_isJumpDown) {

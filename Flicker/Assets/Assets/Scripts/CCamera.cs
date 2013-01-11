@@ -19,7 +19,7 @@ public class CCamera : MonoBehaviour {
 	
 	public int					DistanceFromPlayer = 10;		//!< How far away from the player should the camera be
 	
-	public float				MaxCameraOffset = 10.0f;		//!< 
+	public float				MaxCameraOffset = 1.0f;		//!< 
 
 	/*
 	 * \brief Called when the object is created. At the start.
@@ -37,13 +37,10 @@ public class CCamera : MonoBehaviour {
 	}
 	
 	public void TendToMaxOffset(float direction)
-	{
+	{	
 		if (direction != 0.0f) 
 		{
-			if (direction < 0 && m_cameraOffset == -MaxCameraOffset) return;	
-			if (direction > 0 && m_cameraOffset == MaxCameraOffset) return;	
-			
-			m_cameraOffset += (direction * 0.1f);
+			m_cameraOffset += (direction * 0.01f);
 			
 			if (m_cameraOffset > MaxCameraOffset) m_cameraOffset = MaxCameraOffset;
 			if (m_cameraOffset < -MaxCameraOffset) m_cameraOffset = -MaxCameraOffset;
@@ -60,13 +57,19 @@ public class CCamera : MonoBehaviour {
 		}
 	}
 	
+	public Vector3 WorldTransform {
+		get {
+			return m_transform.position;	
+		}
+	}
+	
     public void SetLookAt(Vector3 lookAt)
     {
         m_transform.LookAt(lookAt);
     }
 	
-    public void SetPosition(Vector3 position)
+    public void SetPosition(Vector3 localposition)
     {
-        m_transform.position = position + new Vector3(0,CameraElevation,0);
+    	m_transform.localPosition = localposition + new Vector3(-m_cameraOffset, CameraElevation, 0);
     }
 }

@@ -7,6 +7,8 @@ public class CPlayerAnimation : MonoBehaviour {
 	
 	bool m_startedLedgeClimb = false;
 	
+	private string m_currentAnimation = null;
+	
 	public void OnStart(Animation animation)
 	{
 		m_animation = animation;
@@ -16,27 +18,32 @@ public class CPlayerAnimation : MonoBehaviour {
 	{
 		if (playerState == PlayerState.Walking)
 		{
+			m_currentAnimation = "Run";
 			if (!m_animation.IsPlaying("Run"))
 				m_animation.CrossFade("Run");
 		}
 		else if (playerState == PlayerState.Standing)
 		{
+			m_currentAnimation = "Idle";
 			m_animation["Idle Simple"].speed = 0.2f;
 			if (!m_animation.IsPlaying("Idle Simple"))
 				m_animation.CrossFade("Idle Simple");
 		}
 		else if (playerState == PlayerState.Jumping)
 		{
+			m_currentAnimation = "Running";
 			if (!m_animation.IsPlaying("Running Jump (NEW)"))
 				m_animation.Play("Running Jump (NEW)");
 		}
 		else if (playerState == PlayerState.FallJumping)
 		{
+			m_currentAnimation = "Falling";
 			if (!m_animation.IsPlaying("Falling Loop"))
 				m_animation.CrossFade("Falling Loop");
 		}
 		else if (playerState == PlayerState.LedgeHang)
 		{
+			m_currentAnimation = "Ledge Hang";
 			if (!m_animation.IsPlaying("Wall Hang Idle")) {
 				m_animation.CrossFade("Wall Hang Idle");
 				m_startedLedgeClimb = false;
@@ -44,23 +51,28 @@ public class CPlayerAnimation : MonoBehaviour {
 		}
 		else if (playerState == PlayerState.LedgeClimb)
 		{
+			m_currentAnimation = "Ledge Climbing";
 			if (!m_animation.IsPlaying("Climb from Free Hang") && !m_startedLedgeClimb) {
 				m_animation.CrossFade("Climb from Free Hang");
 				m_startedLedgeClimb = true;
 			}	
 			else if (m_startedLedgeClimb == true && !m_animation.IsPlaying("Climb from Free Hang")) {
 				playerState = PlayerState.LedgeClimbComplete;
-				m_startedLedgeClimb= false;
+				m_startedLedgeClimb = false;
 			}
 		}
 		else if (playerState == PlayerState.FallingFromTower)
 		{
+			m_currentAnimation = "Falling";
 			if (!m_animation.IsPlaying("Falling Loop"))
 				m_animation.CrossFade("Falling Loop");
 		}
 		else if (playerState == PlayerState.UpALadder)
 		{
 			float upDown = Input.GetAxis("Vertical");
+			
+			m_currentAnimation = "Ladder";
+			
 			if ((upDown != 0.0f && ladderState != LadderState.AtTop) || (ladderState == LadderState.AtTop && upDown < 0))
 			{
 				bool forceAnimationChange = upDown > 0.0f && m_animation["Ladder Up"].speed > 0.0f ? false : true;
@@ -77,6 +89,11 @@ public class CPlayerAnimation : MonoBehaviour {
 					m_animation.Play("Ladder Up");
 			}
 		}
+	}
+	
+	public string CurrentAnimation()
+	{
+		return m_currentAnimation;	
 	}
 	
 }
