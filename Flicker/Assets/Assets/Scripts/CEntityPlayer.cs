@@ -205,13 +205,13 @@ public class CEntityPlayer : CEntityPlayerBase {
 				camPostion = new Vector3(
 		            0,
 					0,
-		            -3	
+		            m_cameraClass.DistanceFromPlayer	
 				);				
 			}
 			else
 			{
 				camPostion = new Vector3(
-		            (Physics.MovingDirection == -1) ? 3 : -3,
+		            (Physics.MovingDirection == -1) ? -m_cameraClass.DistanceFromPlayer : m_cameraClass.DistanceFromPlayer,
 					0,
 		            0	
 				);
