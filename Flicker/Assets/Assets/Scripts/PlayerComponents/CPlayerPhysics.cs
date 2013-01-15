@@ -429,6 +429,7 @@ public class CPlayerPhysics : MonoBehaviour {
 			m_velocity = velocity;	
 		
 		m_direction = direction;
+		if (m_direction != 0) m_movingDirection = m_direction;
 		
 		if (m_collisionState != CollisionState.None && m_jumpState != JumpState.Jumping)
 		{
@@ -438,7 +439,6 @@ public class CPlayerPhysics : MonoBehaviour {
 			}
 			else
 			{
-				m_movingDirection = m_direction;
 				playerState = PlayerState.Walking;	
 			}
 		}
@@ -476,19 +476,15 @@ public class CPlayerPhysics : MonoBehaviour {
 			else
 				playerState = PlayerState.Jumping; 
 			
-			Debug.Log(m_ladderClimb.State + ", " + m_jumpState);
-			
 			if (m_ladderClimb.State == LadderState.JumpOff && m_jumpState != JumpState.Jumping)
 			{
 				if (Input.GetAxis("Horizontal") == 0.0f)
 				{
 					m_ladderClimb.State = LadderState.AtMiddle;
 					playerState = PlayerState.UpALadder;
-					Debug.Log("Must press direction");
 					return;
 				}
 				
-				Debug.Log("Jump off the ladder!");
 				m_jumpTimer = (Time.time * 1000.0f);
 				m_body.AddForce(new Vector3(0, PlayerJumpHeight, 0), ForceMode.Impulse);	
 				m_jumpState = JumpState.Jumping;

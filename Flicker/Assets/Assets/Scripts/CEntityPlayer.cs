@@ -200,7 +200,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 			
 			Vector3 camPostion = Vector3.zero;
 			
-			if (m_playerState == PlayerState.UpALadder)
+			if (m_playerState == PlayerState.UpALadder && m_physics.CollisionType == CollisionState.None)
 			{
 				camPostion = new Vector3(
 		            0,
@@ -221,8 +221,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 				camPostion.y = m_dead.y;
 			
 			Vector3 lookatOffset = transform.FindChild("Player_Mesh/Bip001/Bip001 Pelvis").position;
-			//if (additionalY != 0.0f)
-			//	lookatOffset = transform.position;
 			
 	        m_cameraClass.SetPosition(camPostion);
 	        m_cameraClass.SetLookAt(lookatOffset);
@@ -242,10 +240,20 @@ public class CEntityPlayer : CEntityPlayerBase {
 					m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 90, 0));
 					m_ledgeGrabBox.localPosition = new Vector3(-0.18f, m_ledgeGrabBox.localPosition.y, m_ledgeGrabBox.localPosition.z);
 				}
+				else if (m_physics.MovingDirection > 0)
+				{
+					m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));
+					m_ledgeGrabBox.localPosition = new Vector3(0.18f, m_ledgeGrabBox.localPosition.y, m_ledgeGrabBox.localPosition.z);
+				}
+				else if (m_physics.MovingDirection < 0)
+				{
+					m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 90, 0));
+					m_ledgeGrabBox.localPosition = new Vector3(-0.18f, m_ledgeGrabBox.localPosition.y, m_ledgeGrabBox.localPosition.z);
+				}
 			}
 			else
 			{
-				m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 180, 0));		
+				m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 180, 0));
 			}
 			
 			m_animation.OnFixedUpdate(ref m_playerState, m_physics.LadderClimb.State);
