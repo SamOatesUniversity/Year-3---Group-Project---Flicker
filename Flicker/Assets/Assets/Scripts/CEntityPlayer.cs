@@ -109,8 +109,11 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		m_ledgeGrabBox = this.transform.Find("Ledge_Grab_Detection");
 		
-		m_lastCheckpoint = StartCheckPoint;
-		m_lastCheckpoint.PlayerCheckPointAlpha = m_playerPositionAlpha;
+		if (StartCheckPoint != null)
+		{
+			m_lastCheckpoint = StartCheckPoint;
+			m_lastCheckpoint.PlayerCheckPointAlpha = m_playerPositionAlpha;
+		}
 		
 		m_dead.didDie = false;
 		
@@ -321,8 +324,17 @@ public class CEntityPlayer : CEntityPlayerBase {
 	*/
 	void OnDeath() 
 	{
-		m_lastPlayerPositionAlpha = m_playerPositionAlpha = m_lastCheckpoint.PlayerCheckPointAlpha;
-		m_physics.Direction = m_lastCheckpoint.Direction;
+		if (m_lastCheckpoint != null)
+		{
+			m_lastPlayerPositionAlpha = m_playerPositionAlpha = m_lastCheckpoint.PlayerCheckPointAlpha;
+			m_physics.Direction = m_lastCheckpoint.Direction;	
+		}
+		else
+		{
+			m_physics.Direction = 1;
+			m_lastPlayerPositionAlpha = m_playerPositionAlpha = InitialAlphaPosition;
+		}
+		
 		m_playerState = PlayerState.Standing;
 		m_physics.JumpType = JumpState.Landed;
 		m_physics.LadderClimb.State = LadderState.None;
@@ -377,9 +389,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 			if (parent != null) {
 				CSteamVent vent = parent.GetComponent<CSteamVent>();
 				if (vent != null && vent.StreamOn) {
-					m_playerState = PlayerState.FallingFromTower;
-					m_dead.y = transform.position.y;
-					m_dead.time = Time.time * 1000.0f;
+					PushPlayerFromTower();
 					return;
 				}
 			}
@@ -394,5 +404,12 @@ public class CEntityPlayer : CEntityPlayerBase {
 			return;
 		
 		m_physics.CallOnTriggerExit(collision, ref m_playerState);
+	}
+	
+	public void PushPlayerFromTower()
+	{
+		m_playerState = PlayerState.FallingFromTower;
+		m_dead.y = transform.position.y;
+		m_dead.time = Time.time * 1000.0f;
 	}
 }

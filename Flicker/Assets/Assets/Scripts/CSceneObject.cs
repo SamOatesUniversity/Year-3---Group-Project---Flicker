@@ -9,11 +9,13 @@ public class CSceneObject : MonoBehaviour {
 	
 	public bool CanWallJump 			= true;			//!< Can a player wall jump on this object?
 	
-	public bool IsLadder				= false; 			//!< Is the object a ladder?
+	public bool IsLadder				= false; 		//!< Is the object a ladder?
 	
-	public float ExtraSlide				= 1.0f; 			//!< Can the player wall jump upon this object?
+	public float ExtraSlide				= 1.0f; 		//!< Can the player wall jump upon this object?
 	
 	public bool CanLedgeGrab			= true;			//!< Can the player ledge grab on the object?
+	
+	public bool KillPlayerOnTouch		= false;		//!< 
 
 	// Use this for initialization
 	void Start() 
@@ -28,6 +30,7 @@ public class CSceneObject : MonoBehaviour {
 	}
 	
 	public static bool CheckLedgeGrab(Collision collision) {
+		
 		foreach (ContactPoint contact in collision)
 		{
 			Collider ledgeGrab = null;
@@ -70,12 +73,39 @@ public class CSceneObject : MonoBehaviour {
 		return false;
 	}
 	
+	private void CheckKillOnTouch(Collision collision)
+	{
+		if (!KillPlayerOnTouch)
+			return;
+		
+		foreach (ContactPoint contact in collision)
+		{
+			GameObject player = null;
+			if (contact.otherCollider != null && contact.otherCollider.gameObject.name == "Player Spawn")
+				player = contact.otherCollider.gameObject;
+			if (contact.thisCollider != null && contact.thisCollider.gameObject.name == "Player Spawn")
+				player = contact.thisCollider.gameObject;
+			
+			if (player == null)
+				continue;
+			
+			CEntityPlayer entityPlayer = player.GetComponent<CEntityPlayer>();
+			if (entityPlayer == null)
+				return;
+			
+			entityPlayer.PushPlayerFromTower();
+			
+		}
+	}
+	
 	void OnCollisionEnter(Collision collision) {
 		CheckLedgeGrab(collision);
+		CheckKillOnTouch(collision);
 	}
 	
 	void OnCollisionStay(Collision collision) {
 		CheckLedgeGrab(collision);
+		CheckKillOnTouch(collision);
 	}
 
 }
