@@ -34,12 +34,29 @@ public class CSceneObject : MonoBehaviour {
 		foreach (ContactPoint contact in collision)
 		{
 			Collider ledgeGrab = null;
+			CSceneObject sceneLedge = null;
+			
 			if (contact.otherCollider != null && contact.otherCollider.gameObject.name == "Ledge_Grab_Detection")
+			{
 				ledgeGrab = contact.otherCollider;
-			
-			if (contact.thisCollider != null && contact.thisCollider.gameObject.name == "Ledge_Grab_Detection")
+				
+				if (contact.thisCollider != null && contact.thisCollider.gameObject != null)
+					sceneLedge = contact.thisCollider.gameObject.GetComponent<CSceneObject>();
+			}
+			else if (contact.thisCollider != null && contact.thisCollider.gameObject.name == "Ledge_Grab_Detection")
+			{
 				ledgeGrab = contact.thisCollider;
-			
+				
+				if (contact.otherCollider != null && contact.otherCollider.gameObject != null)
+					sceneLedge = contact.otherCollider.gameObject.GetComponent<CSceneObject>();
+			}
+				
+			if (sceneLedge == null || !sceneLedge.CanLedgeGrab)
+			{
+				if (ledgeGrab != null) ledgeGrab.enabled = false;
+				continue;
+			}
+				
 			if (ledgeGrab != null)
 			{
 				if (CPlayerPhysics.isNearly(contact.normal.normalized.y, -1.0f, 0.1f))

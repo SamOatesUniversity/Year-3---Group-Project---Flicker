@@ -170,9 +170,10 @@ public class CEntityPlayer : CEntityPlayerBase {
 		{
 			m_playerPositionAlpha -= m_physics.MovingDirection * 4;	
 			m_lastPlayerPositionAlpha = m_playerPositionAlpha;
-			additionalY += 0.5f;
+			additionalY += 0.65f;
 			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 			m_playerState = PlayerState.Standing;
+			m_physics.CurrentCollisionState = CollisionState.OnFloor;
 		}
 		
 		if (m_physics.LadderClimb.State != LadderState.None) {

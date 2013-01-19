@@ -106,6 +106,9 @@ public class CPlayerPhysics : MonoBehaviour {
 		get {
 			return m_collisionState;
 		}
+		set {
+			m_collisionState = value;	
+		}
 	}
 	
 	public CLadderClimb LadderClimb {
@@ -214,7 +217,7 @@ public class CPlayerPhysics : MonoBehaviour {
 	*/
 	public void CallOnCollisionExit(Collision collision)
 	{
-		m_collisionState = CollisionState.None;
+		//m_collisionState = CollisionState.None;
 		m_platform = null;
 	}
 	
@@ -228,12 +231,15 @@ public class CPlayerPhysics : MonoBehaviour {
 		foreach (ContactPoint contact in collision)
 		{
 			Debug.DrawRay(contact.point, contact.normal);
-			
+						
 			//
-			CSceneObjectPlatform platform = contact.otherCollider.gameObject.GetComponent<CSceneObjectPlatform>();
-			if (platform != null && m_platform == null) {
-				m_platform = platform;
-				m_platform.resetDeltaA();
+			if (contact.otherCollider != null && contact.otherCollider.gameObject != null)
+			{
+				CSceneObjectPlatform platform = contact.otherCollider.gameObject.GetComponent<CSceneObjectPlatform>();
+				if (platform != null && m_platform == null) {
+					m_platform = platform;
+					m_platform.resetDeltaA();
+				}
 			}
 			
 			//
@@ -249,15 +255,13 @@ public class CPlayerPhysics : MonoBehaviour {
 				}
 			}
 			
-			float yContact = contact.point.y - m_body.position.y;
-			
-			if (contact.thisCollider != null && contact.thisCollider.gameObject.name == "Ledge_Grab_Detection")
+			if (contact.thisCollider != null && contact.thisCollider.gameObject != null && contact.thisCollider.gameObject.name == "Ledge_Grab_Detection" && (obj == null || obj.CanLedgeGrab))
 			{
 				if(CSceneObject.CheckLedgeGrab(collision))
 					continue;
 			}
 			
-			if (contact.otherCollider != null && contact.otherCollider.gameObject.name == "Ledge_Grab_Detection")
+			if (contact.otherCollider != null && contact.otherCollider.gameObject != null && contact.otherCollider.gameObject.name == "Ledge_Grab_Detection" && (obj == null || obj.CanLedgeGrab))
 			{
 				if (CSceneObject.CheckLedgeGrab(collision))
 					continue;
@@ -363,7 +367,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		int direction = isNearly(velocity, 0.0f, 0.1f) ? 0 : velocity > 0 ? 1 : -1;
 		
 		//platform update
-		if (m_platform) {
+		if (m_platform && m_collisionState == CollisionState.OnFloor) {
 			m_platformVelocity += m_platform.DeltaA;
 			m_platform.resetDeltaA();
 		}
@@ -460,6 +464,9 @@ public class CPlayerPhysics : MonoBehaviour {
 	
 	public void OnUpdate(ref PlayerState playerState)
 	{	
+		if (playerState == PlayerState.Standing)
+			m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+		
 		m_isJumpDown = Input.GetButton("Jump");
 		if (m_isJumpDown && m_jumpState == JumpState.Landed && CanJump(playerState))
 		{
@@ -486,6 +493,7 @@ public class CPlayerPhysics : MonoBehaviour {
 			if (m_ladderClimb.State != LadderState.JumpOff)
 			{
 				playerState = PlayerState.UpALadder;
+				m_collisionState = CollisionState.None;
 				m_ladderClimb.CallOnUpdate(m_collisionState);
 			}
 			else
@@ -496,6 +504,7 @@ public class CPlayerPhysics : MonoBehaviour {
 				if (Input.GetAxis("Horizontal") == 0.0f)
 				{
 					m_ladderClimb.State = LadderState.AtMiddle;
+					m_collisionState = CollisionState.None;
 					playerState = PlayerState.UpALadder;
 					return;
 				}
