@@ -229,6 +229,14 @@ public class CPlayerPhysics : MonoBehaviour {
 		{
 			Debug.DrawRay(contact.point, contact.normal);
 			
+			//
+			CSceneObjectPlatform platform = contact.otherCollider.gameObject.GetComponent<CSceneObjectPlatform>();
+			if (platform != null && m_platform == null) {
+				m_platform = platform;
+				m_platform.resetDeltaA();
+			}
+			
+			//
 			CSceneObject obj = null;
 			if (contact.otherCollider)
 			{
@@ -355,7 +363,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		int direction = isNearly(velocity, 0.0f, 0.1f) ? 0 : velocity > 0 ? 1 : -1;
 		
 		//platform update
-		if(m_platform) {
+		if (m_platform) {
 			m_platformVelocity += m_platform.DeltaA;
 			m_platform.resetDeltaA();
 		}
