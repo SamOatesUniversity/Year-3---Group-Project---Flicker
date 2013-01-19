@@ -218,44 +218,13 @@ public class CPlayerPhysics : MonoBehaviour {
 		m_platform = null;
 	}
 	
-	public void CallOnTriggerStay(Collider collider, ref PlayerState playerState)
-	{
-		CSceneObject obj = collider.gameObject.GetComponent<CSceneObject>();
-		if (obj == null && collider.gameObject != null && collider.gameObject.transform.parent != null) {
-			GameObject parent = collider.gameObject.transform.parent.gameObject;
-			if (parent != null) {
-				obj = parent.GetComponent<CSceneObject>();
-			}
-		}
-					
-		if (obj != null && obj.IsLadder && (m_ladderClimb.State != LadderState.JumpOff)) {
-			m_ladderClimb.CallOnTriggerStay(collider, ref playerState);
-			if (m_ladderClimb.State != LadderState.None) {
-				m_body.constraints = RigidbodyConstraints.FreezeAll;
-			}
-			else
-			{
-				m_collisionState = CollisionState.OnFloor;	
-			}
-			return;
-		}
-	}
-	
-	public void CallOnTriggerExit(Collider collider, ref PlayerState playerState)
-	{
-		if (m_ladderClimb.State != LadderState.None) {
-			m_ladderClimb.CallOnTriggerExit(collider, ref playerState);
-			m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-		}
-	}
-	
-	/*
+/*
 	 * \brief Called whilst a collision is taking place
 	*/
 	public void CallOnCollisionStay(Collision collision, ref PlayerState playerState, ref float playerAlpha)
 	{		
 		m_collisionState = CollisionState.None;
-					
+							
 		foreach (ContactPoint contact in collision)
 		{
 			Debug.DrawRay(contact.point, contact.normal);
@@ -326,9 +295,46 @@ public class CPlayerPhysics : MonoBehaviour {
 			m_velocity = -(m_movingDirection * 0.15f);
 		}
 		
-		//print ( "m_velocity is: " + m_velocity );
+		if (m_collisionState == CollisionState.OnFloor && ((Time.time * 1000.0f) - m_jumpTimer > 200.0f))
+		{
+			m_jumpState = JumpState.Landed;	
+			m_ladderClimb.State = LadderState.None;
+			m_player.SetPlayerState(PlayerState.Standing);
+			m_ledgeGrabBox.collider.enabled = true;
+		}
 	}
 	
+	public void CallOnTriggerStay(Collider collider, ref PlayerState playerState)
+	{
+		CSceneObject obj = collider.gameObject.GetComponent<CSceneObject>();
+		if (obj == null && collider.gameObject != null && collider.gameObject.transform.parent != null) {
+			GameObject parent = collider.gameObject.transform.parent.gameObject;
+			if (parent != null) {
+				obj = parent.GetComponent<CSceneObject>();
+			}
+		}
+					
+		if (obj != null && obj.IsLadder && (m_ladderClimb.State != LadderState.JumpOff)) {
+			m_ladderClimb.CallOnTriggerStay(collider, ref playerState);
+			if (m_ladderClimb.State != LadderState.None) {
+				m_body.constraints = RigidbodyConstraints.FreezeAll;
+			}
+			else
+			{
+				m_collisionState = CollisionState.OnFloor;	
+			}
+			return;
+		}
+	}
+	
+	public void CallOnTriggerExit(Collider collider, ref PlayerState playerState)
+	{
+		if (m_ladderClimb.State != LadderState.None) {
+			m_ladderClimb.CallOnTriggerExit(collider, ref playerState);
+			m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+		}
+	}
+		
 	/*
 	 * \brief Called on player update
 	*/
@@ -336,7 +342,7 @@ public class CPlayerPhysics : MonoBehaviour {
 	{		
 		if (playerState == PlayerState.FallingFromTower)
 			return;
-
+		
 		float velocity = (Input.GetAxis("Horizontal") * MaxSpeed) * m_invert;
 		if ((Time.time * 1000.0f) - m_velocityLockTimer < 100)
 		{
@@ -455,6 +461,7 @@ public class CPlayerPhysics : MonoBehaviour {
 				m_body.AddForce(new Vector3(0, PlayerJumpHeight, 0), ForceMode.Impulse);	
 				m_jumpState = JumpState.Jumping;
 				playerState = PlayerState.Jumping;
+				m_collisionState = CollisionState.None;
 			}
 		}		
 		
@@ -556,6 +563,9 @@ public class CPlayerPhysics : MonoBehaviour {
 			return false;
 		
 		if (m_ladderClimb.State == LadderState.JumpOff)
+			return false;
+		
+		if (m_collisionState != CollisionState.OnFloor)
 			return false;
 		
 		return true;
