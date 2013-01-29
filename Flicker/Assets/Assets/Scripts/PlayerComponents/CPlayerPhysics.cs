@@ -356,6 +356,10 @@ public class CPlayerPhysics : MonoBehaviour {
 			return;
 		
 		float velocity = (Input.GetAxis("Horizontal") * MaxSpeed) * m_invert;
+		if (Application.platform == RuntimePlatform.Android)
+			velocity = Input.acceleration.y;
+		
+		
 		if ((Time.time * 1000.0f) - m_velocityLockTimer < 100)
 		{
 			velocity = m_velocity;
@@ -468,6 +472,9 @@ public class CPlayerPhysics : MonoBehaviour {
 			m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 		
 		m_isJumpDown = Input.GetButton("Jump");
+		if (Application.platform == RuntimePlatform.Android)
+			m_isJumpDown = Input.touchCount != 0;
+		
 		if (m_isJumpDown && m_jumpState == JumpState.Landed && CanJump(playerState))
 		{
 			if ((Time.time * 1000.0f) - m_jumpTimer > JumpDelayMS)

@@ -87,6 +87,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		base.Start();
 		
+		if (Application.platform == RuntimePlatform.Android)
+			Screen.orientation = ScreenOrientation.Landscape;
+		
 		//Time.timeScale = 0.75f;
 		
 		m_playerPositionAlpha = InitialAlphaPosition;
@@ -276,6 +279,10 @@ public class CEntityPlayer : CEntityPlayerBase {
 	{
 		if (Input.GetButton("Reset"))
 		{
+			// if we are on android, kill the game
+			if (Application.platform == RuntimePlatform.Android)
+				Application.Quit();				
+				
 			OnDeath();
 			return;
 		}		
