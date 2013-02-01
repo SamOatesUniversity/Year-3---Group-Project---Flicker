@@ -50,6 +50,8 @@ public class CPlayerPhysics : MonoBehaviour {
 	
 	private float 			m_velocityLockTimer = 0;				//!< The time that velocity was locked
 	
+	private float 			m_turnLockTimer = 0;					//!< The time that turning was locked
+	
 	private CSceneObjectPlatform	m_platform = null;				//!< The platform, if any, the player is standing on
 	
 	private GameObject		m_ledgeGrabBox = null;
@@ -457,9 +459,12 @@ public class CPlayerPhysics : MonoBehaviour {
 		int lastDirection = m_direction;
 		int lastMovingDirection = m_movingDirection;
 		
-		m_direction = direction;
-		if (m_direction != 0) m_movingDirection = m_direction;
-		
+		if (playerState != PlayerState.Turning)
+		{
+			m_direction = direction;
+			if (m_direction != 0) m_movingDirection = m_direction;
+		}
+			
 		if (m_collisionState != CollisionState.None && m_jumpState != JumpState.Jumping)
 		{
 			if (m_direction == 0 && playerState != PlayerState.Turning)
@@ -475,14 +480,16 @@ public class CPlayerPhysics : MonoBehaviour {
 				}
 				
 				// are we tuning round?
-				if (lastDirection != direction)
+				if (lastDirection != direction && ((Time.time * 1000.0f) - m_turnLockTimer > 1000.0f))
 				{
 					if (m_velocity != 0.0f && lastMovingDirection != m_direction)
 					{
 						playerState = PlayerState.Turning;
 						m_velocity = 0.0f;
+						m_turnLockTimer = Time.time * 1000.0f;
 					}
-				} else
+				} 
+				else
 					playerState = PlayerState.Walking;	
 			}
 		}
