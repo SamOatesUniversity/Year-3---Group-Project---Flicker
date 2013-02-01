@@ -316,7 +316,16 @@ public class CPlayerPhysics : MonoBehaviour {
 		if (m_collisionState == CollisionState.OnFloor && ((Time.time * 1000.0f) - m_jumpTimer > 200.0f))
 		{
 			m_jumpState = JumpState.Landed;	
-			m_ladderClimb.State = LadderState.None;
+			
+			if (m_ladderClimb.State != LadderState.AtBase)
+			{
+				m_ladderClimb.State = LadderState.None;
+			}
+			else
+			{
+				playerState = PlayerState.UpALadder;
+			}
+			
 			if (m_player.GetPlayerState() != PlayerState.Turning) m_player.SetPlayerState(PlayerState.Standing);
 			m_ledgeGrabBox.collider.enabled = true;
 		}
@@ -373,7 +382,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		
 		if (m_ladderClimb.State == LadderState.AtMiddle || m_ladderClimb.State == LadderState.AtTop)
 			velocity = 0;
-		
+					
 		int direction = isNearly(velocity, 0.0f, 0.1f) ? 0 : velocity > 0 ? 1 : -1;
 		
 		//platform update
