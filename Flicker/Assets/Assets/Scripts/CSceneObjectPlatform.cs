@@ -31,8 +31,9 @@ public class CSceneObjectPlatform : CSceneObject {
 	void FixedUpdate()
 	{
 		Animation platAnim = gameObject.GetComponent<Animation>();
-		if (platAnim != null)
+		if (platAnim == null)
 		{
+			return;
 			//Debug.Log ("Platform Pos = " + platAnim.transform.position); 
 		}
 		Vector3 currentPos = platAnim.transform.position;

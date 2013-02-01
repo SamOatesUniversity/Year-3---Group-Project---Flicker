@@ -126,16 +126,18 @@ public class CPlayerPhysics : MonoBehaviour {
 		}
 		set {
 			m_direction = value;
-			m_movingDirection = value;
 		}
 	}
 	
 	/*
 	 * \brief Gets the players last known moving direction
 	*/
-	public float MovingDirection {
+	public int MovingDirection {
 		get {
 			return m_movingDirection;
+		}
+		set {
+			m_movingDirection = value;	
 		}
 	}
 	
@@ -475,7 +477,6 @@ public class CPlayerPhysics : MonoBehaviour {
 				// are we tuning round?
 				if (lastDirection != direction)
 				{
-					Debug.Log ("Changed Direction");
 					if (m_velocity != 0.0f && lastMovingDirection != m_direction)
 					{
 						playerState = PlayerState.Turning;

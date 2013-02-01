@@ -357,6 +357,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		else
 		{
 			m_physics.Direction = 1;
+			m_physics.MovingDirection = 1;
 			m_lastPlayerPositionAlpha = m_playerPositionAlpha = InitialAlphaPosition;
 		}
 		
