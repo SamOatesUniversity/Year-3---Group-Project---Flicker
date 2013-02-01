@@ -28,7 +28,7 @@ public class CPlayerPhysics : MonoBehaviour {
 	
 	private int				m_direction = 0;						//!< Stores the direction, 0 = not moving, 1 = left, -1 = right
 	
-	private int				m_movingDirection = 0;					//!< Stores the direction, 0 = not moving, 1 = left, -1 = right
+	private int				m_movingDirection = 1;					//!< Stores the direction, 0 = not moving, 1 = left, -1 = right
 
 	private CollisionState	m_collisionState = CollisionState.None;	//!< 
 	
@@ -207,7 +207,9 @@ public class CPlayerPhysics : MonoBehaviour {
 		{
 			m_jumpState = JumpState.Landed;	
 			m_ladderClimb.State = LadderState.None;
-			m_player.SetPlayerState(PlayerState.Standing);
+			
+			if (m_player.GetPlayerState() != PlayerState.Turning) m_player.SetPlayerState(PlayerState.Standing);
+			
 			m_ledgeGrabBox.collider.enabled = true;
 		}
 	}
@@ -311,7 +313,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		{
 			m_jumpState = JumpState.Landed;	
 			m_ladderClimb.State = LadderState.None;
-			m_player.SetPlayerState(PlayerState.Standing);
+			if (m_player.GetPlayerState() != PlayerState.Turning) m_player.SetPlayerState(PlayerState.Standing);
 			m_ledgeGrabBox.collider.enabled = true;
 		}
 	}
@@ -450,18 +452,37 @@ public class CPlayerPhysics : MonoBehaviour {
 		if (!(m_collisionState == CollisionState.OnWall && m_jumpState == JumpState.Jumping))
 			m_velocity = velocity;	
 		
+		int lastDirection = m_direction;
+		int lastMovingDirection = m_movingDirection;
+		
 		m_direction = direction;
 		if (m_direction != 0) m_movingDirection = m_direction;
 		
 		if (m_collisionState != CollisionState.None && m_jumpState != JumpState.Jumping)
 		{
-			if (m_direction == 0)
+			if (m_direction == 0 && playerState != PlayerState.Turning)
 			{
 				playerState = PlayerState.Standing;
 			}
 			else
-			{
-				playerState = PlayerState.Walking;	
+			{	
+				if (playerState == PlayerState.Turning)
+				{
+					m_velocity = 0.0f;
+					return;
+				}
+				
+				// are we tuning round?
+				if (lastDirection != direction)
+				{
+					Debug.Log ("Changed Direction");
+					if (m_velocity != 0.0f && lastMovingDirection != m_direction)
+					{
+						playerState = PlayerState.Turning;
+						m_velocity = 0.0f;
+					}
+				} else
+					playerState = PlayerState.Walking;	
 			}
 		}
 	}

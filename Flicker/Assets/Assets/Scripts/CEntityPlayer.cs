@@ -5,6 +5,7 @@ using System.Collections;
 public enum PlayerState {
 	Standing,				//!< The player is stood still
 	Walking,				//!< The player is walking
+	Turning,				//!< The player is turning roud
 	Jumping,				//!< The player is jumping
 	FallJumping,			//!< The player is falling or has jumped for a long time
 	WallJumping,			//!< The player is on a wall
@@ -226,8 +227,11 @@ public class CEntityPlayer : CEntityPlayerBase {
 						movingDirection = -1;
 				}
 				
+				if (m_playerState == PlayerState.Turning)
+					movingDirection *= -1.0f;
+				
 				camPostion = new Vector3(
-		            (Physics.MovingDirection == -1) ? -m_cameraClass.DistanceFromPlayer : m_cameraClass.DistanceFromPlayer,
+		            (movingDirection == -1) ? -m_cameraClass.DistanceFromPlayer : m_cameraClass.DistanceFromPlayer,
 					0,
 		            0	
 				);
@@ -244,7 +248,15 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		// Animate and position the player model mesh
 		{
-			if (m_playerState != PlayerState.UpALadder)
+			if (m_playerState == PlayerState.UpALadder)
+			{
+				m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 180, 0));
+			}
+			else if (m_playerState == PlayerState.Turning)
+			{
+				
+			}
+			else
 			{
 				if (m_physics.Direction > 0)
 				{
@@ -266,10 +278,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 					m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 90, 0));
 					m_ledgeGrabBox.localPosition = new Vector3(-0.18f, m_ledgeGrabBox.localPosition.y, m_ledgeGrabBox.localPosition.z);
 				}
-			}
-			else
-			{
-				m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 180, 0));
 			}
 			
 			m_animation.OnFixedUpdate(ref m_playerState, m_physics.LadderClimb.State);

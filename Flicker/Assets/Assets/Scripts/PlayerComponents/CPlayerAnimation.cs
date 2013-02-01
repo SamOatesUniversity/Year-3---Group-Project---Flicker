@@ -6,6 +6,7 @@ public class CPlayerAnimation : MonoBehaviour {
 	Animation m_animation = null;
 	
 	bool m_startedLedgeClimb = false;
+	bool m_startedTurningRound = false;
 	
 	private string m_currentAnimation = null;
 	
@@ -17,10 +18,24 @@ public class CPlayerAnimation : MonoBehaviour {
 	public void OnFixedUpdate(ref PlayerState playerState, LadderState ladderState)
 	{
 		if (playerState == PlayerState.Walking)
-		{
+		{			
 			m_currentAnimation = "Run";
 			if (!m_animation.IsPlaying("Run"))
-				m_animation.CrossFade("Run");
+				m_animation.CrossFade("Run", 0.2f);
+		}
+		else if (playerState == PlayerState.Turning)
+		{
+			m_currentAnimation = "Turning Around";
+			if (!m_animation.IsPlaying("Running Turn") && !m_startedTurningRound)
+			{
+				m_startedTurningRound = true;
+				m_animation.CrossFade("Running Turn");
+			}
+			else if (!m_animation.IsPlaying("Running Turn"))
+			{
+				m_startedTurningRound = false;
+				playerState = PlayerState.Walking;
+			}
 		}
 		else if (playerState == PlayerState.Standing)
 		{
