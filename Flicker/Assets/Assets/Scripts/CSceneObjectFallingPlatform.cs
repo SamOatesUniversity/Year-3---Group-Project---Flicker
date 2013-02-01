@@ -54,14 +54,14 @@ public class CSceneObjectFallingPlatform : CSceneObject {
 		}
 		if(m_state == PlatformState.Shaking)
 		{
-			if(platAnim["Take 001"].normalizedTime >= 0.25f)
+			if(platAnim["Take 001"].normalizedTime >= 0.39f)
 			{
 				platAnim["Take 001"].normalizedTime = 0.10f;
 			}
 			if(m_timeTriggered+timeToFall < Time.time)
 			{
 				m_state = PlatformState.Falling;
-				platAnim["Take 001"].normalizedTime = 0.30f;
+				platAnim["Take 001"].normalizedTime = 0.40f;
 			}
 		}
 		else if(m_state == PlatformState.Falling)
@@ -80,14 +80,14 @@ public class CSceneObjectFallingPlatform : CSceneObject {
 				if(m_timeDown+resetTime < Time.time)
 				{
 					m_state = PlatformState.Resetting;
-					platAnim["Take 001"].normalizedTime = 0.71f;
+					platAnim["Take 001"].normalizedTime = 0.70f;
 					platAnim.Play();
 				}
 			}
 		}
 		else if(m_state == PlatformState.Resetting)
 		{
-			if(platAnim["Take 001"].normalizedTime >= 0.90f)
+			if(platAnim["Take 001"].normalizedTime >= 0.97f)
 			{
 				m_state = PlatformState.Normal;
 				platAnim.Stop();
