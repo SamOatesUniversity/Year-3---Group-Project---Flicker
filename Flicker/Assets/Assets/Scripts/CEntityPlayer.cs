@@ -217,6 +217,15 @@ public class CEntityPlayer : CEntityPlayerBase {
 			}
 			else
 			{
+				float movingDirection = Physics.MovingDirection;
+				if (movingDirection == 0)
+				{
+					// this is bad
+					movingDirection = 1;
+					if (m_characterMesh.rotation.eulerAngles.y > 180.0f)
+						movingDirection = -1;
+				}
+				
 				camPostion = new Vector3(
 		            (Physics.MovingDirection == -1) ? -m_cameraClass.DistanceFromPlayer : m_cameraClass.DistanceFromPlayer,
 					0,
@@ -351,6 +360,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_additionalRadius = 0.0f;
 		m_dead.didDie = true;
 		rigidbody.velocity = Vector3.zero;
+		
+		m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));
+		m_ledgeGrabBox.localPosition = new Vector3(0.18f, m_ledgeGrabBox.localPosition.y, m_ledgeGrabBox.localPosition.z);
 	}
 		
 	/*
