@@ -48,6 +48,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	private CPlayerDebug 		m_debug = null;
 	
+	private float				m_standingStillTime = 0;
+	
 	// dying vars
 	
 	struct DyingValues {
@@ -208,12 +210,25 @@ public class CEntityPlayer : CEntityPlayerBase {
 			
 			Vector3 camPostion = Vector3.zero;
 			
+			float timeStoodStill = (Time.time * 1000.0f) - m_standingStillTime;
+			if ((m_playerState == PlayerState.Standing && (timeStoodStill > m_cameraClass.CameraZoomTimerMs)) && m_physics.IsOnPlatform() == false)
+			{
+				m_cameraClass.DistanceFromPlayer -= 0.01f;
+			}
+			else
+			{
+				m_cameraClass.DistanceFromPlayer += 0.1f;
+			}
+			
+			m_cameraClass.DistanceFromPlayer = Mathf.Clamp(m_cameraClass.DistanceFromPlayer, m_cameraClass.MinimumCameraDistance, m_cameraClass.MaximumCameraDistance);
+			float cameraDistance = m_cameraClass.DistanceFromPlayer * m_physics.Invert;
+			
 			if (m_playerState == PlayerState.UpALadder && m_physics.CollisionType == CollisionState.None)
 			{
 				camPostion = new Vector3(
 		            0,
 					0,
-		            m_cameraClass.DistanceFromPlayer	
+		            cameraDistance	
 				);				
 			}
 			else
@@ -223,15 +238,17 @@ public class CEntityPlayer : CEntityPlayerBase {
 				{
 					// this is bad
 					movingDirection = 1;
-					if (m_characterMesh.rotation.eulerAngles.y > 180.0f)
+					if (m_characterMesh.rotation.eulerAngles.y > 180.0f) 
+					{
 						movingDirection = -1;
+					}
 				}
 				
 				if (m_playerState == PlayerState.Turning)
 					movingDirection *= -1.0f;
 				
 				camPostion = new Vector3(
-		            (movingDirection == -1) ? -m_cameraClass.DistanceFromPlayer : m_cameraClass.DistanceFromPlayer,
+		            (movingDirection == -1) ? -cameraDistance : cameraDistance,
 					0,
 		            0	
 				);
@@ -304,6 +321,10 @@ public class CEntityPlayer : CEntityPlayerBase {
 			return;
 		}		
 		
+		if (m_physics.Direction != 0)
+			m_standingStillTime = Time.time * 1000.0f;	
+
+		
 		if (m_playerState == PlayerState.FallingFromTower)
 			return;
 		
@@ -365,7 +386,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_physics.JumpType = JumpState.Landed;
 		m_physics.LadderClimb.State = LadderState.None;
 		m_playerHealth = MaxHealth;
-		m_playerState = PlayerState.Standing;
 		m_additionalRadius = 0.0f;
 		m_dead.didDie = true;
 		rigidbody.velocity = Vector3.zero;

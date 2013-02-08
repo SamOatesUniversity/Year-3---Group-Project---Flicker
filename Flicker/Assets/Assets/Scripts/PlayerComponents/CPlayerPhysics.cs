@@ -68,6 +68,8 @@ public class CPlayerPhysics : MonoBehaviour {
 	
 	public int				JumpDelayMS = 500;				//!< The minimum required time to pass between jumps in miliseconds
 	
+	public bool				InsideTower = true;
+	
 	/*
 	 * \brief Initialise anything we don't know at construct time
 	*/
@@ -80,7 +82,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		
 		m_ledgeGrabBox = transform.Find("Ledge_Grab_Detection").gameObject;
 		
-		m_invert = player.MainCamera.GetComponent<CCamera>().DistanceFromPlayer > 0 ? 1 : -1;
+		m_invert = InsideTower ? -1 : 1;
 	}
 	
 	/*
@@ -177,6 +179,11 @@ public class CPlayerPhysics : MonoBehaviour {
 		get { 
 			return m_invert;
 		}
+	}
+	
+	public bool IsOnPlatform()
+	{
+		return m_platform != null;	
 	}
 	
 	/*
@@ -491,6 +498,7 @@ public class CPlayerPhysics : MonoBehaviour {
 				// are we tuning round?
 				if (lastDirection != direction && ((Time.time * 1000.0f) - m_turnLockTimer > 1000.0f))
 				{
+					playerState = PlayerState.Walking;
 					if (m_velocity != 0.0f && lastMovingDirection != m_direction)
 					{
 						playerState = PlayerState.Turning;
@@ -562,10 +570,7 @@ public class CPlayerPhysics : MonoBehaviour {
 				m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 				m_velocityLockTimer = (Time.time * 1000.0f); 
 			}
-		}
-		
-		
-				
+		}				
 	}
 	
 	/*

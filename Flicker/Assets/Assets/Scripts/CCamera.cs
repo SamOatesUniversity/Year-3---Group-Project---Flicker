@@ -10,6 +10,7 @@ public class CCamera : MonoBehaviour {
 	private Transform 			m_transform;					//!< 
 	
 	private float				m_cameraOffset = 0.0f;			//!< 
+	
 
 	/* ----------------
 	    Public Members 
@@ -17,7 +18,12 @@ public class CCamera : MonoBehaviour {
 	
 	public float 				CameraElevation = 0;			//!< 
 	
-	public int					DistanceFromPlayer = 10;		//!< How far away from the player should the camera be
+	public float				InitialDistanceFromPlayer = 3;		//!< How far away from the player should the camera be
+	public float				DistanceFromPlayer = 3;
+	public float 				MinimumCameraDistance = 1;
+	public float				MaximumCameraDistance = 3;
+	
+	public float 				CameraZoomTimerMs = 3000;
 	
 	public float				MaxCameraOffset = 1.0f;		//!< 
 
@@ -27,6 +33,7 @@ public class CCamera : MonoBehaviour {
 	*/
 	public void Start () {	
 		m_transform = this.transform;
+		DistanceFromPlayer = InitialDistanceFromPlayer;
 	}
 	
 	/*
