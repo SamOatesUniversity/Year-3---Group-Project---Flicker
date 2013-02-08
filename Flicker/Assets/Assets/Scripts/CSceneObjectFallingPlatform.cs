@@ -38,11 +38,6 @@ public class CSceneObjectFallingPlatform : CSceneObject {
 	// Update is called once per frame
 	void Update() 
     {
-		SkinnedMeshRenderer mesh = GameObject.Find("bWallConnect").GetComponent<SkinnedMeshRenderer>();
-		Transform parentTransform = mesh.bones[0].transform;
-		
-		BoxCollider collider = gameObject.GetComponent<BoxCollider>();
-		collider.transform.parent = parentTransform;
 	}
 	
 	void FixedUpdate()
