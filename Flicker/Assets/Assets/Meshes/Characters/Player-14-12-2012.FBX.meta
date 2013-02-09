@@ -1,0 +1,908 @@
+fileFormatVersion: 2
+guid: adeb54b2254d7c04f91a2c8cb1485e6f
+ModelImporter:
+  fileIDToRecycleName:
+    4300000: Body_Lowpoly
+    4300002: Backpack
+    4300004: Belts
+    4300006: Scarf
+    4300008: Fur
+    7400000: Take 001 //// Player-14-12-2012
+    7400002: Run //// Player-14-12-2012
+    7400004: Running Jump //// Player-14-12-2012
+    7400006: Running Turn //// Player-14-12-2012
+    7400008: Idle Simple //// Player-14-12-2012
+    7400010: Idle Scratch Head //// Player-14-12-2012
+    7400012: Idle Lift bag //// Player-14-12-2012
+    7400014: Idle Lift Bag 2 //// Player-14-12-2012
+    7400016: Fall into Free Hang //// Player-14-12-2012
+    7400018: Free Hang Idle //// Player-14-12-2012
+    7400020: Climb from Free Hang //// Player-14-12-2012
+    7400022: Fall into Wall Hang //// Player-14-12-2012
+    7400024: Wall Hang Idle //// Player-14-12-2012
+    7400026: Wall Hang Climb //// Player-14-12-2012
+    7400028: Falling Loop //// Player-14-12-2012
+    7400030: Switch Down //// Player-14-12-2012
+    7400032: Switch Up //// Player-14-12-2012
+    7400034: Ladder Up //// Player-14-12-2012
+    7400036: Bulb Smash (Game over) //// Player-14-12-2012
+    7400038: Knocked Down (Game Over) //// Player-14-12-2012
+    7400040: Fall To Ground (Game Over) //// Player-14-12-2012
+    7400042: Jog (possibly for blending) //// Player-14-12-2012
+    7400044: Jump On Spot //// Player-14-12-2012
+    7400046: 1771-1806 //// Player-14-12-2012
+    7400048: Running Jump (NEW) //// Player-14-12-2012
+  serializedVersion: 10
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    generateAnimations: 3
+    bakeSimulation: 0
+    splitAnimations: 1
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    clipAnimations:
+    - name: Run
+      firstFrame: 0
+      lastFrame: 20
+      wrapMode: 2
+      loop: 1
+    - name: Running Jump
+      firstFrame: 21
+      lastFrame: 96
+      wrapMode: 2
+      loop: 1
+    - name: Running Turn
+      firstFrame: 97
+      lastFrame: 123
+      wrapMode: 0
+      loop: 0
+    - name: Idle Simple
+      firstFrame: 124
+      lastFrame: 184
+      wrapMode: 2
+      loop: 1
+    - name: Idle Scratch Head
+      firstFrame: 185
+      lastFrame: 446
+      wrapMode: 0
+      loop: 0
+    - name: Idle Lift bag
+      firstFrame: 447
+      lastFrame: 577
+      wrapMode: 0
+      loop: 0
+    - name: Idle Lift Bag 2
+      firstFrame: 578
+      lastFrame: 748
+      wrapMode: 0
+      loop: 0
+    - name: Fall into Free Hang
+      firstFrame: 749
+      lastFrame: 809
+      wrapMode: 0
+      loop: 0
+    - name: Free Hang Idle
+      firstFrame: 810
+      lastFrame: 1010
+      wrapMode: 2
+      loop: 1
+    - name: Climb from Free Hang
+      firstFrame: 1011
+      lastFrame: 1060
+      wrapMode: 1
+      loop: 0
+    - name: Fall into Wall Hang
+      firstFrame: 1062
+      lastFrame: 1099
+      wrapMode: 0
+      loop: 0
+    - name: Wall Hang Idle
+      firstFrame: 1100
+      lastFrame: 1300
+      wrapMode: 0
+      loop: 0
+    - name: Wall Hang Climb
+      firstFrame: 1301
+      lastFrame: 1331
+      wrapMode: 0
+      loop: 0
+    - name: Falling Loop
+      firstFrame: 1332
+      lastFrame: 1352
+      wrapMode: 0
+      loop: 0
+    - name: Switch Down
+      firstFrame: 1353
+      lastFrame: 1403
+      wrapMode: 0
+      loop: 0
+    - name: Switch Up
+      firstFrame: 1404
+      lastFrame: 1454
+      wrapMode: 0
+      loop: 0
+    - name: Ladder Up
+      firstFrame: 1455
+      lastFrame: 1495
+      wrapMode: 2
+      loop: 1
+    - name: Bulb Smash (Game over)
+      firstFrame: 1496
+      lastFrame: 1616
+      wrapMode: 0
+      loop: 0
+    - name: Knocked Down (Game Over)
+      firstFrame: 1617
+      lastFrame: 1637
+      wrapMode: 0
+      loop: 0
+    - name: Fall To Ground (Game Over)
+      firstFrame: 1638
+      lastFrame: 1703
+      wrapMode: 0
+      loop: 0
+    - name: Jog (possibly for blending)
+      firstFrame: 1704
+      lastFrame: 1734
+      wrapMode: 0
+      loop: 0
+    - name: Jump On Spot
+      firstFrame: 1735
+      lastFrame: 1770
+      wrapMode: 0
+      loop: 0
+    - name: Running Jump (NEW)
+      firstFrame: 1771
+      lastFrame: 1806
+      wrapMode: 2
+      loop: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMesh: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  textMetaNamesToFileIDs:
+    //RootNode:
+      data:
+        first: 1
+        second: a0860100
+      data:
+        first: 4
+        second: 801a0600
+      data:
+        first: 111
+        second: 605fa900
+    Backpack:
+      data:
+        first: 1
+        second: 4c870100
+      data:
+        first: 4
+        second: 2c1b0600
+      data:
+        first: 137
+        second: a80bd100
+    BeltNub:
+      data:
+        first: 1
+        second: 16870100
+      data:
+        first: 4
+        second: f61a0600
+    BeltRoot:
+      data:
+        first: 1
+        second: 0e870100
+      data:
+        first: 4
+        second: ee1a0600
+    Belts:
+      data:
+        first: 1
+        second: 4a870100
+      data:
+        first: 4
+        second: 2a1b0600
+      data:
+        first: 137
+        second: a60bd100
+    Bip001:
+      data:
+        first: 1
+        second: 44870100
+      data:
+        first: 4
+        second: 241b0600
+    Bip001 Footsteps:
+      data:
+        first: 1
+        second: a8860100
+      data:
+        first: 4
+        second: 881a0600
+    Bip001 Head:
+      data:
+        first: 1
+        second: 18870100
+      data:
+        first: 4
+        second: f81a0600
+    Bip001 HeadNub:
+      data:
+        first: 1
+        second: dc860100
+      data:
+        first: 4
+        second: bc1a0600
+    Bip001 L Calf:
+      data:
+        first: 1
+        second: e2860100
+      data:
+        first: 4
+        second: c21a0600
+    Bip001 L Clavicle:
+      data:
+        first: 1
+        second: c0860100
+      data:
+        first: 4
+        second: a01a0600
+    Bip001 L Finger0:
+      data:
+        first: 1
+        second: ba860100
+      data:
+        first: 4
+        second: 9a1a0600
+    Bip001 L Finger01:
+      data:
+        first: 1
+        second: c6860100
+      data:
+        first: 4
+        second: a61a0600
+    Bip001 L Finger0Nub:
+      data:
+        first: 1
+        second: ee860100
+      data:
+        first: 4
+        second: ce1a0600
+    Bip001 L Finger1:
+      data:
+        first: 1
+        second: f2860100
+      data:
+        first: 4
+        second: d21a0600
+    Bip001 L Finger11:
+      data:
+        first: 1
+        second: de860100
+      data:
+        first: 4
+        second: be1a0600
+    Bip001 L Finger1Nub:
+      data:
+        first: 1
+        second: fe860100
+      data:
+        first: 4
+        second: de1a0600
+    Bip001 L Finger2:
+      data:
+        first: 1
+        second: c2860100
+      data:
+        first: 4
+        second: a21a0600
+    Bip001 L Finger21:
+      data:
+        first: 1
+        second: 42870100
+      data:
+        first: 4
+        second: 221b0600
+    Bip001 L Finger2Nub:
+      data:
+        first: 1
+        second: be860100
+      data:
+        first: 4
+        second: 9e1a0600
+    Bip001 L Foot:
+      data:
+        first: 1
+        second: 52870100
+      data:
+        first: 4
+        second: 321b0600
+    Bip001 L Forearm:
+      data:
+        first: 1
+        second: ac860100
+      data:
+        first: 4
+        second: 8c1a0600
+    Bip001 L Hand:
+      data:
+        first: 1
+        second: 0c870100
+      data:
+        first: 4
+        second: ec1a0600
+    Bip001 L Thigh:
+      data:
+        first: 1
+        second: 0a870100
+      data:
+        first: 4
+        second: ea1a0600
+    Bip001 L Toe0:
+      data:
+        first: 1
+        second: 10870100
+      data:
+        first: 4
+        second: f01a0600
+    Bip001 L Toe0Nub:
+      data:
+        first: 1
+        second: d8860100
+      data:
+        first: 4
+        second: b81a0600
+    Bip001 L UpperArm:
+      data:
+        first: 1
+        second: e8860100
+      data:
+        first: 4
+        second: c81a0600
+    Bip001 Neck:
+      data:
+        first: 1
+        second: 4e870100
+      data:
+        first: 4
+        second: 2e1b0600
+    Bip001 Pelvis:
+      data:
+        first: 1
+        second: 3a870100
+      data:
+        first: 4
+        second: 1a1b0600
+    Bip001 Ponytail1:
+      data:
+        first: 1
+        second: c4860100
+      data:
+        first: 4
+        second: a41a0600
+    Bip001 Ponytail11:
+      data:
+        first: 1
+        second: ce860100
+      data:
+        first: 4
+        second: ae1a0600
+    Bip001 Ponytail1Nub:
+      data:
+        first: 1
+        second: c8860100
+      data:
+        first: 4
+        second: a81a0600
+    Bip001 R Calf:
+      data:
+        first: 1
+        second: 5e870100
+      data:
+        first: 4
+        second: 3e1b0600
+    Bip001 R Clavicle:
+      data:
+        first: 1
+        second: ec860100
+      data:
+        first: 4
+        second: cc1a0600
+    Bip001 R Finger0:
+      data:
+        first: 1
+        second: bc860100
+      data:
+        first: 4
+        second: 9c1a0600
+    Bip001 R Finger01:
+      data:
+        first: 1
+        second: e6860100
+      data:
+        first: 4
+        second: c61a0600
+    Bip001 R Finger0Nub:
+      data:
+        first: 1
+        second: aa860100
+      data:
+        first: 4
+        second: 8a1a0600
+    Bip001 R Finger1:
+      data:
+        first: 1
+        second: d0860100
+      data:
+        first: 4
+        second: b01a0600
+    Bip001 R Finger11:
+      data:
+        first: 1
+        second: e4860100
+      data:
+        first: 4
+        second: c41a0600
+    Bip001 R Finger1Nub:
+      data:
+        first: 1
+        second: d4860100
+      data:
+        first: 4
+        second: b41a0600
+    Bip001 R Finger2:
+      data:
+        first: 1
+        second: e0860100
+      data:
+        first: 4
+        second: c01a0600
+    Bip001 R Finger21:
+      data:
+        first: 1
+        second: ca860100
+      data:
+        first: 4
+        second: aa1a0600
+    Bip001 R Finger2Nub:
+      data:
+        first: 1
+        second: d2860100
+      data:
+        first: 4
+        second: b21a0600
+    Bip001 R Foot:
+      data:
+        first: 1
+        second: 08870100
+      data:
+        first: 4
+        second: e81a0600
+    Bip001 R Forearm:
+      data:
+        first: 1
+        second: ae860100
+      data:
+        first: 4
+        second: 8e1a0600
+    Bip001 R Hand:
+      data:
+        first: 1
+        second: 28870100
+      data:
+        first: 4
+        second: 081b0600
+    Bip001 R Thigh:
+      data:
+        first: 1
+        second: 60870100
+      data:
+        first: 4
+        second: 401b0600
+    Bip001 R Toe0:
+      data:
+        first: 1
+        second: 06870100
+      data:
+        first: 4
+        second: e61a0600
+    Bip001 R Toe0Nub:
+      data:
+        first: 1
+        second: cc860100
+      data:
+        first: 4
+        second: ac1a0600
+    Bip001 R UpperArm:
+      data:
+        first: 1
+        second: f6860100
+      data:
+        first: 4
+        second: d61a0600
+    Bip001 Spine:
+      data:
+        first: 1
+        second: 38870100
+      data:
+        first: 4
+        second: 181b0600
+    Bip001 Spine1:
+      data:
+        first: 1
+        second: 36870100
+      data:
+        first: 4
+        second: 161b0600
+    Bip001 Spine2:
+      data:
+        first: 1
+        second: 34870100
+      data:
+        first: 4
+        second: 141b0600
+    Bip001 Spine3:
+      data:
+        first: 1
+        second: 32870100
+      data:
+        first: 4
+        second: 121b0600
+    Body_Lowpoly:
+      data:
+        first: 1
+        second: 1a870100
+      data:
+        first: 4
+        second: fa1a0600
+      data:
+        first: 137
+        second: a00bd100
+    Bone001:
+      data:
+        first: 1
+        second: b6860100
+      data:
+        first: 4
+        second: 961a0600
+    Bone003:
+      data:
+        first: 1
+        second: 5a870100
+      data:
+        first: 4
+        second: 3a1b0600
+    Bone004:
+      data:
+        first: 1
+        second: 58870100
+      data:
+        first: 4
+        second: 381b0600
+    Bone005:
+      data:
+        first: 1
+        second: 56870100
+      data:
+        first: 4
+        second: 361b0600
+    Bone006:
+      data:
+        first: 1
+        second: 64870100
+      data:
+        first: 4
+        second: 441b0600
+    Bone007:
+      data:
+        first: 1
+        second: 62870100
+      data:
+        first: 4
+        second: 421b0600
+    Bone008:
+      data:
+        first: 1
+        second: 14870100
+      data:
+        first: 4
+        second: f41a0600
+    Bone009:
+      data:
+        first: 1
+        second: 12870100
+      data:
+        first: 4
+        second: f21a0600
+    Bone010:
+      data:
+        first: 1
+        second: fc860100
+      data:
+        first: 4
+        second: dc1a0600
+    Bone011:
+      data:
+        first: 1
+        second: fa860100
+      data:
+        first: 4
+        second: da1a0600
+    Bone013:
+      data:
+        first: 1
+        second: 2e870100
+      data:
+        first: 4
+        second: 0e1b0600
+    Bone014:
+      data:
+        first: 1
+        second: 2c870100
+      data:
+        first: 4
+        second: 0c1b0600
+    Bone015:
+      data:
+        first: 1
+        second: 04870100
+      data:
+        first: 4
+        second: e41a0600
+    Bone016:
+      data:
+        first: 1
+        second: 02870100
+      data:
+        first: 4
+        second: e21a0600
+    Bone017:
+      data:
+        first: 1
+        second: 30870100
+      data:
+        first: 4
+        second: 101b0600
+    Bone018:
+      data:
+        first: 1
+        second: 20870100
+      data:
+        first: 4
+        second: 001b0600
+    Bone019:
+      data:
+        first: 1
+        second: b0860100
+      data:
+        first: 4
+        second: 901a0600
+    Bone019(mirrored):
+      data:
+        first: 1
+        second: da860100
+      data:
+        first: 4
+        second: ba1a0600
+    Bone020:
+      data:
+        first: 1
+        second: 40870100
+      data:
+        first: 4
+        second: 201b0600
+    Bone020(mirrored):
+      data:
+        first: 1
+        second: a6860100
+      data:
+        first: 4
+        second: 861a0600
+    Bone021:
+      data:
+        first: 1
+        second: 3e870100
+      data:
+        first: 4
+        second: 1e1b0600
+    Bone021(mirrored):
+      data:
+        first: 1
+        second: 5c870100
+      data:
+        first: 4
+        second: 3c1b0600
+    Bone022:
+      data:
+        first: 1
+        second: 3c870100
+      data:
+        first: 4
+        second: 1c1b0600
+    Bone022(mirrored):
+      data:
+        first: 1
+        second: 66870100
+      data:
+        first: 4
+        second: 461b0600
+    Bone023:
+      data:
+        first: 1
+        second: 26870100
+      data:
+        first: 4
+        second: 061b0600
+    Bone023(mirrored):
+      data:
+        first: 1
+        second: f0860100
+      data:
+        first: 4
+        second: d01a0600
+    Bone024:
+      data:
+        first: 1
+        second: 24870100
+      data:
+        first: 4
+        second: 041b0600
+    Bone024(mirrored):
+      data:
+        first: 1
+        second: 2a870100
+      data:
+        first: 4
+        second: 0a1b0600
+    Bone025:
+      data:
+        first: 1
+        second: b4860100
+      data:
+        first: 4
+        second: 941a0600
+    Bone025(mirrored):
+      data:
+        first: 1
+        second: f8860100
+      data:
+        first: 4
+        second: d81a0600
+    Bone026:
+      data:
+        first: 1
+        second: b2860100
+      data:
+        first: 4
+        second: 921a0600
+    Bone026(mirrored):
+      data:
+        first: 1
+        second: ea860100
+      data:
+        first: 4
+        second: ca1a0600
+    Bone027:
+      data:
+        first: 1
+        second: 22870100
+      data:
+        first: 4
+        second: 021b0600
+    Bone027(mirrored):
+      data:
+        first: 1
+        second: d6860100
+      data:
+        first: 4
+        second: b61a0600
+    Bone030:
+      data:
+        first: 1
+        second: 1c870100
+      data:
+        first: 4
+        second: fc1a0600
+    Bone031:
+      data:
+        first: 1
+        second: b8860100
+      data:
+        first: 4
+        second: 981a0600
+    Fur:
+      data:
+        first: 1
+        second: 46870100
+      data:
+        first: 4
+        second: 261b0600
+      data:
+        first: 137
+        second: a20bd100
+    MainBelt:
+      data:
+        first: 1
+        second: a2860100
+      data:
+        first: 4
+        second: 821a0600
+    MainBelt2:
+      data:
+        first: 1
+        second: 68870100
+      data:
+        first: 4
+        second: 481b0600
+    MainBelt3:
+      data:
+        first: 1
+        second: 54870100
+      data:
+        first: 4
+        second: 341b0600
+    MainBelt4:
+      data:
+        first: 1
+        second: 00870100
+      data:
+        first: 4
+        second: e01a0600
+    MainBelt5:
+      data:
+        first: 1
+        second: f4860100
+      data:
+        first: 4
+        second: d41a0600
+    MainBelt6:
+      data:
+        first: 1
+        second: 50870100
+      data:
+        first: 4
+        second: 301b0600
+    MainBeltNub:
+      data:
+        first: 1
+        second: a4860100
+      data:
+        first: 4
+        second: 841a0600
+    Scarf:
+      data:
+        first: 1
+        second: 48870100
+      data:
+        first: 4
+        second: 281b0600
+      data:
+        first: 137
+        second: a40bd100
+    connectBone001:
+      data:
+        first: 1
+        second: 1e870100
+      data:
+        first: 4
+        second: fe1a0600
