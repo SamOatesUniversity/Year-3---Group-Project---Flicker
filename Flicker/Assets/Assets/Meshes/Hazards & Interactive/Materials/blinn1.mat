@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: blinn1
-  m_Shader: {fileID: 4, guid: 0000000000000000e000000000000000, type: 0}
+  m_Shader: {fileID: 13, guid: 0000000000000000e000000000000000, type: 0}
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -25,11 +25,22 @@ Material:
           m_Texture: {fileID: 2800000, guid: 2cdf8b8b371b78c46958e81aa8813552, type: 1}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
+      data:
+        first:
+          name: _Illum
+        second:
+          m_Texture: {fileID: 2800000, guid: c2a1edcf5c6b4194ba31c1f4cd96b530, type: 1}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
           name: _Shininess
         second: .240052491
+      data:
+        first:
+          name: _EmissionLM
+        second: 0
     m_Colors:
       data:
         first:
@@ -38,4 +49,4 @@ Material:
       data:
         first:
           name: _SpecColor
-        second: {r: .380596995, g: .380596995, b: .380596995, a: 1}
+        second: {r: 1, g: 1, b: 1, a: 1}
