@@ -16,7 +16,7 @@ public class CSceneObject : MonoBehaviour {
 	public bool CanLedgeGrab			= true;			//!< Can the player ledge grab on the object?
 	
 	public bool KillPlayerOnTouch		= false;		//!< 
-
+	
 	// Use this for initialization
 	void Start() 
     {
