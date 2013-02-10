@@ -27,12 +27,20 @@ public class CSceneObjectFallingPlatform : CSceneObject {
 	
 	private float m_timeTriggered;				//!< time the platform stepped on
 	
+	private AudioSource m_audio;				//!< The audio to play on fall
+	
 	// Use this for initialization
 	void Start() 
     {
 		m_state = PlatformState.Normal;
 		m_timeDown = 0.0f;
 		m_timeTriggered = 0.0f;
+		
+		m_audio = this.GetComponentInChildren<AudioSource>();
+		if (m_audio == null)
+		{
+			Debug.LogWarning("Falling platform missing audio source!");	
+		}
 	}
 	
 	// Update is called once per frame
@@ -57,6 +65,10 @@ public class CSceneObjectFallingPlatform : CSceneObject {
 			{
 				m_state = PlatformState.Falling;
 				platAnim["Take 001"].normalizedTime = 0.40f;
+				if (m_audio != null)
+				{
+					m_audio.Play();	
+				}
 			}
 		}
 		else if(m_state == PlatformState.Falling)
