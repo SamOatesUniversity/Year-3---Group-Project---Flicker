@@ -297,7 +297,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 				}
 			}
 			
-			m_animation.OnFixedUpdate(ref m_playerState, m_physics.LadderClimb.State);
+			m_animation.OnFixedUpdate(ref m_playerState, m_physics.LadderClimb.State, m_physics.GetFootMaterial());
 		}
 		
 		

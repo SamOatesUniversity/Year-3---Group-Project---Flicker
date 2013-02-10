@@ -22,7 +22,7 @@ public class CPlayerAnimation : MonoBehaviour {
 		m_audio = GetComponent<AudioSource>();
 	}
 	
-	public void OnFixedUpdate(ref PlayerState playerState, LadderState ladderState)
+	public void OnFixedUpdate(ref PlayerState playerState, LadderState ladderState, FootMaterial footMaterial)
 	{
 		if (playerState == PlayerState.Walking)
 		{			
@@ -30,14 +30,7 @@ public class CPlayerAnimation : MonoBehaviour {
 			if (!m_animation.IsPlaying("Run"))
 			{
 				m_animation.CrossFade("Run", 0.2f);
-				
-				int noofAudioClips = FootstepsStone.Length;
-				if (noofAudioClips != 0)
-				{
-					int audioIndex = Random.Range(0, noofAudioClips);
-					m_audio.clip = FootstepsStone[audioIndex];
-					m_audio.Play();
-				}
+				PlayFootstepAudio(footMaterial);
 			}			
 		}
 		else if (playerState == PlayerState.Turning)
@@ -116,16 +109,7 @@ public class CPlayerAnimation : MonoBehaviour {
 				
 				if (m_animation.IsPlaying("Ladder Up"))
 				{
-					int noofAudioClips = FootstepsMetal.Length;
-					if (noofAudioClips != 0)
-					{
-						int audioIndex = Random.Range(0, noofAudioClips);
-						if (!m_audio.isPlaying)
-						{
-							m_audio.clip = FootstepsMetal[audioIndex];
-							m_audio.Play();
-						}
-					}	
+					PlayFootstepAudio(FootMaterial.Metal);	
 				}
 				
 			}
@@ -143,4 +127,28 @@ public class CPlayerAnimation : MonoBehaviour {
 		return m_currentAnimation;	
 	}
 	
+	private void PlayFootstepAudio(FootMaterial material)
+	{
+		AudioClip[] clips = FootstepsStone;		
+		switch(material)
+		{
+		case FootMaterial.Wood:
+			clips = FootstepsWood;
+			break;
+		case FootMaterial.Metal:
+			clips = FootstepsMetal;
+			break;
+		}		
+		
+		int noofAudioClips = clips.Length;
+		if (noofAudioClips != 0)
+		{
+			int audioIndex = Random.Range(0, noofAudioClips);
+			if (!m_audio.isPlaying)
+			{
+				m_audio.clip = clips[audioIndex];
+				m_audio.Play();
+			}
+		}
+	}	
 }

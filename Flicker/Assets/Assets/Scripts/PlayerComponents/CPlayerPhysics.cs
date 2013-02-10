@@ -14,6 +14,12 @@ public enum JumpState {
 	Jumping
 }
 
+public enum FootMaterial {
+	Stone,
+	Wood,
+	Metal
+}
+
 public class CPlayerPhysics : MonoBehaviour {
 	
 	/* -----------------
@@ -55,6 +61,8 @@ public class CPlayerPhysics : MonoBehaviour {
 	private CSceneObjectPlatform	m_platform = null;				//!< The platform, if any, the player is standing on
 	
 	private GameObject		m_ledgeGrabBox = null;
+	
+	private FootMaterial	m_footMaterial = FootMaterial.Stone;
 
 	/* ----------------
 	    Public Members 
@@ -119,6 +127,10 @@ public class CPlayerPhysics : MonoBehaviour {
 		get {
 			return m_ladderClimb;	
 		}
+	}
+	
+	public FootMaterial GetFootMaterial() {
+		return m_footMaterial;	
 	}
 
 	/*
@@ -202,6 +214,14 @@ public class CPlayerPhysics : MonoBehaviour {
 			if (isNearly(contact.normal.y, 1.0f, 0.2f))
 			{
 				m_collisionState = CollisionState.OnFloor;
+				
+				// are we on a special material?
+				m_footMaterial = FootMaterial.Stone;
+				if (contact.otherCollider.tag == "Wood Object")
+					m_footMaterial = FootMaterial.Wood;
+				else if (contact.otherCollider.tag == "Metal Object")
+					m_footMaterial = FootMaterial.Metal;
+				
 			}
 			else if (isNearly(contact.normal.y, -1.0f, 0.2f))
 			{
@@ -299,6 +319,13 @@ public class CPlayerPhysics : MonoBehaviour {
 					m_velocity = (m_movingDirection * 0.15f);
 					m_velocityLockTimer = (Time.time * 1000.0f); 
 				}
+				
+				// are we on a special material?
+				m_footMaterial = FootMaterial.Stone;
+				if (contact.otherCollider.tag == "Wood Object")
+					m_footMaterial = FootMaterial.Wood;
+				else if (contact.otherCollider.tag == "Metal Object")
+					m_footMaterial = FootMaterial.Metal;
 			}
 			// head check
 			else if (isNearly(contact.normal.y, -1.0f, 0.1f))
