@@ -80,7 +80,13 @@ public class CEntityPlayer : CEntityPlayerBase {
 	public Camera			MainCamera = null;				//!< The main viewport camera, which will follow the player
 	
 	public CCheckPoint		StartCheckPoint = null;			//!< The start point check point
-
+	
+	public enum LeftRight {
+		Left,
+		Right
+	}
+	
+	public LeftRight		StartFacing = LeftRight.Left;
 		
 	/*
 	 * \brief Called when the object is created. At the start.
@@ -111,8 +117,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_footSteps = GetComponent<AudioSource>();
 				
 		m_characterMesh = this.transform.Find("Player_Mesh");
-		m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));	
 		
+		m_physics.MovingDirection = StartFacing == LeftRight.Left ? 1 : -1;
+
 		m_ledgeGrabBox = this.transform.Find("Ledge_Grab_Detection");
 		
 		if (StartCheckPoint != null)

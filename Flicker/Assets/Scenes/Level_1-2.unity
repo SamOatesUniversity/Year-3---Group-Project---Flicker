@@ -6193,6 +6193,7 @@ MonoBehaviour:
   InitialAlphaPosition: 237
   MainCamera: {fileID: 731597839}
   StartCheckPoint: {fileID: 699939655}
+  StartFacing: 1
 --- !u!1 &258459055
 GameObject:
   m_ObjectHideFlags: 0
@@ -23311,6 +23312,10 @@ Prefab:
     - target: {fileID: 11400006, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: InsideTower
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400010, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: StartFacing
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
