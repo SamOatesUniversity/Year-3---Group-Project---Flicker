@@ -233,7 +233,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 				camPostion = new Vector3(
 		            0,
 					0,
-		            cameraDistance	
+		            (m_physics.InsideTower) ? cameraDistance : -cameraDistance
 				);				
 			}
 			else
@@ -272,7 +272,10 @@ public class CEntityPlayer : CEntityPlayerBase {
 		{
 			if (m_playerState == PlayerState.UpALadder)
 			{
-				m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 180, 0));
+				if (m_physics.InsideTower)
+					m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 180, 0));
+				else
+					m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y, 0));
 			}
 			else if (m_playerState == PlayerState.Turning)
 			{
@@ -462,6 +465,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	public void PushPlayerFromTower()
 	{
+		if (m_playerState == PlayerState.FallingFromTower)
+			return;
+		
 		m_playerState = PlayerState.FallingFromTower;
 		m_dead.y = transform.position.y;
 		m_dead.time = Time.time * 1000.0f;
