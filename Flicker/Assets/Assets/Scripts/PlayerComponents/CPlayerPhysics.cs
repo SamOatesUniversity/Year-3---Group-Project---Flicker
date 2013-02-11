@@ -389,6 +389,11 @@ public class CPlayerPhysics : MonoBehaviour {
 			}
 			return;
 		}
+		
+		if (obj != null && obj.KillPlayerOnTouch)
+		{
+			m_player.PushPlayerFromTower();
+		}
 	}
 	
 	public void CallOnTriggerExit(Collider collider, ref PlayerState playerState)
