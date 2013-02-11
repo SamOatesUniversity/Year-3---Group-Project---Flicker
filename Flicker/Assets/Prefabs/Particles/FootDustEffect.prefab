@@ -26,7 +26,6 @@ Transform:
   m_LocalRotation: {x: -.709287345, y: 0, z: 0, w: .704919577}
   m_LocalPosition: {x: -.186186075, y: 3.12684512, z: -.0198506489}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!198 &19800000
@@ -203,7 +202,7 @@ ParticleSystem:
         rgba: 4294967295
       maxColor:
         serializedVersion: 2
-        rgba: 4289247162
+        rgba: 4285495678
       minMaxState: 0
     startSize:
       scalar: .300000012
@@ -271,9 +270,9 @@ ParticleSystem:
         m_PreInfinity: 2
         m_PostInfinity: 2
       minMaxState: 0
-    gravityModifier: -.00999999978
+    gravityModifier: -.0399999991
     inheritVelocity: 0
-    maxNumParticles: 4
+    maxNumParticles: 6
   ShapeModule:
     enabled: 1
     type: 4
