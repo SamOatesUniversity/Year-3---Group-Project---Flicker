@@ -45,8 +45,16 @@ public class CPlayerLight : MonoBehaviour {
 		
 		if (LightPrefab)
 		{
-			SkinnedMeshRenderer mesh = GameObject.Find("Backpack").GetComponent<SkinnedMeshRenderer>();
-			Transform parentTransform = mesh.bones[0].transform;
+			SkinnedMeshRenderer mesh = GameObject.Find("Body_Lowpoly").GetComponent<SkinnedMeshRenderer>();
+			Transform parentTransform = mesh.bones[9].transform;
+			parentTransform = parentTransform.transform.FindChild("Bip001 Spine2");
+			parentTransform = parentTransform.transform.FindChild("Bip001 Spine3");
+			parentTransform = parentTransform.transform.FindChild("Bone017");
+			parentTransform = parentTransform.transform.FindChild("Bone018");
+			parentTransform = parentTransform.transform.FindChild("connectBone001");
+			parentTransform = parentTransform.transform.FindChild("Bone030");
+			parentTransform = parentTransform.transform.FindChild("LightAttatchBone");
+			
 			GameObject obj =  (GameObject)Instantiate(LightPrefab,transform.position,Quaternion.identity);
 			m_light = obj.GetComponent<Light>().light;
 			m_light.transform.parent = parentTransform;
@@ -59,6 +67,12 @@ public class CPlayerLight : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
+		if (m_light == null)
+		{
+			Debug.LogWarning("Failed to ceate player light");
+			return;	
+		}
+		
 		if (m_currentRange > MaxRange)
 		{
 			m_reverse = -1;

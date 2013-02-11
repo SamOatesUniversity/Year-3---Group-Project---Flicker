@@ -26,22 +26,23 @@ public class CPlayerAnimation : MonoBehaviour {
 	{
 		if (playerState == PlayerState.Walking)
 		{			
-			m_currentAnimation = "Run";
-			if (!m_animation.IsPlaying("Run"))
+			m_currentAnimation = "run";
+			if (!m_animation.IsPlaying("run"))
 			{
-				m_animation.CrossFade("Run", 0.2f);
+				m_animation.CrossFade("run", 0.2f);
 				PlayFootstepAudio(footMaterial);
 			}			
 		}
 		else if (playerState == PlayerState.Turning)
 		{
-			m_currentAnimation = "Turning Around";
-			if (!m_animation.IsPlaying("Running Turn") && !m_startedTurningRound)
+			m_currentAnimation = "running-turn";
+			if (!m_animation.IsPlaying("running-turn") && !m_startedTurningRound)
 			{
 				m_startedTurningRound = true;
-				m_animation.CrossFade("Running Turn");
+				m_animation["running-turn"].speed = 1.2f;
+				m_animation.CrossFade("running-turn");
 			}
-			else if (!m_animation.IsPlaying("Running Turn"))
+			else if (!m_animation.IsPlaying("running-turn"))
 			{
 				m_startedTurningRound = false;
 				playerState = PlayerState.Walking;
@@ -49,65 +50,65 @@ public class CPlayerAnimation : MonoBehaviour {
 		}
 		else if (playerState == PlayerState.Standing)
 		{
-			m_currentAnimation = "Idle";
-			m_animation["Idle Simple"].speed = 0.2f;
-			if (!m_animation.IsPlaying("Idle Simple"))
-				m_animation.CrossFade("Idle Simple");
+			m_currentAnimation = "idle-0";
+			m_animation["idle-0"].speed = 0.2f;
+			if (!m_animation.IsPlaying("idle-0"))
+				m_animation.CrossFade("idle-0");
 		}
 		else if (playerState == PlayerState.Jumping)
 		{
-			m_currentAnimation = "Running";
-			if (!m_animation.IsPlaying("Running Jump (NEW)"))
-				m_animation.Play("Running Jump (NEW)");
+			m_currentAnimation = "run-jump";
+			if (!m_animation.IsPlaying("run-jump"))
+				m_animation.Play("run-jump");
 		}
 		else if (playerState == PlayerState.FallJumping)
 		{
-			m_currentAnimation = "Falling";
-			if (!m_animation.IsPlaying("Falling Loop"))
-				m_animation.CrossFade("Falling Loop");
+			m_currentAnimation = "falling";
+			if (!m_animation.IsPlaying("falling"))
+				m_animation.CrossFade("falling");
 		}
 		else if (playerState == PlayerState.LedgeHang)
 		{
-			m_currentAnimation = "Ledge Hang";
-			if (!m_animation.IsPlaying("Wall Hang Idle")) {
-				m_animation.CrossFade("Wall Hang Idle");
+			m_currentAnimation = "free-hang-idle";
+			if (!m_animation.IsPlaying("free-hang-idle")) {
+				m_animation.CrossFade("free-hang-idle");
 				m_startedLedgeClimb = false;
 			}
 		}
 		else if (playerState == PlayerState.LedgeClimb)
 		{
-			m_currentAnimation = "Ledge Climbing";
-			if (!m_animation.IsPlaying("Climb from Free Hang") && !m_startedLedgeClimb) {
-				m_animation.CrossFade("Climb from Free Hang");
+			m_currentAnimation = "free-hang-climb";
+			if (!m_animation.IsPlaying("free-hang-climb") && !m_startedLedgeClimb) {
+				m_animation.CrossFade("free-hang-climb");
 				m_startedLedgeClimb = true;
 			}	
-			else if (m_startedLedgeClimb == true && !m_animation.IsPlaying("Climb from Free Hang")) {
+			else if (m_startedLedgeClimb == true && !m_animation.IsPlaying("free-hang-climb")) {
 				playerState = PlayerState.LedgeClimbComplete;
 				m_startedLedgeClimb = false;
 			}
 		}
 		else if (playerState == PlayerState.FallingFromTower)
 		{
-			m_currentAnimation = "Falling";
-			if (!m_animation.IsPlaying("Falling Loop"))
-				m_animation.CrossFade("Falling Loop");
+			m_currentAnimation = "falling";
+			if (!m_animation.IsPlaying("falling"))
+				m_animation.CrossFade("falling");
 		}
 		else if (playerState == PlayerState.UpALadder)
 		{
 			float upDown = Input.GetAxis("Vertical");
 			
-			m_currentAnimation = "Ladder";
+			m_currentAnimation = "ladder-climb";
 			
 			if ((upDown != 0.0f && ladderState != LadderState.AtTop) || (ladderState == LadderState.AtTop && upDown < 0))
 			{
-				bool forceAnimationChange = upDown > 0.0f && m_animation["Ladder Up"].speed > 0.0f ? false : true;
-				if (!m_animation.IsPlaying("Ladder Up") || forceAnimationChange)
+				bool forceAnimationChange = upDown > 0.0f && m_animation["ladder-climb"].speed > 0.0f ? false : true;
+				if (!m_animation.IsPlaying("ladder-climb") || forceAnimationChange)
 				{
-					m_animation["Ladder Up"].speed = upDown > 0.0f ? 2.0f : -2.0f;
-					m_animation.Play("Ladder Up");
+					m_animation["ladder-climb"].speed = upDown > 0.0f ? 2.0f : -2.0f;
+					m_animation.Play("ladder-climb");
 				}
 				
-				if (m_animation.IsPlaying("Ladder Up"))
+				if (m_animation.IsPlaying("ladder-climb"))
 				{
 					PlayFootstepAudio(FootMaterial.Metal);	
 				}
@@ -115,9 +116,9 @@ public class CPlayerAnimation : MonoBehaviour {
 			}
 			else
 			{
-				m_animation["Ladder Up"].speed = 0.0f;
-				if (!m_animation.IsPlaying("Ladder Up"))
-					m_animation.Play("Ladder Up");
+				m_animation["ladder-climb"].speed = 0.0f;
+				if (!m_animation.IsPlaying("ladder-climb"))
+					m_animation.Play("ladder-climb");
 			}
 		}
 	}
