@@ -236,6 +236,9 @@ public class CPlayerPhysics : MonoBehaviour {
 		
 		if (m_collisionState == CollisionState.OnFloor)
 		{
+			if (m_jumpState != JumpState.Landed)
+				m_player.GetPlayerAnimation().PlayFootstepAudio(m_footMaterial);
+			
 			m_jumpState = JumpState.Landed;	
 			m_ladderClimb.State = LadderState.None;
 			

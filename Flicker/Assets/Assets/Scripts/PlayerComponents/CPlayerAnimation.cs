@@ -127,7 +127,7 @@ public class CPlayerAnimation : MonoBehaviour {
 		return m_currentAnimation;	
 	}
 	
-	private void PlayFootstepAudio(FootMaterial material)
+	public void PlayFootstepAudio(FootMaterial material)
 	{
 		AudioClip[] clips = FootstepsStone;		
 		switch(material)

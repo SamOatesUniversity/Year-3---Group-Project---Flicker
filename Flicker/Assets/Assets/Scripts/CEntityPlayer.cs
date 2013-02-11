@@ -152,6 +152,11 @@ public class CEntityPlayer : CEntityPlayerBase {
 		}
 	}
 	
+	public CPlayerAnimation GetPlayerAnimation()
+	{
+		return m_animation;	
+	}
+	
 	public string CurrentAnimation()
 	{
 		return m_animation.CurrentAnimation();	
