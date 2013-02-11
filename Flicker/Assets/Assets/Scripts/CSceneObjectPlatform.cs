@@ -15,11 +15,19 @@ public class CSceneObjectPlatform : CSceneObject {
 	
 	private float m_lastRotY;
 	
+	public bool m_enabled = false;
+	Animation platAnim = null;
 	// Use this for initialization
 	void Start() 
     {
+		platAnim = gameObject.GetComponent<Animation>();
 		m_lastPos = gameObject.transform.position;
 		m_lastRotY = gameObject.transform.rotation.eulerAngles.y;
+		if (!m_enabled && platAnim != null)
+		{
+			platAnim.Stop();
+		}
+		
 	}
 	
 	// Update is called once per frame
@@ -28,19 +36,39 @@ public class CSceneObjectPlatform : CSceneObject {
 		
 	}
 	
+	
+	public void ToggleTrigger(bool toggle)
+	{
+		m_enabled = toggle;
+	}
+	
 	void FixedUpdate()
 	{
-		Animation platAnim = gameObject.GetComponent<Animation>();
-		if (platAnim == null)
-		{
-			return;
-			//Debug.Log ("Platform Pos = " + platAnim.transform.position); 
-		}
-		Vector3 currentPos = platAnim.transform.position;
 		
-		float rotY = platAnim.transform.rotation.eulerAngles.y;
-		m_deltaA += rotY - m_lastRotY;
-		m_lastRotY = rotY;
+		
+		
+			platAnim = gameObject.GetComponent<Animation>();
+			if (platAnim == null)
+			{
+				return;
+				//Debug.Log ("Platform Pos = " + platAnim.transform.position); 
+			}
+			Vector3 currentPos = platAnim.transform.position;
+			
+			float rotY = platAnim.transform.rotation.eulerAngles.y;
+			m_deltaA += rotY - m_lastRotY;
+			m_lastRotY = rotY;
+		
+		if (!m_enabled && platAnim.isPlaying)
+		{
+			platAnim.Stop();
+		}	
+		else if (!platAnim.isPlaying && m_enabled)
+		{
+			platAnim.Play();
+		}
+		
+		
 		
 		//print ("currentPos is: " + currentPos);
 		//Vector3 vec1 = m_lastPos - new Vector3( 0.0f, m_lastPos.y, 0.0f );
