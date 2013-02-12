@@ -51,9 +51,10 @@ public class CSceneObjectFallingPlatform : CSceneObject {
 	void FixedUpdate()
 	{
 		Animation platAnim = gameObject.GetComponent<Animation>();
-		if (platAnim == null)
+		if (platAnim == null || platAnim["Take 001"] == null)
 		{
-			Debug.Log("No animation!"); 
+			Debug.Log("No animation on falling platform!"); 
+			return;
 		}
 		if(m_state == PlatformState.Shaking)
 		{
@@ -110,6 +111,9 @@ public class CSceneObjectFallingPlatform : CSceneObject {
 			m_state = PlatformState.Shaking;
 			m_timeTriggered = Time.time;
 			Animation platAnim = gameObject.GetComponent<Animation>();
+			if (platAnim == null || platAnim["Take 001"] == null)
+				return;
+			
 			platAnim["Take 001"].normalizedTime = 0.10f;
 			platAnim.Play();
 		}

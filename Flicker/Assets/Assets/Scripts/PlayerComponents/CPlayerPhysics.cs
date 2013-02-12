@@ -602,7 +602,7 @@ public class CPlayerPhysics : MonoBehaviour {
 				m_body.AddForce(new Vector3(0, PlayerJumpHeight, 0), ForceMode.Impulse);	
 				m_jumpState = JumpState.Jumping;
 				playerState = PlayerState.Jumping;
-				m_velocity = Input.GetAxis("Horizontal") * -2.0f;
+				m_velocity = Input.GetAxis("Horizontal") * (InsideTower ? -2.0f : 2.0f);
 				m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 				m_velocityLockTimer = (Time.time * 1000.0f); 
 			}
