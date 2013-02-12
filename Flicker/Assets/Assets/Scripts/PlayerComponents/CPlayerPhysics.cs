@@ -364,7 +364,7 @@ public class CPlayerPhysics : MonoBehaviour {
 			}
 			
 			if (m_player.GetPlayerState() != PlayerState.Turning) m_player.SetPlayerState(PlayerState.Standing);
-			m_ledgeGrabBox.collider.enabled = true;
+				m_ledgeGrabBox.collider.enabled = true;
 		}
 	}
 	
@@ -582,6 +582,7 @@ public class CPlayerPhysics : MonoBehaviour {
 			{
 				playerState = PlayerState.UpALadder;
 				m_collisionState = CollisionState.None;
+				m_jumpState = JumpState.Landed;
 				m_ladderClimb.CallOnUpdate(m_collisionState);
 			}
 			else
