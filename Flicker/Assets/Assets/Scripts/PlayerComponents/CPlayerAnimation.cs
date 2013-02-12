@@ -14,6 +14,8 @@ public class CPlayerAnimation : MonoBehaviour {
 	bool m_startedTurningRound = false;
 	private string m_currentAnimation = null;
 	
+	private string m_lastKnownIdle = "idle-0";
+	
 	private AudioSource m_audio;
 	
 	public void OnStart(Animation animation)
@@ -50,10 +52,13 @@ public class CPlayerAnimation : MonoBehaviour {
 		}
 		else if (playerState == PlayerState.Standing)
 		{
-			m_currentAnimation = "idle-0";
-			m_animation["idle-0"].speed = 0.2f;
-			if (!m_animation.IsPlaying("idle-0"))
-				m_animation.CrossFade("idle-0");
+			if (!m_animation.IsPlaying(m_lastKnownIdle))
+			{
+				m_currentAnimation = "idle-0"; // "idle-" + Random.Range(0, 4);
+				m_lastKnownIdle = m_currentAnimation;
+				m_animation[m_currentAnimation].speed = Random.Range(10, 30) / 100.0f;
+				m_animation.CrossFade(m_currentAnimation);
+			}						
 		}
 		else if (playerState == PlayerState.Jumping)
 		{
