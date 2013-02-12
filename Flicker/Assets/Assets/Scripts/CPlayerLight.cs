@@ -55,9 +55,10 @@ public class CPlayerLight : MonoBehaviour {
 			parentTransform = parentTransform.transform.FindChild("Bone030");
 			parentTransform = parentTransform.transform.FindChild("LightAttatchBone");
 			
-			GameObject obj =  (GameObject)Instantiate(LightPrefab,transform.position,Quaternion.identity);
+			GameObject obj = (GameObject)Instantiate(LightPrefab, Vector3.zero, Quaternion.identity);
 			m_light = obj.GetComponent<Light>().light;
 			m_light.transform.parent = parentTransform;
+			m_light.transform.localPosition = Vector3.zero;
 			m_light.color = LightColor;
 			m_light.range = MaxRange;
 			m_light.intensity = MaxIntensity;
