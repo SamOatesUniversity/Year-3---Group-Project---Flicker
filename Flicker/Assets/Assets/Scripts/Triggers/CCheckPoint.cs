@@ -12,7 +12,6 @@ public class CCheckPoint : MonoBehaviour {
 	void Start() {
 		m_playerAlpha = calculateAlphaAngle();
 		m_playerAlpha = m_playerAlpha;
-		Debug.Log(gameObject.name + " alpha calculated as " + m_playerAlpha);
 	}
 	
 	void OnTriggerEnter(Collider collision) {
@@ -27,8 +26,6 @@ public class CCheckPoint : MonoBehaviour {
 			m_direction = player.Physics.Direction;
 			if (m_direction == 0)
 				m_direction = player.Physics.MovingDirection;
-			
-			Debug.Log("Hit checkpoint: " + gameObject.name);
 		}	
 		
 	}
@@ -71,7 +68,6 @@ public class CCheckPoint : MonoBehaviour {
 	*/
 	public float PlayerCheckPointAlpha {
 		get {
-			Debug.Log(gameObject.name + " alpha: " + m_playerAlpha);
 			return m_playerAlpha;
 		}
 		set {
