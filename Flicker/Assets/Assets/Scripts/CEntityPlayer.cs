@@ -64,6 +64,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	private Transform			m_ledgeGrabBox = null;
 	
+	private bool 				m_isEscapeDown = false;
+	
 	
 	////////////////////////
 	
@@ -326,15 +328,25 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	public override void Update()
 	{
-		if (Input.GetButton("Reset"))
+		if (Input.GetButton("Reset") && !m_isEscapeDown)
 		{
+			m_isEscapeDown = true;
+			
 			// if we are on android, kill the game
 			if (Application.platform == RuntimePlatform.Android)
 				Application.Quit();				
 				
+			if (m_lastCheckpoint != null && m_lastCheckpoint.NextCheckPoint != null)
+			{
+				m_lastCheckpoint = m_lastCheckpoint.NextCheckPoint;	
+			}
 			OnDeath();
 			return;
-		}		
+		}
+		else if (m_isEscapeDown && !Input.GetButton("Reset"))
+		{
+			m_isEscapeDown = false;
+		}
 		
 		if (m_physics.Direction != 0)
 			m_standingStillTime = Time.time * 1000.0f;	
