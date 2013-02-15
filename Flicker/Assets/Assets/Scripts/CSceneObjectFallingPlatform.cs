@@ -53,7 +53,7 @@ public class CSceneObjectFallingPlatform : CSceneObject {
 		Animation platAnim = gameObject.GetComponent<Animation>();
 		if (platAnim == null || platAnim["Take 001"] == null)
 		{
-			Debug.Log("No animation on falling platform!"); 
+			//Debug.Log("No animation on falling platform!"); 
 			return;
 		}
 		if(m_state == PlatformState.Shaking)
