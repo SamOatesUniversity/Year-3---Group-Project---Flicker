@@ -127,7 +127,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 		if (StartCheckPoint != null)
 		{
 			m_lastCheckpoint = StartCheckPoint;
-			m_lastCheckpoint.PlayerCheckPointAlpha = m_playerPositionAlpha;
 		}
 		
 		m_dead.didDie = false;

@@ -8,11 +8,11 @@ public class CSceneSetup : MonoBehaviour {
 
     public string                       NextScene = null;                       //! The next scene to stream in
 	
-	public int							NumberOfRows = 1;
+	public int							NumberOfFloors = 1;
 
 	// Use this for initialization
     void Start() {
-        if (NextScene == null)
+        if (NextScene == null || NextScene.Length == 0)
         {
 			Debug.LogError("The next scene has not been set on a scene setup script...");
             return;
@@ -24,7 +24,7 @@ public class CSceneSetup : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		if (NextScene == null)
+		if (NextScene == null || NextScene.Length == 0)
 			return;
 		
 		if (m_hasSetup)
@@ -34,7 +34,7 @@ public class CSceneSetup : MonoBehaviour {
 		if (scene != null)
 		{
 			m_hasSetup = true;
-			scene.transform.position = new Vector3(scene.transform.position.x, this.transform.position.y + (NumberOfRows * 0.64f), scene.transform.position.z);
+			scene.transform.position = new Vector3(scene.transform.position.x, this.transform.position.y + (NumberOfFloors * 0.64f), scene.transform.position.z);
 		}
 	
 	}

@@ -11,7 +11,7 @@ public class CCheckPoint : MonoBehaviour {
 	
 	void Start() {
 		m_playerAlpha = calculateAlphaAngle();
-		m_playerAlpha = m_playerAlpha;
+		Debug.Log(this.name + " alpha angle: " + m_playerAlpha);
 	}
 	
 	void OnTriggerEnter(Collider collision) {
@@ -49,16 +49,17 @@ public class CCheckPoint : MonoBehaviour {
 		}
 		
 		// not a straight line, so do some trig to calculate the angle
-		float r = 2.8f; // hard code for now
-		
-		Vector2 or = new Vector2(0, r);
 		Vector2 xz = new Vector2(transform.localPosition.x, transform.localPosition.z);
-		
+		Vector2 or = new Vector2(0, position.x < 0 ? -xz.magnitude : xz.magnitude);
+				
 		float o = (or - xz).magnitude * 0.5f;
 		float h = xz.magnitude;
 		
+		float oh = o / h;
 		float alpha = Mathf.Asin(o / h) * 2.0f;
 		alpha = alpha * Mathf.Rad2Deg;
+		
+		alpha = position.x < 0 ? 180.0f + alpha : alpha;
 		
 		return alpha;
 	}
@@ -69,9 +70,6 @@ public class CCheckPoint : MonoBehaviour {
 	public float PlayerCheckPointAlpha {
 		get {
 			return m_playerAlpha;
-		}
-		set {
-			//m_playerAlpha = value;	
 		}
 	}
 	
