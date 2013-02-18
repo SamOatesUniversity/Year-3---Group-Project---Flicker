@@ -31,6 +31,8 @@ public class CCamera : MonoBehaviour {
 	private Vector3				m_pelvisOffset;
 	
 	private ArrayList			m_storedPositions;
+	private Vector3				m_averagePos;
+	private int 				m_countIgnoredFrames;
 	
 	public int m_maxPositionsStored = 10;
 
@@ -45,13 +47,37 @@ public class CCamera : MonoBehaviour {
 		m_playerPelvis = this.transform.FindChild("../Player Spawn/Player_Mesh/Bip001/Bip001 Pelvis");
 		m_storedPositions = new ArrayList();
 		m_storedPositions.Add(m_playerPelvis.position);
+		m_countIgnoredFrames = 0;
 	}
 
 	/*
 	 * \brief Called once per frame
 	*/
 	public void FixedUpdate () {
-		m_storedPositions.Add(m_playerPelvis.position);
+		int maxFramesIgnorePos = 1;
+		float maxPosJumpFactor = 0.5f;//0.05f;
+		bool posIgnored = true;
+		if( m_countIgnoredFrames < maxFramesIgnorePos )
+		{
+			if( m_playerPelvis.position.y > m_averagePos.y-maxPosJumpFactor && m_playerPelvis.position.y < m_averagePos.y+maxPosJumpFactor )
+			{
+					m_storedPositions.Add(m_playerPelvis.position);
+					posIgnored = false;
+			}
+		}
+		else
+		{
+			m_storedPositions.Add(m_playerPelvis.position);
+			posIgnored = false;
+		}
+		if( posIgnored )
+		{
+			m_countIgnoredFrames++;
+		}
+		else
+		{
+			m_countIgnoredFrames = 0;
+		}
 		
 		if( m_storedPositions.Count > m_maxPositionsStored )
 		{
@@ -59,6 +85,7 @@ public class CCamera : MonoBehaviour {
 		}
 		
 		Vector3 sumPositions = new Vector3(0.0f, 0.0f, 0.0f);
+		
 		foreach( Vector3 pos in m_storedPositions )
 		{
 			sumPositions += pos;
@@ -67,7 +94,7 @@ public class CCamera : MonoBehaviour {
 		
 		Transform player = m_playerPelvis;
 		this.TendToMaxOffset( m_playerEntity.Physics.Direction );
-	
+		m_averagePos = avgPosition;
 		
 		/*
 		float adjustedCameraHeight = player.position.y + CameraElevation;
