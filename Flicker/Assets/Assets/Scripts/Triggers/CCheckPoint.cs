@@ -11,7 +11,6 @@ public class CCheckPoint : MonoBehaviour {
 	
 	void Start() {
 		m_playerAlpha = calculateAlphaAngle();
-		Debug.Log(this.name + " alpha angle: " + m_playerAlpha);
 	}
 	
 	void OnTriggerEnter(Collider collision) {
