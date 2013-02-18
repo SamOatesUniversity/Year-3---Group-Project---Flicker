@@ -60,7 +60,7 @@ public class CSteamVent : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log("CSteamVent: SteamParticleSystem == null. Attach a particle system");
+			Debug.LogError("CSteamVent: SteamParticleSystem == null. Attach a particle system to '" + this.name + "'");
 		}
 			
 	}
@@ -69,7 +69,7 @@ public class CSteamVent : MonoBehaviour
 	{
 		
 		//Break out early if it's setting the same value again.
-		if (toggle == m_streamOn) 
+		if (toggle == m_streamOn || m_pSystem == null) 
 			return;
 			
 		m_streamOn = toggle;
