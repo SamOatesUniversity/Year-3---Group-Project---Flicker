@@ -6,7 +6,7 @@ public class CTriggerBase : MonoBehaviour
 	
 	protected bool CheckContextButton()
 	{
-        return Input.GetButton("Action");
+        return Input.GetKeyUp(KeyCode.E);		
 	}
 	
 	protected float CheckRange(Vector3 _from, Vector3 _to)

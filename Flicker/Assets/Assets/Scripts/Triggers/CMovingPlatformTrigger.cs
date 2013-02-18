@@ -3,63 +3,62 @@ using System.Collections.Generic;
 
 public class CMovingPlatformTrigger : CTriggerBase {
 	
-	public GameObject platform1 = null;
-	public GameObject platform2 = null;
-	public GameObject platform3 = null;
-	public GameObject platform4 = null;
+	public struct PlatformStruct {
+		public GameObject platform;
+		public bool and;
+	};
 	
-	private bool m_TriggerEntered = false;
-	private MeshCollider selfCollider = null;
-	 
-	private List<CSceneObjectPlatform> platforms;
+	public PlatformStruct[] 				Platforms = null;
+		
+	private bool 							m_triggerEntered = false;
+	
+	private MeshCollider 					m_selfCollider = null;
+	
+	private List<CSceneObjectPlatform>		m_platforms = null;
 	
 	// Use this for initialization
 	void Start () {
-		platforms = new List<CSceneObjectPlatform>();
-		selfCollider = this.GetComponent<MeshCollider>();
 		
-		if (platform1 != null){
-			CSceneObjectPlatform plat = platform1.GetComponent<CSceneObjectPlatform>();
-			platforms.Add(plat);
+		m_platforms = new List<CSceneObjectPlatform>();
+		m_selfCollider = this.GetComponent<MeshCollider>();
+		
+		for (int platformIndex = 0; platformIndex < Platforms.Length; ++platformIndex)
+		{
+			CSceneObjectPlatform plat = Platforms[platformIndex].platform.GetComponent<CSceneObjectPlatform>();
+			if (plat != null)
+				m_platforms.Add(plat);
 		}
-		if ( platform2 != null){
-			CSceneObjectPlatform plat = platform2.GetComponent<CSceneObjectPlatform>();
-			platforms.Add(plat);
-		}
-		if ( platform3 != null){
-		CSceneObjectPlatform plat = platform3.GetComponent<CSceneObjectPlatform>();
-			platforms.Add(plat);
-		}
-	
-		if ( platform4 != null){
-		CSceneObjectPlatform plat = platform4.GetComponent<CSceneObjectPlatform>();
-			platforms.Add(plat);
-		}
+		
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
 
-	if (m_TriggerEntered)
+		if (m_triggerEntered)
         {
 			if (CheckContextButton())
             {
-                for (int i = 0; i < platforms.Count; i++)
+                for (int platformIndex = 0; platformIndex < m_platforms.Count; ++platformIndex)
 				{
-					platforms[i].ToggleTrigger(true);
+					m_platforms[platformIndex].ToggleTrigger();
 				}
+				
                 Animation lever = GetComponentInChildren<Animation>();
-                if (lever == null)
+                if (lever != null)
+				{
                     lever.Play("pull");
+				}
 			}
         }
 	}
-	 public void OnTriggerEnter(Collider other)
+	
+	public void OnTriggerEnter(Collider other)
     {
-        m_TriggerEntered = true;
+        m_triggerEntered = true;
     }
+	
     public void OnTriggerExit(Collider other)
     {
-        m_TriggerEntered = false;
+        m_triggerEntered = false;
     }
 }

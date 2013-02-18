@@ -37,27 +37,21 @@ public class CSceneObjectPlatform : CSceneObject {
 	}
 	
 	
-	public void ToggleTrigger(bool toggle)
+	public void ToggleTrigger()
 	{
-		m_enabled = toggle;
+		m_enabled = !m_enabled;
 	}
 	
 	void FixedUpdate()
-	{
-		
-		
-		
-			platAnim = gameObject.GetComponent<Animation>();
-			if (platAnim == null)
-			{
-				return;
-				//Debug.Log ("Platform Pos = " + platAnim.transform.position); 
-			}
-			Vector3 currentPos = platAnim.transform.position;
+	{		
+		if (platAnim == null)
+			return;
 			
-			float rotY = platAnim.transform.rotation.eulerAngles.y;
-			m_deltaA += rotY - m_lastRotY;
-			m_lastRotY = rotY;
+		Vector3 currentPos = platAnim.transform.position;
+		
+		float rotY = platAnim.transform.rotation.eulerAngles.y;
+		m_deltaA += rotY - m_lastRotY;
+		m_lastRotY = rotY;
 		
 		if (!m_enabled && platAnim.isPlaying)
 		{
@@ -66,9 +60,7 @@ public class CSceneObjectPlatform : CSceneObject {
 		else if (!platAnim.isPlaying && m_enabled)
 		{
 			platAnim.Play();
-		}
-		
-		
+		}	
 		
 		//print ("currentPos is: " + currentPos);
 		//Vector3 vec1 = m_lastPos - new Vector3( 0.0f, m_lastPos.y, 0.0f );
