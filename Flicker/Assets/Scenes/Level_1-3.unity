@@ -7406,8 +7406,9 @@ GameObject:
   serializedVersion: 3
   m_Component:
   - 4: {fileID: 1230392291}
+  - 114: {fileID: 1230392292}
   m_Layer: 0
-  m_Name: Scene_1-3
+  m_Name: Level_1-3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7427,6 +7428,18 @@ Transform:
   - {fileID: 548909450}
   - {fileID: 1079866639}
   m_Father: {fileID: 0}
+--- !u!114 &1230392292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1230392290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30117fc6155c96741a5d2ac06f7957f4, type: 1}
+  m_Name: 
+  NextScene: Level_1-4
+  NumberOfRows: 5
 --- !u!1 &1233035289
 GameObject:
   m_ObjectHideFlags: 0
