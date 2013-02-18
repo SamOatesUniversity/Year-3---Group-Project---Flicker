@@ -36,7 +36,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 	private PlayerState			m_playerState = PlayerState.Standing;	//!< The current player state
 		
-    private CCamera 			m_cameraClass = null;					//!< Todo: Haydn fill these in.
+    //private CCamera 			m_cameraClass = null;					//!< Todo: Haydn fill these in.
 		
 	private CPlayerPhysics		m_physics = null;						//!< 
 	
@@ -49,6 +49,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 	private CPlayerDebug 		m_debug = null;
 	
 	private float				m_standingStillTime = 0;
+	
+	private Vector3				m_pelvisOffset;
 	
 	// dying vars
 	
@@ -66,7 +68,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	private bool 				m_isEscapeDown = false;
 	
-	
 	////////////////////////
 	
 	AudioSource				m_footSteps = null;
@@ -79,7 +80,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	public float			InitialAlphaPosition = 0.0f;	//!< The initial point on the circle where the player will start
 	
-	public Camera			MainCamera = null;				//!< The main viewport camera, which will follow the player
+	//public Camera			MainCamera = null;				//!< The main viewport camera, which will follow the player
 	
 	public CCheckPoint		StartCheckPoint = null;			//!< The start point check point
 	
@@ -109,7 +110,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_physics = GetComponent<CPlayerPhysics>();
 		m_physics.Create(this, GetComponent<Rigidbody>());
 		
-        m_cameraClass = MainCamera.GetComponent<CCamera>();
+        //m_cameraClass = MainCamera.GetComponent<CCamera>();
 				
 		m_animation = GetComponent<CPlayerAnimation>();
 		m_animation.OnStart(GetComponentInChildren<Animation>());
@@ -119,9 +120,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_footSteps = GetComponent<AudioSource>();
 				
 		m_characterMesh = this.transform.Find("Player_Mesh");
+		m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));	
 		
 		m_physics.MovingDirection = StartFacing == LeftRight.Left ? 1 : -1;
-
 		m_ledgeGrabBox = this.transform.Find("Ledge_Grab_Detection");
 		
 		if (StartCheckPoint != null)
@@ -136,6 +137,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 		{
 			m_debug.SetPlayer(this);	
 		}
+		
+		m_pelvisOffset = this.transform.Find("Player_Mesh/Bip001/Bip001 Pelvis").position - this.transform.position;
 	}
 	
 	public int GetCurrentHealth()
@@ -189,10 +192,16 @@ public class CEntityPlayer : CEntityPlayerBase {
 		{
 			m_playerPositionAlpha -= m_physics.MovingDirection * 4;	
 			m_lastPlayerPositionAlpha = m_playerPositionAlpha;
-			additionalY += 0.65f;
+			//additionalY += 0.65f;
 			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 			m_playerState = PlayerState.Standing;
-			m_physics.CurrentCollisionState = CollisionState.OnFloor;
+			//m_physics.CurrentCollisionState = CollisionState.OnFloor;
+			CapsuleCollider capCollider = this.GetComponentInChildren<CapsuleCollider>();
+			capCollider.enabled = true;
+			
+			//new stuffs
+			Vector3 newPelvisOffset = this.transform.Find("Player_Mesh/Bip001/Bip001 Pelvis").position - this.transform.position;
+			this.transform.position = this.transform.position + (newPelvisOffset - m_pelvisOffset);
 		}
 		
 		if (m_physics.LadderClimb.State != LadderState.None) {
@@ -217,6 +226,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 			Mathf.Cos(m_playerPositionAlpha * Mathf.Deg2Rad) * (PlayerPathRadius + m_additionalRadius)
 		);
 		
+		/*
 		// Camera Positioning
 		{
 			//m_cameraClass.TendToMaxOffset(m_physics.Direction);
@@ -275,6 +285,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	        m_cameraClass.SetPosition(camPostion);
 	        m_cameraClass.SetLookAt(lookatOffset);
 		}
+		*/
 		
 		// Animate and position the player model mesh
 		{
@@ -320,6 +331,17 @@ public class CEntityPlayer : CEntityPlayerBase {
 		if (m_playerState == PlayerState.FallingFromTower && (Time.time * 1000.0f) - m_dead.time > 3000)
 		{
 			OnDeath();
+		}
+		
+		//Not very nice - reenables collider if no longer ledge hanging/climbing
+		if (
+				m_playerState != PlayerState.LedgeHang && 
+				m_playerState != PlayerState.LedgeClimb &&
+				m_playerState != PlayerState.LedgeClimbComplete
+			)
+		{
+			CapsuleCollider capCollider = this.GetComponentInChildren<CapsuleCollider>();
+			capCollider.enabled = true;
 		}
 		
 		base.FixedUpdate();
@@ -452,6 +474,29 @@ public class CEntityPlayer : CEntityPlayerBase {
 		{
 			m_playerPositionAlpha = m_lastPlayerPositionAlpha;
 		}
+	}
+	
+	void OnTriggerEnter(Collider collider)
+	{
+		//Disabled ledge grab stuff
+		/*
+		if(collider.gameObject != null && collider.gameObject.name == "LedgeHang" && this.collider.name == "LedgeGrabTrigger")
+		{
+			
+			//Debug.Log("Triggered!");
+			if (
+				m_playerState != PlayerState.LedgeHang && 
+				m_playerState != PlayerState.LedgeClimb &&
+				m_playerState != PlayerState.LedgeClimbComplete
+			)
+			{
+				m_physics.SetLedgeGrabState(this, PlayerState.LedgeHang);
+				CapsuleCollider capCollider = this.GetComponentInChildren<CapsuleCollider>();
+				capCollider.enabled = false;
+			}
+		}
+		*/
+		
 	}
 	
 	void OnTriggerStay(Collider collision) {
