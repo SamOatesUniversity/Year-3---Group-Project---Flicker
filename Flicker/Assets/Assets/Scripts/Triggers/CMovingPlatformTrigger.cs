@@ -14,7 +14,7 @@ public class CMovingPlatformTrigger : CTriggerBase {
 				Debug.Log ("Pulled Lever: " + name);
 				state = true;							
                 Animation lever = GetComponentInChildren<Animation>();
-                if (lever != null)
+                if (lever != null && lever["pull"] != null)
 				{
                     lever.Play("pull");
 				}
