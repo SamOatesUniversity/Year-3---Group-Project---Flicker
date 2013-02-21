@@ -92,7 +92,6 @@ public class CCamera : MonoBehaviour {
 		}
 		Vector3 avgPosition = sumPositions / m_storedPositions.Count;
 		
-		Transform player = m_playerPelvis;
 		this.TendToMaxOffset( m_playerEntity.Physics.Direction );
 		m_averagePos = avgPosition;
 		

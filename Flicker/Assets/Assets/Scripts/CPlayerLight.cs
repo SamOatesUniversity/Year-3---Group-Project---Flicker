@@ -21,7 +21,6 @@ public class CPlayerLight : MonoBehaviour {
 	private float m_stepSize = 0.0f;
 	private int m_reverse = 1;
 	private float m_currentRange = 0;
-	private float m_currentIntensity = 0;
 	private float m_currentLightCharge = 0;
 	
 	
@@ -39,7 +38,6 @@ public class CPlayerLight : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		m_currentRange = MaxRange;
-		m_currentIntensity = MaxIntensity;
 		m_stepSize = FlickerSpeed;
 		m_currentLightCharge = LightCharge;
 		

@@ -28,8 +28,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 	    Private Members 
 	   ----------------- */
 
-    private CPlayerLight    	m_playerLight = null;
-
 	private float				m_playerPositionAlpha = 0.0f;			//!< How far around the tower are we (in degrees)
 	
 	private float 				m_lastPlayerPositionAlpha = 0.0f;		//!< 
@@ -47,8 +45,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 	private CCheckPoint			m_lastCheckpoint = null;	
 	
 	private CPlayerDebug 		m_debug = null;
-	
-	private float				m_standingStillTime = 0;
 	
 	private Vector3				m_pelvisOffset;
 	
@@ -68,10 +64,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	private bool 				m_isEscapeDown = false;
 	
-	////////////////////////
-	
-	AudioSource				m_footSteps = null;
-
 	/* ----------------
 	    Public Members 
 	   ---------------- */
@@ -116,9 +108,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_animation.OnStart(GetComponentInChildren<Animation>());
 			
 		m_playerHealth = MaxHealth;
-		
-		m_footSteps = GetComponent<AudioSource>();
-				
+
 		m_characterMesh = this.transform.Find("Player_Mesh");
 		m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));	
 		
@@ -368,10 +358,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 		{
 			m_isEscapeDown = false;
 		}
-		
-		if (m_physics.Direction != 0)
-			m_standingStillTime = Time.time * 1000.0f;	
-
 		
 		if (m_playerState == PlayerState.FallingFromTower)
 			return;

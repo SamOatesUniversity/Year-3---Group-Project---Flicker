@@ -124,5 +124,8 @@ public class CSceneObject : MonoBehaviour {
 		CheckLedgeGrab(collision);
 		CheckKillOnTouch(collision);
 	}
-
+	
+	public virtual void LogicSuccess() {
+			
+	}
 }

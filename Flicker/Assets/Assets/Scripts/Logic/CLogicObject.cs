@@ -31,8 +31,5 @@ public class CLogicObject : MonoBehaviour {
 		)
 	{
 		m_state = state;
-		
-		Debug.Log (this.name + " Logic State Set To " + state);
-		
 	}
 }

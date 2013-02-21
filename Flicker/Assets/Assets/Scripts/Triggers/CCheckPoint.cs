@@ -55,7 +55,7 @@ public class CCheckPoint : MonoBehaviour {
 		float h = xz.magnitude;
 		
 		float oh = o / h;
-		float alpha = Mathf.Asin(o / h) * 2.0f;
+		float alpha = Mathf.Asin(oh) * 2.0f;
 		alpha = alpha * Mathf.Rad2Deg;
 		
 		alpha = position.x < 0 ? 180.0f + alpha : alpha;

@@ -1,21 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
-public class CLogicEquation : MonoBehaviour {
+public class CLogicEquation : Object {
 	
 	private CLogicExpression 				m_expressionOne = null;
 	private CLogicExpression 				m_expressionTwo = null;
 	private LogicOperator 					m_op = LogicOperator.AND;
-	
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
 	
 	public bool Resolve() {
 	
@@ -32,18 +22,7 @@ public class CLogicEquation : MonoBehaviour {
 		
 		return false;
 	}
-	
-	public LogicOperator GetOperator() {
-		return m_op;	
-	}
-	
-	public void SetOperator(
-			LogicOperator op
-		) 
-	{
-		m_op = op;	
-	}
-	
+		
 	public CLogicExpression GetExpression(
 			int id
 		)
@@ -61,5 +40,16 @@ public class CLogicEquation : MonoBehaviour {
 	{
 		if (id == 1) m_expressionOne = exp;
 		if (id == 2) m_expressionTwo = exp;
+	}
+	
+		public LogicOperator GetOperator() {
+		return m_op;	
+	}
+	
+	public void SetOperator(
+			LogicOperator op
+		) 
+	{
+		m_op = op;	
 	}
 }

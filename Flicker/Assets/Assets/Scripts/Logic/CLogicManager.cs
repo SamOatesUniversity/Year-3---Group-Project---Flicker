@@ -9,30 +9,29 @@ public enum LogicOperator {
 
 public class CLogicManager : MonoBehaviour {
 
-	public CLogicEquation 								equation = new CLogicEquation();			//! The equation to manage and test
-
+	public CLogicExpression 								expression = null;			//! The equation to manage and test
+	
+	private CSceneObject									m_object = null;
+	
 	// Use this for initialization
 	void Start () {
-	
+		m_object = GetComponent<CSceneObject>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
+		if (GetOuput() == true)
+		{
+			m_object.LogicSuccess();
+		}
+		
 	}
 	
 	/*
 	*	\brief Returns the result of the expressions
 	*/
 	public bool GetOuput() {		
-		return equation.Resolve();
-	}
-	
-	/*
-	*	\brief Get the equation we are managing
-	*/	
-	public CLogicEquation GetEquation() {
-		return equation;	
-	}
-	
+		return expression.Resolve();
+	}	
 }

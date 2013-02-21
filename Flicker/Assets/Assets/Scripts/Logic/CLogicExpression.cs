@@ -10,17 +10,7 @@ public class CLogicExpression : MonoBehaviour {
 	private CLogicExpression				m_expressionTwo = null;
 	
 	private LogicOperator 					m_op = LogicOperator.AND;		
-	
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-	
+		
 	public bool Resolve() {
 	
 		bool result1 = false;
@@ -47,5 +37,35 @@ public class CLogicExpression : MonoBehaviour {
 		Debug.LogError("Expression Operator '" + m_op + "' not handled in resolve!");
 		
 		return false;
+	}
+	
+	public CLogicObject GetObject(
+			int id
+		)
+	{
+		if (id == 1) return m_objectOne;
+		if (id == 2) return m_objectTwo;
+		
+		return null;
+	}
+	
+	public void SetObject(
+			int id,
+			CLogicObject obj
+		)
+	{
+		if (id == 1) m_objectOne = obj;
+		if (id == 2) m_objectTwo = obj;
+	}
+	
+	public LogicOperator GetOperator() {
+		return m_op;	
+	}
+	
+	public void SetOperator(
+			LogicOperator op
+		) 
+	{
+		m_op = op;	
 	}
 }

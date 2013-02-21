@@ -41,9 +41,7 @@ public class CPlayerPhysics : MonoBehaviour {
 	private JumpState		m_jumpState = JumpState.Landed;			//!< 
 	
 	private CEntityPlayer	m_player = null;
-	
-	private Vector3			m_ledgeOffset = new Vector3(0.0f, -0.42f, 0.0f);
-	
+
 	private CWallJump		m_wallJump = null;						//!< 
 	
 	private bool 			m_isJumpDown = false;					//!< 
