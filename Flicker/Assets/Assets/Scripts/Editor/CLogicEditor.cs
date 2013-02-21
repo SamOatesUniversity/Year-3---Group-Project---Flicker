@@ -2,57 +2,43 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
-[CustomEditor(typeof(CLogicBase))]
+[CustomEditor(typeof(CLogicManager))]
 public class CLogicEditor : Editor {
-		
-	private SerializedObject m_logicHandler = null;
-	private SerializedProperty m_logicInputs = null;
-	
-	private static GUIContent
-		insertContent = new GUIContent("+", "Add New Logic Operator");
-	
-	private static GUILayoutOption
-		buttonWidth = GUILayout.MaxWidth(20f);
-	
-	private int m_noofOperators = 0;
-	
-	void OnEnable () {		
-		m_logicHandler = new SerializedObject(target);
-		m_logicInputs = m_logicHandler.FindProperty("LogicInputs");
-	}
-	
+			
 	public override void OnInspectorGUI()
 	{
-		m_logicHandler.Update();
-
-		for(int i = 0; i < m_logicInputs.arraySize; i++){
-			
-			EditorGUILayout.BeginHorizontal();
-			
-			SerializedProperty logicObject = m_logicInputs.GetArrayElementAtIndex(i);
-			
-			EditorGUILayout.PropertyField(logicObject.FindPropertyRelative("logicObject"));
-			
-			SerializedProperty operators = logicObject.FindPropertyRelative("logicOperator");
-			for(int opIndex = 0; opIndex < operators.arraySize; opIndex++){
-				EditorGUILayout.PropertyField(operators.GetArrayElementAtIndex(opIndex));
-			}
-			
-			EditorGUILayout.EndHorizontal();
+		CLogicManager manager = (CLogicManager)target;
+		CLogicEquation equation = manager.equation;
+		
+		if (equation == null)
+		{
+			//Debug.LogError ("Equation is null!");
+			//return;	
+			equation = new CLogicEquation(); 
 		}
 		
 		EditorGUILayout.BeginHorizontal();
-		GUILayout.Label("Number of operations", GUILayout.MaxWidth(200.0f));
-		m_noofOperators = EditorGUILayout.IntField(m_noofOperators, GUILayout.MaxWidth(40.0f));
-		if (m_noofOperators != m_logicInputs.arraySize)
-		{
-			CLogicBase logicBase = (CLogicBase)target;
-			logicBase.LogicInputs = new CLogicBase.LogicInput[m_noofOperators];
-			m_logicInputs = m_logicHandler.FindProperty("LogicInputs");
-		}
+		
+		// expression one
+		CLogicExpression exp1 = equation.GetExpression(1);
+		exp1 = EditorGUILayout.ObjectField("A", exp1, typeof(CLogicExpression), true) as CLogicExpression;
+		//manager.equation.SetExpression(1, exp1);
+		
+		// operator
+		LogicOperator op = equation.GetOperator();
+		op = (LogicOperator)EditorGUILayout.EnumPopup(op);
+		//manager.equation.SetOperator(op);
+		
+		// expression two
+		CLogicExpression exp2 = equation.GetExpression(2);
+		exp2 = EditorGUILayout.ObjectField("B", exp2, typeof(CLogicExpression), true) as CLogicExpression;
+		//manager.equation.SetExpression(2, exp2);
+		
 		EditorGUILayout.EndHorizontal();
-
-
-		m_logicHandler.ApplyModifiedProperties();
+		
+		if (GUI.changed) {
+			EditorUtility.SetDirty(manager);
+		}
+		
 	}	
 }
