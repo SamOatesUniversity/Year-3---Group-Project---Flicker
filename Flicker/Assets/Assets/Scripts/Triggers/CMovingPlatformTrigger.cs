@@ -6,11 +6,12 @@ public class CMovingPlatformTrigger : CTriggerBase {
 	private bool 							m_triggerEntered = false;
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void Update () {
 		if (m_triggerEntered)
         {
 			if (CheckContextButton())
             {
+				Debug.Log ("Pulled Lever: " + name);
 				state = true;							
                 Animation lever = GetComponentInChildren<Animation>();
                 if (lever != null)

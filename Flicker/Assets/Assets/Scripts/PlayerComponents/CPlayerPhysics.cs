@@ -321,12 +321,15 @@ public class CPlayerPhysics : MonoBehaviour {
 					m_velocityLockTimer = (Time.time * 1000.0f); 
 				}
 				
-				// are we on a special material?
-				m_footMaterial = FootMaterial.Stone;
-				if (contact.otherCollider.tag == "Wood Object")
-					m_footMaterial = FootMaterial.Wood;
-				else if (contact.otherCollider.tag == "Metal Object")
-					m_footMaterial = FootMaterial.Metal;
+				if (contact.otherCollider != null)
+				{
+					// are we on a special material?
+					m_footMaterial = FootMaterial.Stone;
+					if (contact.otherCollider.tag == "Wood Object")
+						m_footMaterial = FootMaterial.Wood;
+					else if (contact.otherCollider.tag == "Metal Object")
+						m_footMaterial = FootMaterial.Metal;
+				}
 			}
 			// head check
 			else if (isNearly(contact.normal.y, -1.0f, 0.1f))
