@@ -12,9 +12,10 @@ public class CSceneSetup : MonoBehaviour {
 
 	// Use this for initialization
     void Start() {
+		
         if (NextScene == null || NextScene.Length == 0)
         {
-			Debug.LogError("The next scene has not been set on a scene setup script...");
+			Debug.LogError("The next scene has not been set on a scene setup script. (" + name + ")");
             return;
         }
 
