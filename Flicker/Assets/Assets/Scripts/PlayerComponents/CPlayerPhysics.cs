@@ -295,11 +295,11 @@ public class CPlayerPhysics : MonoBehaviour {
 					continue;
 			}
 			
-			if (contact.otherCollider != null && contact.otherCollider.gameObject != null && contact.otherCollider.gameObject.name == "Ledge_Grab_Detection" && (obj == null || obj.CanLedgeGrab))
-			{
-				if (CSceneObject.CheckLedgeGrab(collision))
-					continue;
-			}
+		//	if (contact.otherCollider != null && contact.otherCollider.gameObject != null && contact.otherCollider.gameObject.name == "Ledge_Grab_Detection" && (obj == null || obj.CanLedgeGrab))
+		//	{
+		//		if (CSceneObject.CheckLedgeGrab(collision))
+		//			continue;
+		//	}
 			
 			// wall jumping
 			if (obj != null && obj.CanWallJump == true && m_jumpState != JumpState.Landed && !isNearly(contact.normal.y, 1.0f, 0.2f) && !isNearly(contact.normal.y, -1.0f, 0.1f))
