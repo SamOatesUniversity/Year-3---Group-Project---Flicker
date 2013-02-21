@@ -2,34 +2,18 @@ using System;
 using UnityEngine;
 using System.Collections;
 
+[System.Serializable]
 public class CLogicObject : MonoBehaviour {
 		
-	protected bool						m_state;				//!< The current state of the logic object
+	public bool										state;				//!< The current state of the logic object
 	
 	// Use this for initialization
 	void Start () {
-		m_state = false;					
+		state = false;					
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
-	}
-	
-	/*
-	*	\brief Get the state of the logic object 
-	*/
-	public bool GetState() {
-		return m_state;	
-	}
-	
-	/*
-	*	\brief Set the state of the logic object
-	*/
-	public void SetState(
-			bool state
-		)
-	{
-		m_state = state;
 	}
 }

@@ -2,20 +2,21 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+[System.Serializable] 
 public enum LogicOperator {
 	AND,
 	OR
 };
 
+[System.Serializable] 
 public class CLogicManager : MonoBehaviour {
 
 	public CLogicExpression 								expression = null;			//! The equation to manage and test
-	
-	private CSceneObject									m_object = null;
+	public CSceneObject										obj = null;
 	
 	// Use this for initialization
 	void Start () {
-		m_object = GetComponent<CSceneObject>();
+		obj = GetComponent<CSceneObject>();
 	}
 	
 	// Update is called once per frame
@@ -23,7 +24,7 @@ public class CLogicManager : MonoBehaviour {
 	
 		if (GetOuput() == true)
 		{
-			m_object.LogicSuccess();
+			obj.LogicSuccess();
 		}
 		
 	}

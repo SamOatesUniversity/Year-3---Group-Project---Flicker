@@ -11,7 +11,7 @@ public class CMovingPlatformTrigger : CTriggerBase {
         {
 			if (CheckContextButton())
             {
-				SetState(true);								
+				state = true;							
                 Animation lever = GetComponentInChildren<Animation>();
                 if (lever != null)
 				{

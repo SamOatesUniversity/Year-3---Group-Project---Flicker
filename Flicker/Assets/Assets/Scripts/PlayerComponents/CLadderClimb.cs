@@ -9,7 +9,7 @@ public enum LadderState {
 	JumpOff
 }
 
-public class CLadderClimb : MonoBehaviour {
+public class CLadderClimb {
 
 	private LadderState		m_ladderState = LadderState.None;		//!< 
 	
@@ -22,16 +22,6 @@ public class CLadderClimb : MonoBehaviour {
 		set {
 			m_ladderState = value;	
 		}
-	}
-
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 
 	public void CallOnUpdate(CollisionState collisionState) 
