@@ -14,6 +14,9 @@ public class CLogicManager : MonoBehaviour {
 	public CLogicExpression 								expression = null;			//! The equation to manage and test
 	public CSceneObject										obj = null;
 	
+	private bool											m_oldState = false;
+	private bool											m_currentState = false;
+	
 	// Use this for initialization
 	void Start () {
 		obj = GetComponent<CSceneObject>();
@@ -21,18 +24,15 @@ public class CLogicManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		
+		m_oldState = m_currentState;
+		m_currentState = expression.Resolve();
+		
 	
-		if (GetOuput() == true)
+		if (m_oldState != m_currentState)
 		{
-			obj.LogicSuccess();
+			obj.LogicStateChange(m_currentState);
 		}
 		
 	}
-	
-	/*
-	*	\brief Returns the result of the expressions
-	*/
-	public bool GetOuput() {		
-		return expression.Resolve();
-	}	
 }

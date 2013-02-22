@@ -65,7 +65,7 @@ public class CSceneObjectPlatform : CSceneObject {
 		m_deltaA = 0.0f;	
 	}
 	
-	public override void LogicSuccess() {
-		m_enabled = true;
+	public override void LogicStateChange(bool newState) {
+		m_enabled = newState;
 	}
 }

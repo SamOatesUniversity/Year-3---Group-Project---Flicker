@@ -191,7 +191,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 			
 			//new stuffs
 			Vector3 newPelvisOffset = this.transform.Find("Player_Mesh/Bip001/Bip001 Pelvis").position - this.transform.position;
-			this.transform.position = this.transform.position + (newPelvisOffset - m_pelvisOffset) + new Vector3(0, 0.09f, 0);
+			this.transform.position = this.transform.position + (newPelvisOffset - m_pelvisOffset) /*+ new Vector3(0, 0.09f, 0)*/;
 		}
 		
 		if (m_physics.LadderClimb.State != LadderState.None) {

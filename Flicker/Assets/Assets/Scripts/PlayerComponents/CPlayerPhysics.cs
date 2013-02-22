@@ -288,19 +288,7 @@ public class CPlayerPhysics : MonoBehaviour {
 					}
 				}
 			}
-			
-			if (contact.thisCollider != null && contact.thisCollider.gameObject != null && contact.thisCollider.gameObject.name == "Ledge_Grab_Detection" && (obj == null || obj.CanLedgeGrab))
-			{
-				if(CSceneObject.CheckLedgeGrab(collision))
-					continue;
-			}
-			
-		//	if (contact.otherCollider != null && contact.otherCollider.gameObject != null && contact.otherCollider.gameObject.name == "Ledge_Grab_Detection" && (obj == null || obj.CanLedgeGrab))
-		//	{
-		//		if (CSceneObject.CheckLedgeGrab(collision))
-		//			continue;
-		//	}
-			
+						
 			// wall jumping
 			if (obj != null && obj.CanWallJump == true && m_jumpState != JumpState.Landed && !isNearly(contact.normal.y, 1.0f, 0.2f) && !isNearly(contact.normal.y, -1.0f, 0.1f))
 			{
@@ -423,7 +411,7 @@ public class CPlayerPhysics : MonoBehaviour {
 			velocity = m_velocity;
 		}
 		
-		if (m_ladderClimb.State == LadderState.AtMiddle || m_ladderClimb.State == LadderState.AtTop)
+		if (m_ladderClimb != null && m_ladderClimb.State == LadderState.AtMiddle || m_ladderClimb.State == LadderState.AtTop)
 			velocity = 0;
 					
 		int direction = isNearly(velocity, 0.0f, 0.1f) ? 0 : velocity > 0 ? 1 : -1;

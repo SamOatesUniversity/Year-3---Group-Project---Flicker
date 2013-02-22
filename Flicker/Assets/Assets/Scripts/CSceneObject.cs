@@ -29,62 +29,22 @@ public class CSceneObject : MonoBehaviour {
 	
 	}
 	
-	public static bool CheckLedgeGrab(Collision collision) {
+	public bool CheckLedgeGrab(Collider collision) {		
 		
-		foreach (ContactPoint contact in collision)
+		if (this.name == "ledge_grab_area" && collision.name == "Ledge_Grab_Detection")
 		{
-			Collider ledgeGrab = null;
-			CSceneObject sceneLedge = null;
+			GameObject playerObject = collision.attachedRigidbody.gameObject;
+			if (playerObject == null)
+				return false;
 			
-			if (contact.otherCollider != null && contact.otherCollider.gameObject.name == "Ledge_Grab_Detection")
-			{
-				ledgeGrab = contact.otherCollider;
-				
-				if (contact.thisCollider != null && contact.thisCollider.gameObject != null)
-					sceneLedge = contact.thisCollider.gameObject.GetComponent<CSceneObject>();
-			}
-			else if (contact.thisCollider != null && contact.thisCollider.gameObject.name == "Ledge_Grab_Detection")
-			{
-				ledgeGrab = contact.thisCollider;
-				
-				if (contact.otherCollider != null && contact.otherCollider.gameObject != null)
-					sceneLedge = contact.otherCollider.gameObject.GetComponent<CSceneObject>();
-			}
-				
-			if (sceneLedge == null || !sceneLedge.CanLedgeGrab)
-			{
-				if (ledgeGrab != null) ledgeGrab.enabled = false;
-				continue;
-			}
-				
-			if (ledgeGrab != null)
-			{
-				if (CPlayerPhysics.isNearly(contact.normal.normalized.y, -1.0f, 0.1f))
-				{
-					// player hit the ledge grab area	
-					GameObject player = contact.otherCollider.gameObject.transform.parent.gameObject;
-					if (player != null)
-					{
-						CEntityPlayer playerEntity = player.GetComponent<CEntityPlayer>();	
-						if ( playerEntity != null && 
-							playerEntity.GetPlayerState() != PlayerState.LedgeHang && 
-							playerEntity.GetPlayerState() != PlayerState.LedgeClimb &&
-							playerEntity.GetPlayerState() != PlayerState.LedgeClimbComplete
-						)
-						{
-							CPlayerPhysics phy = playerEntity.Physics;
-							phy.SetLedgeGrabState(playerEntity, PlayerState.LedgeHang);
-							contact.otherCollider.enabled = false;
-							return true;
-						}
-					}
-				}
-				else
-				{
-					ledgeGrab.enabled = false;
-					return false;
-				}
-			}
+			CEntityPlayer player = playerObject.GetComponent<CEntityPlayer>();
+			if (player == null)
+				return false;
+			
+			CPlayerPhysics phy = player.Physics;
+			phy.SetLedgeGrabState(player, PlayerState.LedgeHang);
+			
+			return true;
 		}
 		
 		return false;
@@ -116,16 +76,18 @@ public class CSceneObject : MonoBehaviour {
 	}
 	
 	void OnCollisionEnter(Collision collision) {
-		CheckLedgeGrab(collision);
 		CheckKillOnTouch(collision);
 	}
 	
 	void OnCollisionStay(Collision collision) {
-		CheckLedgeGrab(collision);
 		CheckKillOnTouch(collision);
 	}
 	
-	public virtual void LogicSuccess() {
+	void OnTriggerEnter(Collider other) {
+		CheckLedgeGrab(other);	
+	}
+	
+	public virtual void LogicStateChange(bool newState) {
 			
 	}
 }
