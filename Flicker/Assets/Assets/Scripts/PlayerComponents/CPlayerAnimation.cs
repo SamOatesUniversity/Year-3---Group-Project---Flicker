@@ -24,7 +24,7 @@ public class CPlayerAnimation : MonoBehaviour {
 		m_audio = GetComponent<AudioSource>();
 	}
 	
-	public void OnFixedUpdate(ref PlayerState playerState, LadderState ladderState, FootMaterial footMaterial)
+	public void OnFixedUpdate(ref PlayerState playerState, LadderState ladderState, FootMaterial footMaterial, CEntityPlayer player)
 	{
 		if (playerState == PlayerState.Walking)
 		{			
@@ -75,8 +75,11 @@ public class CPlayerAnimation : MonoBehaviour {
 		else if (playerState == PlayerState.LedgeHang)
 		{
 			m_currentAnimation = "free-hang-idle";
-			if (!m_animation.IsPlaying("free-hang-idle")) {
-				m_animation.CrossFade("free-hang-idle");
+			if (player.Physics.GetLedgeGrabType() == eLedgeType.Wall)
+				m_currentAnimation = "wall-hang-idle";
+			
+			if (!m_animation.IsPlaying(m_currentAnimation)) {
+				m_animation.CrossFade(m_currentAnimation);
 				m_startedLedgeClimb = false;
 			}
 		}

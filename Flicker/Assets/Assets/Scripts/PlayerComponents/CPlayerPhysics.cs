@@ -61,6 +61,8 @@ public class CPlayerPhysics : MonoBehaviour {
 	private GameObject		m_ledgeGrabBox = null;
 	
 	private FootMaterial	m_footMaterial = FootMaterial.Stone;
+	
+	private eLedgeType		m_ledgeHangType = eLedgeType.Free;
 
 	/* ----------------
 	    Public Members 
@@ -194,6 +196,10 @@ public class CPlayerPhysics : MonoBehaviour {
 	public bool IsOnPlatform()
 	{
 		return m_platform != null;	
+	}
+	
+	public eLedgeType GetLedgeGrabType() {
+		return m_ledgeHangType;	
 	}
 	
 	/*
@@ -628,14 +634,15 @@ public class CPlayerPhysics : MonoBehaviour {
 		*/
 	}
 	
-	public void SetLedgeGrabState (CEntityPlayer player, PlayerState state)
+	public void SetLedgeGrabState (CEntityPlayer player, PlayerState state, eLedgeType ledgeHangType)
 	{
 		if (state == PlayerState.LedgeHang)
 		{
 			m_velocity = 0;
 			player.SetPlayerState(PlayerState.LedgeHang);
 			m_body.constraints = RigidbodyConstraints.FreezeAll;
-			m_jumpState = JumpState.Landed;				
+			m_jumpState = JumpState.Landed;	
+			m_ledgeHangType = ledgeHangType;
 		}
 	}
 	

@@ -1,8 +1,13 @@
 using UnityEngine;
 using System.Collections;
 
+public enum eLedgeType {
+	Wall,
+	Free
+}
+
 public class CSceneObject : MonoBehaviour {
-	
+		
 	/* ----------------
 	    Public Members 
 	   ---------------- */
@@ -14,6 +19,8 @@ public class CSceneObject : MonoBehaviour {
 	public float ExtraSlide				= 1.0f; 		//!< Can the player wall jump upon this object?
 	
 	public bool CanLedgeGrab			= true;			//!< Can the player ledge grab on the object?
+	
+	public eLedgeType LedgeType 		= eLedgeType.Free;
 	
 	public bool KillPlayerOnTouch		= false;		//!< 
 	
@@ -41,8 +48,8 @@ public class CSceneObject : MonoBehaviour {
 			if (player == null)
 				return false;
 			
-			CPlayerPhysics phy = player.Physics;
-			phy.SetLedgeGrabState(player, PlayerState.LedgeHang);
+			CPlayerPhysics phy = player.Physics;			
+			phy.SetLedgeGrabState(player, PlayerState.LedgeHang, LedgeType);
 			
 			return true;
 		}
