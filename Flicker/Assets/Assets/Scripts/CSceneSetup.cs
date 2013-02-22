@@ -17,8 +17,8 @@ public class CSceneSetup : MonoBehaviour {
 			Debug.LogError("The next scene has not been set on a scene setup script. (" + name + ")");
             return;
         }
-
-        Application.LoadLevelAdditive(NextScene);
+		
+		Application.LoadLevelAdditiveAsync(NextScene);
     }
 	
 	// Update is called once per frame

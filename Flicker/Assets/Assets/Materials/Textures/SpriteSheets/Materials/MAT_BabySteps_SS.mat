@@ -17,7 +17,7 @@ Material:
         second:
           m_Texture: {fileID: 2800000, guid: 34be985ca92a7204ebba6c4813b94553, type: 1}
           m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 1}
+          m_Offset: {x: .75, y: .125}
       data:
         first:
           name: _BumpMap
@@ -67,6 +67,10 @@ Material:
         second: .5
       data:
         first:
+          name: _InvFade
+        second: 1
+      data:
+        first:
           name: _WaveScale
         second: .063000001
       data:
@@ -79,17 +83,17 @@ Material:
         second: .400000006
       data:
         first:
-          name: _InvFade
-        second: 1
-      data:
-        first:
           name: _BumpAmt
         second: 10
     m_Colors:
       data:
         first:
           name: _Color
-        second: {r: .937157393, g: .937157393, b: .937157393, a: .937157393}
+        second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _TintColor
+        second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
           name: _RefrColor
@@ -102,7 +106,3 @@ Material:
         first:
           name: _HorizonColor
         second: {r: .172000006, g: .463, b: .435000002, a: 1}
-      data:
-        first:
-          name: _TintColor
-        second: {r: 1, g: 1, b: 1, a: 1}
