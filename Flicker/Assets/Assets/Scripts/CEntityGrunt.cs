@@ -41,8 +41,6 @@ public class CEntityGrunt : CEntityPlayerBase {
 
 	private CGruntDebug 		m_debug = null;
 	
-	private float				m_standingStillTime = 0;
-	
 	// dying vars
 	
 	struct DyingValues {
@@ -54,10 +52,6 @@ public class CEntityGrunt : CEntityPlayerBase {
 	private DyingValues	m_dead;
 	
 	private Transform			m_characterMesh = null;
-	
-	////////////////////////
-	
-	AudioSource				m_footSteps = null;
 
 	/* ----------------
 	    Public Members 
@@ -104,8 +98,6 @@ public class CEntityGrunt : CEntityPlayerBase {
 			
 		m_playerHealth = MaxHealth;
 		
-		m_footSteps = GetComponent<AudioSource>();
-				
 		m_characterMesh = this.transform.Find("GruntMesh");
 		m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));	
 		
@@ -219,11 +211,7 @@ public class CEntityGrunt : CEntityPlayerBase {
 	}
 	
 	public override void Update()
-	{
-		if (m_physics.Direction != 0)
-			m_standingStillTime = Time.time * 1000.0f;	
-
-		
+	{		
 		if (m_playerState == GruntState.FallingFromTower)
 			return;
 		

@@ -6,7 +6,7 @@ public class CMovingPlatformTrigger : CTriggerBase {
 	private bool 							m_triggerEntered = false;
 	
 	// Update is called once per frame
-	void Update () {
+	new void Update () {
 		if (m_triggerEntered)
         {
 			if (CheckContextButton())

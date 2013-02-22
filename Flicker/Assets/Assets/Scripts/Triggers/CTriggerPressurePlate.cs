@@ -2,10 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 
 public class CTriggerPressurePlate : CTriggerBase {
-		
-	void Update () {
-
-	}
 	
 	public void OnTriggerEnter(Collider other)
     {

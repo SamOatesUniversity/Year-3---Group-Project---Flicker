@@ -10,7 +10,6 @@ public class CGruntAnimation : MonoBehaviour {
 	//----------------------//
 	
 	Animation m_animation = null;
-	bool m_startedLedgeClimb = false;
 	bool m_startedTurningRound = false;
 	private string m_currentAnimation = null;
 	
