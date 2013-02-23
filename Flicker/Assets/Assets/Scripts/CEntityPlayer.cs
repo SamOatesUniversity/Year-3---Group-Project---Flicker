@@ -56,7 +56,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		public bool didDie;
 	};
 	
-	private DyingValues	m_dead;
+	private DyingValues			m_dead;
 	
 	private Transform			m_characterMesh = null;
 	

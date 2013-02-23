@@ -63,7 +63,9 @@ public class CPlayerPhysics : MonoBehaviour {
 	private FootMaterial	m_footMaterial = FootMaterial.Stone;
 	
 	private eLedgeType		m_ledgeHangType = eLedgeType.Free;
-
+		
+	private bool			m_canJumpFromLedge = false;
+	
 	/* ----------------
 	    Public Members 
 	   ---------------- */		
@@ -246,9 +248,8 @@ public class CPlayerPhysics : MonoBehaviour {
 			m_jumpState = JumpState.Landed;	
 			m_ladderClimb.State = LadderState.None;
 			
-			if (m_player.GetPlayerState() != PlayerState.Turning) m_player.SetPlayerState(PlayerState.Standing);
-			
-			//m_ledgeGrabBox.collider.enabled = true;
+			if (m_player.GetPlayerState() != PlayerState.Turning) 
+				m_player.SetPlayerState(PlayerState.Standing);
 		}
 	}
 	
@@ -358,8 +359,8 @@ public class CPlayerPhysics : MonoBehaviour {
 				playerState = PlayerState.UpALadder;
 			}
 			
-			if (m_player.GetPlayerState() != PlayerState.Turning) m_player.SetPlayerState(PlayerState.Standing);
-			m_ledgeGrabBox.collider.enabled = true;
+			if (m_player.GetPlayerState() != PlayerState.Turning) 
+				m_player.SetPlayerState(PlayerState.Standing);
 		}
 	}
 	
@@ -439,7 +440,6 @@ public class CPlayerPhysics : MonoBehaviour {
 				playerState = PlayerState.Walking;
 				m_jumpState = JumpState.Landed;
 				m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-				m_ledgeGrabBox.collider.enabled = true;
 				m_movingDirection *= -1;
 				m_direction *= -1;
 				m_collisionState = CollisionState.None;
@@ -456,10 +456,9 @@ public class CPlayerPhysics : MonoBehaviour {
 				if (Input.GetAxis("Vertical") > 0 && playerState != PlayerState.LedgeClimbComplete) {
 					playerState = PlayerState.LedgeClimb;
 					m_jumpState = JumpState.Landed;
-					m_ledgeGrabBox.collider.enabled = false;
 				}
 				// if the user pressed space, jump off the wall
-				else if (m_isJumpDown) {
+				else if (m_isJumpDown && m_canJumpFromLedge) {
 					m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 					m_velocity = -(m_movingDirection) * 4.0f; // kick it away from the wall
 					m_body.AddForce(new Vector3(0, PlayerJumpHeight * 0.25f, 0), ForceMode.Impulse);	
@@ -467,7 +466,6 @@ public class CPlayerPhysics : MonoBehaviour {
 					m_collisionState = CollisionState.None;
 					m_movingDirection *= -1;
 					m_direction *= -1;
-					m_ledgeGrabBox.collider.enabled = true;
 					
 					Transform t = m_ledgeGrabBox.transform;
 					t.localPosition = new Vector3(m_direction > 0 ? -0.18f : 0.18f, t.localPosition.y, t.localPosition.z);
@@ -547,9 +545,19 @@ public class CPlayerPhysics : MonoBehaviour {
 		if (playerState == PlayerState.Standing)
 			m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 		
+		bool wasJump = m_isJumpDown;
 		m_isJumpDown = Input.GetButton("Jump");
 		if (Application.platform == RuntimePlatform.Android)
 			m_isJumpDown = Input.touchCount != 0;
+		
+		if (m_isJumpDown && !wasJump)
+		{
+			m_canJumpFromLedge = true;	
+		}
+		else
+		{
+			m_canJumpFromLedge = false;
+		}
 		
 		if (m_isJumpDown && m_jumpState == JumpState.Landed && CanJump(playerState))
 		{
