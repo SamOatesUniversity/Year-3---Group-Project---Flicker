@@ -110,6 +110,7 @@ public class CPlayerAnimation : MonoBehaviour {
 			if (!m_animation.IsPlaying(m_currentAnimation))
 			{
 				m_animation.Play(m_currentAnimation);	
+				PlayFootstepAudio(FootMaterial.Metal);
 			}
 		}
 	}

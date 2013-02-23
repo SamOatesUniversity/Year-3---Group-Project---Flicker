@@ -182,6 +182,10 @@ public class CEntityPlayer : CEntityPlayerBase {
 			m_playerPositionAlpha -= m_physics.MovingDirection * 4;	
 			m_lastPlayerPositionAlpha = m_playerPositionAlpha;
 			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+			m_playerState = PlayerState.Standing;
+			
+			CapsuleCollider capCollider = this.GetComponentInChildren<CapsuleCollider>();
+			capCollider.enabled = true;
 			
 			//new stuffs
 			Vector3 newPelvisOffset = this.transform.Find("Player_Mesh/Bip001/Bip001 Pelvis").position - this.transform.position;
@@ -254,6 +258,17 @@ public class CEntityPlayer : CEntityPlayerBase {
 		if (m_playerState == PlayerState.FallingFromTower && (Time.time * 1000.0f) - m_dead.time > 2000)
 		{
 			OnDeath();
+		}
+		
+		//Not very nice - reenables collider if no longer ledge hanging/climbing
+		if (
+				m_playerState != PlayerState.LedgeHang && 
+				m_playerState != PlayerState.LedgeClimb &&
+				m_playerState != PlayerState.LedgeClimbComplete
+			)
+		{
+			CapsuleCollider capCollider = this.GetComponentInChildren<CapsuleCollider>();
+			capCollider.enabled = true;
 		}
 		
 		base.FixedUpdate();
