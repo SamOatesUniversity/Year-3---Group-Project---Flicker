@@ -186,8 +186,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 			m_playerState = PlayerState.Standing;
 			//m_physics.CurrentCollisionState = CollisionState.OnFloor;
-			CapsuleCollider capCollider = this.GetComponentInChildren<CapsuleCollider>();
-			capCollider.enabled = true;
 			
 			//new stuffs
 			Vector3 newPelvisOffset = this.transform.Find("Player_Mesh/Bip001/Bip001 Pelvis").position - this.transform.position;
@@ -203,7 +201,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 			m_additionalRadius = Mathf.Clamp(m_additionalRadius, -3.0f, 3.0f);
 			m_playerPositionAlpha = m_lastPlayerPositionAlpha;			
 		}
-				
+		
 		float yPosition = transform.position.y + additionalY;
 		if (m_dead.didDie) {
 			yPosition = m_lastCheckpoint.transform.position.y;
@@ -215,67 +213,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 			yPosition,
 			Mathf.Cos(m_playerPositionAlpha * Mathf.Deg2Rad) * (PlayerPathRadius + m_additionalRadius)
 		);
-		
-		/*
-		// Camera Positioning
-		{
-			//m_cameraClass.TendToMaxOffset(m_physics.Direction);
-			
-			Vector3 camPostion = Vector3.zero;
-			
-			float timeStoodStill = (Time.time * 1000.0f) - m_standingStillTime;
-			if ((m_playerState == PlayerState.Standing && (timeStoodStill > m_cameraClass.CameraZoomTimerMs)) && m_physics.IsOnPlatform() == false)
-			{
-				m_cameraClass.DistanceFromPlayer -= 0.01f;
-			}
-			else
-			{
-				m_cameraClass.DistanceFromPlayer += 0.1f;
-			}
-			
-			m_cameraClass.DistanceFromPlayer = Mathf.Clamp(m_cameraClass.DistanceFromPlayer, m_cameraClass.MinimumCameraDistance, m_cameraClass.MaximumCameraDistance);
-			float cameraDistance = m_cameraClass.DistanceFromPlayer * m_physics.Invert;
-			
-			if (m_playerState == PlayerState.UpALadder && m_physics.CollisionType == CollisionState.None)
-			{
-				camPostion = new Vector3(
-		            0,
-					0,
-		            (m_physics.InsideTower) ? cameraDistance : -cameraDistance
-				);				
-			}
-			else
-			{
-				float movingDirection = Physics.MovingDirection;
-				if (movingDirection == 0)
-				{
-					// this is bad
-					movingDirection = 1;
-					if (m_characterMesh.rotation.eulerAngles.y > 180.0f) 
-					{
-						movingDirection = -1;
-					}
-				}
-				
-				if (m_playerState == PlayerState.Turning)
-					movingDirection *= -1.0f;
-				
-				camPostion = new Vector3(
-		            (movingDirection == -1) ? -cameraDistance : cameraDistance,
-					0,
-		            0	
-				);
-			}
-			
-			if (m_playerState == PlayerState.FallingFromTower)
-				camPostion.y = m_dead.y;
-			
-			Vector3 lookatOffset = transform.FindChild("Player_Mesh/Bip001/Bip001 Pelvis").position;
-			
-	        m_cameraClass.SetPosition(camPostion);
-	        m_cameraClass.SetLookAt(lookatOffset);
-		}
-		*/
 		
 		// Animate and position the player model mesh
 		{
@@ -318,7 +255,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		}
 		
 		
-		if (m_playerState == PlayerState.FallingFromTower && (Time.time * 1000.0f) - m_dead.time > 3000)
+		if (m_playerState == PlayerState.FallingFromTower && (Time.time * 1000.0f) - m_dead.time > 2000)
 		{
 			OnDeath();
 		}

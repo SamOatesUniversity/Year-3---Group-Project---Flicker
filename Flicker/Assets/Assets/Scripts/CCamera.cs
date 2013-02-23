@@ -70,6 +70,7 @@ public class CCamera : MonoBehaviour {
 			m_storedPositions.Add(m_playerPelvis.position);
 			posIgnored = false;
 		}
+		
 		if( posIgnored )
 		{
 			m_countIgnoredFrames++;
@@ -118,7 +119,9 @@ public class CCamera : MonoBehaviour {
 			camPosition.y += CameraElevation;
 		}
 	
-		m_transform.position = camPosition;
+		if (m_playerEntity.GetPlayerState() != PlayerState.FallingFromTower)
+			m_transform.position = camPosition;
+		
 		this.SetLookAt( avgPosition );
 	}
 	
@@ -153,10 +156,5 @@ public class CCamera : MonoBehaviour {
     {
 		//Debug.Log(lookAt);
         m_transform.LookAt(lookAt);
-    }
-	
-    public void SetPosition(Vector3 localposition)
-    {
-    	//m_transform.localPosition = localposition + new Vector3(-m_cameraOffset + DistanceFromPlayer, CameraElevation, 0);
     }
 }
