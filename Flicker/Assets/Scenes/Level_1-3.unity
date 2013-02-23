@@ -4370,6 +4370,8 @@ GameObject:
   - 4: {fileID: 607367772}
   - 33: {fileID: 607367774}
   - 23: {fileID: 607367773}
+  - 65: {fileID: 607367775}
+  - 114: {fileID: 607367776}
   m_Layer: 0
   m_Name: LadderTOP
   m_TagString: Untagged
@@ -4384,7 +4386,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 607367771}
   m_LocalRotation: {x: 0, y: -.0490676872, z: -0, w: .99879545}
-  m_LocalPosition: {x: -0, y: 1.27999973, z: -5.59505651e-08}
+  m_LocalPosition: {x: 6.3980045e-15, y: 1.9199996, z: -5.59506574e-08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1684135299}
@@ -4415,6 +4417,34 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 607367771}
   m_Mesh: {fileID: 4300000, guid: c0043c5097e95f6488cc709aa06ebd9f, type: 3}
+--- !u!65 &607367775
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 607367771}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: .33675918, z: 0}
+  m_Center: {x: -3.27734637, y: .16837953, z: 1.49011292e-08}
+--- !u!114 &607367776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 607367771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
+  m_Name: 
+  CanWallJump: 0
+  IsLadder: 1
+  ExtraSlide: 1
+  CanLedgeGrab: 0
+  LedgeType: 1
+  KillPlayerOnTouch: 0
 --- !u!1 &611548002
 GameObject:
   m_ObjectHideFlags: 0
@@ -10490,6 +10520,7 @@ Transform:
   m_LocalPosition: {x: 0, y: -1.03168786, z: 0}
   m_LocalScale: {x: .806006193, y: .806006134, z: .806006193}
   m_Children:
+  - {fileID: 2132578371}
   - {fileID: 607367772}
   m_Father: {fileID: 418082877}
 --- !u!111 &1684135300
@@ -13563,6 +13594,91 @@ Prefab:
   m_RootGameObject: {fileID: 635949838}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!1 &2132578370
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100004, guid: b12a8f6a19a903540a26a1f19fa61308, type: 3}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 2132578371}
+  - 33: {fileID: 2132578373}
+  - 23: {fileID: 2132578372}
+  - 65: {fileID: 2132578374}
+  - 114: {fileID: 2132578375}
+  m_Layer: 0
+  m_Name: LadderMID
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2132578371
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400004, guid: b12a8f6a19a903540a26a1f19fa61308, type: 3}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2132578370}
+  m_LocalRotation: {x: 2.18293685e-08, y: -.0490676723, z: -1.07240861e-09, w: .998795509}
+  m_LocalPosition: {x: 3.03457621e-15, y: 1.27999997, z: 2.79753056e-08}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1684135299}
+--- !u!23 &2132578372
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 2300002, guid: b12a8f6a19a903540a26a1f19fa61308,
+    type: 3}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2132578370}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 109e410bee9588a48ab6a0bb21c4a533, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+--- !u!33 &2132578373
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 3300002, guid: b12a8f6a19a903540a26a1f19fa61308,
+    type: 3}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2132578370}
+  m_Mesh: {fileID: 4300004, guid: b12a8f6a19a903540a26a1f19fa61308, type: 3}
+--- !u!65 &2132578374
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2132578370}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: .639999866, z: 0}
+  m_Center: {x: -3.27960348, y: .319999874, z: -7.33047472e-08}
+--- !u!114 &2132578375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2132578370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
+  m_Name: 
+  CanWallJump: 0
+  IsLadder: 1
+  ExtraSlide: 1
+  CanLedgeGrab: 0
+  LedgeType: 1
+  KillPlayerOnTouch: 0
 --- !u!1 &2132927535
 GameObject:
   m_ObjectHideFlags: 0

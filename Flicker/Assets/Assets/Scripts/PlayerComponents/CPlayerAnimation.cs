@@ -24,7 +24,7 @@ public class CPlayerAnimation : MonoBehaviour {
 		m_audio = GetComponent<AudioSource>();
 	}
 	
-	public void OnFixedUpdate(ref PlayerState playerState, LadderState ladderState, FootMaterial footMaterial, CEntityPlayer player)
+	public void OnFixedUpdate(ref PlayerState playerState, CEntityPlayer player)
 	{
 		if (playerState == PlayerState.Walking)
 		{			
@@ -32,7 +32,7 @@ public class CPlayerAnimation : MonoBehaviour {
 			if (!m_animation.IsPlaying("run"))
 			{
 				m_animation.CrossFade("run", 0.2f);
-				PlayFootstepAudio(footMaterial);
+				PlayFootstepAudio(player.Physics.GetFootMaterial());
 			}			
 		}
 		else if (playerState == PlayerState.Turning)
@@ -101,32 +101,15 @@ public class CPlayerAnimation : MonoBehaviour {
 			if (!m_animation.IsPlaying("falling"))
 				m_animation.CrossFade("falling");
 		}
-		else if (playerState == PlayerState.UpALadder)
+		else if (playerState == PlayerState.OnLadder)
 		{
-			float upDown = Input.GetAxis("Vertical");
-			
 			m_currentAnimation = "ladder-climb";
-			
-			if ((upDown != 0.0f && ladderState != LadderState.AtTop) || (ladderState == LadderState.AtTop && upDown < 0))
+
+			m_animation[m_currentAnimation].speed = player.Physics.GetLadder.offset * 100.0f;			
+
+			if (!m_animation.IsPlaying(m_currentAnimation))
 			{
-				bool forceAnimationChange = upDown > 0.0f && m_animation["ladder-climb"].speed > 0.0f ? false : true;
-				if (!m_animation.IsPlaying("ladder-climb") || forceAnimationChange)
-				{
-					m_animation["ladder-climb"].speed = upDown > 0.0f ? 2.0f : -2.0f;
-					m_animation.Play("ladder-climb");
-				}
-				
-				if (m_animation.IsPlaying("ladder-climb"))
-				{
-					PlayFootstepAudio(FootMaterial.Metal);	
-				}
-				
-			}
-			else
-			{
-				m_animation["ladder-climb"].speed = 0.0f;
-				if (!m_animation.IsPlaying("ladder-climb"))
-					m_animation.Play("ladder-climb");
+				m_animation.Play(m_currentAnimation);	
 			}
 		}
 	}

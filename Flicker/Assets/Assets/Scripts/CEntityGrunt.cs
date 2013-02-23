@@ -13,9 +13,7 @@ public enum GruntState {
 	LedgeClimb,
 	LedgeClimbComplete,
 	WallJumpStart,
-	FallingFromTower,		//!< The player has been pushed of the tower
-	UpALadder,
-	DownALadder
+	FallingFromTower		//!< The player has been pushed of the tower
 };
 
 [RequireComponent (typeof (CGruntPhysics))]

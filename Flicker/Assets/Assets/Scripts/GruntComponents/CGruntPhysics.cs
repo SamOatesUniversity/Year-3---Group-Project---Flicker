@@ -485,9 +485,6 @@ public class CGruntPhysics : MonoBehaviour {
 		if (playerState == GruntState.LedgeClimbComplete)
 			return false;
 		
-		if (playerState == GruntState.UpALadder)
-			return false;
-		
 		if (m_collisionState != CollisionState.OnFloor)
 			return false;
 		

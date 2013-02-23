@@ -14,8 +14,7 @@ public enum PlayerState {
 	LedgeClimbComplete,
 	WallJumpStart,
 	FallingFromTower,		//!< The player has been pushed of the tower
-	UpALadder,
-	DownALadder
+	OnLadder
 };
 
 [RequireComponent (typeof (CWallJump))]
@@ -182,18 +181,11 @@ public class CEntityPlayer : CEntityPlayerBase {
 		{
 			m_playerPositionAlpha -= m_physics.MovingDirection * 4;	
 			m_lastPlayerPositionAlpha = m_playerPositionAlpha;
-			//additionalY += 0.65f;
 			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-			m_playerState = PlayerState.Standing;
-			//m_physics.CurrentCollisionState = CollisionState.OnFloor;
 			
 			//new stuffs
 			Vector3 newPelvisOffset = this.transform.Find("Player_Mesh/Bip001/Bip001 Pelvis").position - this.transform.position;
 			this.transform.position = this.transform.position + (newPelvisOffset - m_pelvisOffset) /*+ new Vector3(0, 0.09f, 0)*/;
-		}
-		
-		if (m_physics.LadderClimb.State != LadderState.None) {
-			additionalY += m_physics.LadderClimb.Offset;
 		}
 		
 		if (m_playerState == PlayerState.FallingFromTower) {		
@@ -208,6 +200,12 @@ public class CEntityPlayer : CEntityPlayerBase {
 			m_dead.didDie = false;
 		}
 		
+		if (m_playerState == PlayerState.OnLadder)
+		{
+			rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+			yPosition += Physics.GetLadder.offset;
+		}
+		
 		m_position = new Vector3(
 			Mathf.Sin(m_playerPositionAlpha * Mathf.Deg2Rad) * (PlayerPathRadius + m_additionalRadius),
 			yPosition,
@@ -216,16 +214,14 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		// Animate and position the player model mesh
 		{
-			if (m_playerState == PlayerState.UpALadder)
+			if (m_playerState == PlayerState.Turning)
 			{
-				if (m_physics.InsideTower)
-					m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y - 180, 0));
-				else
-					m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y, 0));
+				// do nothing on turn around
 			}
-			else if (m_playerState == PlayerState.Turning)
+			else if (m_playerState == PlayerState.OnLadder)
 			{
-				
+				float spin = Physics.InsideTower ? -180.0f : 0.0f;
+				m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + spin, 0));
 			}
 			else
 			{
@@ -251,24 +247,13 @@ public class CEntityPlayer : CEntityPlayerBase {
 				}
 			}
 			
-			m_animation.OnFixedUpdate(ref m_playerState, m_physics.LadderClimb.State, m_physics.GetFootMaterial(), this);
+			m_animation.OnFixedUpdate(ref m_playerState, this);
 		}
 		
 		
 		if (m_playerState == PlayerState.FallingFromTower && (Time.time * 1000.0f) - m_dead.time > 2000)
 		{
 			OnDeath();
-		}
-		
-		//Not very nice - reenables collider if no longer ledge hanging/climbing
-		if (
-				m_playerState != PlayerState.LedgeHang && 
-				m_playerState != PlayerState.LedgeClimb &&
-				m_playerState != PlayerState.LedgeClimbComplete
-			)
-		{
-			CapsuleCollider capCollider = this.GetComponentInChildren<CapsuleCollider>();
-			capCollider.enabled = true;
 		}
 		
 		base.FixedUpdate();
@@ -355,7 +340,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		m_playerState = PlayerState.Standing;
 		m_physics.JumpType = JumpState.Landed;
-		m_physics.LadderClimb.State = LadderState.None;
 		m_playerHealth = MaxHealth;
 		m_additionalRadius = 0.0f;
 		m_dead.didDie = true;
@@ -393,7 +377,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 			return;
 		
 		m_physics.CallOnCollisionStay(collision, ref m_playerState, ref m_playerPositionAlpha);
-		if (m_physics.CollisionType == CollisionState.OnWall)
+		if (m_physics.CurrentCollisionState == CollisionState.OnWall)
 		{
 			m_playerPositionAlpha = m_lastPlayerPositionAlpha;
 		}

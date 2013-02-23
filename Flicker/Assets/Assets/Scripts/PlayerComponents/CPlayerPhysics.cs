@@ -5,8 +5,7 @@ public enum CollisionState {
 	None,
 	OnFloor,
 	OnWall,
-	OnRoof,
-	OnLadder
+	OnRoof
 }
 
 public enum JumpState {
@@ -48,8 +47,6 @@ public class CPlayerPhysics : MonoBehaviour {
 	
 	private int				m_invert = 1;							//!< 	
 	
-	private CLadderClimb	m_ladderClimb = null;					//!< 
-	
 	private float			m_jumpTimer = 0;						//!< The time the player last jumped
 	
 	private float 			m_velocityLockTimer = 0;				//!< The time that velocity was locked
@@ -65,6 +62,8 @@ public class CPlayerPhysics : MonoBehaviour {
 	private eLedgeType		m_ledgeHangType = eLedgeType.Free;
 		
 	private bool			m_canJumpFromLedge = false;
+	
+	private CPlayerLadder	m_ladder = null;
 	
 	/* ----------------
 	    Public Members 
@@ -88,11 +87,18 @@ public class CPlayerPhysics : MonoBehaviour {
 		m_body = body;
 		m_player = player;
 		m_wallJump = player.GetComponent<CWallJump>();
-		m_ladderClimb = new CLadderClimb();
+		
+		m_ladder = new CPlayerLadder();
 		
 		m_ledgeGrabBox = transform.Find("Ledge_Grab_Detection").gameObject;
 		
 		m_invert = InsideTower ? -1 : 1;
+	}
+	
+	public CPlayerLadder GetLadder {
+		get {
+			return m_ladder;	
+		}
 	}
 	
 	/*
@@ -122,12 +128,6 @@ public class CPlayerPhysics : MonoBehaviour {
 		}
 		set {
 			m_collisionState = value;	
-		}
-	}
-	
-	public CLadderClimb LadderClimb {
-		get {
-			return m_ladderClimb;	
 		}
 	}
 	
@@ -165,15 +165,6 @@ public class CPlayerPhysics : MonoBehaviour {
 	public Rigidbody Body {
 		get {
 			return m_body;	
-		}
-	}
-	
-	/*
-	 * \brief Returns if we are currently in a collision
-	*/
-	public CollisionState CollisionType {
-		get {
-			return m_collisionState;
 		}
 	}
 	
@@ -221,6 +212,12 @@ public class CPlayerPhysics : MonoBehaviour {
 			{
 				m_collisionState = CollisionState.OnFloor;
 				
+				if (m_player.GetPlayerState() == PlayerState.OnLadder)
+				{
+					GetLadder.state = LadderState.AtBase;
+					m_player.SetPlayerState(PlayerState.Standing);
+				}
+				
 				// are we on a special material?
 				m_footMaterial = FootMaterial.Stone;
 				if (contact.otherCollider.tag == "Wood Object")
@@ -236,7 +233,6 @@ public class CPlayerPhysics : MonoBehaviour {
 			else
 			{
 				m_collisionState = CollisionState.OnWall;
-				m_ladderClimb.State = LadderState.None;
 			}
 		}
 		
@@ -246,10 +242,14 @@ public class CPlayerPhysics : MonoBehaviour {
 				m_player.GetPlayerAnimation().PlayFootstepAudio(m_footMaterial);
 			
 			m_jumpState = JumpState.Landed;	
-			m_ladderClimb.State = LadderState.None;
 			
-			if (m_player.GetPlayerState() != PlayerState.Turning) 
+			if (GetLadder.state == LadderState.JumpingOff)
+				GetLadder.state = LadderState.None;
+			
+			if (m_player.GetPlayerState() != PlayerState.Turning && m_player.GetPlayerState() != PlayerState.OnLadder) 
+			{
 				m_player.SetPlayerState(PlayerState.Standing);
+			}
 		}
 	}
 	
@@ -309,12 +309,20 @@ public class CPlayerPhysics : MonoBehaviour {
 			// floor check
 			else if (isNearly(contact.normal.y, 1.0f, 0.8f))
 			{
-				m_collisionState = CollisionState.OnFloor;
+				if (m_player.GetPlayerState() != PlayerState.OnLadder)
+					m_collisionState = CollisionState.OnFloor;
+				
 				if (!isNearly(contact.normal.y, 1.0f, 0.15f) && collision.contacts.Length == 1)
 				{
 					m_velocity = (m_movingDirection * 0.15f);
 					m_velocityLockTimer = (Time.time * 1000.0f); 
 				}
+				
+				//if (m_player.GetPlayerState() == PlayerState.OnLadder)
+				//{
+				//	GetLadder.state = LadderState.None;
+				//	m_player.SetPlayerState(PlayerState.Standing);
+				//}
 				
 				if (contact.otherCollider != null)
 				{
@@ -349,18 +357,14 @@ public class CPlayerPhysics : MonoBehaviour {
 		if (m_collisionState == CollisionState.OnFloor && ((Time.time * 1000.0f) - m_jumpTimer > 200.0f))
 		{
 			m_jumpState = JumpState.Landed;	
-			
-			if (m_ladderClimb.State != LadderState.AtBase)
+						
+			if (m_player.GetPlayerState() != PlayerState.Turning)
 			{
-				m_ladderClimb.State = LadderState.None;
+				if (m_player.GetPlayerState() != PlayerState.OnLadder)
+				{
+					m_player.SetPlayerState(PlayerState.Standing);
+				}
 			}
-			else
-			{
-				playerState = PlayerState.UpALadder;
-			}
-			
-			if (m_player.GetPlayerState() != PlayerState.Turning) 
-				m_player.SetPlayerState(PlayerState.Standing);
 		}
 	}
 	
@@ -374,18 +378,6 @@ public class CPlayerPhysics : MonoBehaviour {
 			}
 		}
 					
-		if (obj != null && obj.IsLadder && (m_ladderClimb.State != LadderState.JumpOff)) {
-			m_ladderClimb.CallOnTriggerStay(collider, ref playerState);
-			if (m_ladderClimb.State != LadderState.None) {
-				m_body.constraints = RigidbodyConstraints.FreezeAll;
-			}
-			else
-			{
-				m_collisionState = CollisionState.OnFloor;	
-			}
-			return;
-		}
-		
 		if (obj != null && obj.KillPlayerOnTouch)
 		{
 			m_player.PushPlayerFromTower();
@@ -394,10 +386,7 @@ public class CPlayerPhysics : MonoBehaviour {
 	
 	public void CallOnTriggerExit(Collider collider, ref PlayerState playerState)
 	{
-		if (m_ladderClimb.State != LadderState.None) {
-			m_ladderClimb.CallOnTriggerExit(collider, ref playerState);
-			m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-		}
+
 	}
 		
 	/*
@@ -412,15 +401,14 @@ public class CPlayerPhysics : MonoBehaviour {
 		if (Application.platform == RuntimePlatform.Android)
 			velocity = Input.acceleration.y;
 		
-		
+		if (playerState == PlayerState.OnLadder)
+			velocity = 0.0f;	
+
 		if ((Time.time * 1000.0f) - m_velocityLockTimer < 100)
 		{
 			velocity = m_velocity;
 		}
-		
-		if (m_ladderClimb != null && m_ladderClimb.State == LadderState.AtMiddle || m_ladderClimb.State == LadderState.AtTop)
-			velocity = 0;
-					
+							
 		int direction = isNearly(velocity, 0.0f, 0.1f) ? 0 : velocity > 0 ? 1 : -1;
 		
 		//platform update
@@ -513,7 +501,10 @@ public class CPlayerPhysics : MonoBehaviour {
 		{
 			if (m_direction == 0 && playerState != PlayerState.Turning)
 			{
-				playerState = PlayerState.Standing;
+				if (playerState != PlayerState.OnLadder)
+				{
+					playerState = PlayerState.Standing;
+				}
 			}
 			else
 			{	
@@ -577,38 +568,66 @@ public class CPlayerPhysics : MonoBehaviour {
 			{
 				playerState = PlayerState.FallJumping;
 			}
+		}	
+		
+		if (m_isJumpDown == true && (GetLadder.state == LadderState.OnMiddle || GetLadder.state == LadderState.OnTop))		
+		{
+			GetLadder.state = LadderState.JumpingOff;
+			m_jumpTimer = (Time.time * 1000.0f);
+			m_body.AddForce(new Vector3(0, PlayerJumpHeight, 0), ForceMode.Impulse);	
+			m_jumpState = JumpState.Jumping;
+			playerState = PlayerState.Jumping;
+			m_collisionState = CollisionState.None;	
+			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 		}
 		
-		if (m_ladderClimb.State != LadderState.None)
+		float updown = (Input.GetAxis("Vertical") * 0.001f);
+		if (updown > 0.0f)
 		{
-			if (m_ladderClimb.State != LadderState.JumpOff)
+			if (GetLadder.state == LadderState.AtBase)
 			{
-				playerState = PlayerState.UpALadder;
+				GetLadder.state = LadderState.OnBase;
+				playerState = PlayerState.OnLadder;
 				m_collisionState = CollisionState.None;
-				m_ladderClimb.CallOnUpdate(m_collisionState);
 			}
-			else
-				playerState = PlayerState.Jumping; 
 			
-			if (m_ladderClimb.State == LadderState.JumpOff && m_jumpState != JumpState.Jumping)
+			if (GetLadder.state == LadderState.OnBase || GetLadder.state == LadderState.OnMiddle)
 			{
-				if (Input.GetAxis("Horizontal") == 0.0f)
-				{
-					m_ladderClimb.State = LadderState.AtMiddle;
-					m_collisionState = CollisionState.None;
-					playerState = PlayerState.UpALadder;
-					return;
-				}
-				
-				m_jumpTimer = (Time.time * 1000.0f);
-				m_body.AddForce(new Vector3(0, PlayerJumpHeight, 0), ForceMode.Impulse);	
-				m_jumpState = JumpState.Jumping;
-				playerState = PlayerState.Jumping;
-				m_velocity = Input.GetAxis("Horizontal") * -2.0f;
-				m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-				m_velocityLockTimer = (Time.time * 1000.0f); 
+				GetLadder.offset = (updown * 10.0f);
+				GetLadder.moving = true;
+				GetLadder.direction = 1.0f;
 			}
-		}				
+			
+			if (GetLadder.state == LadderState.OnTop)
+			{
+				GetLadder.moving = false;
+				GetLadder.direction = 0.0f;
+				GetLadder.offset = 0.0f;
+			}
+		}
+		else if (updown < 0.0f)
+		{
+			if (GetLadder.state == LadderState.OnBase)
+			{
+				GetLadder.state = LadderState.AtBase;
+				playerState = PlayerState.Standing;
+				rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+			}	
+			
+			if (GetLadder.state == LadderState.OnBase || GetLadder.state == LadderState.OnMiddle || GetLadder.state == LadderState.OnTop)
+			{
+				GetLadder.offset = (updown * 10.0f);
+				GetLadder.moving = true;
+				GetLadder.direction = -1.0f;
+			}
+		}
+		
+		if (updown == 0.0f && GetLadder.state != LadderState.None)
+		{
+			GetLadder.moving = false;
+			GetLadder.direction = 0.0f;
+			GetLadder.offset = 0.0f;
+		}
 	}
 	
 	/*
@@ -664,14 +683,11 @@ public class CPlayerPhysics : MonoBehaviour {
 		
 		if (playerState == PlayerState.LedgeClimbComplete)
 			return false;
-		
-		if (playerState == PlayerState.UpALadder)
-			return false;
-		
-		if (m_ladderClimb.State == LadderState.JumpOff)
-			return false;
-		
+
 		if (m_collisionState != CollisionState.OnFloor)
+			return false;
+		
+		if (playerState == PlayerState.OnLadder)
 			return false;
 		
 		return true;
