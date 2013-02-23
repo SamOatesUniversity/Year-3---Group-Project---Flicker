@@ -5129,6 +5129,8 @@ GameObject:
   - 4: {fileID: 536147095}
   - 33: {fileID: 536147097}
   - 23: {fileID: 536147096}
+  - 65: {fileID: 536147098}
+  - 114: {fileID: 536147099}
   m_Layer: 0
   m_Name: LadderMID
   m_TagString: Untagged
@@ -5174,6 +5176,34 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1575638316}
   m_GameObject: {fileID: 536147094}
   m_Mesh: {fileID: 4300004, guid: c0043c5097e95f6488cc709aa06ebd9f, type: 3}
+--- !u!65 &536147098
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 536147094}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .600000024, y: .639999866, z: 0}
+  m_Center: {x: -3.27960205, y: .319999874, z: -2.44345379e-08}
+--- !u!114 &536147099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 536147094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
+  m_Name: 
+  CanWallJump: 0
+  IsLadder: 1
+  ExtraSlide: 1
+  CanLedgeGrab: 0
+  LedgeType: 1
+  KillPlayerOnTouch: 0
 --- !u!1 &538743374
 GameObject:
   m_ObjectHideFlags: 0
@@ -5608,6 +5638,8 @@ GameObject:
   - 4: {fileID: 579365028}
   - 33: {fileID: 579365030}
   - 23: {fileID: 579365029}
+  - 65: {fileID: 579365031}
+  - 114: {fileID: 579365032}
   m_Layer: 0
   m_Name: LadderMID
   m_TagString: Untagged
@@ -5653,6 +5685,34 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 579365027}
   m_Mesh: {fileID: 4300004, guid: c0043c5097e95f6488cc709aa06ebd9f, type: 3}
+--- !u!65 &579365031
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 579365027}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .600000024, y: .639999866, z: 0}
+  m_Center: {x: -3.2796011, y: .319999874, z: 2.93219131e-07}
+--- !u!114 &579365032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 579365027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
+  m_Name: 
+  CanWallJump: 0
+  IsLadder: 1
+  ExtraSlide: 1
+  CanLedgeGrab: 0
+  LedgeType: 1
+  KillPlayerOnTouch: 0
 --- !u!1001 &587874400
 Prefab:
   m_ObjectHideFlags: 0
@@ -5715,6 +5775,8 @@ GameObject:
   - 4: {fileID: 588655087}
   - 33: {fileID: 588655089}
   - 23: {fileID: 588655088}
+  - 65: {fileID: 588655090}
+  - 114: {fileID: 588655091}
   m_Layer: 0
   m_Name: LadderBASE
   m_TagString: Untagged
@@ -5760,6 +5822,34 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1931885985}
   m_GameObject: {fileID: 588655086}
   m_Mesh: {fileID: 4300002, guid: c0043c5097e95f6488cc709aa06ebd9f, type: 3}
+--- !u!65 &588655090
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 588655086}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .600000024, y: .481577784, z: 0}
+  m_Center: {x: -3.28221846, y: .399211049, z: -4.47034836e-08}
+--- !u!114 &588655091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 588655086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
+  m_Name: 
+  CanWallJump: 0
+  IsLadder: 1
+  ExtraSlide: 1
+  CanLedgeGrab: 0
+  LedgeType: 1
+  KillPlayerOnTouch: 0
 --- !u!1 &601664079
 GameObject:
   m_ObjectHideFlags: 0
@@ -5972,6 +6062,8 @@ GameObject:
   - 4: {fileID: 607367772}
   - 33: {fileID: 607367774}
   - 23: {fileID: 607367773}
+  - 65: {fileID: 607367775}
+  - 114: {fileID: 607367776}
   m_Layer: 0
   m_Name: LadderTOP
   m_TagString: Untagged
@@ -6017,6 +6109,34 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 607367771}
   m_Mesh: {fileID: 4300000, guid: c0043c5097e95f6488cc709aa06ebd9f, type: 3}
+--- !u!65 &607367775
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 607367771}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .600000024, y: .33675918, z: 0}
+  m_Center: {x: -3.27734399, y: .16837959, z: -3.39350628e-08}
+--- !u!114 &607367776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 607367771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
+  m_Name: 
+  CanWallJump: 0
+  IsLadder: 1
+  ExtraSlide: 1
+  CanLedgeGrab: 0
+  LedgeType: 1
+  KillPlayerOnTouch: 0
 --- !u!1 &625563041
 GameObject:
   m_ObjectHideFlags: 0
@@ -8136,6 +8256,8 @@ GameObject:
   - 4: {fileID: 948134937}
   - 33: {fileID: 948134939}
   - 23: {fileID: 948134938}
+  - 65: {fileID: 948134940}
+  - 114: {fileID: 948134941}
   m_Layer: 0
   m_Name: LadderMID
   m_TagString: Untagged
@@ -8181,6 +8303,34 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 948134936}
   m_Mesh: {fileID: 4300004, guid: c0043c5097e95f6488cc709aa06ebd9f, type: 3}
+--- !u!65 &948134940
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 948134936}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .600000024, y: .639999866, z: 0}
+  m_Center: {x: -3.2796011, y: .319999874, z: 9.77397079e-08}
+--- !u!114 &948134941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 948134936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
+  m_Name: 
+  CanWallJump: 0
+  IsLadder: 1
+  ExtraSlide: 1
+  CanLedgeGrab: 0
+  LedgeType: 1
+  KillPlayerOnTouch: 0
 --- !u!1 &952258698
 GameObject:
   m_ObjectHideFlags: 0
@@ -9462,6 +9612,8 @@ GameObject:
   - 4: {fileID: 1104468947}
   - 33: {fileID: 1104468949}
   - 23: {fileID: 1104468948}
+  - 65: {fileID: 1104468950}
+  - 114: {fileID: 1104468951}
   m_Layer: 0
   m_Name: LadderMID
   m_TagString: Untagged
@@ -9507,6 +9659,34 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1104468946}
   m_Mesh: {fileID: 4300004, guid: c0043c5097e95f6488cc709aa06ebd9f, type: 3}
+--- !u!65 &1104468950
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1104468946}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .600000024, y: .639999866, z: 0}
+  m_Center: {x: -3.27960086, y: .319999874, z: -9.77397079e-08}
+--- !u!114 &1104468951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1104468946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
+  m_Name: 
+  CanWallJump: 0
+  IsLadder: 1
+  ExtraSlide: 1
+  CanLedgeGrab: 0
+  LedgeType: 1
+  KillPlayerOnTouch: 0
 --- !u!1 &1107905961
 GameObject:
   m_ObjectHideFlags: 0
@@ -10074,6 +10254,8 @@ GameObject:
   - 4: {fileID: 1163886984}
   - 33: {fileID: 1163886986}
   - 23: {fileID: 1163886985}
+  - 65: {fileID: 1163886987}
+  - 114: {fileID: 1163886988}
   m_Layer: 0
   m_Name: LadderMID
   m_TagString: Untagged
@@ -10119,6 +10301,34 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1163886983}
   m_Mesh: {fileID: 4300004, guid: c0043c5097e95f6488cc709aa06ebd9f, type: 3}
+--- !u!65 &1163886987
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1163886983}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .600000024, y: .639999866, z: 0}
+  m_Center: {x: -3.27960157, y: .319999874, z: 2.56932252e-13}
+--- !u!114 &1163886988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1163886983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
+  m_Name: 
+  CanWallJump: 0
+  IsLadder: 1
+  ExtraSlide: 1
+  CanLedgeGrab: 0
+  LedgeType: 1
+  KillPlayerOnTouch: 0
 --- !u!1001 &1169649848
 Prefab:
   m_ObjectHideFlags: 0
@@ -13516,6 +13726,8 @@ GameObject:
   - 4: {fileID: 1489673451}
   - 33: {fileID: 1489673453}
   - 23: {fileID: 1489673452}
+  - 65: {fileID: 1489673454}
+  - 114: {fileID: 1489673455}
   m_Layer: 0
   m_Name: LadderMID
   m_TagString: Untagged
@@ -13561,6 +13773,34 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1931885985}
   m_GameObject: {fileID: 1489673450}
   m_Mesh: {fileID: 4300004, guid: c0043c5097e95f6488cc709aa06ebd9f, type: 3}
+--- !u!65 &1489673454
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1489673450}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .600000024, y: .639999866, z: 0}
+  m_Center: {x: -3.2796011, y: .319999874, z: -1.77635684e-15}
+--- !u!114 &1489673455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1489673450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
+  m_Name: 
+  CanWallJump: 0
+  IsLadder: 1
+  ExtraSlide: 1
+  CanLedgeGrab: 0
+  LedgeType: 1
+  KillPlayerOnTouch: 0
 --- !u!1 &1495567952
 GameObject:
   m_ObjectHideFlags: 0
@@ -13703,6 +13943,8 @@ GameObject:
   - 4: {fileID: 1509955470}
   - 33: {fileID: 1509955472}
   - 23: {fileID: 1509955471}
+  - 65: {fileID: 1509955473}
+  - 114: {fileID: 1509955474}
   m_Layer: 0
   m_Name: LadderMID
   m_TagString: Untagged
@@ -13748,6 +13990,34 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1509955469}
   m_Mesh: {fileID: 4300004, guid: c0043c5097e95f6488cc709aa06ebd9f, type: 3}
+--- !u!65 &1509955473
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1509955469}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .600000024, y: .639999866, z: 0}
+  m_Center: {x: -3.27960086, y: .319999874, z: -1.95479416e-07}
+--- !u!114 &1509955474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1509955469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
+  m_Name: 
+  CanWallJump: 0
+  IsLadder: 1
+  ExtraSlide: 1
+  CanLedgeGrab: 0
+  LedgeType: 1
+  KillPlayerOnTouch: 0
 --- !u!1 &1514574403
 GameObject:
   m_ObjectHideFlags: 0
@@ -17972,6 +18242,8 @@ GameObject:
   - 4: {fileID: 1838962044}
   - 33: {fileID: 1838962046}
   - 23: {fileID: 1838962045}
+  - 65: {fileID: 1838962047}
+  - 114: {fileID: 1838962048}
   m_Layer: 0
   m_Name: LadderTOP
   m_TagString: Untagged
@@ -18017,6 +18289,34 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1575638316}
   m_GameObject: {fileID: 1838962043}
   m_Mesh: {fileID: 4300000, guid: c0043c5097e95f6488cc709aa06ebd9f, type: 3}
+--- !u!65 &1838962047
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1838962043}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .600000024, y: .33675918, z: 0}
+  m_Center: {x: -3.27734494, y: .16837959, z: -9.51635037e-09}
+--- !u!114 &1838962048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1838962043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
+  m_Name: 
+  CanWallJump: 0
+  IsLadder: 1
+  ExtraSlide: 1
+  CanLedgeGrab: 0
+  LedgeType: 1
+  KillPlayerOnTouch: 0
 --- !u!1 &1842142841
 GameObject:
   m_ObjectHideFlags: 0
@@ -18434,6 +18734,8 @@ GameObject:
   - 4: {fileID: 1866961701}
   - 33: {fileID: 1866961703}
   - 23: {fileID: 1866961702}
+  - 65: {fileID: 1866961704}
+  - 114: {fileID: 1866961705}
   m_Layer: 0
   m_Name: LadderMID
   m_TagString: Untagged
@@ -18479,6 +18781,34 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1866961700}
   m_Mesh: {fileID: 4300004, guid: c0043c5097e95f6488cc709aa06ebd9f, type: 3}
+--- !u!65 &1866961704
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1866961700}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .600000024, y: .639999866, z: 0}
+  m_Center: {x: -3.27960157, y: .319999874, z: -1.95479174e-07}
+--- !u!114 &1866961705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1866961700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
+  m_Name: 
+  CanWallJump: 0
+  IsLadder: 1
+  ExtraSlide: 1
+  CanLedgeGrab: 0
+  LedgeType: 1
+  KillPlayerOnTouch: 0
 --- !u!1 &1871975231
 GameObject:
   m_ObjectHideFlags: 0
@@ -19327,6 +19657,8 @@ GameObject:
   - 4: {fileID: 1980000175}
   - 33: {fileID: 1980000177}
   - 23: {fileID: 1980000176}
+  - 65: {fileID: 1980000178}
+  - 114: {fileID: 1980000179}
   m_Layer: 0
   m_Name: LadderBASE
   m_TagString: Untagged
@@ -19372,6 +19704,34 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1575638316}
   m_GameObject: {fileID: 1980000174}
   m_Mesh: {fileID: 4300002, guid: c0043c5097e95f6488cc709aa06ebd9f, type: 3}
+--- !u!65 &1980000178
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1980000174}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .600000024, y: .481577784, z: 0}
+  m_Center: {x: -3.28221941, y: .399211049, z: -6.91577569e-08}
+--- !u!114 &1980000179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1980000174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
+  m_Name: 
+  CanWallJump: 0
+  IsLadder: 1
+  ExtraSlide: 1
+  CanLedgeGrab: 0
+  LedgeType: 1
+  KillPlayerOnTouch: 0
 --- !u!1 &1984036930
 GameObject:
   m_ObjectHideFlags: 0
@@ -19577,6 +19937,8 @@ GameObject:
   - 4: {fileID: 2008993865}
   - 33: {fileID: 2008993867}
   - 23: {fileID: 2008993866}
+  - 65: {fileID: 2008993868}
+  - 114: {fileID: 2008993869}
   m_Layer: 0
   m_Name: LadderBASE
   m_TagString: Untagged
@@ -19622,6 +19984,34 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2008993864}
   m_Mesh: {fileID: 4300002, guid: c0043c5097e95f6488cc709aa06ebd9f, type: 3}
+--- !u!65 &2008993868
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2008993864}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .600000024, y: .481577784, z: 0}
+  m_Center: {x: -3.28221822, y: .399211049, z: -2.4033892e-07}
+--- !u!114 &2008993869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2008993864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
+  m_Name: 
+  CanWallJump: 0
+  IsLadder: 1
+  ExtraSlide: 1
+  CanLedgeGrab: 0
+  LedgeType: 1
+  KillPlayerOnTouch: 0
 --- !u!1001 &2010012792
 Prefab:
   m_ObjectHideFlags: 0
@@ -20217,6 +20607,8 @@ GameObject:
   - 4: {fileID: 2071374176}
   - 33: {fileID: 2071374178}
   - 23: {fileID: 2071374177}
+  - 65: {fileID: 2071374179}
+  - 114: {fileID: 2071374180}
   m_Layer: 0
   m_Name: LadderTOP
   m_TagString: Untagged
@@ -20262,6 +20654,34 @@ MeshFilter:
   m_PrefabInternal: {fileID: 1931885985}
   m_GameObject: {fileID: 2071374175}
   m_Mesh: {fileID: 4300000, guid: c0043c5097e95f6488cc709aa06ebd9f, type: 3}
+--- !u!65 &2071374179
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2071374175}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .600000024, y: .33675918, z: 0}
+  m_Center: {x: -3.27734399, y: .16837959, z: 1.49011541e-08}
+--- !u!114 &2071374180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2071374175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
+  m_Name: 
+  CanWallJump: 0
+  IsLadder: 1
+  ExtraSlide: 1
+  CanLedgeGrab: 0
+  LedgeType: 1
+  KillPlayerOnTouch: 0
 --- !u!1 &2072119641
 GameObject:
   m_ObjectHideFlags: 0
