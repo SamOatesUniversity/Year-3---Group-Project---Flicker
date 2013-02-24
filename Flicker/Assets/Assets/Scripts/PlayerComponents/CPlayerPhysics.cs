@@ -684,7 +684,10 @@ public class CPlayerPhysics : MonoBehaviour {
 		if (playerState == PlayerState.LedgeClimbComplete)
 			return false;
 
-		if (m_collisionState != CollisionState.OnFloor)
+		if (m_collisionState == CollisionState.OnRoof)
+			return false;
+		
+		if (m_collisionState == CollisionState.None)
 			return false;
 		
 		if (playerState == PlayerState.OnLadder)
