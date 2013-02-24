@@ -1,6 +1,11 @@
 using UnityEngine;
 using System.Collections;
 
+public enum GameState {
+	Running,
+	Paused
+}
+
 //! Different states a player can be in
 public enum PlayerState {
 	Standing,				//!< The player is stood still
@@ -61,7 +66,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	private Transform			m_ledgeGrabBox = null;
 	
-	private bool 				m_isEscapeDown = false;
+	private bool 				m_isCheckpointSkipDown = false;
+	
+	private bool				m_isEscapeDown = false;
 	
 	/* ----------------
 	    Public Members 
@@ -81,6 +88,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 	}
 	
 	public LeftRight		StartFacing = LeftRight.Left;
+	
+	public GameState		CurrentGameState = GameState.Running;
 		
 	/*
 	 * \brief Called when the object is created. At the start.
@@ -143,6 +152,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 	public CCheckPoint LastCheckPoint {
 		set {
 			m_lastCheckpoint = value;	
+		}
+		get {
+			return m_lastCheckpoint;	
 		}
 	}
 	
@@ -276,19 +288,30 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	public override void Update()
 	{
-		if (Input.GetButton("Reset") && !m_isEscapeDown)
+		if (Input.GetButton("CheckpointNext") && !m_isCheckpointSkipDown)
 		{
-			m_isEscapeDown = true;
-			
-			// if we are on android, kill the game
-			if (Application.platform == RuntimePlatform.Android)
-				Application.Quit();				
-				
+			m_isCheckpointSkipDown = true;
+
 			if (m_lastCheckpoint != null && m_lastCheckpoint.NextCheckPoint != null)
 			{
 				m_lastCheckpoint = m_lastCheckpoint.NextCheckPoint;	
 			}
 			OnDeath();
+			return;
+		}
+		else if (m_isCheckpointSkipDown && !Input.GetButton("CheckpointNext"))
+		{
+			m_isCheckpointSkipDown = false;
+		}
+		
+		if (Input.GetButton("Reset") && !m_isEscapeDown)
+		{
+			m_isEscapeDown = true;
+			if (CurrentGameState == GameState.Running) {
+				CurrentGameState = GameState.Paused;
+				Time.timeScale = 0.0f;
+			}
+						
 			return;
 		}
 		else if (m_isEscapeDown && !Input.GetButton("Reset"))
@@ -339,7 +362,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	/*
 	 * \called when player health drops to zero
 	*/
-	void OnDeath() 
+	public void OnDeath() 
 	{
 		if (m_lastCheckpoint != null)
 		{

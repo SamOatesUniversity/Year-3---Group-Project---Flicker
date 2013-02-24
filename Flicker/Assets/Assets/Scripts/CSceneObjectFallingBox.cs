@@ -12,6 +12,13 @@ public class CSceneObjectFallingBox : MonoBehaviour {
 			PressurePlate.state = true;
 	}
 	
+	void Update() {
+		
+		if (m_ran && PressurePlate != null)
+			PressurePlate.state = true;
+		
+	}
+	
 	void OnCollisionEnter(Collision collision) {
 		
 		if (m_ran)

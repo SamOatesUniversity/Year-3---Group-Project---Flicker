@@ -72,6 +72,12 @@ public class CPlayerAnimation : MonoBehaviour {
 			if (!m_animation.IsPlaying("falling"))
 				m_animation.CrossFade("falling");
 		}
+		else if (playerState == PlayerState.WallJumpStart)
+		{
+			m_currentAnimation = "wall-hang-idle";
+			if (!m_animation.IsPlaying(m_currentAnimation))
+				m_animation.CrossFade(m_currentAnimation);
+		}
 		else if (playerState == PlayerState.LedgeHang)
 		{
 			m_currentAnimation = "free-hang-idle";

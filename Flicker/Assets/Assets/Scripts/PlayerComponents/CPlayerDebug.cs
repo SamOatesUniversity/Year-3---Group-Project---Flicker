@@ -23,6 +23,8 @@ public class CPlayerDebug : MonoBehaviour
 		if (!m_visible || m_player == null) return;
 		
 		m_information.Clear();
+		m_information.Add("FPS: " + Mathf.RoundToInt(1.0f / Time.deltaTime));
+		m_information.Add("----------");
 		m_information.Add("Player Position: " + m_player.transform.position.ToString());
 		m_information.Add("Player Alpha: " + m_player.CurrentPlayerAlpha.ToString());
 		m_information.Add("----------");

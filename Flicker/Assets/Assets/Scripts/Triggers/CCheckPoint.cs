@@ -7,7 +7,7 @@ public class CCheckPoint : MonoBehaviour {
 	private int m_direction = 1;
 	
 	public CCheckPoint NextCheckPoint = null;
-	public CCheckPoint PreviousCheckPoint = null;
+	public bool	IsLevelStart = false;
 	
 	void Start() {
 		m_playerAlpha = calculateAlphaAngle();

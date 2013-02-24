@@ -534,7 +534,18 @@ public class CPlayerPhysics : MonoBehaviour {
 	public void OnUpdate(ref PlayerState playerState)
 	{	
 		if (playerState == PlayerState.Standing)
+		{
 			m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+			
+			if (GetLadder.state != LadderState.AtBase)
+			{
+				// standing, we can't be on a ladder
+				GetLadder.state = LadderState.None;
+				GetLadder.offset = 0.0f;
+				GetLadder.moving = false;
+				GetLadder.direction = 0.0f;
+			}
+		}
 		
 		bool wasJump = m_isJumpDown;
 		m_isJumpDown = Input.GetButton("Jump");
@@ -574,6 +585,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		{
 			GetLadder.state = LadderState.JumpingOff;
 			m_jumpTimer = (Time.time * 1000.0f);
+			m_body.velocity = Vector3.zero;
 			m_body.AddForce(new Vector3(0, PlayerJumpHeight, 0), ForceMode.Impulse);	
 			m_jumpState = JumpState.Jumping;
 			playerState = PlayerState.Jumping;
