@@ -152,10 +152,6 @@ public class CSceneObject : MonoBehaviour {
 		CheckKillOnTouch(collision);
 	}
 	
-	void OnCollisionStay(Collision collision) {
-		CheckKillOnTouch(collision);
-	}
-	
 	void OnTriggerEnter(Collider other) {
 		CheckLedgeGrab(other);	
 		CheckLadder(other);

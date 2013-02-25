@@ -50,6 +50,9 @@ public class CSceneObjectFallingPlatform : CSceneObject {
 	
 	void FixedUpdate()
 	{
+		if (m_state == PlatformState.Normal)
+			return;
+		
 		Animation platAnim = gameObject.GetComponent<Animation>();
 		if (platAnim == null || platAnim["Take 001"] == null)
 		{

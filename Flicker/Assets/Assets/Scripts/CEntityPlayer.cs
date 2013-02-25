@@ -423,25 +423,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	void OnTriggerEnter(Collider collider)
 	{
-		//Disabled ledge grab stuff
-		/*
-		if(collider.gameObject != null && collider.gameObject.name == "LedgeHang" && this.collider.name == "LedgeGrabTrigger")
-		{
-			
-			//Debug.Log("Triggered!");
-			if (
-				m_playerState != PlayerState.LedgeHang && 
-				m_playerState != PlayerState.LedgeClimb &&
-				m_playerState != PlayerState.LedgeClimbComplete
-			)
-			{
-				m_physics.SetLedgeGrabState(this, PlayerState.LedgeHang);
-				CapsuleCollider capCollider = this.GetComponentInChildren<CapsuleCollider>();
-				capCollider.enabled = false;
-			}
-		}
-		*/
-		
+				
 	}
 	
 	void OnTriggerStay(Collider collision) {

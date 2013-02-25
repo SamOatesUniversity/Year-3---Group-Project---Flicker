@@ -40,12 +40,15 @@ public class CSceneObjectPlatform : CSceneObject {
 	{		
 		if (platAnim == null)
 			return;
-
-		float rotY = platAnim.transform.rotation.eulerAngles.y;
-		m_deltaA += rotY - m_lastRotY;
-		m_lastRotY = rotY;
 		
-		if (!m_enabled && platAnim.isPlaying)
+		if (m_enabled == true)
+		{
+			float rotY = platAnim.transform.rotation.eulerAngles.y;
+			m_deltaA += rotY - m_lastRotY;
+			m_lastRotY = rotY;
+		}
+		
+		if (platAnim.isPlaying && !m_enabled)
 		{
 			platAnim.Stop();
 		}	
