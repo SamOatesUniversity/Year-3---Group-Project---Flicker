@@ -207,6 +207,51 @@ public class CCamera : MonoBehaviour {
 		if (selected != -1)
 		{
 			QualitySettings.SetQualityLevel(selected);
+			
+			Water water = null;
+			GameObject waterObject = GameObject.Find("Nighttime Water");
+			if (waterObject != null) water = waterObject.GetComponent<Water>();
+
+			SSAOEffect ssao = GetComponent<SSAOEffect>();
+						
+			switch(selected)
+			{
+			case 0:
+			case 1:
+			{
+				if (water != null)
+				{
+					water.m_WaterMode = Water.WaterMode.Simple;
+					water.m_TextureSize = 64;
+					ssao.enabled = false;
+				}
+			}
+			break;
+				
+			case 2:
+			case 3:
+			{
+				if (water != null)
+				{
+					water.m_WaterMode = Water.WaterMode.Reflective;
+					water.m_TextureSize = 128;
+					ssao.enabled = false;
+				}
+			}
+			break;
+				
+			case 4:
+			case 5:
+			{
+				if (water != null)
+				{
+					water.m_WaterMode = Water.WaterMode.Refractive;
+					water.m_TextureSize = 256;
+					ssao.enabled = true;
+				}
+			}
+			break;
+			}
 		}
 		
 		yPosition += 96 + 42;

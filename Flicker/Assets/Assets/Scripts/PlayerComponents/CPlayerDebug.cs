@@ -8,6 +8,9 @@ public class CPlayerDebug : MonoBehaviour
 	private ArrayList m_information = new ArrayList();
 	
 	private CEntityPlayer m_player = null;
+		
+	private int m_fps = 30;
+	private float m_time = 0.0f;
 	
 	public CPlayerDebug ()
 	{
@@ -18,12 +21,22 @@ public class CPlayerDebug : MonoBehaviour
 		m_player = player;	
 	}
 	
+	void Update()
+	{
+		m_time += Time.deltaTime;
+		if (m_time >= 1.0f)
+		{
+			m_time = 0.0f;
+			m_fps = Mathf.RoundToInt(1.0f / Time.deltaTime);	
+		}	
+	}
+	
 	void OnGUI ()
 	{
 		if (!m_visible || m_player == null) return;
-		
+				
 		m_information.Clear();
-		m_information.Add("FPS: " + Mathf.RoundToInt(1.0f / Time.deltaTime));
+		m_information.Add("FPS: " + m_fps);
 		m_information.Add("----------");
 		m_information.Add("Player Position: " + m_player.transform.position.ToString());
 		m_information.Add("Player Alpha: " + m_player.CurrentPlayerAlpha.ToString());
