@@ -90,7 +90,7 @@ public class CSceneObject : MonoBehaviour {
 			
 			LadderState currentLadderState = player.Physics.GetLadder.state;
 			
-			if (currentLadderState == LadderState.None || currentLadderState == LadderState.OnMiddle) {
+			if (currentLadderState == LadderState.OnMiddle) {
 				player.Physics.GetLadder.state = LadderState.OnTop;
 				player.SetPlayerState(PlayerState.OnLadder);
 				player.Physics.CurrentCollisionState = CollisionState.None;

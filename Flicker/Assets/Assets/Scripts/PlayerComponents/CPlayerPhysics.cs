@@ -229,6 +229,10 @@ public class CPlayerPhysics : MonoBehaviour {
 			else if (isNearly(contact.normal.y, -1.0f, 0.2f))
 			{
 				m_collisionState = CollisionState.OnRoof;
+				if (contact.otherCollider != null && contact.otherCollider.GetComponent<CSceneObjectPlatform>() != null)
+				{
+					m_player.PushPlayerFromTower();
+				}
 			}
 			else
 			{
