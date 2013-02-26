@@ -111,7 +111,7 @@ public class CPlayerAnimation : MonoBehaviour {
 		{
 			m_currentAnimation = "ladder-climb";
 
-			m_animation[m_currentAnimation].speed = player.Physics.GetLadder.offset * 100.0f;			
+			m_animation[m_currentAnimation].speed = player.Physics.GetLadder.offset * 150.0f;			
 
 			if (!m_animation.IsPlaying(m_currentAnimation))
 			{
