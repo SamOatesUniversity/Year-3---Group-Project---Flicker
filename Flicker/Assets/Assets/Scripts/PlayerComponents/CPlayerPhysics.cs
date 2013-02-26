@@ -597,6 +597,8 @@ public class CPlayerPhysics : MonoBehaviour {
 			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 		}
 		
+		// LADDER CODE
+		
 		float updown = (Input.GetAxis("Vertical") * 0.001f);
 		if (updown > 0.0f)
 		{
@@ -605,16 +607,15 @@ public class CPlayerPhysics : MonoBehaviour {
 				GetLadder.state = LadderState.OnBase;
 				playerState = PlayerState.OnLadder;
 				m_collisionState = CollisionState.None;
+				m_jumpState = JumpState.Landed;
 			}
-			
-			if (GetLadder.state == LadderState.OnBase || GetLadder.state == LadderState.OnMiddle)
+			else if (GetLadder.state == LadderState.OnBase || GetLadder.state == LadderState.OnMiddle)
 			{
 				GetLadder.offset = (updown * 10.0f);
 				GetLadder.moving = true;
 				GetLadder.direction = 1.0f;
 			}
-			
-			if (GetLadder.state == LadderState.OnTop)
+			else if (GetLadder.state == LadderState.OnTop)
 			{
 				GetLadder.moving = false;
 				GetLadder.direction = 0.0f;
@@ -628,9 +629,9 @@ public class CPlayerPhysics : MonoBehaviour {
 				GetLadder.state = LadderState.AtBase;
 				playerState = PlayerState.Standing;
 				rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+				rigidbody.AddForce(0, 0.1f, 0);
 			}	
-			
-			if (GetLadder.state == LadderState.OnBase || GetLadder.state == LadderState.OnMiddle || GetLadder.state == LadderState.OnTop)
+			else if (GetLadder.state == LadderState.OnBase || GetLadder.state == LadderState.OnMiddle || GetLadder.state == LadderState.OnTop)
 			{
 				GetLadder.offset = (updown * 10.0f);
 				GetLadder.moving = true;
