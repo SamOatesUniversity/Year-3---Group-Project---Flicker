@@ -183,7 +183,7 @@ public class Water : MonoBehaviour
 		Vector4 waveScale4 = new Vector4(waveScale, waveScale, waveScale * 0.4f, waveScale * 0.45f);
 		
 		// Time since level load, and do intermediate calculations with doubles
-		double t = Time.timeSinceLevelLoad / 20.0;
+		double t = Time.timeSinceLevelLoad * 0.05f;
 		Vector4 offsetClamped = new Vector4(
 			(float)System.Math.IEEERemainder(waveSpeed.x * waveScale4.x * t, 1.0),
 			(float)System.Math.IEEERemainder(waveSpeed.y * waveScale4.y * t, 1.0),
@@ -228,8 +228,8 @@ public class Water : MonoBehaviour
 		// update other values to match current camera.
 		// even if we are supplying custom camera&projection matrices,
 		// some of values are used elsewhere (e.g. skybox uses far plane)
-		dest.farClipPlane = src.farClipPlane;
-		dest.nearClipPlane = src.nearClipPlane;
+		dest.farClipPlane = 1.0f;
+		dest.nearClipPlane = 0.1f;
 		dest.orthographic = src.orthographic;
 		dest.fieldOfView = src.fieldOfView;
 		dest.aspect = src.aspect;
