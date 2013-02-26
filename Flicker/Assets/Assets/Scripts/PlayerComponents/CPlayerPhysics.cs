@@ -604,7 +604,11 @@ public class CPlayerPhysics : MonoBehaviour {
 		{
 			if (GetLadder.state == LadderState.AtBase)
 			{
-				GetLadder.state = LadderState.OnBase;
+				if (m_jumpState == JumpState.Jumping) {
+					GetLadder.state = LadderState.OnMiddle;
+				} else {
+					GetLadder.state = LadderState.OnBase;
+				}
 				playerState = PlayerState.OnLadder;
 				m_collisionState = CollisionState.None;
 				m_jumpState = JumpState.Landed;
