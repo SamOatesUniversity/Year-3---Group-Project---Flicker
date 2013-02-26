@@ -288,20 +288,24 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	public override void Update()
 	{
-		if (Input.GetButton("CheckpointNext") && !m_isCheckpointSkipDown)
+		// only allow dev cheats in the editor
+		if (Application.isEditor)
 		{
-			m_isCheckpointSkipDown = true;
-
-			if (m_lastCheckpoint != null && m_lastCheckpoint.NextCheckPoint != null)
+			if (Input.GetButton("CheckpointNext") && !m_isCheckpointSkipDown)
 			{
-				m_lastCheckpoint = m_lastCheckpoint.NextCheckPoint;	
+				m_isCheckpointSkipDown = true;
+	
+				if (m_lastCheckpoint != null && m_lastCheckpoint.NextCheckPoint != null)
+				{
+					m_lastCheckpoint = m_lastCheckpoint.NextCheckPoint;	
+				}
+				OnDeath();
+				return;
 			}
-			OnDeath();
-			return;
-		}
-		else if (m_isCheckpointSkipDown && !Input.GetButton("CheckpointNext"))
-		{
-			m_isCheckpointSkipDown = false;
+			else if (m_isCheckpointSkipDown && !Input.GetButton("CheckpointNext"))
+			{
+				m_isCheckpointSkipDown = false;
+			}
 		}
 		
 		if (Input.GetButton("Reset") && !m_isEscapeDown)
