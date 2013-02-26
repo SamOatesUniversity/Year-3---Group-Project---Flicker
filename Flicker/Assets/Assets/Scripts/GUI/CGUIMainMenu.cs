@@ -4,6 +4,8 @@ using System.Collections;
 public class CGUIMainMenu : MonoBehaviour {
 	
 	public Texture			Title = null;
+	public Texture			YoutubeTexture = null;
+	public Texture			FacebookTexture = null;
 	
 	enum MenuState {
 		Main,
@@ -104,6 +106,18 @@ public class CGUIMainMenu : MonoBehaviour {
 		if (GUI.Button(quitRect, "Exit"))
 		{
 			m_menuState = MenuState.Exit;
+		}
+		
+		Rect youtubeRect = new Rect(Screen.width - 74, Screen.height - 74, 64, 64);
+		if (GUI.Button (youtubeRect, YoutubeTexture))
+		{
+			Application.OpenURL("http://www.youtube.com/user/FlickerGame");
+		}
+		
+		Rect facebookRect = new Rect(Screen.width - 148, Screen.height - 74, 64, 64);
+		if (GUI.Button (facebookRect, FacebookTexture))
+		{
+			Application.OpenURL("http://www.facebook.com/FlickerTheGame");
 		}
 	}
 }
