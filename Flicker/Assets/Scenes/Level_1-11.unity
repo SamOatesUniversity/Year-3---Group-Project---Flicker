@@ -4707,8 +4707,9 @@ MonoBehaviour:
   MaxHealth: 100
   PlayerPathRadius: 2.79999995
   InitialAlphaPosition: 265
-  MainCamera: {fileID: 1585933563}
   StartCheckPoint: {fileID: 0}
+  StartFacing: 0
+  CurrentGameState: 0
 --- !u!114 &424124283
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18507,6 +18508,7 @@ MonoBehaviour:
   MaximumCameraDistance: 3
   CameraZoomTimerMs: 3000
   MaxCameraOffset: 2
+  m_maxPositionsStored: 10
 --- !u!114 &1585933570
 MonoBehaviour:
   m_ObjectHideFlags: 0
