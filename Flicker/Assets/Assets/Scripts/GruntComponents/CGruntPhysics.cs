@@ -365,7 +365,7 @@ public class CGruntPhysics : MonoBehaviour {
 			{
 				m_movingDirection = -1;
 				m_direction = -1;
-			}
+			} 
 			else if ( m_grunt.CurrentPlayerAlpha > playerAlpha )
 			{
 				m_movingDirection = 1;
