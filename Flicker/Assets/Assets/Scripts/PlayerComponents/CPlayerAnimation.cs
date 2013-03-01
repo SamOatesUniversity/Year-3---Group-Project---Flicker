@@ -119,6 +119,22 @@ public class CPlayerAnimation : MonoBehaviour {
 				PlayFootstepAudio(FootMaterial.Metal);
 			}
 		}
+		else if (playerState == PlayerState.PullingWallLeverDown)
+		{
+			m_currentAnimation = "switch-down";	
+			if (!m_animation.IsPlaying(m_currentAnimation))
+			{
+				m_animation.CrossFade(m_currentAnimation);	
+			}
+		}
+		else if (playerState == PlayerState.PullingWallLeverUp)
+		{
+			m_currentAnimation = "switch-up";	
+			if (!m_animation.IsPlaying(m_currentAnimation))
+			{
+				m_animation.CrossFade(m_currentAnimation);	
+			}
+		}
 	}
 	
 	public string CurrentAnimation()

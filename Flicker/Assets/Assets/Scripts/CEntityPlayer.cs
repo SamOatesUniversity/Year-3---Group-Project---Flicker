@@ -19,7 +19,9 @@ public enum PlayerState {
 	LedgeClimbComplete,
 	WallJumpStart,
 	FallingFromTower,		//!< The player has been pushed of the tower
-	OnLadder
+	OnLadder,
+	PullingWallLeverDown,	//!< Pulling a lever on the wall down
+	PullingWallLeverUp		//!< Pulling a lever on the wall up
 };
 
 [RequireComponent (typeof (CWallJump))]
@@ -51,6 +53,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 	private CPlayerDebug 		m_debug = null;
 	
 	private Vector3				m_pelvisOffset;
+	
+	private static CEntityPlayer INSTANCE = null;
 	
 	// dying vars
 	
@@ -97,8 +101,10 @@ public class CEntityPlayer : CEntityPlayerBase {
 	*/
 	public override void Start () {
 		
-		base.Start();
+		INSTANCE = this;
 		
+		base.Start();
+				
 		if (Application.platform == RuntimePlatform.Android)
 			Screen.orientation = ScreenOrientation.Landscape;
 		
@@ -142,6 +148,11 @@ public class CEntityPlayer : CEntityPlayerBase {
 	public int GetCurrentHealth()
 	{
 		return m_playerHealth;
+	}
+	
+	public static CEntityPlayer GetInstance()
+	{
+		return INSTANCE;	
 	}
 	
 	public int GetMaxHealth()
@@ -234,7 +245,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 			{
 				// do nothing on turn around
 			}
-			else if (m_playerState == PlayerState.OnLadder)
+			else if (m_playerState == PlayerState.OnLadder || PullingLever())
 			{
 				float spin = Physics.InsideTower ? -180.0f : 0.0f;
 				m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + spin, 0));
@@ -465,5 +476,16 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_playerState = PlayerState.FallingFromTower;
 		m_dead.y = transform.position.y;
 		m_dead.time = Time.time * 1000.0f;
+	}
+	
+	public bool PullingLever()
+	{
+		if (m_playerState == PlayerState.PullingWallLeverDown)
+			return true;
+		
+		if (m_playerState == PlayerState.PullingWallLeverUp)
+			return true;
+		
+		return false;
 	}
 }

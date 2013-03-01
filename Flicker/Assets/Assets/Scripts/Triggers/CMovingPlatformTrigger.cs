@@ -22,6 +22,9 @@ public class CMovingPlatformTrigger : CTriggerBase {
 	
 	public eLevelType						LeverType = eLevelType.SingleUse;		
 	
+	private float 							m_timePulled = 0.0f;
+	public float							TimeDelaySecs = 0.1f;
+	
 	new void Start() {
 	
 		m_animation = GetComponent<Animation>();
@@ -40,20 +43,34 @@ public class CMovingPlatformTrigger : CTriggerBase {
 
 		if (m_triggerEntered)
         {
+			if (Time.time - m_timePulled > TimeDelaySecs && m_leverState == eLevelState.InUse)
+			{
+				m_animation["Take 001"].speed = 1.0f;
+			}
+			
+			if (m_leverState == eLevelState.Reseting)
+			{
+				m_animation["Take 001"].speed = -1.0f;
+			}
+			
 			bool pulled = CheckContextButton();
 			if (pulled && m_leverState == eLevelState.ReadyForUse)
             {
-				Debug.Log("PULLING LEVER " + name);
+				CEntityPlayer player = CEntityPlayer.GetInstance();
+				player.SetPlayerState(PlayerState.PullingWallLeverDown);
 				
 				state = true;
-				m_animation["Take 001"].speed = 1.0f;                
 				m_leverState = eLevelState.InUse;
+				m_timePulled = Time.time;
 			}
 			else if (LeverType == eLevelType.Toggle && pulled && m_leverState == eLevelState.Finished)
 			{
+				CEntityPlayer player = CEntityPlayer.GetInstance();
+				player.SetPlayerState(PlayerState.PullingWallLeverUp);
+				
 				state = false;
-				m_animation["Take 001"].speed = -1.0f;	
 				m_leverState = eLevelState.Reseting;
+				m_timePulled = Time.time;
 			}
         }
 		
@@ -69,12 +86,18 @@ public class CMovingPlatformTrigger : CTriggerBase {
 				m_animation["Take 001"].speed = 0.0f;
 				m_leverState = eLevelState.Finished;	
 			}
+			
+			CEntityPlayer player = CEntityPlayer.GetInstance();
+			player.SetPlayerState(PlayerState.Standing);
 		}
 		
 		if (m_leverState == eLevelState.Reseting && m_animation["Take 001"].normalizedTime < 0.1f)
 		{
 			m_animation["Take 001"].speed = 0.0f;
 			m_leverState = eLevelState.ReadyForUse;
+			
+			CEntityPlayer player = CEntityPlayer.GetInstance();
+			player.SetPlayerState(PlayerState.Standing);
 		}
 	}
 	
