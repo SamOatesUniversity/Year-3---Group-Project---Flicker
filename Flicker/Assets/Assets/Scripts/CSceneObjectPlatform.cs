@@ -12,15 +12,22 @@ public class CSceneObjectPlatform : CSceneObject {
 	private float m_lastRotY;
 	
 	public bool m_enabled = false;
-	Animation platAnim = null;
+	
+	private Animation m_platAnim = null;
+	
 	// Use this for initialization
 	void Start() 
     {
-		platAnim = gameObject.GetComponent<Animation>();
+		m_platAnim = gameObject.GetComponent<Animation>();
 		m_lastRotY = gameObject.transform.rotation.eulerAngles.y;
-		if (!m_enabled && platAnim != null)
+		if (!m_enabled && m_platAnim != null)
 		{
-			platAnim.Stop();
+			if (m_platAnim.clip == null || m_platAnim[m_platAnim.clip.name] == null) {
+				return;
+			}
+			
+			m_platAnim.Play();
+			m_platAnim[m_platAnim.clip.name].speed = 0.0f;
 		}
 		
 	}
@@ -38,23 +45,26 @@ public class CSceneObjectPlatform : CSceneObject {
 	
 	void FixedUpdate()
 	{		
-		if (platAnim == null)
+		if (m_platAnim == null || m_platAnim.clip == null || m_platAnim[m_platAnim.clip.name] == null)
 			return;
 		
 		if (m_enabled == true)
 		{
-			float rotY = platAnim.transform.rotation.eulerAngles.y;
+			float rotY = m_platAnim.transform.rotation.eulerAngles.y;
 			m_deltaA += rotY - m_lastRotY;
 			m_lastRotY = rotY;
 		}
 		
-		if (platAnim.isPlaying && !m_enabled)
+		if (m_platAnim[m_platAnim.clip.name].speed == 1.0f && !m_enabled)
 		{
-			platAnim.Stop();
+			Debug.Log ("STOP PLAT");
+			m_platAnim[m_platAnim.clip.name].speed = 0.0f;
+			
 		}	
-		else if (!platAnim.isPlaying && m_enabled)
+		else if (m_platAnim[m_platAnim.clip.name].speed == 0.0f && m_enabled)
 		{
-			platAnim.Play();
+			Debug.Log ("start plat");
+			m_platAnim[m_platAnim.clip.name].speed = 1.0f;
 		}
 	}
 	

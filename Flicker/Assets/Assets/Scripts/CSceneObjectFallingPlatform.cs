@@ -136,7 +136,7 @@ public class CSceneObjectFallingPlatform : CSceneObject {
 	void OnTriggerEnter(Collider collider)
 	{
 		if(m_state == PlatformState.Normal)
-		{
+		{				
 			m_state = PlatformState.Shaking;
 			m_timeTriggered = Time.time;			
 			m_platAnim["Take 001"].normalizedTime = 0.10f;

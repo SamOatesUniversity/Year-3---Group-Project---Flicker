@@ -6,7 +6,7 @@ public class CTriggerBase : CLogicObject
 	
 	protected bool CheckContextButton()
 	{
-        return Input.GetKeyUp(KeyCode.E);		
+        return Input.GetButtonUp("Action");	
 	}
 	
 	protected float CheckRange(Vector3 _from, Vector3 _to)
