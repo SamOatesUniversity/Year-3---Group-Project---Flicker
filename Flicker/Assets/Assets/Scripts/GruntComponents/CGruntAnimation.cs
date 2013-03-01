@@ -36,14 +36,14 @@ public class CGruntAnimation : MonoBehaviour {
 		}
 		else if (playerState == GruntState.Turning)
 		{
-			m_currentAnimation = "running-turn";
-			if (!m_animation.IsPlaying("running-turn") && !m_startedTurningRound)
+			m_currentAnimation = "walk180turn";
+			if (!m_animation.IsPlaying("walk180turn") && !m_startedTurningRound)
 			{
 				m_startedTurningRound = true;
-				m_animation["running-turn"].speed = 1.2f;
-				m_animation.CrossFade("running-turn");
+				m_animation["walk180turn"].speed = 1.2f;
+				m_animation.CrossFade("walk180turn");
 			}
-			else if (!m_animation.IsPlaying("running-turn"))
+			else if (!m_animation.IsPlaying("walk180turn"))
 			{
 				m_startedTurningRound = false;
 				playerState = GruntState.Walking;

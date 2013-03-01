@@ -1,10 +1,41 @@
 fileFormatVersion: 2
-guid: e447dcda7bb2fb94c98a6e4de8a1b8e3
+guid: fa49f98cc25146448a8d62bee8710715
 ModelImporter:
   fileIDToRecycleName:
     4300000: GRUNT_LOWv2
     4300002: GRUNT_LOW_vestv2
-    7400000: Take 001 //// GruntImport19thFEB.fbm
+    7400000: Take 001 //// GruntImport19thFEB
+    7400002: idle //// GruntImport19thFEB
+    7400004: GRUNT_idle1 //// GruntImport19thFEB
+    7400006: GRUNT_idle_crackneck //// GruntImport19thFEB
+    7400008: GRUNT_idle2 //// GruntImport19thFEB
+    7400010: GRUNT_walk //// GruntImport19thFEB
+    7400012: GRUNT_walk180turn //// GruntImport19thFEB
+    7400014: GRUNT_run //// GruntImport19thFEB
+    7400016: GRUNT_state_idletoalert //// GruntImport19thFEB
+    7400018: GRUNT_alert_attackidle1 //// GruntImport19thFEB
+    7400020: GRUNT_alert_attackidle2 //// GruntImport19thFEB
+    7400022: GRUNT_alert_attack1 //// GruntImport19thFEB
+    7400024: GRUNT_idle1 //// GruntImport19thFEB.fbm
+    7400026: GRUNT_idle_crackneck //// GruntImport19thFEB.fbm
+    7400028: GRUNT_idle2 //// GruntImport19thFEB.fbm
+    7400030: GRUNT_walk //// GruntImport19thFEB.fbm
+    7400032: GRUNT_walk180turn //// GruntImport19thFEB.fbm
+    7400034: GRUNT_run //// GruntImport19thFEB.fbm
+    7400036: GRUNT_state_idletoalert //// GruntImport19thFEB.fbm
+    7400038: GRUNT_alert_attackidle1 //// GruntImport19thFEB.fbm
+    7400040: GRUNT_alert_attackidle2 //// GruntImport19thFEB.fbm
+    7400042: GRUNT_alert_attack1 //// GruntImport19thFEB.fbm
+    7400044: idle1 //// GruntImport19thFEB.fbm
+    7400046: idle_crackneck //// GruntImport19thFEB.fbm
+    7400048: idle2 //// GruntImport19thFEB.fbm
+    7400050: walk //// GruntImport19thFEB.fbm
+    7400052: walk180turn //// GruntImport19thFEB.fbm
+    7400054: run //// GruntImport19thFEB.fbm
+    7400056: state_idletoalert //// GruntImport19thFEB.fbm
+    7400058: alert_attackidle1 //// GruntImport19thFEB.fbm
+    7400060: alert_attackidle2 //// GruntImport19thFEB.fbm
+    7400062: alert_attack1 //// GruntImport19thFEB.fbm
   serializedVersion: 10
   materials:
     importMaterials: 1
@@ -18,8 +49,58 @@ ModelImporter:
     animationRotationError: .5
     animationPositionError: .5
     animationScaleError: .5
-    animationWrapMode: 0
-    clipAnimations: []
+    animationWrapMode: 2
+    clipAnimations:
+    - name: idle1
+      firstFrame: 1
+      lastFrame: 160
+      wrapMode: 2
+      loop: 1
+    - name: idle_crackneck
+      firstFrame: 160
+      lastFrame: 320
+      wrapMode: 2
+      loop: 1
+    - name: idle2
+      firstFrame: 320
+      lastFrame: 480
+      wrapMode: 2
+      loop: 1
+    - name: walk
+      firstFrame: 481
+      lastFrame: 511
+      wrapMode: 2
+      loop: 1
+    - name: walk180turn
+      firstFrame: 511
+      lastFrame: 529
+      wrapMode: 1
+      loop: 0
+    - name: run
+      firstFrame: 530
+      lastFrame: 553
+      wrapMode: 2
+      loop: 1
+    - name: state_idletoalert
+      firstFrame: 554
+      lastFrame: 564
+      wrapMode: 1
+      loop: 0
+    - name: alert_attackidle1
+      firstFrame: 564
+      lastFrame: 625
+      wrapMode: 2
+      loop: 1
+    - name: alert_attackidle2
+      firstFrame: 625
+      lastFrame: 686
+      wrapMode: 2
+      loop: 1
+    - name: alert_attack1
+      firstFrame: 686
+      lastFrame: 758
+      wrapMode: 2
+      loop: 1
   meshes:
     lODScreenPercentages: []
     globalScale: .00999999978
@@ -52,10 +133,10 @@ ModelImporter:
     Bip001 Head001:
       data:
         first: 1
-        second: a4860100
+        second: a0860100
       data:
         first: 4
-        second: 841a0600
+        second: 801a0600
     Bip001 HeadNub001:
       data:
         first: 1
@@ -199,10 +280,10 @@ ModelImporter:
     Bip001 L Toe001:
       data:
         first: 1
-        second: a2860100
+        second: a4860100
       data:
         first: 4
-        second: 821a0600
+        second: 841a0600
     Bip001 L Toe0Nub001:
       data:
         first: 1
@@ -430,10 +511,10 @@ ModelImporter:
     Bip001 R Toe001:
       data:
         first: 1
-        second: a0860100
+        second: a2860100
       data:
         first: 4
-        second: 801a0600
+        second: 821a0600
     Bip001 R Toe0Nub001:
       data:
         first: 1
