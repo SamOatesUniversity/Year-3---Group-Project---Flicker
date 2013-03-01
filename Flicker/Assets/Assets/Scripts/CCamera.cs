@@ -36,8 +36,9 @@ public class CCamera : MonoBehaviour {
 	public float				MaxCameraOffset = 1.0f;		//!< 
 	
 	private Transform			m_playerPelvis;
+	private Transform			m_currentTransform;
+	
 	private CEntityPlayer 		m_playerEntity;
-	private Vector3				m_pelvisOffset;
 	
 	private ArrayList			m_storedPositions;
 	private Vector3				m_averagePos;
@@ -52,11 +53,24 @@ public class CCamera : MonoBehaviour {
 	public void Start () {	
 		m_transform = this.transform;
 		DistanceFromPlayer = InitialDistanceFromPlayer;
-		m_playerEntity = this.transform.FindChild("../Player Spawn").GetComponent<CEntityPlayer>();
-		m_playerPelvis = this.transform.FindChild("../Player Spawn/Player_Mesh/Bip001/Bip001 Pelvis");
+		m_playerEntity = CEntityPlayer.GetInstance();
+		m_playerPelvis = m_playerEntity.transform.FindChild("Player_Mesh/Bip001/Bip001 Pelvis");
+		
+		m_currentTransform = m_playerPelvis;
+		
 		m_storedPositions = new ArrayList();
-		m_storedPositions.Add(m_playerPelvis.position);
+		m_storedPositions.Add(m_currentTransform.position);
 		m_countIgnoredFrames = 0;
+	}
+	
+	public void SetLookAtTransform(Transform newLookat)
+	{
+		m_currentTransform = newLookat;
+	}
+	
+	public void ResetLookAtTransform()
+	{
+		m_currentTransform = m_playerPelvis;	
 	}
 
 	/*
@@ -68,15 +82,15 @@ public class CCamera : MonoBehaviour {
 		bool posIgnored = true;
 		if( m_countIgnoredFrames < maxFramesIgnorePos )
 		{
-			if( m_playerPelvis.position.y > m_averagePos.y-maxPosJumpFactor && m_playerPelvis.position.y < m_averagePos.y+maxPosJumpFactor )
+			if( m_currentTransform.position.y > m_averagePos.y-maxPosJumpFactor && m_currentTransform.position.y < m_averagePos.y+maxPosJumpFactor )
 			{
-					m_storedPositions.Add(m_playerPelvis.position);
+					m_storedPositions.Add(m_currentTransform.position);
 					posIgnored = false;
 			}
 		}
 		else
 		{
-			m_storedPositions.Add(m_playerPelvis.position);
+			m_storedPositions.Add(m_currentTransform.position);
 			posIgnored = false;
 		}
 		
@@ -105,12 +119,6 @@ public class CCamera : MonoBehaviour {
 		this.TendToMaxOffset( m_playerEntity.Physics.Direction );
 		m_averagePos = avgPosition;
 		
-		/*
-		float adjustedCameraHeight = player.position.y + CameraElevation;
-		Vector3 playerToCamera = new Vector3(0.0f, adjustedCameraHeight, 0.0f) - player.position;
-		Vector3 normPlayerToCamera = Vector3.Normalize( playerToCamera );
-		Vector3 camPosition = player.position + ( normPlayerToCamera * DistanceFromPlayer );
-		*/
 		float adjustedCameraHeight = avgPosition.y + CameraElevation;
 		Vector3 camPosition;
 		
