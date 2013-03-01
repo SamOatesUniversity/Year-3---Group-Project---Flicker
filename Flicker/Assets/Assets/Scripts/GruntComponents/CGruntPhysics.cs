@@ -212,8 +212,9 @@ public class CGruntPhysics : MonoBehaviour {
 			
 			//m_ledgeGrabBox.collider.enabled = true;
 		}
-		if (m_collisionState == CollisionState.OnWall)
+		if (m_collisionState == CollisionState.OnWall &&  m_grunt.GetGruntState() != GruntState.Turning)
 		{
+			m_grunt.SetGruntState( GruntState.Turning );
 			if( m_movingDirection == 1)
 			{
 				m_movingDirection = -1;	
@@ -222,7 +223,6 @@ public class CGruntPhysics : MonoBehaviour {
 			{
 				m_movingDirection = 1;	
 			}
-			m_grunt.SetGruntState( GruntState.Turning );
 		}
 	}
 	
@@ -274,8 +274,12 @@ public class CGruntPhysics : MonoBehaviour {
 				m_collisionState = CollisionState.OnFloor;
 				if (!isNearly(contact.normal.y, 1.0f, 0.15f) && collision.contacts.Length == 1)
 				{
-					m_velocity = (m_movingDirection * 0.15f);
-					m_velocityLockTimer = (Time.time * 1000.0f); 
+					if(m_grunt.GetGruntState() == GruntState.Walking)
+					{
+						m_velocity = (m_movingDirection * 0.15f);
+						m_velocityLockTimer = (Time.time * 1000.0f);	
+					}
+					 
 				}
 				if(contact.otherCollider)
 				{
@@ -394,7 +398,7 @@ public class CGruntPhysics : MonoBehaviour {
 					m_velocity = 0.0f;
 					return;
 				}
-				
+				/*
 				// are we tuning round?
 				if (lastDirection != direction && ((Time.time * 1000.0f) - m_turnLockTimer > 1000.0f))
 				{
@@ -408,7 +412,9 @@ public class CGruntPhysics : MonoBehaviour {
 				} 
 				else
 					playerState = GruntState.Walking;	
+					*/
 			}
+			
 		}
 	}
 	

@@ -147,6 +147,7 @@ public class CEntityGrunt : CEntityPlayerBase {
 		m_lastPlayerPositionAlpha = m_playerPositionAlpha;
 		
 		m_physics.OnFixedUpdate(ref m_playerState);
+
 		
 		m_playerPositionAlpha -= m_physics.Velocity;
 		m_playerPositionAlpha += m_physics.PlatformVelocity;
@@ -174,10 +175,11 @@ public class CEntityGrunt : CEntityPlayerBase {
 			
 			if (m_playerState == GruntState.Turning)
 			{
-				
+				Debug.Log("NOT IN ROTATION CODE");
 			}
 			else
 			{
+				Debug.Log("rOTATION");
 				if (m_physics.Direction > 0)
 				{
 					m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));
@@ -196,7 +198,9 @@ public class CEntityGrunt : CEntityPlayerBase {
 				}
 			}
 			
-			m_animation.OnFixedUpdate(ref m_playerState, m_physics, m_physics.GetFootMaterial());
+			int mDirection = m_physics.MovingDirection;
+			m_animation.OnFixedUpdate(ref m_playerState, ref mDirection, m_physics, m_physics.GetFootMaterial());
+			m_physics.MovingDirection = mDirection;
 		}
 		
 		

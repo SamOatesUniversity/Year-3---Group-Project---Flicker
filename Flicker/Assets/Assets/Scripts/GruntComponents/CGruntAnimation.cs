@@ -23,7 +23,7 @@ public class CGruntAnimation : MonoBehaviour {
 		m_audio = GetComponent<AudioSource>();
 	}
 	
-	public void OnFixedUpdate(ref GruntState playerState, CGruntPhysics physics, FootMaterial footMaterial)
+	public void OnFixedUpdate(ref GruntState playerState, ref int movingDirection, CGruntPhysics physics, FootMaterial footMaterial)
 	{
 		if (playerState == GruntState.Walking)
 		{			
@@ -39,14 +39,26 @@ public class CGruntAnimation : MonoBehaviour {
 			m_currentAnimation = "walk180turn";
 			if (!m_animation.IsPlaying("walk180turn") && !m_startedTurningRound)
 			{
+				Debug.Log("On turn start");
 				m_startedTurningRound = true;
-				m_animation["walk180turn"].speed = 1.2f;
+				m_animation["walk180turn"].speed = 1.0f;
 				m_animation.CrossFade("walk180turn");
 			}
 			else if (!m_animation.IsPlaying("walk180turn"))
 			{
 				m_startedTurningRound = false;
 				playerState = GruntState.Walking;
+				Debug.Log("On turn complete");
+				/*
+				if( movingDirection == 1)
+				{
+					movingDirection = -1;	
+				}
+				else if( movingDirection == -1 )
+				{
+					movingDirection = 1;	
+				}
+				*/
 			}
 		}
 		else if (playerState == GruntState.Standing)
