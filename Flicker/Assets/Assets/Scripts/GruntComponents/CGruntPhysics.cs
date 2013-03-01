@@ -53,7 +53,7 @@ public class CGruntPhysics : MonoBehaviour {
 	
 	public float 			PeacefulSpeed = 0.2f;
 	
-	public float			DetectedSpeed = 0.3f;
+	public float			DetectedSpeed = 0.4f;
 	
 	/*
 	 * \brief Initialise anything we don't know at construct time
@@ -212,16 +212,18 @@ public class CGruntPhysics : MonoBehaviour {
 			
 			//m_ledgeGrabBox.collider.enabled = true;
 		}
-		if (m_collisionState == CollisionState.OnWall &&  m_grunt.GetGruntState() != GruntState.Turning)
+		if (m_collisionState == CollisionState.OnWall &&  m_grunt.GetGruntState() != GruntState.Turning && m_grunt.GetGruntState() != GruntState.Attacking)
 		{
 			m_grunt.SetGruntState( GruntState.Turning );
 			if( m_movingDirection == 1)
 			{
-				m_movingDirection = -1;	
+				m_movingDirection = -1;
+				m_direction = -1;
 			}
 			else if( m_movingDirection == -1 )
 			{
-				m_movingDirection = 1;	
+				m_movingDirection = 1;
+				m_direction = 1;
 			}
 		}
 	}
@@ -276,7 +278,14 @@ public class CGruntPhysics : MonoBehaviour {
 				{
 					if(m_grunt.GetGruntState() == GruntState.Walking)
 					{
-						m_velocity = (m_movingDirection * 0.15f);
+						if(m_grunt.GetGruntPlayerDetected())
+						{
+							m_velocity = (m_movingDirection * 0.6f);
+						}
+						else
+						{
+							m_velocity = (m_movingDirection * 0.15f);
+						}
 						m_velocityLockTimer = (Time.time * 1000.0f);	
 					}
 					 
@@ -342,10 +351,27 @@ public class CGruntPhysics : MonoBehaviour {
 	/*
 	 * \brief Called on player update
 	*/
-	public void OnFixedUpdate(ref GruntState playerState)
+	public void OnFixedUpdate(ref GruntState playerState, bool playerDetected)
 	{		
 		if (playerState == GruntState.FallingFromTower)
 			return;
+		
+		GameObject player = GameObject.Find("Player Spawn");
+		float playerAlpha = player.GetComponent<CEntityPlayer>().CurrentPlayerAlpha;
+		
+		if( playerDetected )
+		{
+			if( playerAlpha > m_grunt.CurrentPlayerAlpha )
+			{
+				m_movingDirection = -1;
+				m_direction = -1;
+			}
+			else if ( m_grunt.CurrentPlayerAlpha > playerAlpha )
+			{
+				m_movingDirection = 1;
+				m_direction = 1;
+			}
+		}
 		
 	//	float velocity = (Input.GetAxis("Horizontal") * MaxSpeed) * m_invert;
 	//	if (Application.platform == RuntimePlatform.Android)
@@ -353,9 +379,16 @@ public class CGruntPhysics : MonoBehaviour {
 		float velocity = 0.0f;
 		if( m_movingDirection != 0 )
 		{
-			if( playerState != GruntState.Turning )
+			if( playerState != GruntState.Turning && playerState != GruntState.Attacking && playerState != GruntState.Standing )
 			{
-				velocity = 0.2f * m_movingDirection;
+				if(m_grunt.GetGruntPlayerDetected())
+				{
+					velocity = (m_movingDirection * DetectedSpeed);
+				}
+				else
+				{
+					velocity = (m_movingDirection * PeacefulSpeed);
+				}
 			}
 		}
 			
@@ -422,6 +455,7 @@ public class CGruntPhysics : MonoBehaviour {
 	{	
 		if (playerState == GruntState.Standing)
 			m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+		
 		
 		m_isJumpDown = false; //= Input.GetButton("Jump");
 		//if (Application.platform == RuntimePlatform.Android)

@@ -36,6 +36,9 @@ ModelImporter:
     7400058: alert_attackidle1 //// GruntImport19thFEB.fbm
     7400060: alert_attackidle2 //// GruntImport19thFEB.fbm
     7400062: alert_attack1 //// GruntImport19thFEB.fbm
+    7400064: idle-0 //// GruntImport19thFEB.fbm
+    7400066: idle-1 //// GruntImport19thFEB.fbm
+    7400068: idle-2 //// GruntImport19thFEB.fbm
   serializedVersion: 10
   materials:
     importMaterials: 1
@@ -51,21 +54,21 @@ ModelImporter:
     animationScaleError: .5
     animationWrapMode: 2
     clipAnimations:
-    - name: idle1
+    - name: idle-0
       firstFrame: 1
       lastFrame: 160
-      wrapMode: 2
-      loop: 1
-    - name: idle_crackneck
+      wrapMode: 0
+      loop: 0
+    - name: idle-1
       firstFrame: 160
       lastFrame: 320
-      wrapMode: 2
-      loop: 1
-    - name: idle2
+      wrapMode: 0
+      loop: 0
+    - name: idle-2
       firstFrame: 320
       lastFrame: 480
-      wrapMode: 2
-      loop: 1
+      wrapMode: 0
+      loop: 0
     - name: walk
       firstFrame: 481
       lastFrame: 511
@@ -73,9 +76,9 @@ ModelImporter:
       loop: 1
     - name: walk180turn
       firstFrame: 511
-      lastFrame: 529
+      lastFrame: 528
       wrapMode: 0
-      loop: 1
+      loop: 0
     - name: run
       firstFrame: 530
       lastFrame: 553
@@ -97,10 +100,10 @@ ModelImporter:
       wrapMode: 2
       loop: 1
     - name: alert_attack1
-      firstFrame: 686
+      firstFrame: 720
       lastFrame: 758
-      wrapMode: 2
-      loop: 1
+      wrapMode: 1
+      loop: 0
   meshes:
     lODScreenPercentages: []
     globalScale: .00999999978

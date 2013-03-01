@@ -9,6 +9,7 @@ public enum GruntState {
 	Jumping,				//!< The player is jumping
 	FallJumping,			//!< The player is falling or has jumped for a long time
 	WallJumping,			//!< The player is on a wall
+	Attacking,
 	LedgeHang,
 	LedgeClimb,
 	LedgeClimbComplete,
@@ -36,8 +37,13 @@ public class CEntityGrunt : CEntityPlayerBase {
 	private CGruntAnimation 	m_animation = null;						//!<
 	
 	private float				m_additionalRadius = 0.0f;
+	
+	private bool				m_playerDetected = false;
+	
+	private float 				m_resetTimer = 0.0f;
 
 	private CGruntDebug 		m_debug = null;
+	
 	
 	// dying vars
 	
@@ -58,6 +64,10 @@ public class CEntityGrunt : CEntityPlayerBase {
 	public float			PlayerPathRadius = 10.0f;		//!< The radius of the circluar path the player should take
 	
 	public float			InitialAlphaPosition = 0.0f;	//!< The initial point on the circle where the player will start
+	
+	public float			TimeToReset = 5.0f;
+	
+	public float 			DetectionRange = 10.0f;
 	
 	public CCheckPoint		StartCheckPoint = null;			//!< The start point check point
 	
@@ -144,9 +154,27 @@ public class CEntityGrunt : CEntityPlayerBase {
 	*/
 	public override void FixedUpdate () 
 	{
+		if( m_playerDetected )
+		{
+			if(m_resetTimer + TimeToReset < Time.time)
+			{
+				m_playerDetected = false;	
+			}
+		}
+
+		if( m_playerPositionAlpha > 360.0f )
+		{
+			m_playerPositionAlpha -= 360.0f;	
+		}
+		else if( m_playerPositionAlpha <= -360.0f )
+		{
+			m_playerPositionAlpha += 360.0f;	
+		}
+		
+		
 		m_lastPlayerPositionAlpha = m_playerPositionAlpha;
 		
-		m_physics.OnFixedUpdate(ref m_playerState);
+		m_physics.OnFixedUpdate(ref m_playerState, m_playerDetected);
 
 		
 		m_playerPositionAlpha -= m_physics.Velocity;
@@ -159,11 +187,11 @@ public class CEntityGrunt : CEntityPlayerBase {
 		if (m_playerState == GruntState.FallingFromTower) {		
 			m_additionalRadius += (0.025f * m_physics.Invert);
 			m_additionalRadius = Mathf.Clamp(m_additionalRadius, -3.0f, 3.0f);
-			m_playerPositionAlpha = m_lastPlayerPositionAlpha;			
+			m_playerPositionAlpha = m_lastPlayerPositionAlpha;
 		}
-				
+
 		float yPosition = transform.position.y + additionalY;
-		
+
 		m_position = new Vector3(
 			Mathf.Sin(m_playerPositionAlpha * Mathf.Deg2Rad) * (PlayerPathRadius + m_additionalRadius),
 			yPosition,
@@ -175,11 +203,11 @@ public class CEntityGrunt : CEntityPlayerBase {
 			
 			if (m_playerState == GruntState.Turning)
 			{
-				Debug.Log("NOT IN ROTATION CODE");
+				//Debug.Log("NOT IN ROTATION CODE");
 			}
 			else
 			{
-				Debug.Log("rOTATION");
+				//Debug.Log("rOTATION");
 				if (m_physics.Direction > 0)
 				{
 					m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));
@@ -199,7 +227,7 @@ public class CEntityGrunt : CEntityPlayerBase {
 			}
 			
 			int mDirection = m_physics.MovingDirection;
-			m_animation.OnFixedUpdate(ref m_playerState, ref mDirection, m_physics, m_physics.GetFootMaterial());
+			m_animation.OnFixedUpdate(ref m_playerState, ref mDirection, m_physics, m_physics.GetFootMaterial(), m_playerDetected);
 			m_physics.MovingDirection = mDirection;
 		}
 		
@@ -246,6 +274,22 @@ public class CEntityGrunt : CEntityPlayerBase {
 	}
 	
 	/*
+	 * \brief External access to set playerDetected
+	*/
+	public void SetGruntPlayerDetected(bool detected)
+	{
+		m_playerDetected = detected;
+	}
+	
+	/*
+	 * \brief External access to get a players state
+	*/
+	public bool GetGruntPlayerDetected()
+	{
+		return m_playerDetected;
+	}
+	
+	/*
 	 * \brief Gets the players physcis object
 	*/
 	public CGruntPhysics Physics {
@@ -269,7 +313,21 @@ public class CEntityGrunt : CEntityPlayerBase {
 		if (m_playerState == GruntState.FallingFromTower)
 			return;
 		
+		foreach (ContactPoint contact in collision)
+		{
+			if (contact.otherCollider != null && contact.otherCollider.gameObject != null)
+			{
+				if(contact.otherCollider.gameObject.name == "Player Spawn")
+				{
+					Debug.Log("Collided with player");
+					m_playerState = GruntState.Attacking;
+				}
+			}
+		}
+		
 		m_physics.CallOnCollisionEnter(collision);
+		
+
 	}
 	
 	/*
@@ -296,16 +354,25 @@ public class CEntityGrunt : CEntityPlayerBase {
 	}
 	
 	void OnTriggerEnter(Collider collider)
-	{	
+	{
+		//Debug.Log (collider.gameObject.name);
+		if(collider.gameObject.name == "Ledge_Grab_Detection")
+		{
+			//Player should be detected now
+			m_playerDetected = true;
+			m_resetTimer = Time.time;
+			Debug.Log("Grunt cock entered");
+			
+		}
 	}
 	
-	void OnTriggerStay(Collider collision) {
+	void OnTriggerStay(Collider collider) {
 		
 		if (m_playerState == GruntState.FallingFromTower)
 			return;
 						
-		if (collision.gameObject.name == "VentCollision") {
-			GameObject parent = collision.gameObject.transform.parent.gameObject;	
+		if (collider.gameObject.name == "VentCollision") {
+			GameObject parent = collider.gameObject.transform.parent.gameObject;	
 			if (parent != null) {
 				CSteamVent vent = parent.GetComponent<CSteamVent>();
 				if (vent != null && vent.StreamOn) {
@@ -315,15 +382,27 @@ public class CEntityGrunt : CEntityPlayerBase {
 			}
 		}
 		
-		m_physics.CallOnTriggerStay(collision, ref m_playerState);
+		if(collider.gameObject.name == "Ledge_Grab_Detection")
+		{
+			m_resetTimer = Time.time;
+			//Debug.Log("Grunt cock in");
+		}
+		
+		m_physics.CallOnTriggerStay(collider, ref m_playerState);
     }
 	
-	void OnTriggerExit(Collider collision) {
+	void OnTriggerExit(Collider collider) {
 		
 		if (m_playerState == GruntState.FallingFromTower)
 			return;
-		
-		m_physics.CallOnTriggerExit(collision, ref m_playerState);
+		if(collider.gameObject.name == "Ledge_Grab_Detection")
+		{
+			//Player should be detected now
+			m_resetTimer = Time.time;
+			Debug.Log("Grunt cock exited");
+			
+		}
+		m_physics.CallOnTriggerExit(collider, ref m_playerState);
 	}
 	
 	public void PushPlayerFromTower()

@@ -190,6 +190,14 @@ public class CEntityPlayer : CEntityPlayerBase {
 	*/
 	public override void FixedUpdate () 
 	{
+		if( m_playerPositionAlpha > 360.0f )
+		{
+			m_playerPositionAlpha -= 360.0f;	
+		}
+		else if( m_playerPositionAlpha <= -360.0f )
+		{
+			m_playerPositionAlpha += 360.0f;	
+		}
 		m_lastPlayerPositionAlpha = m_playerPositionAlpha;
 		
 		m_physics.OnFixedUpdate(ref m_playerState);

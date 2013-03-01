@@ -11,6 +11,7 @@ public class CGruntAnimation : MonoBehaviour {
 	
 	Animation m_animation = null;
 	bool m_startedTurningRound = false;
+	bool m_startedAttacking = false;
 	private string m_currentAnimation = null;
 	
 	private string m_lastKnownIdle = "idle-0";
@@ -23,16 +24,28 @@ public class CGruntAnimation : MonoBehaviour {
 		m_audio = GetComponent<AudioSource>();
 	}
 	
-	public void OnFixedUpdate(ref GruntState playerState, ref int movingDirection, CGruntPhysics physics, FootMaterial footMaterial)
+	public void OnFixedUpdate(ref GruntState playerState, ref int movingDirection, CGruntPhysics physics, FootMaterial footMaterial, bool isDetected)
 	{
 		if (playerState == GruntState.Walking)
-		{			
-			m_currentAnimation = "walk";
-			if (!m_animation.IsPlaying("walk"))
+		{	
+			if(isDetected)
 			{
-				m_animation.CrossFade("walk", 0.2f);
-				PlayFootstepAudio(footMaterial);
-			}			
+				m_currentAnimation = "run";
+				if (!m_animation.IsPlaying("run"))
+				{
+					m_animation.CrossFade("run", 0.2f);
+					PlayFootstepAudio(footMaterial);
+				}
+			}
+			else
+			{
+				m_currentAnimation = "walk";
+				if (!m_animation.IsPlaying("walk"))
+				{
+					m_animation.CrossFade("walk", 0.2f);
+					PlayFootstepAudio(footMaterial);
+				}				
+			}
 		}
 		else if (playerState == GruntState.Turning)
 		{
@@ -59,6 +72,23 @@ public class CGruntAnimation : MonoBehaviour {
 					movingDirection = 1;	
 				}
 				*/
+			}
+		}
+		else if (playerState == GruntState.Attacking)
+		{
+			m_currentAnimation = "alert_attack1";
+			if (!m_animation.IsPlaying("alert_attack1") && !m_startedAttacking)
+			{
+				Debug.Log("On attack start");
+				m_startedAttacking = true;
+				m_animation["alert_attack1"].speed = 1.0f;
+				m_animation.CrossFade("alert_attack1");
+			}
+			else if (!m_animation.IsPlaying("alert_attack1"))
+			{
+				m_startedTurningRound = false;
+				playerState = GruntState.Walking;
+				Debug.Log("On attack complete");
 			}
 		}
 		else if (playerState == GruntState.Standing)
