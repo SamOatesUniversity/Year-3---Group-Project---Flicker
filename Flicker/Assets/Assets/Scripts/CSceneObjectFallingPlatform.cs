@@ -69,6 +69,10 @@ public class CSceneObjectFallingPlatform : CSceneObject {
 	
 	void FixedUpdate()
 	{
+		if( m_platAnim == null || m_platAnim["Take 001"] == null )
+		{
+			return;
+		}
 		if (m_state == PlatformState.Normal)
 		{
 			m_platAnim["Take 001"].normalizedTime = 0.10f;
