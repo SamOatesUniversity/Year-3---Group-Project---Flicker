@@ -30,8 +30,12 @@ public class CMovingPlatformTrigger : CTriggerBase {
 		m_animation = GetComponent<Animation>();
 		if (m_animation == null || m_animation["Take 001"] == null)
 		{
-			Debug.LogError("The lever '" + name + "' has no animation!");	
-			return;
+			m_animation = transform.parent.GetComponent<Animation>();
+			if (m_animation == null || m_animation["Take 001"] == null)
+			{
+				Debug.LogError("The lever '" + name + "' has no animation!");	
+				return;
+			}
 		}
 		
 		m_animation["Take 001"].speed = 0.0f;

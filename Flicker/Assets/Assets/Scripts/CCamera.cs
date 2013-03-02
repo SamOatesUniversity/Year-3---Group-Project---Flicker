@@ -54,6 +54,9 @@ public class CCamera : MonoBehaviour {
 		m_transform = this.transform;
 		DistanceFromPlayer = InitialDistanceFromPlayer;
 		m_playerEntity = CEntityPlayer.GetInstance();
+		if (m_playerEntity == null) {
+			m_playerEntity = GameObject.Find("Player Spawn").GetComponent<CEntityPlayer>();	
+		}
 		m_playerPelvis = m_playerEntity.transform.FindChild("Player_Mesh/Bip001/Bip001 Pelvis");
 		
 		m_currentTransform = m_playerPelvis;

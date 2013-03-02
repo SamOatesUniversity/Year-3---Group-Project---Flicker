@@ -19,6 +19,9 @@ public class CForceVolume : MonoBehaviour {
 	//called if a collidable object triggers the volume
 	 void OnTriggerEnter(Collider collider) {
         Rigidbody rBody = collider.gameObject.GetComponent<Rigidbody>();
+		if (rBody == null)
+			return;
+		
 		rBody.AddForce(ForceToApply);
 		CEntityPlayer player = collider.gameObject.GetComponent<CEntityPlayer>();
 		if (player)
@@ -29,6 +32,9 @@ public class CForceVolume : MonoBehaviour {
 	
 	void OnTriggerStay(Collider collider) {
 		Rigidbody rBody = collider.gameObject.GetComponent<Rigidbody>();
+		if (rBody == null)
+			return;
+		
 		if (rBody.velocity.y < MaximumVelocity.y)
 		{
 			rBody.AddForce(new Vector3(0.0f, ForceToApply.y, 0.0f));	

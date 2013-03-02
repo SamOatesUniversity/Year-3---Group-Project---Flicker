@@ -18,7 +18,7 @@ public class CSceneSetup : MonoBehaviour {
             return;
         }
 		
-		Application.LoadLevelAdditiveAsync(NextScene);
+		Application.LoadLevelAdditive(NextScene);
     }
 	
 	// Update is called once per frame
