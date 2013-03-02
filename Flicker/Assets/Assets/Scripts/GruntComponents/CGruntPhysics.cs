@@ -169,17 +169,24 @@ public class CGruntPhysics : MonoBehaviour {
 	/*
 	 * \brief Works out if a value is almost another value (for floating point accuracy)
 	*/
-	public void CallOnCollisionEnter(Collision collision)
+	public void CallOnCollisionEnter(Collision collision, bool playerDetected)
 	{
 		m_collisionState = CollisionState.None;
 		
 		foreach (ContactPoint contact in collision)
 		{			
 			m_platform = contact.otherCollider.gameObject.GetComponent<CSceneObjectPlatform>();
+			GameObject thisCollider = contact.thisCollider.gameObject;
+			GameObject otherCollider = contact.otherCollider.gameObject;
 			if (m_platform != null) {
 				m_platform.resetDeltaA();
 			}
-			if (isNearly(contact.normal.y, 1.0f, 0.2f))
+			//if( thisCollider.name == "Bip001 L Hand001" && otherCollider.name == "Player Spawn" )
+			if( thisCollider.name == "Bip001 L Hand001" )
+			{
+				m_grunt.PushPlayerFromTower();
+			}
+			else if (isNearly(contact.normal.y, 1.0f, 0.2f))
 			{
 				m_collisionState = CollisionState.OnFloor;
 				
@@ -214,16 +221,23 @@ public class CGruntPhysics : MonoBehaviour {
 		}
 		if (m_collisionState == CollisionState.OnWall &&  m_grunt.GetGruntState() != GruntState.Turning && m_grunt.GetGruntState() != GruntState.Attacking)
 		{
-			m_grunt.SetGruntState( GruntState.Turning );
-			if( m_movingDirection == 1)
+			if( !playerDetected )
 			{
-				m_movingDirection = -1;
-				m_direction = -1;
+				m_grunt.SetGruntState( GruntState.Turning );
+				if( m_movingDirection == 1)
+				{
+					m_movingDirection = -1;
+					m_direction = -1;
+				}
+				else if( m_movingDirection == -1 )
+				{
+					m_movingDirection = 1;
+					m_direction = 1;
+				}
 			}
-			else if( m_movingDirection == -1 )
+			else
 			{
-				m_movingDirection = 1;
-				m_direction = 1;
+				m_grunt.SetGruntState( GruntState.Standing );
 			}
 		}
 	}

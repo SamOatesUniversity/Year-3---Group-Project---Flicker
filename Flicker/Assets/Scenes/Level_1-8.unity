@@ -16867,6 +16867,7 @@ GameObject:
   serializedVersion: 3
   m_Component:
   - 4: {fileID: 1520583474}
+  - 135: {fileID: 1520583475}
   m_Layer: 0
   m_Name: Bip001 L Hand001
   m_TagString: Untagged
@@ -16889,6 +16890,18 @@ Transform:
   - {fileID: 147043133}
   - {fileID: 1374397442}
   m_Father: {fileID: 2004559414}
+--- !u!135 &1520583475
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1520583473}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .00800000038
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1521383303
 GameObject:
   m_ObjectHideFlags: 0
@@ -18720,8 +18733,8 @@ SkinnedMeshRenderer:
   - {fileID: 682881781}
   m_RootBone: {fileID: 1946890213}
   m_AABB:
-    m_Center: {x: -.0215425082, y: -.00224456005, z: -.00231124833}
-    m_Extent: {x: .0329879895, y: .021700358, z: .023392085}
+    m_Center: {x: -.0215425082, y: -.00225253589, z: -.00231124833}
+    m_Extent: {x: .0329879895, y: .0217083339, z: .023392085}
   m_DirtyAABB: 0
 --- !u!1 &1686106272
 GameObject:
@@ -19866,8 +19879,8 @@ SkinnedMeshRenderer:
   - {fileID: 845490954}
   m_RootBone: {fileID: 1946890213}
   m_AABB:
-    m_Center: {x: -.00323085859, y: .00847065635, z: -.00734424964}
-    m_Extent: {x: .0698181987, y: .050821349, z: .0577874146}
+    m_Center: {x: -.00323085859, y: .00847065635, z: -.00736523792}
+    m_Extent: {x: .0698181987, y: .050821349, z: .0578084029}
   m_DirtyAABB: 0
 --- !u!1 &1812903454
 GameObject:
@@ -20491,7 +20504,7 @@ MonoBehaviour:
   MaxHealth: 100
   PlayerPathRadius: 3.5999999
   InitialAlphaPosition: 0
-  TimeToReset: 5
+  TimeToReset: 15
   DetectionRange: 10
   StartCheckPoint: {fileID: 0}
   StartFacing: 0
@@ -21082,8 +21095,8 @@ Animation:
   - {fileID: 7400052, guid: fa49f98cc25146448a8d62bee8710715, type: 3}
   - {fileID: 7400054, guid: fa49f98cc25146448a8d62bee8710715, type: 3}
   - {fileID: 7400056, guid: fa49f98cc25146448a8d62bee8710715, type: 3}
-  - {fileID: 7400058, guid: fa49f98cc25146448a8d62bee8710715, type: 3}
-  - {fileID: 7400060, guid: fa49f98cc25146448a8d62bee8710715, type: 3}
+  - {fileID: 7400070, guid: fa49f98cc25146448a8d62bee8710715, type: 3}
+  - {fileID: 7400072, guid: fa49f98cc25146448a8d62bee8710715, type: 3}
   - {fileID: 7400062, guid: fa49f98cc25146448a8d62bee8710715, type: 3}
   m_WrapMode: 0
   m_PlayAutomatically: 1
@@ -21282,6 +21295,18 @@ Prefab:
     - target: {fileID: 100018, guid: fa49f98cc25146448a8d62bee8710715, type: 3}
       propertyPath: m_Name
       value: GruntMesh
+      objectReference: {fileID: 0}
+    - target: {fileID: 400118, guid: fa49f98cc25146448a8d62bee8710715, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -.0176129378
+      objectReference: {fileID: 0}
+    - target: {fileID: 400118, guid: fa49f98cc25146448a8d62bee8710715, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 2.38418574e-09
+      objectReference: {fileID: 0}
+    - target: {fileID: 400118, guid: fa49f98cc25146448a8d62bee8710715, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -4.76837148e-09
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fa49f98cc25146448a8d62bee8710715, type: 3}

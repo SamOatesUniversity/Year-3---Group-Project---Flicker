@@ -95,9 +95,17 @@ public class CGruntAnimation : MonoBehaviour {
 		{
 			if (!m_animation.IsPlaying(m_lastKnownIdle))
 			{
-				m_currentAnimation = "idle-" + Random.Range(0, 2);
+				if( isDetected )
+				{
+					m_currentAnimation = "alert-idle-" + Random.Range(0, 1);
+					m_animation[m_currentAnimation].speed = 1.0f;
+				}
+				else
+				{
+					m_currentAnimation = "idle-" + Random.Range(0, 2);
+					m_animation[m_currentAnimation].speed = Random.Range(10, 30) / 100.0f;
+				}
 				m_lastKnownIdle = m_currentAnimation;
-				m_animation[m_currentAnimation].speed = Random.Range(10, 30) / 100.0f;
 				m_animation.CrossFade(m_currentAnimation);
 			}						
 		}

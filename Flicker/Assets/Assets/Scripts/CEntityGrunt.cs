@@ -158,7 +158,19 @@ public class CEntityGrunt : CEntityPlayerBase {
 		{
 			if(m_resetTimer + TimeToReset < Time.time)
 			{
-				m_playerDetected = false;	
+				//reset detection
+				m_playerDetected = false;
+				m_playerState = GruntState.Turning;
+				if( m_physics.MovingDirection == 1)
+				{
+					m_physics.MovingDirection = -1;
+					//m_physics.MovingDirection = -1;
+				}
+				else if( m_physics.MovingDirection == -1 )
+				{
+					m_physics.MovingDirection = 1;
+					//m_direction = 1;
+				}
 			}
 		}
 
@@ -325,7 +337,7 @@ public class CEntityGrunt : CEntityPlayerBase {
 			}
 		}
 		
-		m_physics.CallOnCollisionEnter(collision);
+		m_physics.CallOnCollisionEnter(collision, m_playerDetected);
 		
 
 	}
