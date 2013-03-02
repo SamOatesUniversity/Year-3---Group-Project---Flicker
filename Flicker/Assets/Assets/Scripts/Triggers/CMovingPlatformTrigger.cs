@@ -31,6 +31,7 @@ public class CMovingPlatformTrigger : CTriggerBase {
 		if (m_animation == null || m_animation["Take 001"] == null)
 		{
 			Debug.LogError("The lever '" + name + "' has no animation!");	
+			return;
 		}
 		
 		m_animation["Take 001"].speed = 0.0f;
@@ -40,15 +41,15 @@ public class CMovingPlatformTrigger : CTriggerBase {
 	
 	// Update is called once per frame
 	new void Update () {
-
+		
 		if (m_triggerEntered)
         {
-			if (Time.time - m_timePulled > TimeDelaySecs && m_leverState == eLevelState.InUse)
+			if (m_animation != null && (Time.time - m_timePulled > TimeDelaySecs && m_leverState == eLevelState.InUse))
 			{
 				m_animation["Take 001"].speed = 1.0f;
 			}
 			
-			if (m_leverState == eLevelState.Reseting)
+			if (m_animation != null && m_leverState == eLevelState.Reseting)
 			{
 				m_animation["Take 001"].speed = -1.0f;
 			}
@@ -73,6 +74,10 @@ public class CMovingPlatformTrigger : CTriggerBase {
 				m_timePulled = Time.time;
 			}
         }
+		
+		if (m_animation == null) {
+			return;
+		}
 		
 		if (m_leverState == eLevelState.InUse && m_animation["Take 001"].normalizedTime > 0.9f)
 		{			
