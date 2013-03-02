@@ -19,6 +19,8 @@ public class CCamera : MonoBehaviour {
 	};
 	
 	private PausedMenuState		m_pausedMenuState = PausedMenuState.Main;
+	
+	private static CCamera				INSTANCE = null;
 
 	/* ----------------
 	    Public Members 
@@ -44,13 +46,20 @@ public class CCamera : MonoBehaviour {
 	private Vector3				m_averagePos;
 	private int 				m_countIgnoredFrames;
 	
-	public int m_maxPositionsStored = 10;
-
+	public int 					MaxPositionsStored = 10;
+	
+	public static CCamera GetInstance() {
+		return INSTANCE;	
+	}
+	
 	/*
 	 * \brief Called when the object is created. At the start.
 	 *        Only called once per instaniation.
 	*/
 	public void Start () {	
+		
+		INSTANCE = this;
+		
 		m_transform = this.transform;
 		DistanceFromPlayer = InitialDistanceFromPlayer;
 		m_playerEntity = CEntityPlayer.GetInstance();
@@ -106,9 +115,13 @@ public class CCamera : MonoBehaviour {
 			m_countIgnoredFrames = 0;
 		}
 		
-		if( m_storedPositions.Count > m_maxPositionsStored )
+		int removeAmount = 2;
+		while( m_storedPositions.Count > MaxPositionsStored )
 		{
 			m_storedPositions.RemoveAt(0);
+			removeAmount--;
+			if (removeAmount <= 0)
+				break;
 		}
 		
 		Vector3 sumPositions = new Vector3(0.0f, 0.0f, 0.0f);

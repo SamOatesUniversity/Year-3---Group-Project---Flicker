@@ -21,7 +21,8 @@ public enum PlayerState {
 	FallingFromTower,		//!< The player has been pushed of the tower
 	OnLadder,
 	PullingWallLeverDown,	//!< Pulling a lever on the wall down
-	PullingWallLeverUp		//!< Pulling a lever on the wall up
+	PullingWallLeverUp,		//!< Pulling a lever on the wall up
+	InCutScene
 };
 
 [RequireComponent (typeof (CWallJump))]
@@ -190,6 +191,14 @@ public class CEntityPlayer : CEntityPlayerBase {
 	*/
 	public override void FixedUpdate () 
 	{
+		if (m_playerState == PlayerState.InCutScene)
+		{
+			m_playerState = PlayerState.Standing;
+			m_animation.OnFixedUpdate(ref m_playerState, this);
+			m_playerState = PlayerState.InCutScene;
+			return;
+		}
+		
 		if( m_playerPositionAlpha > 360.0f )
 		{
 			m_playerPositionAlpha -= 360.0f;	
@@ -308,7 +317,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	public override void Update()
 	{
 		// only allow dev cheats in the editor
-		if (Application.isEditor)
+		if (Application.isEditor && CurrentGameState != GameState.Paused)
 		{
 			if (Input.GetButton("CheckpointNext") && !m_isCheckpointSkipDown)
 			{
@@ -341,6 +350,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 		{
 			m_isEscapeDown = false;
 		}
+		
+		if (m_playerState == PlayerState.InCutScene)
+			return;
 		
 		if (m_playerState == PlayerState.FallingFromTower)
 			return;
@@ -415,6 +427,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 	*/
 	void OnCollisionEnter(Collision collision)
 	{
+		if (m_playerState == PlayerState.InCutScene)
+			return;
+		
 		if (m_playerState == PlayerState.FallingFromTower)
 			return;
 		
@@ -426,6 +441,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 	*/
 	void OnCollisionExit(Collision collision)
 	{
+		if (m_playerState == PlayerState.InCutScene)
+			return;
+		
 		m_physics.CallOnCollisionExit(collision);
 	}
 	
@@ -434,6 +452,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 	*/
 	void OnCollisionStay(Collision collision)
 	{		
+		if (m_playerState == PlayerState.InCutScene)
+			return;
+		
 		if (m_playerState == PlayerState.FallingFromTower)
 			return;
 		
@@ -450,6 +471,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 	}
 	
 	void OnTriggerStay(Collider collision) {
+		
+		if (m_playerState == PlayerState.InCutScene)
+			return;
 		
 		if (m_playerState == PlayerState.FallingFromTower)
 			return;
@@ -469,6 +493,9 @@ public class CEntityPlayer : CEntityPlayerBase {
     }
 	
 	void OnTriggerExit(Collider collision) {
+		
+		if (m_playerState == PlayerState.InCutScene)
+			return;
 		
 		if (m_playerState == PlayerState.FallingFromTower)
 			return;
