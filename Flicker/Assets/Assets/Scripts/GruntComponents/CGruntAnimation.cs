@@ -86,7 +86,7 @@ public class CGruntAnimation : MonoBehaviour {
 			}
 			else if (!m_animation.IsPlaying("alert_attack1"))
 			{
-				m_startedTurningRound = false;
+				m_startedAttacking = false;
 				playerState = GruntState.Walking;
 				Debug.Log("On attack complete");
 			}

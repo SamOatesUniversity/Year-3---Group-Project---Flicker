@@ -181,11 +181,6 @@ public class CGruntPhysics : MonoBehaviour {
 			if (m_platform != null) {
 				m_platform.resetDeltaA();
 			}
-			//if( thisCollider.name == "Bip001 L Hand001" && otherCollider.name == "Player Spawn" )
-			if( thisCollider.name == "Bip001 L Hand001" )
-			{
-				m_grunt.PushPlayerFromTower();
-			}
 			else if (isNearly(contact.normal.y, 1.0f, 0.2f))
 			{
 				m_collisionState = CollisionState.OnFloor;
@@ -214,10 +209,6 @@ public class CGruntPhysics : MonoBehaviour {
 				m_grunt.GetPlayerAnimation().PlayFootstepAudio(m_footMaterial);
 			
 			m_jumpState = JumpState.Landed;	
-			
-			//if (m_grunt.GetGruntState() != GruntState.Turning) m_grunt.SetGruntState(GruntState.Standing);
-			
-			//m_ledgeGrabBox.collider.enabled = true;
 		}
 		if (m_collisionState == CollisionState.OnWall &&  m_grunt.GetGruntState() != GruntState.Turning && m_grunt.GetGruntState() != GruntState.Attacking)
 		{
@@ -372,15 +363,24 @@ public class CGruntPhysics : MonoBehaviour {
 		
 		GameObject player = GameObject.Find("Player Spawn");
 		float playerAlpha = player.GetComponent<CEntityPlayer>().CurrentPlayerAlpha;
+		float gruntAlpha = m_grunt.CurrentPlayerAlpha;
 		
 		if( playerDetected )
 		{
-			if( playerAlpha > m_grunt.CurrentPlayerAlpha )
+			if( playerAlpha > gruntAlpha + 180 )
+			{
+				gruntAlpha += 360;
+			}
+			else if( playerAlpha + 180 < gruntAlpha )
+			{
+				gruntAlpha -= 360;
+			}
+			if( playerAlpha > gruntAlpha )
 			{
 				m_movingDirection = -1;
 				m_direction = -1;
 			} 
-			else if ( m_grunt.CurrentPlayerAlpha > playerAlpha )
+			else if ( gruntAlpha > playerAlpha )
 			{
 				m_movingDirection = 1;
 				m_direction = 1;

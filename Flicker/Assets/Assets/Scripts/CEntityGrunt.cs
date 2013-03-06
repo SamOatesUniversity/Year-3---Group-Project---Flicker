@@ -327,11 +327,13 @@ public class CEntityGrunt : CEntityPlayerBase {
 		
 		foreach (ContactPoint contact in collision)
 		{
+			//Debug.Log("This Collider: " + contact.thisCollider.gameObject.name);
+			//Debug.Log("Other Collider: " + contact.otherCollider.gameObject.name);
 			if (contact.otherCollider != null && contact.otherCollider.gameObject != null)
 			{
 				if(contact.otherCollider.gameObject.name == "Player Spawn")
 				{
-					Debug.Log("Collided with player");
+					//Debug.Log("Collided with player");
 					m_playerState = GruntState.Attacking;
 				}
 			}
@@ -363,6 +365,21 @@ public class CEntityGrunt : CEntityPlayerBase {
 		{
 			m_playerPositionAlpha = m_lastPlayerPositionAlpha;
 		}
+		
+		foreach (ContactPoint contact in collision)
+		{
+			//Debug.Log("This Collider: " + contact.thisCollider.gameObject.name);
+			//Debug.Log("Other Collider: " + contact.otherCollider.gameObject.name);
+			if (contact.otherCollider != null && contact.otherCollider.gameObject != null)
+			{
+				if(contact.thisCollider.gameObject.name == "Bip001 L Hand001" && contact.otherCollider.gameObject.name == "Player Spawn")
+				{
+					Debug.Log("Hit player");
+					CEntityPlayer.GetInstance().PushPlayerFromTower();
+					m_playerDetected = false;
+				}
+			}
+		}
 	}
 	
 	void OnTriggerEnter(Collider collider)
@@ -372,8 +389,8 @@ public class CEntityGrunt : CEntityPlayerBase {
 		{
 			//Player should be detected now
 			m_playerDetected = true;
+			m_playerState = GruntState.Walking;
 			m_resetTimer = Time.time;
-			Debug.Log("Grunt cock entered");
 			
 		}
 	}
@@ -388,7 +405,7 @@ public class CEntityGrunt : CEntityPlayerBase {
 			if (parent != null) {
 				CSteamVent vent = parent.GetComponent<CSteamVent>();
 				if (vent != null && vent.StreamOn) {
-					PushPlayerFromTower();
+					m_playerDetected = false;
 					return;
 				}
 			}
@@ -397,7 +414,6 @@ public class CEntityGrunt : CEntityPlayerBase {
 		if(collider.gameObject.name == "Ledge_Grab_Detection")
 		{
 			m_resetTimer = Time.time;
-			//Debug.Log("Grunt cock in");
 		}
 		
 		m_physics.CallOnTriggerStay(collider, ref m_playerState);
@@ -411,7 +427,6 @@ public class CEntityGrunt : CEntityPlayerBase {
 		{
 			//Player should be detected now
 			m_resetTimer = Time.time;
-			Debug.Log("Grunt cock exited");
 			
 		}
 		m_physics.CallOnTriggerExit(collider, ref m_playerState);
