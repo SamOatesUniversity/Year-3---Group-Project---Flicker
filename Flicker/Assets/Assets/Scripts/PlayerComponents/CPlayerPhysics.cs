@@ -408,7 +408,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		if (playerState == PlayerState.OnLadder || playerState == PlayerState.LedgeClimb || playerState == PlayerState.LedgeClimbComplete)
 			velocity = 0.0f;	
 
-		if ((Time.time * 1000.0f) - m_velocityLockTimer < 100)
+		if ((Time.time * 1000.0f) - m_velocityLockTimer < 350)
 		{
 			velocity = m_velocity;
 		}
@@ -476,11 +476,13 @@ public class CPlayerPhysics : MonoBehaviour {
 				m_velocity = -m_movingDirection;
 				playerState = PlayerState.Walking;
 				m_jumpState = JumpState.Landed;
+				m_collisionState = CollisionState.None;
 			} else if (m_isJumpDown && direction != 0 && direction != m_movingDirection) {
 				m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-				m_velocity = -(m_movingDirection); // kick it away from the wall
+				m_velocity = -(m_movingDirection * 0.5f); // kick it away from the wall
+				m_velocityLockTimer = (Time.time * 1000.0f) + 50; 
 				m_body.AddForce(new Vector3(0, PlayerJumpHeight * 1.1f, 0), ForceMode.Impulse);	
-				playerState = PlayerState.WallJumping;
+				playerState = PlayerState.Jumping;
 				m_jumpState = JumpState.Jumping;
 				m_jumpTimer = (Time.time * 1000.0f); 
 				m_collisionState = CollisionState.None;

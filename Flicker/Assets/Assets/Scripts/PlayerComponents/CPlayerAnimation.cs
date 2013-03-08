@@ -21,6 +21,8 @@ public class CPlayerAnimation : MonoBehaviour {
 	
 	private string m_lastKnownIdle = "idle-0";
 	
+	private bool m_hasWallJumped = false;
+	
 	private AudioSource m_audio;
 	
 	public void OnStart(Animation animation)
@@ -63,6 +65,7 @@ public class CPlayerAnimation : MonoBehaviour {
 				m_lastKnownIdle = m_currentAnimation;
 				m_animation[m_currentAnimation].speed = Random.Range(10, 30) / 100.0f;
 				m_animation.CrossFade(m_currentAnimation);
+				m_hasWallJumped = false;
 			}						
 		}
 		else if (playerState == PlayerState.Jumping)
@@ -71,6 +74,7 @@ public class CPlayerAnimation : MonoBehaviour {
 			if (!m_animation.IsPlaying("run-jump")) {
 				m_animation.Play("run-jump");
 				PlayRandomAudio(Jump, true);	
+				m_hasWallJumped = false;
 			}
 		}
 		else if (playerState == PlayerState.FallJumping)
@@ -82,15 +86,11 @@ public class CPlayerAnimation : MonoBehaviour {
 		}
 		else if (playerState == PlayerState.WallJumpStart)
 		{
-			m_currentAnimation = "wall-hang-idle";
-			if (!m_animation.IsPlaying(m_currentAnimation))
-				m_animation.CrossFade(m_currentAnimation);
-		}
-		else if (playerState == PlayerState.WallJumping)
-		{
 			m_currentAnimation = "wall-jump";
-			if (!m_animation.IsPlaying(m_currentAnimation))
-				m_animation.CrossFade(m_currentAnimation);
+			if (!m_animation.IsPlaying(m_currentAnimation) && !m_hasWallJumped){
+				m_hasWallJumped = true;
+				m_animation.CrossFade(m_currentAnimation, 0.01f);
+			}
 		}
 		else if (playerState == PlayerState.LedgeHang)
 		{
