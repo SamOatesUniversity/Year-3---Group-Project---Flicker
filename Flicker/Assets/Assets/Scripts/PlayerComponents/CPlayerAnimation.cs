@@ -6,6 +6,11 @@ public class CPlayerAnimation : MonoBehaviour {
 	public AudioClip[]		FootstepsStone;
 	public AudioClip[]		FootstepsWood;
 	public AudioClip[]		FootstepsMetal;
+	public AudioClip[]		Hurt;
+	public AudioClip[]		Jump;
+	public AudioClip[]		Climb;
+	public AudioClip[]		Push;
+	public AudioClip[]		FallFromTower;
 	
 	//----------------------//
 	
@@ -63,14 +68,17 @@ public class CPlayerAnimation : MonoBehaviour {
 		else if (playerState == PlayerState.Jumping)
 		{
 			m_currentAnimation = "run-jump";
-			if (!m_animation.IsPlaying("run-jump"))
+			if (!m_animation.IsPlaying("run-jump")) {
 				m_animation.Play("run-jump");
+				PlayRandomAudio(Jump, true);	
+			}
 		}
 		else if (playerState == PlayerState.FallJumping)
 		{
 			m_currentAnimation = "falling";
-			if (!m_animation.IsPlaying("falling"))
+			if (!m_animation.IsPlaying("falling")) {
 				m_animation.CrossFade("falling");
+			}
 		}
 		else if (playerState == PlayerState.WallJumpStart)
 		{
@@ -94,6 +102,7 @@ public class CPlayerAnimation : MonoBehaviour {
 			m_currentAnimation = "free-hang-climb";
 			if (!m_animation.IsPlaying("free-hang-climb") && !m_startedLedgeClimb) {
 				m_animation.CrossFade("free-hang-climb");
+				PlayRandomAudio(Climb, true);
 				m_startedLedgeClimb = true;
 			}	
 			else if (m_startedLedgeClimb == true && !m_animation.IsPlaying("free-hang-climb")) {
@@ -104,8 +113,10 @@ public class CPlayerAnimation : MonoBehaviour {
 		else if (playerState == PlayerState.FallingFromTower)
 		{
 			m_currentAnimation = "falling";
-			if (!m_animation.IsPlaying("falling"))
+			if (!m_animation.IsPlaying("falling")) {
+				PlayRandomAudio(FallFromTower, false);
 				m_animation.CrossFade("falling");
+			}				
 		}
 		else if (playerState == PlayerState.OnLadder)
 		{
@@ -155,15 +166,20 @@ public class CPlayerAnimation : MonoBehaviour {
 			break;
 		}		
 		
-		int noofAudioClips = clips.Length;
+		PlayRandomAudio(clips, false);
+	}	
+	
+	public void PlayRandomAudio(AudioClip[] audioClips, bool forcePlay)
+	{
+		int noofAudioClips = audioClips.Length;
 		if (noofAudioClips != 0)
 		{
 			int audioIndex = Random.Range(0, noofAudioClips);
-			if (!m_audio.isPlaying)
+			if (!m_audio.isPlaying || forcePlay)
 			{
-				m_audio.clip = clips[audioIndex];
+				m_audio.clip = audioClips[audioIndex];
 				m_audio.Play();
 			}
 		}
-	}	
+	}
 }
