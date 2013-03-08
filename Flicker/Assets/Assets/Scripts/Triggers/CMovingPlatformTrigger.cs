@@ -6,7 +6,8 @@ public class CMovingPlatformTrigger : CTriggerBase {
 	public enum eLevelType {
 		SingleUse,
 		InstantReset,
-		Toggle
+		Toggle,
+		MultiUse
 	};
 	
 	enum eLevelState {
@@ -24,6 +25,7 @@ public class CMovingPlatformTrigger : CTriggerBase {
 	
 	private float 							m_timePulled = 0.0f;
 	public float							TimeDelaySecs = 0.1f;
+	public float 							ResetTime = 4.0f;
 	
 	new void Start() {
 	
@@ -46,8 +48,14 @@ public class CMovingPlatformTrigger : CTriggerBase {
 	// Update is called once per frame
 	new void Update () {
 		
+		if (m_leverState == eLevelState.InUse && LeverType == eLevelType.MultiUse && (Time.time - m_timePulled > ResetTime))
+		{
+			m_leverState = eLevelState.ReadyForUse;	
+			state = false;
+		}
+		
 		if (m_triggerEntered)
-        {
+        {						
 			if (m_animation != null && (Time.time - m_timePulled > TimeDelaySecs && m_leverState == eLevelState.InUse))
 			{
 				m_animation["Take 001"].speed = 1.0f;
@@ -82,7 +90,7 @@ public class CMovingPlatformTrigger : CTriggerBase {
 		if (m_animation == null) {
 			return;
 		}
-		
+				
 		if (m_leverState == eLevelState.InUse && m_animation["Take 001"].normalizedTime > 0.9f)
 		{			
 			if (LeverType == eLevelType.InstantReset)
@@ -94,6 +102,11 @@ public class CMovingPlatformTrigger : CTriggerBase {
 			{
 				m_animation["Take 001"].speed = 0.0f;
 				m_leverState = eLevelState.Finished;	
+			}
+			else if (LeverType == eLevelType.MultiUse)
+			{
+				m_leverState = eLevelState.ReadyForUse;	
+				state = false;
 			}
 			
 			CEntityPlayer player = CEntityPlayer.GetInstance();

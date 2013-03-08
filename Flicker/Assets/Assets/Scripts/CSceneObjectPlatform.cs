@@ -15,6 +15,9 @@ public class CSceneObjectPlatform : CSceneObject {
 	
 	private Animation m_platAnim = null;
 	
+	public bool isLevel1_3 = false;
+	private bool m_reversePlatform = false;
+	
 	// Use this for initialization
 	void Start() 
     {
@@ -55,16 +58,28 @@ public class CSceneObjectPlatform : CSceneObject {
 			m_lastRotY = rotY;
 		}
 		
-		if (m_platAnim[m_platAnim.clip.name].speed == 1.0f && !m_enabled)
+		if (isLevel1_3 && m_platAnim[m_platAnim.clip.name].speed != 0.0f)
 		{
-			Debug.Log ("STOP PLAT");
+			if (m_platAnim[m_platAnim.clip.name].normalizedTime >= 0.97f) 
+			{
+				m_enabled = false;
+				m_reversePlatform = true;
+			}
+			else if (m_platAnim[m_platAnim.clip.name].normalizedTime == 0.0f)
+			{
+				m_enabled = false;
+				m_reversePlatform = false;
+			}
+		}
+		
+		if (m_platAnim[m_platAnim.clip.name].speed != 0.0f && !m_enabled)
+		{
 			m_platAnim[m_platAnim.clip.name].speed = 0.0f;
 			
 		}	
 		else if (m_platAnim[m_platAnim.clip.name].speed == 0.0f && m_enabled)
 		{
-			Debug.Log ("start plat");
-			m_platAnim[m_platAnim.clip.name].speed = 1.0f;
+			m_platAnim[m_platAnim.clip.name].speed = m_reversePlatform ? -1.0f : 1.0f;
 		}
 	}
 	

@@ -12,7 +12,7 @@ public enum LogicOperator {
 public class CLogicManager : MonoBehaviour {
 
 	public CLogicExpression 								expression = null;			//! The equation to manage and test
-	public CSceneObject										obj = null;
+	private CSceneObject									obj = null;
 	
 	private bool											m_oldState = false;
 	private bool											m_currentState = false;
@@ -25,12 +25,19 @@ public class CLogicManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
+		if (expression.name == "platform_expression_4")
+		{
+			Debug.Log("m_oldState: " + m_oldState);
+			Debug.Log("m_currentState: " + m_currentState);
+		}
+		
 		m_oldState = m_currentState;
 		m_currentState = expression.Resolve();
 		
 	
 		if (m_oldState != m_currentState)
 		{
+			Debug.Log("Sent Pulse to " + obj.name);
 			obj.LogicStateChange(m_currentState);
 		}
 		
