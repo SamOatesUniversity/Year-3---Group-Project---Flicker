@@ -35,6 +35,9 @@ public class CCutSceneTrigger : MonoBehaviour {
 	// Something entered the trigger area
 	void OnTriggerEnter(Collider other) {
 		
+		if (!enabled)
+			return;
+		
 		if (m_animation == null || m_animation.GetClipCount() == 0)
 		{
 			Debug.LogWarning("Cutscene '" + name + "' is missing an animation!");

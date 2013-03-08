@@ -43,10 +43,12 @@ public class CCamera : MonoBehaviour {
 	private CEntityPlayer 		m_playerEntity;
 	
 	private ArrayList			m_storedPositions;
+	private ArrayList			m_storedCameraPositions;
 	private Vector3				m_averagePos;
 	private int 				m_countIgnoredFrames;
 	
 	public int 					MaxPositionsStored = 10;
+	public int 					MaxCamPositionsStored = 10;
 	
 	public static CCamera GetInstance() {
 		return INSTANCE;	
@@ -73,6 +75,8 @@ public class CCamera : MonoBehaviour {
 		m_storedPositions = new ArrayList();
 		m_storedPositions.Add(m_currentTransform.position);
 		m_countIgnoredFrames = 0;
+		
+		m_storedCameraPositions = new ArrayList();
 	}
 	
 	public void SetLookAtTransform(Transform newLookat)
@@ -89,6 +93,8 @@ public class CCamera : MonoBehaviour {
 	{
 		Vector3 lastposition = (Vector3)m_storedPositions[m_storedPositions.Count-1];
 		m_storedPositions.Clear();
+		
+		// keep one frame, so it smoothly changes, rather than jumping
 		m_storedPositions.Add(lastposition);
 	}
 
@@ -158,9 +164,27 @@ public class CCamera : MonoBehaviour {
 			camPosition = avgPosition - ( normPlayerToOrigin * DistanceFromPlayer );
 			camPosition.y += CameraElevation;
 		}
-	
+		
+		m_storedCameraPositions.Add(camPosition);
+		removeAmount = 1;
+		while( m_storedCameraPositions.Count > MaxCamPositionsStored )
+		{
+			m_storedCameraPositions.RemoveAt(0);
+			removeAmount--;
+			if (removeAmount <= 0)
+				break;
+		}
+		
+		Vector3 sumCamPositions = new Vector3(0.0f, 0.0f, 0.0f);
+		
+		foreach( Vector3 pos in m_storedCameraPositions )
+		{
+			sumCamPositions += pos;
+		}
+		Vector3 avgCamPosition = sumCamPositions / m_storedCameraPositions.Count;
+			
 		if (m_playerEntity.GetPlayerState() != PlayerState.FallingFromTower)
-			m_transform.position = camPosition;
+			m_transform.position = avgCamPosition;
 		
 		this.SetLookAt( avgPosition );
 	}
