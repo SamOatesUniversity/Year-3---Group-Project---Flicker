@@ -480,7 +480,8 @@ public class CPlayerPhysics : MonoBehaviour {
 				m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 				m_velocity = -(m_movingDirection); // kick it away from the wall
 				m_body.AddForce(new Vector3(0, PlayerJumpHeight * 1.1f, 0), ForceMode.Impulse);	
-				playerState = PlayerState.Jumping;
+				playerState = PlayerState.WallJumping;
+				m_jumpState = JumpState.Jumping;
 				m_jumpTimer = (Time.time * 1000.0f); 
 				m_collisionState = CollisionState.None;
 				m_movingDirection *= -1;
@@ -582,6 +583,10 @@ public class CPlayerPhysics : MonoBehaviour {
 			if ((Time.time * 1000.0f) - m_jumpTimer > 2000.0f)
 			{
 				playerState = PlayerState.FallJumping;
+				if ((Time.time * 1000.0f) - m_jumpTimer > 3000.0f)
+				{
+					m_player.PushPlayerFromTower();	
+				}
 			}
 		}	
 		
