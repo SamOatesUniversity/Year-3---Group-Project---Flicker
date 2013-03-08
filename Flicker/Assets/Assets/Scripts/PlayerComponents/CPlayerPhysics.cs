@@ -405,7 +405,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		if (Application.platform == RuntimePlatform.Android)
 			velocity = Input.acceleration.y;
 		
-		if (playerState == PlayerState.OnLadder)
+		if (playerState == PlayerState.OnLadder || playerState == PlayerState.LedgeClimb || playerState == PlayerState.LedgeClimbComplete)
 			velocity = 0.0f;	
 
 		if ((Time.time * 1000.0f) - m_velocityLockTimer < 100)
