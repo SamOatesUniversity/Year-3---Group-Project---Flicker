@@ -467,7 +467,11 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	void OnTriggerEnter(Collider collider)
 	{
-				
+		if(collider.gameObject.name == "Electricity")
+		{
+			//Kill player
+			PushPlayerFromTower();
+		}		
 	}
 	
 	void OnTriggerStay(Collider collision) {

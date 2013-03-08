@@ -71,6 +71,8 @@ public class CEntityGrunt : CEntityPlayerBase {
 	
 	public CCheckPoint		StartCheckPoint = null;			//!< The start point check point
 	
+	public GameObject 		DeathEffect = null;
+	
 	public enum LeftRight {
 		Left,
 		Right
@@ -392,6 +394,14 @@ public class CEntityGrunt : CEntityPlayerBase {
 			m_playerState = GruntState.Walking;
 			m_resetTimer = Time.time;
 			
+		}
+		if(collider.gameObject.name == "Electricity")
+		{
+			//Kill grunt
+			Object deathBlast = Instantiate(DeathEffect, transform.position, transform.rotation);
+			Destroy(deathBlast, 2);
+			Debug.Log(this);
+			this.transform.gameObject.SetActiveRecursively(false);
 		}
 	}
 	
