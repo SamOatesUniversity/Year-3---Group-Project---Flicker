@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 0
 --- !u!4 &400000
 Transform:
@@ -26,9 +26,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.417501003, y: 6.69307423, z: -3.55368972}
+  m_LocalPosition: {x: -2.85548568, y: 29.8861122, z: .0592990294}
   m_LocalScale: {x: .5, y: .5, z: .5}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
 --- !u!23 &2300000
@@ -64,8 +63,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b15afe172c52c3f4e957103eab4f00ec, type: 1}
+  m_Script: {fileID: 11500000, guid: 7abec3ffa2e9e094fa2e7c69ad60b586, type: 1}
   m_Name: 
+  ThisLevel: Level_1-1
+  NextLevel: Level_1-2
+  LoadingScreenTexture: {fileID: 2800000, guid: f4b00c7f9d40e2f469e4023ef636589b,
+    type: 1}
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1

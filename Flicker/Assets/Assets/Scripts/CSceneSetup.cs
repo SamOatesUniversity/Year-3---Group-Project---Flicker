@@ -8,7 +8,9 @@ public class CSceneSetup : MonoBehaviour {
     public string                       NextScene = null;                       //! The next scene to stream in
 	
 	public int							NumberOfFloors = 1;
-
+	
+	public Texture 						LoadingScreenTexture = null;
+	 
 	// Use this for initialization
     void Start() {
 		
@@ -20,6 +22,15 @@ public class CSceneSetup : MonoBehaviour {
 		
 		Application.LoadLevelAdditive(NextScene);
     }
+	
+	void OnGUI() {
+	
+		if (LoadingScreenTexture == null || m_hasSetup)
+			return;
+		
+		GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), LoadingScreenTexture);
+		
+	}
 	
 	// Update is called once per frame
 	void Update () {

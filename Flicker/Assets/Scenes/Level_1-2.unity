@@ -4240,12 +4240,13 @@ Prefab:
     - target: {fileID: 11400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
       propertyPath: NextCheckPoint
       value: 
-      objectReference: {fileID: 239444789}
+      objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
       propertyPath: PreviousCheckPoint
       value: 
-      objectReference: {fileID: 699939655}
-    m_RemovedComponents: []
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 11400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
   m_RootGameObject: {fileID: 591439266}
   m_IsPrefabParent: 0
@@ -7219,7 +7220,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &239444785
 Transform:
@@ -7275,9 +7276,8 @@ SphereCollider:
 --- !u!114 &239444789
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400000, guid: 09cbe6347af347940b18200acbde18e3,
-    type: 2}
-  m_PrefabInternal: {fileID: 559810055}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 239444784}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -17156,12 +17156,13 @@ Prefab:
     - target: {fileID: 11400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
       propertyPath: PreviousCheckPoint
       value: 
-      objectReference: {fileID: 591439271}
+      objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
       propertyPath: NextCheckPoint
       value: 
-      objectReference: {fileID: 699939655}
-    m_RemovedComponents: []
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 11400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
   m_RootGameObject: {fileID: 239444784}
   m_IsPrefabParent: 0
@@ -18223,7 +18224,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &591439267
 Transform:
@@ -18279,9 +18280,8 @@ SphereCollider:
 --- !u!114 &591439271
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400000, guid: 09cbe6347af347940b18200acbde18e3,
-    type: 2}
-  m_PrefabInternal: {fileID: 127258338}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 591439266}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -21827,7 +21827,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &699939651
 Transform:
@@ -21883,9 +21883,8 @@ SphereCollider:
 --- !u!114 &699939655
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400000, guid: 09cbe6347af347940b18200acbde18e3,
-    type: 2}
-  m_PrefabInternal: {fileID: 842851902}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 699939650}
   m_Enabled: 1
   m_EditorHideFlags: 0
@@ -26354,16 +26353,17 @@ Prefab:
     - target: {fileID: 11400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
       propertyPath: NextCheckPoint
       value: 
-      objectReference: {fileID: 591439271}
+      objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
       propertyPath: PreviousCheckPoint
       value: 
-      objectReference: {fileID: 239444789}
+      objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
       propertyPath: IsLevelStart
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
   m_RootGameObject: {fileID: 699939650}
   m_IsPrefabParent: 0
@@ -27908,7 +27908,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400164, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: m_LocalPosition.y
-      value: .65154314
+      value: .876927495
       objectReference: {fileID: 0}
     - target: {fileID: 400164, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: m_LocalPosition.z
@@ -36333,6 +36333,8 @@ MonoBehaviour:
   m_Name: 
   NextScene: Level_1-3
   NumberOfFloors: 20
+  LoadingScreenTexture: {fileID: 2800000, guid: f4b00c7f9d40e2f469e4023ef636589b,
+    type: 1}
 --- !u!1001 &1188225249
 Prefab:
   m_ObjectHideFlags: 0
@@ -47580,7 +47582,7 @@ Transform:
   m_PrefabInternal: {fileID: 907108642}
   m_GameObject: {fileID: 1580026238}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: .65154314, z: 0}
+  m_LocalPosition: {x: 0, y: .876927495, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 887855103}
