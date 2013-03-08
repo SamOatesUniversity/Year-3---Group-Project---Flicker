@@ -54,6 +54,7 @@ public class CCutSceneTrigger : MonoBehaviour {
 				
 		m_player.SetPlayerState(PlayerState.InCutScene);
 		
+		m_camera.ClearFrames();
 		m_initialDistanceFromPlayer = m_camera.DistanceFromPlayer;
 		m_maxPositionsStored = m_camera.MaxPositionsStored;
 		m_camera.MaxPositionsStored = NumberOfLerpKeys;

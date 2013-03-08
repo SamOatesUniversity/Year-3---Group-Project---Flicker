@@ -84,6 +84,13 @@ public class CCamera : MonoBehaviour {
 	{
 		m_currentTransform = m_playerPelvis;	
 	}
+	
+	public void ClearFrames()
+	{
+		Vector3 lastposition = (Vector3)m_storedPositions[m_storedPositions.Count-1];
+		m_storedPositions.Clear();
+		m_storedPositions.Add(lastposition);
+	}
 
 	/*
 	 * \brief Called once per frame
