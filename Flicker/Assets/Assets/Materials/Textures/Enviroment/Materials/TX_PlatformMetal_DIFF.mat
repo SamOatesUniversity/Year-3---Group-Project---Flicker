@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: default
-  m_Shader: {fileID: 7, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: TX_PlatformMetal_DIFF
+  m_Shader: {fileID: 4, guid: 0000000000000000e000000000000000, type: 0}
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -15,7 +15,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: dcaedff514f7fa946b2595a0f17610a5, type: 1}
+          m_Texture: {fileID: 2800000, guid: 83ba5d817cb5a4644b0834d55c1bb12f, type: 1}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -25,22 +25,11 @@ Material:
           m_Texture: {fileID: 2800000, guid: 10ee33abbb3bea4479ba1d395b4e8b51, type: 1}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _Illum
-        second:
-          m_Texture: {fileID: 0}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
     m_Floats:
       data:
         first:
           name: _Shininess
-        second: .524521828
-      data:
-        first:
-          name: _EmissionLM
-        second: 0
+        second: .790873587
     m_Colors:
       data:
         first:
