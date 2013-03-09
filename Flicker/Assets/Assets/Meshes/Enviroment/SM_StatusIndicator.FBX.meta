@@ -5,6 +5,7 @@ ModelImporter:
     4300000: Box079
     4300002: Object072
     7400000: Take 001 //// SM_StatusIndicator
+    7400002: idle //// SM_StatusIndicator
   serializedVersion: 10
   materials:
     importMaterials: 1
@@ -19,7 +20,12 @@ ModelImporter:
     animationPositionError: .5
     animationScaleError: .5
     animationWrapMode: 0
-    clipAnimations: []
+    clipAnimations:
+    - name: idle
+      firstFrame: 1
+      lastFrame: 48
+      wrapMode: 2
+      loop: 0
   meshes:
     lODScreenPercentages: []
     globalScale: .00999999978

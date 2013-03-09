@@ -5,6 +5,7 @@ ModelImporter:
     4300000: SM_LargeLeverBase
     4300002: SM_LargeLeverSwitch
     7400000: Take 001 //// SM_LargeLever
+    7400002: idle //// SM_LargeLever
   serializedVersion: 10
   materials:
     importMaterials: 1
@@ -19,7 +20,12 @@ ModelImporter:
     animationPositionError: .5
     animationScaleError: .5
     animationWrapMode: 0
-    clipAnimations: []
+    clipAnimations:
+    - name: idle
+      firstFrame: 1
+      lastFrame: 80
+      wrapMode: 2
+      loop: 0
   meshes:
     lODScreenPercentages: []
     globalScale: .00999999978
