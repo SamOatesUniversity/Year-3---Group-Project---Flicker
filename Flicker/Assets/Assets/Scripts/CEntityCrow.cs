@@ -52,7 +52,6 @@ public class CEntityCrow : MonoBehaviour {
 	
 	void FixedUpdate()
 	{	
-		Debug.Log(m_currentAnimation);
 		DoAnimations();
 		
 		if( m_startled && !m_doneTakeoffMathCalcs )	
@@ -143,7 +142,6 @@ public class CEntityCrow : MonoBehaviour {
 			m_startled = true;
 			m_state = CrowState.Takeoff;
 			m_timeTookoff = Time.time;
-			Debug.Log("Crow startled!");
 		}
 	}
 }
