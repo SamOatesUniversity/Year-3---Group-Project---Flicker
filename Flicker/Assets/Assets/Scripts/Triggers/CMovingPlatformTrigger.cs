@@ -27,16 +27,30 @@ public class CMovingPlatformTrigger : CTriggerBase {
 	public float							TimeDelaySecs = 0.1f;
 	public float 							ResetTime = 4.0f;
 	
+	public GameObject						ForcedGameObject = null;
+	
 	new void Start() {
 	
-		m_animation = GetComponent<Animation>();
-		if (m_animation == null || m_animation["Take 001"] == null)
+		if (ForcedGameObject != null)
 		{
-			m_animation = transform.parent.GetComponent<Animation>();
+			m_animation = ForcedGameObject.GetComponent<Animation>();
 			if (m_animation == null || m_animation["Take 001"] == null)
 			{
 				Debug.LogError("The lever '" + name + "' has no animation!");	
 				return;
+			}
+		}
+		else
+		{
+			m_animation = GetComponent<Animation>();
+			if (m_animation == null || m_animation["Take 001"] == null)
+			{
+				m_animation = transform.parent.GetComponent<Animation>();
+				if (m_animation == null || m_animation["Take 001"] == null)
+				{
+					Debug.LogError("The lever '" + name + "' has no animation!");	
+					return;
+				}
 			}
 		}
 		

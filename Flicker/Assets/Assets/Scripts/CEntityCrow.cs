@@ -95,22 +95,22 @@ public class CEntityCrow : MonoBehaviour {
 		if (m_state == CrowState.Resting)
 		{	
 			m_currentAnimation = "idle";
-			if (!m_animation.IsPlaying("idle"))
+			if (!m_animation.IsPlaying(m_currentAnimation))
 			{
-				m_animation.CrossFade("idle", 0.2f);
+				m_animation.CrossFade(m_currentAnimation, 0.2f);
 			}
 		}
 		else if (m_state == CrowState.Takeoff)
 		{
 			
 			m_currentAnimation = "takeoff";
-			if (!m_animation.IsPlaying("takeoff") && !m_startedTakeoff)
+			if (!m_animation.IsPlaying(m_currentAnimation) && !m_startedTakeoff)
 			{
 				m_startedTakeoff = true;
-				m_animation["takeoff"].speed = 0.5f;
-				m_animation.CrossFade("takeoff", 0.2f);
+				m_animation[m_currentAnimation].speed = 0.5f;
+				m_animation.CrossFade(m_currentAnimation, 0.2f);
 			}
-			else if (!m_animation.IsPlaying("takeoff"))
+			else if (!m_animation.IsPlaying(m_currentAnimation))
 			{
 				m_startedTakeoff = false;
 				m_state = CrowState.Flying;
@@ -127,9 +127,9 @@ public class CEntityCrow : MonoBehaviour {
 		else if (m_state == CrowState.Flying)
 		{
 			m_currentAnimation = "flight";
-			if (!m_animation.IsPlaying("flight"))
+			if (!m_animation.IsPlaying(m_currentAnimation))
 			{
-				m_animation.CrossFade("flight", 0.2f);
+				m_animation.CrossFade(m_currentAnimation, 0.2f);
 			}
 		}
 	}
