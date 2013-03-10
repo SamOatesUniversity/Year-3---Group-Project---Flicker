@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class CSceneObjectPlatform : CSceneObject {
+public class CSceneObjectPlatform : CSceneObjectBase {
 		
 	/* -----------------
 	    Private Members 
@@ -17,6 +17,8 @@ public class CSceneObjectPlatform : CSceneObject {
 	
 	public bool isLevel1_3 = false;
 	private bool m_reversePlatform = false;
+	
+	public bool OnIsOn = false;
 	
 	// Use this for initialization
 	void Start() 
@@ -95,5 +97,7 @@ public class CSceneObjectPlatform : CSceneObject {
 	
 	public override void LogicStateChange(bool newState) {
 		m_enabled = newState;
+		if (OnIsOn)
+			m_enabled = true;
 	}
 }

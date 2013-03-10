@@ -409,17 +409,6 @@ public class CEntityGrunt : CEntityPlayerBase {
 		
 		if (m_playerState == GruntState.FallingFromTower)
 			return;
-						
-		if (collider.gameObject.name == "VentCollision") {
-			GameObject parent = collider.gameObject.transform.parent.gameObject;	
-			if (parent != null) {
-				CSteamVent vent = parent.GetComponent<CSteamVent>();
-				if (vent != null && vent.StreamOn) {
-					m_playerDetected = false;
-					return;
-				}
-			}
-		}
 		
 		if(collider.gameObject.name == "Ledge_Grab_Detection")
 		{

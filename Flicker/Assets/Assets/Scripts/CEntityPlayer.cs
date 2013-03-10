@@ -481,18 +481,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		
 		if (m_playerState == PlayerState.FallingFromTower)
 			return;
-						
-		if (collision.gameObject.name == "VentCollision") {
-			GameObject parent = collision.gameObject.transform.parent.gameObject;	
-			if (parent != null) {
-				CSteamVent vent = parent.GetComponent<CSteamVent>();
-				if (vent != null && vent.StreamOn) {
-					PushPlayerFromTower();
-					return;
-				}
-			}
-		}
-		
+								
 		m_physics.CallOnTriggerStay(collision, ref m_playerState);
     }
 	

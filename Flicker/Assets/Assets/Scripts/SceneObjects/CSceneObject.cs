@@ -6,7 +6,7 @@ public enum eLedgeType {
 	Free
 }
 
-public class CSceneObject : MonoBehaviour {
+public class CSceneObject : CSceneObjectBase {
 		
 	/* ----------------
 	    Public Members 
@@ -176,9 +176,5 @@ public class CSceneObject : MonoBehaviour {
 			}
 		}
 		
-	}
-	
-	public virtual void LogicStateChange(bool newState) {
-			
 	}
 }

@@ -12,14 +12,14 @@ public enum LogicOperator {
 public class CLogicManager : MonoBehaviour {
 
 	public CLogicExpression 								expression = null;			//! The equation to manage and test
-	private CSceneObject									obj = null;
+	private CSceneObjectBase								obj = null;
 	
 	private bool											m_oldState = false;
 	private bool											m_currentState = false;
 	
 	// Use this for initialization
 	void Start () {
-		obj = GetComponent<CSceneObject>();
+		obj = GetComponent<CSceneObjectBase>();
 	}
 	
 	// Update is called once per frame
