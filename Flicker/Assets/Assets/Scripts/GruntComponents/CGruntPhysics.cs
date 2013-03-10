@@ -31,8 +31,6 @@ public class CGruntPhysics : MonoBehaviour {
 	
 	private float 			m_velocityLockTimer = 0;				//!< The time that velocity was locked
 	
-	private float 			m_turnLockTimer = 0;					//!< The time that turning was locked
-	
 	private CSceneObjectPlatform	m_platform = null;				//!< The platform, if any, the player is standing on
 	
 	private FootMaterial	m_footMaterial = FootMaterial.Stone;
@@ -176,8 +174,6 @@ public class CGruntPhysics : MonoBehaviour {
 		foreach (ContactPoint contact in collision)
 		{			
 			m_platform = contact.otherCollider.gameObject.GetComponent<CSceneObjectPlatform>();
-			GameObject thisCollider = contact.thisCollider.gameObject;
-			GameObject otherCollider = contact.otherCollider.gameObject;
 			if (m_platform != null) {
 				m_platform.resetDeltaA();
 			}
@@ -422,10 +418,7 @@ public class CGruntPhysics : MonoBehaviour {
 						
 		if (!(m_collisionState == CollisionState.OnWall && m_jumpState == JumpState.Jumping))
 			m_velocity = velocity;	
-		
-		int lastDirection = m_direction;
-		int lastMovingDirection = m_movingDirection;
-		
+				
 		if (playerState != GruntState.Turning)
 		{
 			m_direction = direction;
@@ -445,21 +438,6 @@ public class CGruntPhysics : MonoBehaviour {
 					m_velocity = 0.0f;
 					return;
 				}
-				/*
-				// are we tuning round?
-				if (lastDirection != direction && ((Time.time * 1000.0f) - m_turnLockTimer > 1000.0f))
-				{
-					playerState = GruntState.Walking;
-					if (m_velocity != 0.0f && lastMovingDirection != m_direction)
-					{
-						playerState = GruntState.Turning;
-						m_velocity = 0.0f;
-						m_turnLockTimer = Time.time * 1000.0f;
-					}
-				} 
-				else
-					playerState = GruntState.Walking;	
-					*/
 			}
 			
 		}

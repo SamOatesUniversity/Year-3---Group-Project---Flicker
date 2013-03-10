@@ -11,7 +11,6 @@ public enum CrowState {
 
 public class CEntityCrow : MonoBehaviour {
 	
-	private Vector3 	m_velocity;
 	private CrowState	m_state;
 	private bool		m_startled;
 	private bool		m_startedTakeoff;
@@ -40,7 +39,6 @@ public class CEntityCrow : MonoBehaviour {
 	void Start () {
 		m_startled = false;
 		m_state = CrowState.Resting;
-		m_velocity = new Vector3(0.0f, 0.0f, 0.0f);
 		m_startedTakeoff = false;
 		m_animation = GetComponentInChildren<Animation>();
 		MathHelp = GetComponent<MathHelpers>();
