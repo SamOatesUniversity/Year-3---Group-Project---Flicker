@@ -407,6 +407,9 @@ public class CPlayerPhysics : MonoBehaviour {
 		
 		if (playerState == PlayerState.OnLadder || playerState == PlayerState.LedgeClimb || playerState == PlayerState.LedgeClimbComplete)
 			velocity = 0.0f;	
+		
+		if (playerState == PlayerState.PullingWallLeverDown || playerState == PlayerState.PullingWallLeverUp)
+			velocity = 0.0f;	
 
 		if ((Time.time * 1000.0f) - m_velocityLockTimer < 350)
 		{
@@ -719,6 +722,12 @@ public class CPlayerPhysics : MonoBehaviour {
 			return false;
 		
 		if (playerState == PlayerState.OnLadder)
+			return false;
+		
+		if (playerState == PlayerState.PullingWallLeverDown)
+			return false;
+		
+		if (playerState == PlayerState.PullingWallLeverUp)
 			return false;
 		
 		return true;
