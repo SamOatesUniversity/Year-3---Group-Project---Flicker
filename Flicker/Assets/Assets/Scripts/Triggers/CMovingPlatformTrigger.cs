@@ -29,6 +29,11 @@ public class CMovingPlatformTrigger : CTriggerBase {
 	
 	public GameObject						ForcedGameObject = null;
 	
+	public bool								OnWall = true;
+	
+	public float 							SendSignalDelay = 0.0f;
+	private bool							m_sentSignal = true;
+	
 	new void Start() {
 	
 		if (ForcedGameObject != null)
@@ -37,6 +42,7 @@ public class CMovingPlatformTrigger : CTriggerBase {
 			if (m_animation == null || m_animation["Take 001"] == null)
 			{
 				Debug.LogError("The lever '" + name + "' has no animation!");	
+				m_animation = null;
 				return;
 			}
 		}
@@ -49,11 +55,12 @@ public class CMovingPlatformTrigger : CTriggerBase {
 				if (m_animation == null || m_animation["Take 001"] == null)
 				{
 					Debug.LogError("The lever '" + name + "' has no animation!");	
+					m_animation = null;
 					return;
 				}
 			}
 		}
-		
+
 		m_animation["Take 001"].speed = 0.0f;
 		m_animation.Play("Take 001");
 		
@@ -62,10 +69,16 @@ public class CMovingPlatformTrigger : CTriggerBase {
 	// Update is called once per frame
 	new void Update () {
 		
-		if (m_leverState == eLevelState.InUse && LeverType == eLevelType.MultiUse && (Time.time - m_timePulled > ResetTime))
+		if (m_leverState == eLevelState.InUse && LeverType == eLevelType.MultiUse && (Time.time - m_timePulled > (ResetTime + SendSignalDelay)))
 		{
 			m_leverState = eLevelState.ReadyForUse;	
 			state = false;
+		}
+		
+		if (SendSignalDelay != 0.0f && Time.time - m_timePulled >= SendSignalDelay && !m_sentSignal)
+		{
+			state = true;
+			m_sentSignal = true;
 		}
 		
 		if (m_triggerEntered)
@@ -86,7 +99,11 @@ public class CMovingPlatformTrigger : CTriggerBase {
 				CEntityPlayer player = CEntityPlayer.GetInstance();
 				player.SetPlayerState(PlayerState.PullingWallLeverDown);
 				
-				state = true;
+				if (SendSignalDelay == 0.0f) 
+					state = true;
+				else 
+					m_sentSignal = false;
+				
 				m_leverState = eLevelState.InUse;
 				m_timePulled = Time.time;
 			}

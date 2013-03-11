@@ -23,6 +23,8 @@ public class CPlayerAnimation : MonoBehaviour {
 	
 	private bool m_hasWallJumped = false;
 	
+	private bool m_pulledLever = false;
+	
 	private AudioSource m_audio;
 	
 	public void OnStart(Animation animation)
@@ -138,18 +140,30 @@ public class CPlayerAnimation : MonoBehaviour {
 		}
 		else if (playerState == PlayerState.PullingWallLeverDown)
 		{
+			if (m_pulledLever && !m_animation.IsPlaying(m_currentAnimation))
+			{
+				playerState = PlayerState.Standing;
+				m_pulledLever = false;
+			}
 			m_currentAnimation = "switch-down";	
 			if (!m_animation.IsPlaying(m_currentAnimation))
 			{
 				m_animation.CrossFade(m_currentAnimation);	
+				m_pulledLever = true;
 			}
 		}
 		else if (playerState == PlayerState.PullingWallLeverUp)
 		{
+			if (m_pulledLever && !m_animation.IsPlaying(m_currentAnimation))
+			{
+				playerState = PlayerState.Standing;
+				m_pulledLever = false;
+			}
 			m_currentAnimation = "switch-up";	
 			if (!m_animation.IsPlaying(m_currentAnimation))
 			{
 				m_animation.CrossFade(m_currentAnimation);	
+				m_pulledLever = true;
 			}
 		}
 	}
