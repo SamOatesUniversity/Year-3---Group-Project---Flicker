@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: MAT_BulbOFF
-  m_Shader: {fileID: 4800000, guid: 963484209d11fd7f110076aa44295342, type: 1}
+  m_Name: MAT_BULBOFF
+  m_Shader: {fileID: 20, guid: 0000000000000000e000000000000000, type: 0}
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -15,14 +15,7 @@ Material:
         first:
           name: _MainTex
         second:
-          m_Texture: {fileID: 2800000, guid: ae2209bab5aa60f4f8ff664c84e56ef8, type: 1}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _BumpMap
-        second:
-          m_Texture: {fileID: 2800000, guid: 4303a4be7e70a0e4d971ad6d20ee5fed, type: 1}
+          m_Texture: {fileID: 2800000, guid: 4f21164ab0270dd4d9973df48b6910a1, type: 1}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
@@ -32,11 +25,14 @@ Material:
           m_Texture: {fileID: 2800000, guid: 1d69142dab4ff814a9ef247661fbd4ac, type: 1}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
-    m_Floats:
       data:
         first:
-          name: _BumpAmt
-        second: 38.2089577
+          name: _Cube
+        second:
+          m_Texture: {fileID: 8900000, guid: c39e9a654d3773a4fa2782b695d8a551, type: 2}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+    m_Floats:
       data:
         first:
           name: _EmissionLM
@@ -46,3 +42,7 @@ Material:
         first:
           name: _Color
         second: {r: 1, g: 1, b: 1, a: 1}
+      data:
+        first:
+          name: _ReflectColor
+        second: {r: 1, g: 1, b: 1, a: .5}
