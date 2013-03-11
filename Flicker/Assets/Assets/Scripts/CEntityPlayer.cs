@@ -103,7 +103,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 	public override void Start () {
 		
 		INSTANCE = this;
-		Debug.Log(INSTANCE);
 		
 		base.Start();
 				

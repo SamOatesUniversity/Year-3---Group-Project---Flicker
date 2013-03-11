@@ -236,7 +236,8 @@ public class CPlayerPhysics : MonoBehaviour {
 			}
 			else
 			{
-				m_collisionState = CollisionState.OnWall;
+				if (m_player.GetPlayerState() != PlayerState.OnLadder)
+					m_collisionState = CollisionState.OnWall;
 			}
 		}
 		
@@ -322,12 +323,6 @@ public class CPlayerPhysics : MonoBehaviour {
 					m_velocityLockTimer = (Time.time * 1000.0f); 
 				}
 				
-				//if (m_player.GetPlayerState() == PlayerState.OnLadder)
-				//{
-				//	GetLadder.state = LadderState.None;
-				//	m_player.SetPlayerState(PlayerState.Standing);
-				//}
-				
 				if (contact.otherCollider != null)
 				{
 					// are we on a special material?
@@ -346,9 +341,12 @@ public class CPlayerPhysics : MonoBehaviour {
 			// wall check
 			else
 			{
-				if (isFacingCollision(m_movingDirection, m_body.transform.position, contact.point, playerAlpha)) {
-					m_collisionState = CollisionState.OnWall;
-					break;
+				if (m_player.GetPlayerState() != PlayerState.OnLadder)
+				{				
+					if (isFacingCollision(m_movingDirection, m_body.transform.position, contact.point, playerAlpha)) {
+						m_collisionState = CollisionState.OnWall;
+						break;
+					}
 				}
 			}
 		}	
