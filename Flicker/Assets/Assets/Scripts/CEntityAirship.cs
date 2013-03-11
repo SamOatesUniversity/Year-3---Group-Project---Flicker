@@ -7,8 +7,9 @@ public class CEntityAirship : MonoBehaviour {
 	public float 			YOffset = 1.0f;
 	public uint 			NumYPositions = 20;
 	public float			RateOfFire = 3.5f;
+	public GameObject		CanonballObject = null;
 	
-	private Transform 	 	m_initialPosition;
+	private Transform 	 	m_initialTransform;
 	private ArrayList		m_storedYPositions;
 	private CEntityPlayer	m_playerEntity;
 	private Transform		m_playerTransform;
@@ -16,7 +17,7 @@ public class CEntityAirship : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		m_initialPosition = this.transform;
+		m_initialTransform = this.transform;
 		
 		m_storedYPositions = new ArrayList();
 		
@@ -44,7 +45,8 @@ public class CEntityAirship : MonoBehaviour {
 		//If player falling from tower, reset ship position
 		if( m_playerEntity.GetPlayerState() == PlayerState.FallingFromTower )
 		{
-			this.transform = m_initialPosition;	
+			this.transform.position = m_initialTransform.position;
+			this.transform.rotation = m_initialTransform.rotation;
 		}
 		
 		//update list of player Y pos
@@ -91,6 +93,6 @@ public class CEntityAirship : MonoBehaviour {
 	
 	void FireCannon()
 	{
-		Object cannonball = Instantiate(Cannonball, transform.position, transform.rotation);
+		Object cannonball = Instantiate(CanonballObject, this.transform.position, this.transform.rotation);
 	}
 }
