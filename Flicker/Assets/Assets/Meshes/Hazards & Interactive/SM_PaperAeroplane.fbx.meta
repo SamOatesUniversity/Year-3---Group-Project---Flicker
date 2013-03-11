@@ -5,6 +5,8 @@ ModelImporter:
     4300000: pPlane1
     4300002: pPlane2
     4300004: PlaneOutline
+    7400000: Take 001 //// SM_PaperAeroplane
+    7400002: idle //// SM_PaperAeroplane
   serializedVersion: 10
   materials:
     importMaterials: 1
@@ -19,7 +21,12 @@ ModelImporter:
     animationPositionError: .5
     animationScaleError: .5
     animationWrapMode: 0
-    clipAnimations: []
+    clipAnimations:
+    - name: idle
+      firstFrame: 1
+      lastFrame: 24
+      wrapMode: 2
+      loop: 1
   meshes:
     lODScreenPercentages: []
     globalScale: .00999999978
@@ -57,11 +64,43 @@ ModelImporter:
         first: 4
         second: 841a0600
       data:
-        first: 23
-        second: 62182300
+        first: 137
+        second: a00bd100
+    joint1:
       data:
-        first: 33
-        second: a25a3200
+        first: 1
+        second: a6860100
+      data:
+        first: 4
+        second: 861a0600
+    joint2:
+      data:
+        first: 1
+        second: ac860100
+      data:
+        first: 4
+        second: 8c1a0600
+    joint3:
+      data:
+        first: 1
+        second: ae860100
+      data:
+        first: 4
+        second: 8e1a0600
+    joint4:
+      data:
+        first: 1
+        second: aa860100
+      data:
+        first: 4
+        second: 8a1a0600
+    joint5:
+      data:
+        first: 1
+        second: a8860100
+      data:
+        first: 4
+        second: 881a0600
     pPlane2:
       data:
         first: 1
@@ -70,8 +109,5 @@ ModelImporter:
         first: 4
         second: 821a0600
       data:
-        first: 23
-        second: 60182300
-      data:
-        first: 33
-        second: a05a3200
+        first: 137
+        second: a20bd100
