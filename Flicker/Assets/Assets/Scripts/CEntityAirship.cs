@@ -88,4 +88,9 @@ public class CEntityAirship : MonoBehaviour {
 			m_fireTimer += Time.deltaTime;	
 		}
 	}
+	
+	void FireCannon()
+	{
+		Object cannonball = Instantiate(Cannonball, transform.position, transform.rotation);
+	}
 }
