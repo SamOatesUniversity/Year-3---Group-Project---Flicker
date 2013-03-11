@@ -2,18 +2,23 @@ using UnityEngine;
 using System.Collections;
 
 public class CEntityAirship : MonoBehaviour {
-	public float 			Speed = 1.0f;
+	public float 			FiringSpeed = 1.0f;
+	public float 			CirclingSpeed = 5.0f;
 	public float 			PathRadius = 10.0f;
 	public float 			YOffset = 1.0f;
 	public uint 			NumYPositions = 20;
 	public float			RateOfFire = 3.5f;
 	public GameObject		CanonballObject = null;
+	public float 			firingArcLength = 10.0f;
 	
 	private Transform 	 	m_initialTransform;
 	private ArrayList		m_storedYPositions;
 	private CEntityPlayer	m_playerEntity;
 	private Transform		m_playerTransform;
 	private float 			m_fireTimer;
+	private float 			testLength;
+	
+	private bool			m_isFiring;
 	
 	// Use this for initialization
 	void Start () {
@@ -34,6 +39,8 @@ public class CEntityAirship : MonoBehaviour {
 			m_storedYPositions.Add(playerY);
 		}
 		m_fireTimer = 0.0f;
+		m_isFiring = false;
+		testLength = 0.0f;
 	}
 	
 	// Update is called once per frame
@@ -42,6 +49,25 @@ public class CEntityAirship : MonoBehaviour {
 	}
 	
 	void FixedUpdate() {
+		//test if in arc of player
+		//Vector3 adjustedOriginPlayer = new Vector3(0.0f, m_playerEntity.transform.position.y, 0.0f); 
+		//Vector3 playerOriginVec = m_playerEntity.transform.position - adjustedOriginPlayer;
+		//Vector3 adjustedOriginShip = new Vector3(0.0f, this.transform.position.y, 0.0f);
+		//Vector3 shipOriginVec = this.transform.position - adjustedOriginShip;
+		
+		//float shipDotPlayer = Vector3.Dot(playerOriginVec, shipOriginVec);
+		Vector3 shipToPlayer = m_playerEntity.transform.position - this.transform.position;
+		float distanceFromPlayer = shipToPlayer.magnitude;
+		if( distanceFromPlayer < firingArcLength )
+		{
+			m_isFiring = true;
+		}
+		else
+		{
+			m_isFiring = false;	
+		}
+		testLength = distanceFromPlayer;
+		
 		//If player falling from tower, reset ship position
 		if( m_playerEntity.GetPlayerState() == PlayerState.FallingFromTower )
 		{
@@ -69,12 +95,21 @@ public class CEntityAirship : MonoBehaviour {
 			averageY = sumYPos/NumYPositions;
 		}
 		float correctedY = averageY + YOffset;
+		float speed = 0.0f;
+		if( m_isFiring )
+		{
+			speed = FiringSpeed;	
+		}
+		else
+		{
+			speed = CirclingSpeed;
+		}
 		
 		//update ship position
 		Transform currentTransform = this.transform;
 		Vector3 origin = new Vector3(0.0f, 0.0f, 0.0f);
 		Vector3 up = new Vector3(0.0f, 1.0f, 0.0f);
-		this.transform.RotateAround(origin, up, Speed*0.1f);
+		this.transform.RotateAround(origin, up, speed*0.1f);
 		
 		Vector3 pos = this.transform.position;
 		pos.y = correctedY;
