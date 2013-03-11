@@ -9,7 +9,7 @@ public enum PlatformState {
 	Resetting
 }
 
-public class CSceneObjectFallingPlatform : CSceneObject {
+public class CSceneObjectFallingPlatform : CSceneObjectBase {
 		
 	/* -----------------
 	    Private Members 
