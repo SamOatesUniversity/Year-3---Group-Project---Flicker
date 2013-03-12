@@ -19,8 +19,7 @@ public class CForceVolume : CSceneObjectBase {
 		CEntityPlayer player = CEntityPlayer.GetInstance();
 		if (player)
 		{
-			player.SetPlayerState(PlayerState.Jumping);
-			player.Physics.JumpType = JumpState.Jumping;
+			player.Physics.MakeJump();
 		}
     }
 	
@@ -40,8 +39,8 @@ public class CForceVolume : CSceneObjectBase {
 		CEntityPlayer player = CEntityPlayer.GetInstance();
 		if (player)
 		{
-			player.SetPlayerState(PlayerState.Jumping);
-			player.Physics.JumpType = JumpState.Jumping;
+			player.Physics.MakeJump();
+			
 			player.Physics.Velocity += ForceToApply.x;	
 			if(player.Physics.Velocity > MaximumVelocity.x)
 				player.Physics.Velocity = MaximumVelocity.x;

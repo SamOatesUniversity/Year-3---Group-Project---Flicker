@@ -395,6 +395,7 @@ public class CEntityGrunt : CEntityPlayerBase {
 			m_resetTimer = Time.time;
 			
 		}
+	
 		if(collider.gameObject.name == "Electricity")
 		{
 			//Kill grunt

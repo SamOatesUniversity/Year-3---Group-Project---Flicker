@@ -16370,6 +16370,10 @@ Prefab:
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: 3aa2e531b704082469f7bc085569c2c5, type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3aa2e531b704082469f7bc085569c2c5, type: 2}
   m_RootGameObject: {fileID: 693376859}
@@ -19264,7 +19268,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400012, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400074, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -21409,7 +21413,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 785988692}
   m_GameObject: {fileID: 841360068}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 138c29849e95b6940b7a9311cccd5e4d, type: 1}
   m_Name: 
@@ -23273,7 +23277,7 @@ MonoBehaviour:
   state: 0
   LeverType: 2
   TimeDelaySecs: .100000001
-  ResetTime: 4
+  ResetTime: 5
   ForcedGameObject: {fileID: 0}
   OnWall: 1
   SendSignalDelay: 0
@@ -26685,6 +26689,8 @@ MonoBehaviour:
   MaxCameraOffset: 2
   MaxPositionsStored: 10
   MaxCamPositionsStored: 10
+  MainMenuSkin: {fileID: 0}
+  PauseMenuBackground: {fileID: 0}
 --- !u!1 &1081807520
 GameObject:
   m_ObjectHideFlags: 0
@@ -43900,7 +43906,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 674385949}
   m_GameObject: {fileID: 1874357051}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 14f131c071c7a5640a16a2e053e549b0, type: 1}
   m_Name: 
@@ -46572,7 +46578,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1984142201}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30117fc6155c96741a5d2ac06f7957f4, type: 1}
   m_Name: 

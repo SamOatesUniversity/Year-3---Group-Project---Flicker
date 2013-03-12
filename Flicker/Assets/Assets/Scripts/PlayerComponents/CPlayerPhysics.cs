@@ -731,4 +731,12 @@ public class CPlayerPhysics : MonoBehaviour {
 		return true;
 	}
 	
+	public void MakeJump() 
+	{
+		m_jumpTimer = ((Time.time + 10) * 1000.0f);
+		m_jumpState = JumpState.Jumping;
+		CEntityPlayer.GetInstance().SetPlayerState(PlayerState.Jumping);
+		m_collisionState = CollisionState.None;	
+	}
+	
 }
