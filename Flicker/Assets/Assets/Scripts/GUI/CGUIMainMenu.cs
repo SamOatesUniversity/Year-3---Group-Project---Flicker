@@ -15,6 +15,8 @@ public class CGUIMainMenu : MonoBehaviour {
 	};
 	
 	private MenuState		m_menuState = MenuState.Main;
+	
+	public GUISkin MainMenuSkin = null;
 
 	// Use this for initialization
 	void Start () {
@@ -28,6 +30,8 @@ public class CGUIMainMenu : MonoBehaviour {
 	
 	void OnGUI() {
 	
+		GUI.skin = MainMenuSkin;
+		
 		Rect logo = new Rect(120, 100, Title.width, Title.height);
 		GUI.Label(logo, Title);
 		
