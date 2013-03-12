@@ -251,7 +251,7 @@ public class CPlayerPhysics : MonoBehaviour {
 			if (GetLadder.state == LadderState.JumpingOff)
 				GetLadder.state = LadderState.None;
 			
-			if (m_player.GetPlayerState() != PlayerState.Turning && m_player.GetPlayerState() != PlayerState.OnLadder && !m_player.PullingLever()) 
+			if (m_player.GetPlayerState() != PlayerState.Turning && m_player.GetPlayerState() != PlayerState.OnLadder && !m_player.PullingLever(false)) 
 			{
 				m_player.SetPlayerState(PlayerState.Standing);
 			}
@@ -362,7 +362,7 @@ public class CPlayerPhysics : MonoBehaviour {
 						
 			if (m_player.GetPlayerState() != PlayerState.Turning)
 			{
-				if (m_player.GetPlayerState() != PlayerState.OnLadder && !m_player.PullingLever())
+				if (m_player.GetPlayerState() != PlayerState.OnLadder && !m_player.PullingLever(false))
 				{
 					m_player.SetPlayerState(PlayerState.Standing);
 				}
@@ -406,7 +406,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		if (playerState == PlayerState.OnLadder || playerState == PlayerState.LedgeClimb || playerState == PlayerState.LedgeClimbComplete)
 			velocity = 0.0f;	
 		
-		if (playerState == PlayerState.PullingWallLeverDown || playerState == PlayerState.PullingWallLeverUp)
+		if (m_player.PullingLever(false))
 			velocity = 0.0f;	
 
 		if ((Time.time * 1000.0f) - m_velocityLockTimer < 350)
@@ -509,7 +509,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		{
 			if (m_direction == 0 && playerState != PlayerState.Turning)
 			{
-				if (playerState != PlayerState.OnLadder && !m_player.PullingLever())
+				if (playerState != PlayerState.OnLadder && !m_player.PullingLever(false))
 				{
 					playerState = PlayerState.Standing;
 				}
@@ -722,10 +722,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		if (playerState == PlayerState.OnLadder)
 			return false;
 		
-		if (playerState == PlayerState.PullingWallLeverDown)
-			return false;
-		
-		if (playerState == PlayerState.PullingWallLeverUp)
+		if (m_player.PullingLever(false))
 			return false;
 		
 		return true;

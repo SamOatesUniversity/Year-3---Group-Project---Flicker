@@ -47,13 +47,13 @@ public class CPlayerAnimation : MonoBehaviour {
 		else if (playerState == PlayerState.Turning)
 		{
 			m_currentAnimation = "running-turn";
-			if (!m_animation.IsPlaying("running-turn") && !m_startedTurningRound)
+			if (!m_animation.IsPlaying(m_currentAnimation) && !m_startedTurningRound)
 			{
 				m_startedTurningRound = true;
-				m_animation["running-turn"].speed = 1.2f;
-				m_animation.CrossFade("running-turn");
+				m_animation[m_currentAnimation].speed = 1.2f;
+				m_animation.CrossFade(m_currentAnimation);
 			}
-			else if (!m_animation.IsPlaying("running-turn"))
+			else if (!m_animation.IsPlaying(m_currentAnimation))
 			{
 				m_startedTurningRound = false;
 				playerState = PlayerState.Walking;
@@ -165,6 +165,20 @@ public class CPlayerAnimation : MonoBehaviour {
 				m_animation.CrossFade(m_currentAnimation);	
 				m_pulledLever = true;
 			}
+		}
+		else if (playerState == PlayerState.NormalFloorLever)
+		{
+			if (m_pulledLever && !m_animation.IsPlaying(m_currentAnimation))
+			{
+				playerState = PlayerState.Standing;
+				m_pulledLever = false;
+			}
+			m_currentAnimation = "bigswitch-on";	
+			if (!m_animation.IsPlaying(m_currentAnimation))
+			{
+				m_animation.CrossFade(m_currentAnimation);	
+				m_pulledLever = true;
+			}	
 		}
 	}
 	

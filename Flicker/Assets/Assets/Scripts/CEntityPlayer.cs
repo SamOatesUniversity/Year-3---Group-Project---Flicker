@@ -22,7 +22,9 @@ public enum PlayerState {
 	OnLadder,
 	PullingWallLeverDown,	//!< Pulling a lever on the wall down
 	PullingWallLeverUp,		//!< Pulling a lever on the wall up
-	InCutScene
+	InCutScene,
+	NormalFloorLever,
+	KickFloorLever
 };
 
 [RequireComponent (typeof (CWallJump))]
@@ -262,7 +264,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 			{
 				// do nothing on turn around
 			}
-			else if (m_playerState == PlayerState.OnLadder || PullingLever())
+			else if (m_playerState == PlayerState.OnLadder || PullingLever(true))
 			{
 				float spin = Physics.InsideTower ? -180.0f : 0.0f;
 				m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + spin, 0));
@@ -507,12 +509,18 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_dead.time = Time.time * 1000.0f;
 	}
 	
-	public bool PullingLever()
+	public bool PullingLever(bool wallonly)
 	{
 		if (m_playerState == PlayerState.PullingWallLeverDown)
 			return true;
 		
 		if (m_playerState == PlayerState.PullingWallLeverUp)
+			return true;
+		
+		if (wallonly)
+			return false;
+		
+		if (m_playerState == PlayerState.NormalFloorLever)
 			return true;
 		
 		return false;

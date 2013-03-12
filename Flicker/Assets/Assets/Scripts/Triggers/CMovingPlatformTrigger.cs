@@ -97,8 +97,13 @@ public class CMovingPlatformTrigger : CTriggerBase {
 			if (pulled && m_leverState == eLevelState.ReadyForUse)
             {
 				CEntityPlayer player = CEntityPlayer.GetInstance();
-				player.SetPlayerState(PlayerState.PullingWallLeverDown);
 				
+				if (OnWall) {
+					player.SetPlayerState(PlayerState.PullingWallLeverDown);
+				} else {
+					player.SetPlayerState(PlayerState.NormalFloorLever);
+				}
+					
 				if (SendSignalDelay == 0.0f) 
 					state = true;
 				else 
