@@ -55,74 +55,81 @@ public class CEntityAirship : MonoBehaviour {
 		//Vector3 adjustedOriginShip = new Vector3(0.0f, this.transform.position.y, 0.0f);
 		//Vector3 shipOriginVec = this.transform.position - adjustedOriginShip;
 		
-		//float shipDotPlayer = Vector3.Dot(playerOriginVec, shipOriginVec);
-		Vector3 shipToPlayer = m_playerEntity.transform.position - this.transform.position;
-		float distanceFromPlayer = shipToPlayer.magnitude;
-		if( distanceFromPlayer < firingArcLength )
+		if( m_playerEntity )
 		{
-			m_isFiring = true;
+			//float shipDotPlayer = Vector3.Dot(playerOriginVec, shipOriginVec);
+			Vector3 shipToPlayer = m_playerEntity.transform.position - this.transform.position;
+			float distanceFromPlayer = shipToPlayer.magnitude;
+			if( distanceFromPlayer < firingArcLength )
+			{
+				m_isFiring = true;
+			}
+			else
+			{
+				m_isFiring = false;	
+			}
+			testLength = distanceFromPlayer;
+			
+			//If player falling from tower, reset ship position
+			if( m_playerEntity.GetPlayerState() == PlayerState.FallingFromTower )
+			{
+				this.transform.position = m_initialTransform.position;
+				this.transform.rotation = m_initialTransform.rotation;
+			}
+			
+			//update list of player Y pos
+			if( m_playerEntity.GetPlayerState() != PlayerState.Jumping )
+			{
+				float playerY = m_playerTransform.position.y;
+				m_storedYPositions.Add(playerY);
+				m_storedYPositions.RemoveAt(0);
+			}
+			
+			//Calculate Y bos based on past NumYPositions frames
+			float sumYPos = 0.0f;
+			foreach( float yPos in m_storedYPositions )
+			{
+				sumYPos += yPos;
+			}
+			float averageY = 0.0f;
+			if( NumYPositions > 0 )
+			{
+				averageY = sumYPos/NumYPositions;
+			}
+			float correctedY = averageY + YOffset;
+			float speed = 0.0f;
+			if( m_isFiring )
+			{
+				speed = FiringSpeed;	
+			}
+			else
+			{
+				speed = CirclingSpeed;
+			}
+			
+			//update ship position
+			Transform currentTransform = this.transform;
+			Vector3 origin = new Vector3(0.0f, 0.0f, 0.0f);
+			Vector3 up = new Vector3(0.0f, 1.0f, 0.0f);
+			this.transform.RotateAround(origin, up, speed*0.1f);
+			
+			Vector3 pos = this.transform.position;
+			pos.y = correctedY;
+			this.transform.position = pos;
+		
+			if( m_fireTimer >= RateOfFire )
+			{
+				FireCannon();
+				m_fireTimer = 0.0f;
+			}
+			else
+			{
+				m_fireTimer += Time.deltaTime;	
+			}
 		}
 		else
 		{
-			m_isFiring = false;	
-		}
-		testLength = distanceFromPlayer;
-		
-		//If player falling from tower, reset ship position
-		if( m_playerEntity.GetPlayerState() == PlayerState.FallingFromTower )
-		{
-			this.transform.position = m_initialTransform.position;
-			this.transform.rotation = m_initialTransform.rotation;
-		}
-		
-		//update list of player Y pos
-		if( m_playerEntity.GetPlayerState() != PlayerState.Jumping )
-		{
-			float playerY = m_playerTransform.position.y;
-			m_storedYPositions.Add(playerY);
-			m_storedYPositions.RemoveAt(0);
-		}
-		
-		//Calculate Y bos based on past NumYPositions frames
-		float sumYPos = 0.0f;
-		foreach( float yPos in m_storedYPositions )
-		{
-			sumYPos += yPos;
-		}
-		float averageY = 0.0f;
-		if( NumYPositions > 0 )
-		{
-			averageY = sumYPos/NumYPositions;
-		}
-		float correctedY = averageY + YOffset;
-		float speed = 0.0f;
-		if( m_isFiring )
-		{
-			speed = FiringSpeed;	
-		}
-		else
-		{
-			speed = CirclingSpeed;
-		}
-		
-		//update ship position
-		Transform currentTransform = this.transform;
-		Vector3 origin = new Vector3(0.0f, 0.0f, 0.0f);
-		Vector3 up = new Vector3(0.0f, 1.0f, 0.0f);
-		this.transform.RotateAround(origin, up, speed*0.1f);
-		
-		Vector3 pos = this.transform.position;
-		pos.y = correctedY;
-		this.transform.position = pos;
-	
-		if( m_fireTimer >= RateOfFire )
-		{
-			FireCannon();
-			m_fireTimer = 0.0f;
-		}
-		else
-		{
-			m_fireTimer += Time.deltaTime;	
+			Debug.Log("CEntityAirship: Cannot find player");	
 		}
 	}
 	
