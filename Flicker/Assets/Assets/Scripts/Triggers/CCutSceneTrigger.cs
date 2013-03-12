@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class CCutSceneTrigger : MonoBehaviour {
-	
+public class CCutSceneTrigger : CSceneObjectBase {
+
 	private bool					m_active = false;
 	private CCamera					m_camera = null;
 	private CEntityPlayer			m_player = null;
@@ -67,6 +67,40 @@ public class CCutSceneTrigger : MonoBehaviour {
 		
 	}
 	
+	void OnTriggerStay(Collider other) {
+		
+		if (!enabled || m_active)
+			return;
+		
+		if (m_animation == null || m_animation.GetClipCount() == 0)
+		{
+			Debug.LogWarning("Cutscene '" + name + "' is missing an animation!");
+			return;
+		}
+		
+		if (other.name != "Player Spawn")
+			return;
+
+		m_player = CEntityPlayer.GetInstance();
+		if (m_player == null)
+			return;
+
+		m_camera = CCamera.GetInstance();
+		if (m_camera == null)
+			return;
+				
+		m_player.SetPlayerState(PlayerState.InCutScene);
+		
+		m_camera.ClearFrames();
+		m_initialDistanceFromPlayer = m_camera.DistanceFromPlayer;
+		m_maxPositionsStored = m_camera.MaxPositionsStored;
+		m_camera.MaxPositionsStored = NumberOfLerpKeys;
+		
+		m_animation.Play();
+		m_active = true;
+		
+	}
+	
 	// Called once the cutscene has ended
 	void OnCutSceneEnd() {
 		
@@ -76,6 +110,14 @@ public class CCutSceneTrigger : MonoBehaviour {
 		m_camera.MaxPositionsStored = m_maxPositionsStored;
 		m_active = false;
 		enabled = false;
+		
+	}
+	
+	public override void LogicStateChange(bool newState) {
+			
+		if (!m_active) {
+			enabled = true;
+		}
 		
 	}
 }

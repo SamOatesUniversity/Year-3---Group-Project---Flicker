@@ -467,7 +467,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	void OnTriggerEnter(Collider collider)
 	{
-		Debug.Log(collider.gameObject.name);
 		if(collider.gameObject.name == "Electricity" || collider.gameObject.name == "Cannonball(Clone)")
 		{
 			//Kill player
