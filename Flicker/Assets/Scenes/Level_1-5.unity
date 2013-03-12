@@ -2245,6 +2245,8 @@ MonoBehaviour:
   MaxCameraOffset: 2
   MaxPositionsStored: 10
   MaxCamPositionsStored: 10
+  MainMenuSkin: {fileID: 0}
+  PauseMenuBackground: {fileID: 0}
 --- !u!1 &81734419
 GameObject:
   m_ObjectHideFlags: 0
@@ -9846,7 +9848,6 @@ GameObject:
   - 111: {fileID: 393216847}
   - 65: {fileID: 393216848}
   - 114: {fileID: 393216849}
-  - 114: {fileID: 393216850}
   m_Layer: 0
   m_Name: SM_O_MovingPlatform
   m_TagString: Untagged
@@ -9936,17 +9937,6 @@ MonoBehaviour:
   m_enabled: 1
   isLevel1_3: 0
   OnIsOn: 1
---- !u!114 &393216850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 393216843}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6f8c6368576c1b040afc2672623dce0e, type: 1}
-  m_Name: 
-  expression: {fileID: 0}
 --- !u!1001 &395344083
 Prefab:
   m_ObjectHideFlags: 0

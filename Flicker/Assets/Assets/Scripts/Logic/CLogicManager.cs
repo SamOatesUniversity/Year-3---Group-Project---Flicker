@@ -20,10 +20,18 @@ public class CLogicManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		obj = GetComponent<CSceneObjectBase>();
+		
+		if (expression == null)
+		{
+			Debug.LogError("No expression found for logic manager: " + name);	
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		
+		if (expression == null)
+			return;
 		
 		m_oldState = m_currentState;
 		m_currentState = expression.Resolve();
