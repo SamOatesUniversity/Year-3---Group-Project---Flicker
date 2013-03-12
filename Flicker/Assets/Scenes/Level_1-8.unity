@@ -12955,6 +12955,7 @@ GameObject:
   - 135: {fileID: 515108086}
   - 111: {fileID: 515108085}
   - 114: {fileID: 515108087}
+  - 114: {fileID: 515108088}
   m_Layer: 0
   m_Name: VentBoostersActive_Anim
   m_TagString: Untagged
@@ -12973,7 +12974,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1984142202}
 --- !u!111 &515108085
 Animation:
   m_ObjectHideFlags: 0
@@ -13010,12 +13011,23 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 515108083}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b02f0a5c23c55184d8db082c76015bca, type: 1}
   m_Name: 
   DistanceFromLookAt: 3
   NumberOfLerpKeys: 30
+--- !u!114 &515108088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 515108083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f8c6368576c1b040afc2672623dce0e, type: 1}
+  m_Name: 
+  expression: {fileID: 566187451}
 --- !u!1 &515329520
 GameObject:
   m_ObjectHideFlags: 0
@@ -18527,6 +18539,7 @@ GameObject:
   - 23: {fileID: 752394763}
   - 111: {fileID: 752394765}
   - 65: {fileID: 752394766}
+  - 114: {fileID: 752394767}
   m_Layer: 0
   m_Name: SM_O_ScaffoldingWooden1
   m_TagString: Untagged
@@ -18603,6 +18616,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .621247649, y: .762156069, z: .642095864}
   m_Center: {x: -3.53370762, y: -.000409552798, z: .321044385}
+--- !u!114 &752394767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 752394761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
+  m_Name: 
+  CanWallJump: 1
+  IsLadder: 0
+  ExtraSlide: 1
+  CanLedgeGrab: 0
+  LedgeType: 1
+  KillPlayerOnTouch: 0
 --- !u!1 &753276154
 GameObject:
   m_ObjectHideFlags: 0
@@ -25161,6 +25190,7 @@ GameObject:
   - 23: {fileID: 989247792}
   - 111: {fileID: 989247794}
   - 65: {fileID: 989247795}
+  - 114: {fileID: 989247796}
   m_Layer: 0
   m_Name: SM_O_ScaffoldingWooden1
   m_TagString: Untagged
@@ -25237,6 +25267,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .621246278, y: .610000014, z: .642094791}
   m_Center: {x: -3.53370166, y: -.000409108558, z: .321044952}
+--- !u!114 &989247796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 989247790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
+  m_Name: 
+  CanWallJump: 1
+  IsLadder: 0
+  ExtraSlide: 1
+  CanLedgeGrab: 0
+  LedgeType: 1
+  KillPlayerOnTouch: 0
 --- !u!1 &1004348487
 GameObject:
   m_ObjectHideFlags: 0
@@ -34155,6 +34201,7 @@ GameObject:
   - 23: {fileID: 1406639253}
   - 111: {fileID: 1406639255}
   - 65: {fileID: 1406639256}
+  - 114: {fileID: 1406639257}
   m_Layer: 0
   m_Name: SM_O_ScaffoldingWooden1
   m_TagString: Untagged
@@ -34231,6 +34278,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .621246576, y: .762155473, z: .642094851}
   m_Center: {x: -3.5337038, y: -.000409393106, z: .321044534}
+--- !u!114 &1406639257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1406639251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
+  m_Name: 
+  CanWallJump: 1
+  IsLadder: 0
+  ExtraSlide: 1
+  CanLedgeGrab: 0
+  LedgeType: 1
+  KillPlayerOnTouch: 0
 --- !u!1 &1412674292
 GameObject:
   m_ObjectHideFlags: 0
@@ -47116,6 +47179,7 @@ Transform:
   - {fileID: 1281017018}
   - {fileID: 498159110}
   - {fileID: 1280366158}
+  - {fileID: 515108084}
   m_Father: {fileID: 0}
 --- !u!114 &1984142203
 MonoBehaviour:
