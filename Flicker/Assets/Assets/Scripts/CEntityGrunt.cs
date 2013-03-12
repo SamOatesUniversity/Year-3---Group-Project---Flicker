@@ -349,6 +349,11 @@ public class CEntityGrunt : CEntityPlayerBase {
 		{
 			m_onBarrier = true;
 		}
+		if( collision.collider.gameObject.name=="GruntSpawn" && !m_playerDetected )
+		{
+			m_playerState = GruntState.Standing;
+			m_physics.MovingDirection = -1;
+		}
 	}
 	
 	/*
