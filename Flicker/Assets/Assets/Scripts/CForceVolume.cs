@@ -1,29 +1,22 @@
 using UnityEngine;
 using System.Collections;
 
-public class CForceVolume : MonoBehaviour {
+public class CForceVolume : CSceneObjectBase {
 	
 	public Vector3 ForceToApply;			//!< Force to apply to object which triggers the force volume
 	public Vector3 MaximumVelocity;
-	
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-	
+		
 	//called if a collidable object triggers the volume
 	 void OnTriggerEnter(Collider collider) {
+		if (!enabled)
+			return;
+		
         Rigidbody rBody = collider.gameObject.GetComponent<Rigidbody>();
 		if (rBody == null)
 			return;
 		
 		rBody.AddForce(ForceToApply);
-		CEntityPlayer player = collider.gameObject.GetComponent<CEntityPlayer>();
+		CEntityPlayer player = CEntityPlayer.GetInstance();
 		if (player)
 		{
 			player.SetPlayerState(PlayerState.Jumping);
@@ -31,6 +24,9 @@ public class CForceVolume : MonoBehaviour {
     }
 	
 	void OnTriggerStay(Collider collider) {
+		if (!enabled)
+			return;
+		
 		Rigidbody rBody = collider.gameObject.GetComponent<Rigidbody>();
 		if (rBody == null)
 			return;
@@ -40,13 +36,21 @@ public class CForceVolume : MonoBehaviour {
 			rBody.AddForce(new Vector3(0.0f, ForceToApply.y, 0.0f));	
 		}
 		
-		CEntityPlayer player = collider.gameObject.GetComponent<CEntityPlayer>();
+		CEntityPlayer player = CEntityPlayer.GetInstance();
 		if (player)
 		{
-			if(player.Physics.Velocity < MaximumVelocity.x)
-			{
-				player.Physics.Velocity += ForceToApply.x;	
-			}
+			player.SetPlayerState(PlayerState.Jumping);
+			player.Physics.Velocity += ForceToApply.x;	
+			if(player.Physics.Velocity > MaximumVelocity.x)
+				player.Physics.Velocity = MaximumVelocity.x;
+		}
+	}
+	
+	public override void LogicStateChange(bool newState) {
+		enabled = newState;
+		ParticleSystem ps = GetComponentInChildren<ParticleSystem>();
+		if (ps != null) {
+			ps.enableEmission = newState;	
 		}
 	}
 }
