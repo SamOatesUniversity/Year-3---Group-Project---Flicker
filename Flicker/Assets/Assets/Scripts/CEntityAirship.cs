@@ -124,10 +124,13 @@ public class CEntityAirship : MonoBehaviour {
 			Vector3 pos = this.transform.position;
 			pos.y = correctedY;
 			this.transform.position = pos;
-		
+			
 			if( m_fireTimer >= RateOfFire )
 			{
-				FireCannon();
+				if( m_isFiring )
+				{
+					FireCannon();
+				}
 				m_fireTimer = 0.0f;
 			}
 			else
