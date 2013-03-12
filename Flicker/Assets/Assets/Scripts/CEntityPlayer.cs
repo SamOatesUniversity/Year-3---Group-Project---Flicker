@@ -501,6 +501,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		if (m_playerState == PlayerState.FallingFromTower)
 			return;
 		
+		rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 		m_playerState = PlayerState.FallingFromTower;
 		m_dead.y = transform.position.y;
 		m_dead.time = Time.time * 1000.0f;
