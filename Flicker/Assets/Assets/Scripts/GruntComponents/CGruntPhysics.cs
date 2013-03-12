@@ -206,7 +206,7 @@ public class CGruntPhysics : MonoBehaviour {
 			
 			m_jumpState = JumpState.Landed;	
 		}
-		if (m_collisionState == CollisionState.OnWall &&  m_grunt.GetGruntState() != GruntState.Turning && m_grunt.GetGruntState() != GruntState.Attacking)
+		if ( (m_collisionState == CollisionState.OnWall || collision.collider.gameObject.name=="GruntBarrier") &&  m_grunt.GetGruntState() != GruntState.Turning && m_grunt.GetGruntState() != GruntState.Attacking)
 		{
 			if( !playerDetected )
 			{

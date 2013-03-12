@@ -44,6 +44,8 @@ public class CEntityGrunt : CEntityPlayerBase {
 
 	private CGruntDebug 		m_debug = null;
 	
+	private bool				m_onBarrier = false;
+	
 	
 	// dying vars
 	
@@ -343,7 +345,10 @@ public class CEntityGrunt : CEntityPlayerBase {
 		
 		m_physics.CallOnCollisionEnter(collision, m_playerDetected);
 		
-
+		if( collision.collider.gameObject.name=="GruntBarrier" )
+		{
+			m_onBarrier = true;
+		}
 	}
 	
 	/*
@@ -352,6 +357,10 @@ public class CEntityGrunt : CEntityPlayerBase {
 	void OnCollisionExit(Collision collision)
 	{
 		m_physics.CallOnCollisionExit(collision);
+		if( collision.collider.gameObject.name=="GruntBarrier" )
+		{
+			m_onBarrier = false;
+		}
 	}
 	
 	/*
@@ -391,9 +400,12 @@ public class CEntityGrunt : CEntityPlayerBase {
 		{
 			//Player should be detected now
 			m_playerDetected = true;
-			m_playerState = GruntState.Walking;
 			m_resetTimer = Time.time;
 			
+			if( !m_onBarrier )
+			{
+				m_playerState = GruntState.Walking;
+			}
 		}
 	
 		if(collider.gameObject.name == "Electricity")
