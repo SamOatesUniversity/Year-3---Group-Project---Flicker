@@ -41,6 +41,7 @@ public class CCamera : MonoBehaviour {
 	public int 					MaxCamPositionsStored = 10;
 	
 	public GUISkin MainMenuSkin = null; 
+	public Texture2D PauseMenuBackground = null;
 	
 	public static CCamera GetInstance() {
 		return INSTANCE;	
@@ -217,6 +218,8 @@ public class CCamera : MonoBehaviour {
 	
 		if (m_playerEntity.CurrentGameState == GameState.Running)
 			return;
+		
+		GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), PauseMenuBackground);
 		
 		GUI.skin = MainMenuSkin;
 		CGUIOptions.GetInstance().OnGUI(false);		
