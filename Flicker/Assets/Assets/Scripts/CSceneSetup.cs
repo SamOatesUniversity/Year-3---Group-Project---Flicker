@@ -10,7 +10,9 @@ public class CSceneSetup : MonoBehaviour {
 	public int							NumberOfFloors = 1;
 	
 	public Texture 						LoadingScreenTexture = null;
-	 
+	private bool						m_showLoadingScreen = true;
+	private float						m_loadCompleteTime = 0.0f;
+	
 	// Use this for initialization
     void Start() {
 		
@@ -25,7 +27,7 @@ public class CSceneSetup : MonoBehaviour {
 	
 	void OnGUI() {
 	
-		if (LoadingScreenTexture == null || m_hasSetup)
+		if (LoadingScreenTexture == null || !m_showLoadingScreen)
 			return;
 		
 		GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), LoadingScreenTexture);
@@ -38,13 +40,18 @@ public class CSceneSetup : MonoBehaviour {
 		if (NextScene == null || NextScene.Length == 0)
 			return;
 		
-		if (m_hasSetup)
+		if (m_hasSetup) {
+			if (m_showLoadingScreen && (Time.time - m_loadCompleteTime > 2.0f)) {
+				m_showLoadingScreen = false;	
+			}
 			return;
+		}
 		
 		GameObject scene = GameObject.Find(NextScene);
 		if (scene != null)
 		{
 			m_hasSetup = true;
+			m_loadCompleteTime = Time.time;
 			scene.transform.position = new Vector3(scene.transform.position.x, this.transform.position.y + (NumberOfFloors * 0.64f), scene.transform.position.z);
 		}
 	
