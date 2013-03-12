@@ -26,9 +26,20 @@ public class CEntityAirship : MonoBehaviour {
 		
 		m_storedYPositions = new ArrayList();
 		
+		m_fireTimer = 0.0f;
+		m_isFiring = false;
+		testLength = 0.0f;
+		
 		m_playerEntity = CEntityPlayer.GetInstance();
 		if (m_playerEntity == null) {
-			m_playerEntity = GameObject.Find("Player Spawn").GetComponent<CEntityPlayer>();	
+			GameObject playerObject = GameObject.Find("Player Spawn");
+			if (playerObject != null) {
+				m_playerEntity = playerObject.GetComponent<CEntityPlayer>();	
+			}
+			if (m_playerEntity == null) {
+				Debug.LogError("CEntityAirship: Cannot find player");
+				return;
+			}
 		}
 		
 		m_playerTransform = m_playerEntity.transform.FindChild("Player_Mesh/Bip001/Bip001 Pelvis");
@@ -38,9 +49,6 @@ public class CEntityAirship : MonoBehaviour {
 		{
 			m_storedYPositions.Add(playerY);
 		}
-		m_fireTimer = 0.0f;
-		m_isFiring = false;
-		testLength = 0.0f;
 	}
 	
 	// Update is called once per frame
@@ -126,10 +134,6 @@ public class CEntityAirship : MonoBehaviour {
 			{
 				m_fireTimer += Time.deltaTime;	
 			}
-		}
-		else
-		{
-			Debug.Log("CEntityAirship: Cannot find player");	
 		}
 	}
 	
