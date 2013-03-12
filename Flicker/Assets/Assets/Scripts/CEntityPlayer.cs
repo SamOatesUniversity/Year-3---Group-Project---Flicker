@@ -435,6 +435,11 @@ public class CEntityPlayer : CEntityPlayerBase {
 		if (m_playerState == PlayerState.FallingFromTower)
 			return;
 		
+		if( collision.collider.gameObject.name == "Electricity" )
+		{
+			PushPlayerFromTower();	
+		}
+		
 		m_physics.CallOnCollisionEnter(collision);
 	}
 	
@@ -469,7 +474,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	void OnTriggerEnter(Collider collider)
 	{
-		if(collider.gameObject.name == "Electricity" || collider.gameObject.name == "Cannonball(Clone)")
+		if(collider.gameObject.name == "Cannonball(Clone)")
 		{
 			//Kill player
 			PushPlayerFromTower();
