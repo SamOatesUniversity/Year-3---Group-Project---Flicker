@@ -12,6 +12,8 @@ public class CSteamVent : CSceneObjectBase
 	public float			DeactiveTime = 0.0f;
 	private float			m_offTime = 0.0f;
 	
+	public bool				IsOnOffVent = false;
+	
 	public void Start () 
 	{
 		if (BladeAnimation != null)
@@ -32,9 +34,20 @@ public class CSteamVent : CSceneObjectBase
 		if (m_particle == null)
 			return;
 		
-		if (DeactiveTime > 0.0f && Time.time - m_offTime > DeactiveTime)
+		if (!IsOnOffVent) 
 		{
-			Enabled = true;
+			if (DeactiveTime > 0.0f && Time.time - m_offTime > DeactiveTime)
+			{
+				Enabled = true;
+			}
+		}
+		else 
+		{
+			if (Time.time - m_offTime > DeactiveTime)
+			{
+				Enabled = !Enabled;
+				m_offTime = Time.time;
+			}
 		}
 		
 		m_particle.enableEmission = Enabled;
