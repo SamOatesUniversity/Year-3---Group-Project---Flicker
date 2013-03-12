@@ -354,6 +354,14 @@ public class CEntityGrunt : CEntityPlayerBase {
 			m_playerState = GruntState.Standing;
 			m_physics.MovingDirection = -1;
 		}
+		if( collision.collider.gameObject.name == "Electricity" )
+		{
+			//Kill grunt
+			Object deathBlast = Instantiate(DeathEffect, transform.position, transform.rotation);
+			Destroy(deathBlast, 2);
+			Debug.Log(this);
+			this.transform.gameObject.SetActiveRecursively(false);
+		}
 	}
 	
 	/*
@@ -411,15 +419,6 @@ public class CEntityGrunt : CEntityPlayerBase {
 			{
 				m_playerState = GruntState.Walking;
 			}
-		}
-	
-		if(collider.gameObject.name == "Electricity")
-		{
-			//Kill grunt
-			Object deathBlast = Instantiate(DeathEffect, transform.position, transform.rotation);
-			Destroy(deathBlast, 2);
-			Debug.Log(this);
-			this.transform.gameObject.SetActiveRecursively(false);
 		}
 	}
 	
