@@ -20,6 +20,7 @@ public class CForceVolume : CSceneObjectBase {
 		if (player)
 		{
 			player.SetPlayerState(PlayerState.Jumping);
+			player.Physics.JumpType = JumpState.Jumping;
 		}
     }
 	
@@ -40,6 +41,7 @@ public class CForceVolume : CSceneObjectBase {
 		if (player)
 		{
 			player.SetPlayerState(PlayerState.Jumping);
+			player.Physics.JumpType = JumpState.Jumping;
 			player.Physics.Velocity += ForceToApply.x;	
 			if(player.Physics.Velocity > MaximumVelocity.x)
 				player.Physics.Velocity = MaximumVelocity.x;
