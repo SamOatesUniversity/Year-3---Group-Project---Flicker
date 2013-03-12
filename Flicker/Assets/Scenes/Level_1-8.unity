@@ -18641,8 +18641,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 766577166}
   m_LocalRotation: {x: 0, y: -.42755416, z: 0, w: .903989792}
-  m_LocalPosition: {x: 1.72309626e-07, y: -7.03999949, z: 1.57864577e-07}
-  m_LocalScale: {x: 1.24068499, y: 1.24068499, z: 1.24068534}
+  m_LocalPosition: {x: 0, y: -7.03999949, z: 0}
+  m_LocalScale: {x: 1.24068499, y: 1.24068499, z: 1.24068546}
   m_Children:
   - {fileID: 156258271}
   - {fileID: 1148455305}
@@ -18655,7 +18655,7 @@ Transform:
   - {fileID: 2013593739}
   - {fileID: 924425032}
   - {fileID: 146100657}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1984142202}
 --- !u!23 &766577168
 Renderer:
   m_ObjectHideFlags: 0
@@ -19337,6 +19337,10 @@ Prefab:
     - target: {fileID: 400076, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000000, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: far clip plane
+      value: 500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
@@ -26521,7 +26525,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: .300000012
-  far clip plane: 10
+  far clip plane: 500
   field of view: 60
   orthographic: 0
   orthographic size: 100
@@ -46431,6 +46435,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1245935822}
+  - {fileID: 766577167}
   - {fileID: 822163947}
   - {fileID: 448271637}
   - {fileID: 548909450}
