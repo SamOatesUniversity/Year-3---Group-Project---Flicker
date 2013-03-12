@@ -110,6 +110,7 @@ public class CCutSceneTrigger : CSceneObjectBase {
 		m_camera.MaxPositionsStored = m_maxPositionsStored;
 		m_active = false;
 		enabled = false;
+		GameObject.Destroy(this.gameObject);
 		
 	}
 	
