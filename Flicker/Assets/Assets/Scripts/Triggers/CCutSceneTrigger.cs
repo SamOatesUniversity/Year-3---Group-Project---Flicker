@@ -59,8 +59,10 @@ public class CCutSceneTrigger : CSceneObjectBase {
 			return;
 				
 		m_player.SetPlayerState(PlayerState.InCutScene);
-		GruntObject.GetComponent<CEntityGrunt>().SetGruntState(GruntState.Standing);
-		
+		if (GruntObject != null) {
+			GruntObject.GetComponent<CEntityGrunt>().SetGruntState(GruntState.Standing);
+		}
+			
 		m_camera.ClearFrames();
 		m_initialDistanceFromPlayer = m_camera.DistanceFromPlayer;
 		m_maxPositionsStored = m_camera.MaxPositionsStored;
