@@ -9218,7 +9218,7 @@ Transform:
   m_GameObject: {fileID: 408635183}
   m_LocalRotation: {x: 0, y: .24297978, z: 0, w: .970031381}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.24068511, y: 1.24068499, z: 1.24068511}
+  m_LocalScale: {x: 1.24068511, y: 1.24000001, z: 1.24068511}
   m_Children: []
   m_Father: {fileID: 1571415974}
 --- !u!23 &408635185
@@ -11821,19 +11821,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: bloomIntensity
-      value: 5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: bloomThreshhold
-      value: .699999988
+      value: .800000012
       objectReference: {fileID: 0}
     - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: bloomBlurIterations
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: sepBlurSpread
-      value: 2.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 11400016, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: MainMenuSkin
@@ -14077,11 +14077,11 @@ MonoBehaviour:
   tweakMode: 0
   screenBlendMode: 1
   hdr: 0
-  sepBlurSpread: 2.5
+  sepBlurSpread: 2
   useSrcAlphaAsMask: 0
-  bloomIntensity: 5
-  bloomThreshhold: .699999988
-  bloomBlurIterations: 4
+  bloomIntensity: 2
+  bloomThreshhold: .800000012
+  bloomBlurIterations: 2
   lensflares: 0
   hollywoodFlareBlurIterations: 2
   lensflareMode: 1
@@ -35835,7 +35835,7 @@ Transform:
   m_GameObject: {fileID: 1521246904}
   m_LocalRotation: {x: 0, y: .146729544, z: 0, w: .989176691}
   m_LocalPosition: {x: 0, y: 8.31999969, z: 0}
-  m_LocalScale: {x: 1.24068522, y: 1.24068499, z: 1.24068522}
+  m_LocalScale: {x: 1.24068522, y: 1.24000001, z: 1.24068522}
   m_Children: []
   m_Father: {fileID: 603817324}
 --- !u!23 &1521246906
