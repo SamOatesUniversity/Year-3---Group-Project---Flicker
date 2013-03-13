@@ -19,6 +19,7 @@ public class CEntityAirship : MonoBehaviour {
 	private float 			testLength;
 	
 	private bool			m_isFiring;
+	private float 			m_cutsceneSpeedMod = 1.0f;
 	
 	// Use this for initialization
 	void Start () {
@@ -49,6 +50,16 @@ public class CEntityAirship : MonoBehaviour {
 		{
 			m_storedYPositions.Add(playerY);
 		}
+	}
+	
+	void StartCutScene()
+	{
+		m_cutsceneSpeedMod = 0.2f;
+	}
+	
+	void EndCutScene()
+	{
+		m_cutsceneSpeedMod = 1.0f;
 	}
 	
 	// Update is called once per frame
@@ -108,11 +119,11 @@ public class CEntityAirship : MonoBehaviour {
 			float speed = 0.0f;
 			if( m_isFiring )
 			{
-				speed = FiringSpeed;	
+				speed = FiringSpeed * m_cutsceneSpeedMod;	
 			}
 			else
 			{
-				speed = CirclingSpeed;
+				speed = CirclingSpeed * m_cutsceneSpeedMod;
 			}
 			
 			//update ship position
