@@ -21,8 +21,12 @@ public class CEntityCaptain : MonoBehaviour {
 	
 	private int 			m_cutsceneAnimCounter = 0;
 	
+	private static CEntityCaptain INSTANCE = null;
+	
 	// Use this for initialization
 	void Start () {
+		
+		INSTANCE = this;
 		m_state = CaptainState.Idle;
 		m_animation = GetComponentInChildren<Animation>();
 		
@@ -43,7 +47,11 @@ public class CEntityCaptain : MonoBehaviour {
 		m_angryAnims.Add("fire");
 		
 		m_lastKnownIdle = "";
-		StartCutScene();
+	}
+	
+	public static CEntityCaptain GetInstance()
+	{
+		return INSTANCE;	
 	}
 	
 	// Update is called once per frame
@@ -56,13 +64,13 @@ public class CEntityCaptain : MonoBehaviour {
 		DoAnimations();
 	}
 	
-	void StartCutScene()
+	public void StartCutScene()
 	{
 		m_state = CaptainState.Cutscene;
 		m_lastKnownIdle = m_cutsceneAnims[0] as string;
 	}
 	
-	void EndCutScene()
+	public void EndCutScene()
 	{
 		m_state = CaptainState.Angry;
 		m_lastKnownIdle = m_angryAnims[0] as string;
@@ -110,8 +118,10 @@ public class CEntityCaptain : MonoBehaviour {
 					{
 						EndCutScene();
 					}
-					
-					m_currentAnimation = m_cutsceneAnims[m_cutsceneAnimCounter] as string;
+					else
+					{
+						m_currentAnimation = m_cutsceneAnims[m_cutsceneAnimCounter] as string;
+					}
 				}
 				else
 				{

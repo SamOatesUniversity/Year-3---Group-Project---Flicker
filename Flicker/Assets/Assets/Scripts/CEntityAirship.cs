@@ -21,8 +21,12 @@ public class CEntityAirship : MonoBehaviour {
 	private bool			m_isFiring;
 	private float 			m_cutsceneSpeedMod = 1.0f;
 	
+	private static CEntityAirship INSTANCE = null;
+	
 	// Use this for initialization
 	void Start () {
+		
+		INSTANCE = this;
 		m_initialTransform = this.transform;
 		
 		m_storedYPositions = new ArrayList();
@@ -50,14 +54,20 @@ public class CEntityAirship : MonoBehaviour {
 		{
 			m_storedYPositions.Add(playerY);
 		}
+		this.gameObject.SetActiveRecursively(false);
 	}
 	
-	void StartCutScene()
+	public static CEntityAirship GetInstance()
+	{
+		return INSTANCE;	
+	}
+	
+	public void StartCutScene()
 	{
 		m_cutsceneSpeedMod = 0.2f;
 	}
 	
-	void EndCutScene()
+	public void EndCutScene()
 	{
 		m_cutsceneSpeedMod = 1.0f;
 	}
