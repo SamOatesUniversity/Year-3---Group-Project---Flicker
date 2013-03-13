@@ -111,7 +111,40 @@ public class CEntityMonkey : MonoBehaviour {
 		}
 		else if( m_level == MonkeyLevel.OneEight )
 		{
-			
+			if( m_state == MonkeyState.IdlePre )
+			{
+				m_currentAnimation = "MONKEY_idle";
+				if (!m_animation.IsPlaying(m_currentAnimation))
+				{
+					m_animation.CrossFade(m_currentAnimation, 0.2f);
+				}	
+			}
+			else if( m_state == MonkeyState.Animate )
+			{
+				m_currentAnimation = "MONKEY_idle-to-attack";
+				if (!m_animation.IsPlaying("MONKEY_idle-to-attack") && !m_startedMainAnim)
+				{
+					//Debug.Log("On attack start");
+					m_startedMainAnim = true;
+					m_animation["MONKEY_idle-to-attack"].speed = 1.0f;
+					m_animation.CrossFade("MONKEY_idle-to-attack");
+				}
+				else if (!m_animation.IsPlaying("MONKEY_idle-to-attack"))
+				{
+					m_startedMainAnim = false;
+					m_state = MonkeyState.IdlePost;
+					this.gameObject.SetActiveRecursively(false);
+					//Debug.Log("On attack complete");
+				}
+			}
+			if( m_state == MonkeyState.IdlePost )
+			{
+				m_currentAnimation = "MONKEY_idle";
+				if (!m_animation.IsPlaying(m_currentAnimation))
+				{
+					m_animation.CrossFade(m_currentAnimation, 0.2f);
+				}	
+			}
 		}
 		
 	}
