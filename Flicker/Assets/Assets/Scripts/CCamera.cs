@@ -55,6 +55,7 @@ public class CCamera : MonoBehaviour {
 		
 		if (INSTANCE == null) {
 			INSTANCE = this;
+			CGUIOptions.GetInstance().ApplyOptions();	
 		}
 		
 		m_transform = this.transform;

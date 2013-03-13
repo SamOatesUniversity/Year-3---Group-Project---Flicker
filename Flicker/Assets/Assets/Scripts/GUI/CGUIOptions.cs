@@ -91,42 +91,18 @@ public class CGUIOptions {
 		}
 	}
 	
-	private void OnOptionsMenu(bool mainMenuOption)
-	{
-		const float BUTTON_WIDTH = 256;
-		float yPosition = 100;
+	public void ApplyOptions() {
+	
+		Water water = null;
+		GameObject waterObject = GameObject.Find("Nighttime Water");
+		if (waterObject != null) water = waterObject.GetComponent<Water>();
 		
-		if (!mainMenuOption) {
-			string pausedText = "Options";
-			Vector2 textDimensions = GUI.skin.label.CalcSize(new GUIContent(pausedText));
-			Rect pausedLabelRect = new Rect((Screen.width * 0.5f) - (textDimensions.x * 0.5f), yPosition, textDimensions.x, textDimensions.y);
-			GUI.Label(pausedLabelRect, pausedText);
-		}
-		
-		yPosition += 96;
-		
-		GUI.skin.button.fontSize = 22;		
-		string[] graphicsLevels = QualitySettings.names;		
-		Rect selectionRect = new Rect((Screen.width * 0.5f) - 256, yPosition, 512, 64);
-		if (mainMenuOption)
-			selectionRect = new Rect((Screen.width * 0.3f) - 256, yPosition + 120.0f, 512, 64);
-			
-		GUI.SetNextControlName ("graphics");
-		int selected = GUI.SelectionGrid(selectionRect, QualitySettings.GetQualityLevel(), graphicsLevels, graphicsLevels.Length);
-		if (selected != -1)
+		SSAOEffect ssao = null;
+		if (CCamera.GetInstance())
+			ssao = CCamera.GetInstance().GetComponent<SSAOEffect>();
+									
+		switch(QualitySettings.GetQualityLevel())
 		{
-			QualitySettings.SetQualityLevel(selected);
-			
-			Water water = null;
-			GameObject waterObject = GameObject.Find("Nighttime Water");
-			if (waterObject != null) water = waterObject.GetComponent<Water>();
-			
-			SSAOEffect ssao = null;
-			if (CCamera.GetInstance())
-				ssao = CCamera.GetInstance().GetComponent<SSAOEffect>();
-						
-			switch(selected)
-			{
 			case 0:
 			case 1:
 			{
@@ -162,7 +138,35 @@ public class CGUIOptions {
 				if (ssao != null) ssao.enabled = true;
 			}
 			break;
-			}
+		}		
+	}
+	
+	private void OnOptionsMenu(bool mainMenuOption)
+	{
+		const float BUTTON_WIDTH = 256;
+		float yPosition = 100;
+		
+		if (!mainMenuOption) {
+			string pausedText = "Options";
+			Vector2 textDimensions = GUI.skin.label.CalcSize(new GUIContent(pausedText));
+			Rect pausedLabelRect = new Rect((Screen.width * 0.5f) - (textDimensions.x * 0.5f), yPosition, textDimensions.x, textDimensions.y);
+			GUI.Label(pausedLabelRect, pausedText);
+		}
+		
+		yPosition += 96;
+		
+		GUI.skin.button.fontSize = 22;		
+		string[] graphicsLevels = QualitySettings.names;		
+		Rect selectionRect = new Rect((Screen.width * 0.5f) - 256, yPosition, 512, 64);
+		if (mainMenuOption)
+			selectionRect = new Rect((Screen.width * 0.3f) - 256, yPosition + 120.0f, 512, 64);
+			
+		GUI.SetNextControlName ("graphics");
+		int selected = GUI.SelectionGrid(selectionRect, QualitySettings.GetQualityLevel(), graphicsLevels, graphicsLevels.Length);
+		if (selected != -1)
+		{
+			QualitySettings.SetQualityLevel(selected);
+			ApplyOptions();	
 		}
 		
 		GUI.skin.button.fontSize = 48;	
@@ -359,6 +363,7 @@ public class CGUIOptions {
 		
 		if (upDown != 0.0f)
 		{
+			m_pressedOK = false;
 			if (m_highlighted == "graphics")
 			{
 				m_highlighted = "back";
@@ -376,6 +381,7 @@ public class CGUIOptions {
 		{
 			int newLevel = leftRight > 0.0f ? 1 : -1;
 			QualitySettings.SetQualityLevel(QualitySettings.GetQualityLevel() + newLevel);
+			m_pressedOK = false;
 		}
 	}
 	

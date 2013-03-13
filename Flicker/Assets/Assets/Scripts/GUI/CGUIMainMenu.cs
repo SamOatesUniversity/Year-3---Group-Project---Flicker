@@ -459,6 +459,7 @@ public class CGUIMainMenu : MonoBehaviour {
 		
 		if (upDown != 0.0f)
 		{
+			m_pressedOK = false;
 			if (m_highlighted == "graphics")
 			{
 				m_highlighted = "back";
@@ -476,6 +477,7 @@ public class CGUIMainMenu : MonoBehaviour {
 		{
 			int newLevel = leftRight > 0.0f ? 1 : -1;
 			QualitySettings.SetQualityLevel(QualitySettings.GetQualityLevel() + newLevel);
+			m_pressedOK = false;
 		}
 	}
 	
