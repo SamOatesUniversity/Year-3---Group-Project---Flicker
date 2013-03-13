@@ -7,6 +7,7 @@ public class CTriggerSecret : MonoBehaviour {
 	private bool m_reading = false;
 	
 	public Texture SecretLetter = null;
+	public Texture PressToContinue = null;
 	
 	// Use this for initialization
 	void Start () {

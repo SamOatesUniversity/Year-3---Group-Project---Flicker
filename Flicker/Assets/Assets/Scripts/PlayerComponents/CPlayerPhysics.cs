@@ -551,7 +551,7 @@ public class CPlayerPhysics : MonoBehaviour {
 	}
 	
 	public void OnUpdate(ref PlayerState playerState)
-	{	
+	{			
 		if (playerState == PlayerState.Standing)
 		{
 			m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;

@@ -28,14 +28,14 @@ public class CSceneSetup : MonoBehaviour {
 				playerXform.gameObject.SetActiveRecursively(false);
 			}
 		}
-				
+						
         if (NextScene == null || NextScene.Length == 0)
         {
 			m_showLoadingScreen = false;
             return;
         }
 		
-		Application.LoadLevelAdditive(NextScene);
+		Application.LoadLevelAdditiveAsync(NextScene);
     }
 	
 	void OnGUI() {
