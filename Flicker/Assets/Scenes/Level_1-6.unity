@@ -18454,6 +18454,8 @@ GameObject:
   - 4: {fileID: 340479052}
   - 135: {fileID: 340479053}
   - 114: {fileID: 340479054}
+  - 114: {fileID: 340479055}
+  - 111: {fileID: 340479056}
   m_Layer: 0
   m_Name: AirshipTriggerStart
   m_TagString: Untagged
@@ -18497,6 +18499,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 737856b82d0b03745b4a4be342cc7cb4, type: 1}
   m_Name: 
   EnableAirship: 1
+--- !u!114 &340479055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 340479051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b02f0a5c23c55184d8db082c76015bca, type: 1}
+  m_Name: 
+  DistanceFromLookAt: 3
+  NumberOfLerpKeys: 60
+  IsMonkey18: 0
+  GruntObject: {fileID: 0}
+--- !u!111 &340479056
+Animation:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 340479051}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 63649de80a3fd5047b3aa417e30d4d9c, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 63649de80a3fd5047b3aa417e30d4d9c, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+  m_UserAABB:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
 --- !u!1 &340565511
 GameObject:
   m_ObjectHideFlags: 0
@@ -25062,79 +25096,6 @@ Prefab:
   m_RootGameObject: {fileID: 1360024767}
   m_IsPrefabParent: 0
   m_IsExploded: 1
---- !u!1 &445982929
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 3
-  m_Component:
-  - 4: {fileID: 445982930}
-  - 135: {fileID: 445982931}
-  - 111: {fileID: 445982932}
-  - 114: {fileID: 445982933}
-  m_Layer: 0
-  m_Name: 1-6_PirateCaptain_Introduction
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &445982930
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 445982929}
-  m_LocalRotation: {x: 0, y: -.803337455, z: 0, w: -.595524132}
-  m_LocalPosition: {x: 3.16090655, y: .897339463, z: -1.97843623}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 673201820}
---- !u!135 &445982931
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 445982929}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: .200000003
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!111 &445982932
-Animation:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 445982929}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 63649de80a3fd5047b3aa417e30d4d9c, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 63649de80a3fd5047b3aa417e30d4d9c, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
-  m_UserAABB:
-    m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0, y: 0, z: 0}
---- !u!114 &445982933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 445982929}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b02f0a5c23c55184d8db082c76015bca, type: 1}
-  m_Name: 
-  DistanceFromLookAt: 3
-  NumberOfLerpKeys: 60
-  IsMonkey18: 0
-  GruntObject: {fileID: 0}
 --- !u!1 &446245625
 GameObject:
   m_ObjectHideFlags: 0
@@ -37548,7 +37509,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 445982930}
   - {fileID: 504542380}
   - {fileID: 340479052}
   - {fileID: 762063878}
