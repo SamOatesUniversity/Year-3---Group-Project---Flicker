@@ -53,7 +53,9 @@ public class CCamera : MonoBehaviour {
 	*/
 	public void Start () {	
 		
-		INSTANCE = this;
+		if (INSTANCE == null) {
+			INSTANCE = this;
+		}
 		
 		m_transform = this.transform;
 		DistanceFromPlayer = InitialDistanceFromPlayer;

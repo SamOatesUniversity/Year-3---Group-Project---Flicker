@@ -240,12 +240,12 @@ public class CGUIOptions {
 					}
 				}
 				
-				CEntityPlayer.GetInstance().LastCheckPoint = cp;
-				CEntityPlayer.GetInstance().OnDeath();
 				m_pausedMenuState = PausedMenuState.Main;
 				
 				Time.timeScale = 1.0f;
 				CEntityPlayer.GetInstance().CurrentGameState = GameState.Running;
+				CEntityPlayer.GetInstance().LastCheckPoint = cp;
+				CEntityPlayer.GetInstance().OnDeath();
 			}
 			
 			return;

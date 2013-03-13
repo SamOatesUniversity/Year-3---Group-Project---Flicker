@@ -104,7 +104,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 	*/
 	public override void Start () {
 		
-		INSTANCE = this;
+		if (INSTANCE == null) {
+			INSTANCE = this;
+		}
 		
 		base.Start();
 				
