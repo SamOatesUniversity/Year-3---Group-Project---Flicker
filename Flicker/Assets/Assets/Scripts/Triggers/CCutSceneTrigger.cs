@@ -116,7 +116,12 @@ public class CCutSceneTrigger : CSceneObjectBase {
 				if (grunt != null) {
 					grunt.SetGruntState(GruntState.Walking);
 				}
-			}			
+			}	
+			
+			if (m_camera == null) {
+				Debug.LogError("Camera is null on a cutscene: " + name);	
+			}
+			
 			m_camera.ResetLookAtTransform();
 			m_player.SetPlayerState(PlayerState.Standing);
 			m_camera.DistanceFromPlayer = m_initialDistanceFromPlayer;
