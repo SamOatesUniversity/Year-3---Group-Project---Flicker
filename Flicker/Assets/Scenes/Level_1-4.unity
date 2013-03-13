@@ -11925,7 +11925,7 @@ GameObject:
   - 114: {fileID: 340592484}
   m_Layer: 0
   m_Name: Level_1-4
-  m_TagString: Untagged
+  m_TagString: Level
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12116,6 +12116,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30117fc6155c96741a5d2ac06f7957f4, type: 1}
   m_Name: 
+  ThisScene: Level_1-4
   NextScene: Level_1-5
   NumberOfFloors: 18
   LoadingScreenTexture: {fileID: 2800000, guid: f30f85dc2a86a9741af240c5407deebd,
@@ -21063,8 +21064,8 @@ MonoBehaviour:
   MaxCameraOffset: 2
   MaxPositionsStored: 10
   MaxCamPositionsStored: 10
-  MainMenuSkin: {fileID: 0}
-  PauseMenuBackground: {fileID: 0}
+  MainMenuSkin: {fileID: 11400000, guid: 77779d8ae3575e2428b90d7ff82221a3, type: 2}
+  PauseMenuBackground: {fileID: 2800000, guid: a3a49b4f88892ce4fac6b6519e572a15, type: 1}
 --- !u!114 &568200865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26926,7 +26927,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 3
   m_Type: 1
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: .833002806, b: .701492548, a: 1}
   m_Intensity: .5
   m_Range: 10
   m_SpotAngle: 30
@@ -51554,6 +51555,19 @@ Prefab:
       propertyPath: sepBlurSpread
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 100164, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400016, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: MainMenuSkin
+      value: 
+      objectReference: {fileID: 11400000, guid: 77779d8ae3575e2428b90d7ff82221a3,
+        type: 2}
+    - target: {fileID: 11400016, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: PauseMenuBackground
+      value: 
+      objectReference: {fileID: 2800000, guid: a3a49b4f88892ce4fac6b6519e572a15, type: 1}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
   m_RootGameObject: {fileID: 39346438}

@@ -8733,6 +8733,15 @@ Prefab:
       propertyPath: m_HDR
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400016, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: MainMenuSkin
+      value: 
+      objectReference: {fileID: 11400000, guid: 77779d8ae3575e2428b90d7ff82221a3,
+        type: 2}
+    - target: {fileID: 11400016, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: PauseMenuBackground
+      value: 
+      objectReference: {fileID: 2800000, guid: a3a49b4f88892ce4fac6b6519e572a15, type: 1}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
   m_RootGameObject: {fileID: 878839373}
@@ -37509,13 +37518,13 @@ Transform:
   m_PrefabParentObject: {fileID: 400000, guid: d219a75f9a13d4c4784f371418e774b7, type: 2}
   m_PrefabInternal: {fileID: 1557344389}
   m_GameObject: {fileID: 1320229777}
-  m_LocalRotation: {x: 0, y: -.336889833, z: 0, w: .941544116}
-  m_LocalPosition: {x: 2.65728712, y: 8.15846539, z: 3.03371239}
-  m_LocalScale: {x: .806006312, y: .806006372, z: .806006312}
+  m_LocalRotation: {x: 0, y: -.98917681, z: 0, w: -.146728367}
+  m_LocalPosition: {x: -3.615973, y: 8.15846539, z: -1.78587055}
+  m_LocalScale: {x: .806006193, y: .806006372, z: .806006193}
   m_Children:
   - {fileID: 145452382}
   - {fileID: 53435773}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2124661520}
 --- !u!1001 &1322386232
 Prefab:
   m_ObjectHideFlags: 0
@@ -54052,8 +54061,8 @@ MonoBehaviour:
   MaxCameraOffset: 2
   MaxPositionsStored: 10
   MaxCamPositionsStored: 10
-  MainMenuSkin: {fileID: 0}
-  PauseMenuBackground: {fileID: 0}
+  MainMenuSkin: {fileID: 11400000, guid: 77779d8ae3575e2428b90d7ff82221a3, type: 2}
+  PauseMenuBackground: {fileID: 2800000, guid: a3a49b4f88892ce4fac6b6519e572a15, type: 1}
 --- !u!114 &1862627590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61606,7 +61615,7 @@ GameObject:
   - 114: {fileID: 2124661521}
   m_Layer: 0
   m_Name: Level_1-9
-  m_TagString: Untagged
+  m_TagString: Level
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -61706,6 +61715,7 @@ Transform:
   - {fileID: 1194071814}
   - {fileID: 673215234}
   - {fileID: 1584744699}
+  - {fileID: 1320229778}
   m_Father: {fileID: 0}
 --- !u!114 &2124661521
 MonoBehaviour:
@@ -61717,6 +61727,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 30117fc6155c96741a5d2ac06f7957f4, type: 1}
   m_Name: 
+  ThisScene: Level_1-9
   NextScene: Level_1-10
   NumberOfFloors: 16
   LoadingScreenTexture: {fileID: 2800000, guid: f30f85dc2a86a9741af240c5407deebd,

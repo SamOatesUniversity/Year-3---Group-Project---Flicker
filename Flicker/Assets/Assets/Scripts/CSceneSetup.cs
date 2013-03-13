@@ -4,7 +4,8 @@ using System.Collections;
 public class CSceneSetup : MonoBehaviour {
 	
 	private bool                        m_hasSetup = false;                     //! Have we setup the scene position, unity require one tick to update streamed level transforms
-
+	
+	public string                       ThisScene = null;                       //! The next scene to stream in
     public string                       NextScene = null;                       //! The next scene to stream in
 	
 	public int							NumberOfFloors = 1;
@@ -15,10 +16,22 @@ public class CSceneSetup : MonoBehaviour {
 	
 	// Use this for initialization
     void Start() {
+				
+		GameObject[] allLevels = GameObject.FindGameObjectsWithTag("Level");
 		
+		if (allLevels.Length > 1)
+		{
+			GameObject scene = GameObject.Find(ThisScene);
+			Transform playerXform = scene.transform.FindChild("Scene Setup");
+			if (playerXform != null)
+			{
+				playerXform.gameObject.SetActiveRecursively(false);
+			}
+		}
+				
         if (NextScene == null || NextScene.Length == 0)
         {
-			Debug.LogError("The next scene has not been set on a scene setup script. (" + name + ")");
+			m_showLoadingScreen = false;
             return;
         }
 		
@@ -54,6 +67,5 @@ public class CSceneSetup : MonoBehaviour {
 			m_loadCompleteTime = Time.time;
 			scene.transform.position = new Vector3(scene.transform.position.x, this.transform.position.y + (NumberOfFloors * 0.64f), scene.transform.position.z);
 		}
-	
 	}
 }
