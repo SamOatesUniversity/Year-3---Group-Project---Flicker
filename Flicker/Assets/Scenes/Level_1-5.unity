@@ -672,6 +672,8 @@ MonoBehaviour:
   m_Name: 
   DistanceFromLookAt: 3
   NumberOfLerpKeys: 10
+  IsMonkey18: 0
+  GruntObject: {fileID: 0}
 --- !u!114 &26197538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11376,6 +11378,8 @@ MonoBehaviour:
   m_Name: 
   DistanceFromLookAt: 3
   NumberOfLerpKeys: 30
+  IsMonkey18: 0
+  GruntObject: {fileID: 0}
 --- !u!114 &470660471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22318,9 +22322,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 79420760}
-  - {fileID: 183484721}
   - {fileID: 599697661}
   - {fileID: 1147909549}
+  - {fileID: 183484721}
   m_Father: {fileID: 1101728402}
 --- !u!1001 &959848334
 Prefab:
@@ -27974,7 +27978,8 @@ MonoBehaviour:
   m_Name: 
   NextScene: Level_1-6
   NumberOfFloors: 14
-  LoadingScreenTexture: {fileID: 0}
+  LoadingScreenTexture: {fileID: 2800000, guid: f30f85dc2a86a9741af240c5407deebd,
+    type: 1}
 --- !u!1 &1104468946
 GameObject:
   m_ObjectHideFlags: 0
