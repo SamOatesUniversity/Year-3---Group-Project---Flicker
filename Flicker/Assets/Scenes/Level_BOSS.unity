@@ -8962,6 +8962,8 @@ MonoBehaviour:
   MaxCameraOffset: 2
   MaxPositionsStored: 10
   MaxCamPositionsStored: 10
+  MainMenuSkin: {fileID: 0}
+  PauseMenuBackground: {fileID: 0}
 --- !u!114 &835447797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8969,7 +8971,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1354659862}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1dad87ba4f1e04d6eb7f287e1f2e08fe, type: 1}
   m_Name: 
@@ -14843,7 +14845,7 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1354659862}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0923359e9e352a4b9b11c7b7161ad67, type: 1}
   m_Name: 
@@ -14863,18 +14865,18 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1354659862}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d35a90bed98554f4d8b92c9cd3cfbafa, type: 1}
   m_Name: 
   tweakMode: 0
   screenBlendMode: 1
   hdr: 0
-  sepBlurSpread: 1.5
+  sepBlurSpread: 2.5
   useSrcAlphaAsMask: 0
   bloomIntensity: 1
-  bloomThreshhold: .819999993
-  bloomBlurIterations: 2
+  bloomThreshhold: .699999988
+  bloomBlurIterations: 4
   lensflares: 0
   hollywoodFlareBlurIterations: 2
   lensflareMode: 1
@@ -18738,7 +18740,7 @@ Camera:
     m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
-  m_HDR: 0
+  m_HDR: 1
 --- !u!45 &1761862228
 Skybox:
   m_ObjectHideFlags: 0

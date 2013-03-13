@@ -21004,7 +21004,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: .300000012
-  far clip plane: 100
+  far clip plane: 500
   field of view: 60
   orthographic: 0
   orthographic size: 100
@@ -21014,7 +21014,7 @@ Camera:
     m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
-  m_HDR: 0
+  m_HDR: 1
 --- !u!45 &568200861
 Skybox:
   m_ObjectHideFlags: 0
@@ -21099,11 +21099,11 @@ MonoBehaviour:
   tweakMode: 0
   screenBlendMode: 1
   hdr: 0
-  sepBlurSpread: 1.5
+  sepBlurSpread: 2.5
   useSrcAlphaAsMask: 0
-  bloomIntensity: 10
-  bloomThreshhold: .790000021
-  bloomBlurIterations: 2
+  bloomIntensity: 5
+  bloomThreshhold: .699999988
+  bloomBlurIterations: 4
   lensflares: 0
   hollywoodFlareBlurIterations: 2
   lensflareMode: 1
@@ -51400,7 +51400,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2000000, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: far clip plane
-      value: 100
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 11400010, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: PlayerPathRadius
@@ -51425,6 +51425,26 @@ Prefab:
     - target: {fileID: 400056, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: m_LocalPosition.z
       value: -9.26526234e-09
+      objectReference: {fileID: 0}
+    - target: {fileID: 2000000, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: m_HDR
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: bloomIntensity
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: bloomThreshhold
+      value: .699999988
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: bloomBlurIterations
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: sepBlurSpread
+      value: 2.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}

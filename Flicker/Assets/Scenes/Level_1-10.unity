@@ -43790,6 +43790,30 @@ Prefab:
       propertyPath: m_LocalPosition.z
       value: 2.43232279e-08
       objectReference: {fileID: 0}
+    - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: bloomIntensity
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: bloomThreshhold
+      value: .699999988
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: bloomBlurIterations
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: sepBlurSpread
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 400172, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -2.99640751
+      objectReference: {fileID: 0}
+    - target: {fileID: 400172, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 3.00000358
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
   m_RootGameObject: {fileID: 1851395641}
@@ -78217,7 +78241,7 @@ Transform:
   m_PrefabInternal: {fileID: 1072649453}
   m_GameObject: {fileID: 1803259102}
   m_LocalRotation: {x: -2.62599915e-08, y: -1.60048501e-07, z: 1.76664543e-07, w: 1}
-  m_LocalPosition: {x: -2.99640393, y: .320000261, z: 3}
+  m_LocalPosition: {x: -2.99640751, y: .320000261, z: 3.00000358}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 983568786}
@@ -78335,11 +78359,11 @@ MonoBehaviour:
   tweakMode: 0
   screenBlendMode: 1
   hdr: 0
-  sepBlurSpread: 1.5
+  sepBlurSpread: 2.5
   useSrcAlphaAsMask: 0
-  bloomIntensity: 10
-  bloomThreshhold: .790000021
-  bloomBlurIterations: 2
+  bloomIntensity: 5
+  bloomThreshhold: .699999988
+  bloomBlurIterations: 4
   lensflares: 0
   hollywoodFlareBlurIterations: 2
   lensflareMode: 1
