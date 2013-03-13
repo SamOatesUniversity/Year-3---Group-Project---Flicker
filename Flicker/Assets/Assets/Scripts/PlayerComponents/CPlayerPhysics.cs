@@ -419,6 +419,11 @@ public class CPlayerPhysics : MonoBehaviour {
 		{
 			velocity = m_velocity;
 		}
+		
+		if (velocity != 0.0f && m_ladder.state != LadderState.AtBase)
+		{
+			m_ladder.state = LadderState.None;	
+		}
 							
 		int direction = isNearly(velocity, 0.0f, 0.1f) ? 0 : velocity > 0 ? 1 : -1;
 		
