@@ -9,7 +9,10 @@ public class CCannonball : MonoBehaviour {
 	
 	public GameObject		Marker = null;
 	
+	public float			DeathTimer = 0.5f;
+	
 	private Vector3 		m_velocity;
+	private bool 			m_exploded;
 	
 	
 	// Use this for initialization
@@ -35,11 +38,20 @@ public class CCannonball : MonoBehaviour {
 	
 	void FixedUpdate()
 	{
-		this.transform.position += m_velocity;
+		if( !m_exploded )
+		{
+			this.transform.position += m_velocity;
+		}
 	}
 	
 	void OnTriggerEnter(Collider collider)
 	{
-		Destroy(this.gameObject);
+		Destroy(this.gameObject, DeathTimer);
+		ParticleSystem pSystem = this.GetComponent<ParticleSystem>();
+		pSystem.Stop();
+		GameObject cannonMesh = this.transform.FindChild("SM_Cannonball").gameObject;
+		MeshRenderer mRenderer = cannonMesh.GetComponent<MeshRenderer>();
+		mRenderer.enabled = false;
+		m_exploded = true;
 	}
 }

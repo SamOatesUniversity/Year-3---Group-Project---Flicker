@@ -9,6 +9,19 @@ ModelImporter:
     4300008: Pirate_Captain_Hat001
     7400000: Take 001 //// PirateCaptainAnims
     7400002: Take 001 //// PirateCaptain
+    7400004: calmidle //// PirateCaptain
+    7400006: walk //// PirateCaptain
+    7400008: run //// PirateCaptain
+    7400010: taunt //// PirateCaptain
+    7400012: 90ccw_turn //// PirateCaptain
+    7400014: 90cw_turn //// PirateCaptain
+    7400016: 180cw_turn //// PirateCaptain
+    7400018: 180ccw_turn //// PirateCaptain
+    7400020: angryidle_0 //// PirateCaptain
+    7400022: stagger //// PirateCaptain
+    7400024: facepalm //// PirateCaptain
+    7400026: launch //// PirateCaptain
+    7400028: fire //// PirateCaptain
   serializedVersion: 10
   materials:
     importMaterials: 1
@@ -23,7 +36,72 @@ ModelImporter:
     animationPositionError: .5
     animationScaleError: .5
     animationWrapMode: 0
-    clipAnimations: []
+    clipAnimations:
+    - name: calmidle
+      firstFrame: 1
+      lastFrame: 180
+      wrapMode: 2
+      loop: 1
+    - name: walk
+      firstFrame: 181
+      lastFrame: 215
+      wrapMode: 2
+      loop: 1
+    - name: run
+      firstFrame: 216
+      lastFrame: 244
+      wrapMode: 2
+      loop: 1
+    - name: taunt
+      firstFrame: 245
+      lastFrame: 370
+      wrapMode: 0
+      loop: 0
+    - name: 90ccw_turn
+      firstFrame: 371
+      lastFrame: 393
+      wrapMode: 0
+      loop: 0
+    - name: 90cw_turn
+      firstFrame: 394
+      lastFrame: 416
+      wrapMode: 0
+      loop: 0
+    - name: 180cw_turn
+      firstFrame: 417
+      lastFrame: 447
+      wrapMode: 0
+      loop: 0
+    - name: 180ccw_turn
+      firstFrame: 448
+      lastFrame: 478
+      wrapMode: 0
+      loop: 0
+    - name: angryidle_0
+      firstFrame: 497
+      lastFrame: 527
+      wrapMode: 0
+      loop: 0
+    - name: stagger
+      firstFrame: 528
+      lastFrame: 571
+      wrapMode: 0
+      loop: 0
+    - name: facepalm
+      firstFrame: 572
+      lastFrame: 652
+      wrapMode: 0
+      loop: 0
+    - name: launch
+      firstFrame: 653
+      lastFrame: 713
+      wrapMode: 0
+      loop: 0
+    - name: fire
+      firstFrame: 714
+      lastFrame: 768
+      wrapMode: 0
+      loop: 0
   meshes:
     lODScreenPercentages: []
     globalScale: .00999999978
