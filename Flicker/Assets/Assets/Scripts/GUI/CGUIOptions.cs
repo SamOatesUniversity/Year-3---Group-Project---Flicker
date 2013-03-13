@@ -15,6 +15,11 @@ public class CGUIOptions {
 	
 	private PausedMenuState		m_pausedMenuState = PausedMenuState.Main;
 	
+	private bool m_isController = false;
+	private string m_highlighted = "";
+	private bool m_pressedOK = false;
+	private float m_changeTime = 0.0f;
+	
 	public static CGUIOptions GetInstance() 
 	{
 		if (instance == null)
@@ -25,6 +30,34 @@ public class CGUIOptions {
 	
 	public PausedMenuState GetMenuState() {
 		return m_pausedMenuState;	
+	}
+	
+	public void OnUpdate()
+	{
+		if (Input.GetButtonUp("Jump"))
+		{
+			m_pressedOK = true;	
+		}
+		
+		float upDown = Input.GetAxis("Vertical");
+		float leftRight = Input.GetAxis("Horizontal");
+		
+		if (upDown != 0.0f || leftRight != 0.0f)
+		{
+			if (!m_isController)
+			{
+				m_highlighted = "continue";				
+				m_isController = true;
+				m_changeTime = Time.realtimeSinceStartup;
+				return;
+			}
+	
+			if (Time.realtimeSinceStartup - m_changeTime > 0.2f)
+			{
+				GoToNextConrol(upDown, leftRight);
+				m_changeTime = Time.realtimeSinceStartup;
+			}
+		}			
 	}
 	
 	public void OnGUI(bool mainMenuOption)
@@ -50,7 +83,12 @@ public class CGUIOptions {
 		case PausedMenuState.Restart:
 			AreYouSureMenu();
 			break;
-		};		
+		};
+		
+		if (m_isController) 
+		{
+			GUI.FocusControl (m_highlighted);	
+		}
 	}
 	
 	private void OnOptionsMenu(bool mainMenuOption)
@@ -168,8 +206,9 @@ public class CGUIOptions {
 		
 		yPosition += 96;
 		
-		Rect yesRect = new Rect((Screen.width * 0.5f) - (BUTTON_WIDTH * 0.5f) - 5, yPosition, BUTTON_WIDTH * 0.5f, 32);
-		if (GUI.Button(yesRect, "Yes"))
+		Rect yesRect = new Rect((Screen.width * 0.5f) - (BUTTON_WIDTH * 0.5f) - 5, yPosition, BUTTON_WIDTH * 0.5f, 48);
+		GUI.SetNextControlName ("yes");
+		if (GUI.Button(yesRect, "Yes") || (m_pressedOK && m_highlighted == "no"))
 		{
 			if (m_pausedMenuState == PausedMenuState.Quit)
 			{
@@ -206,10 +245,13 @@ public class CGUIOptions {
 			return;
 		}
 		
-		Rect noRect = new Rect((Screen.width * 0.5f) + 5, yPosition, BUTTON_WIDTH * 0.5f, 32);
-		if (GUI.Button(noRect, "No"))
+		Rect noRect = new Rect((Screen.width * 0.5f) + 5, yPosition, BUTTON_WIDTH * 0.5f, 48);
+		GUI.SetNextControlName ("no");
+		if (GUI.Button(noRect, "No") || (m_pressedOK && m_highlighted == "no"))
 		{
 			m_pausedMenuState = PausedMenuState.Main;
+			m_pressedOK = false;
+			m_highlighted = "continue";
 			return;
 		}
 	}
@@ -227,8 +269,11 @@ public class CGUIOptions {
 		
 		yPosition += 96;
 		Rect continueRect = new Rect((Screen.width * 0.5f) - (BUTTON_WIDTH * 0.5f), yPosition, BUTTON_WIDTH, 48);
-		if (GUI.Button(continueRect, "Continue"))
+		GUI.SetNextControlName ("continue");
+		if (GUI.Button(continueRect, "Continue") || (m_pressedOK && m_highlighted == "continue"))
 		{
+			m_pressedOK = false;
+			m_highlighted = "continue";
 			CEntityPlayer.GetInstance().CurrentGameState = GameState.Running;
 			Time.timeScale = 1.0f;
 			return;
@@ -236,34 +281,152 @@ public class CGUIOptions {
 		
 		yPosition += 42;
 		Rect restartRect = new Rect((Screen.width * 0.5f) - (BUTTON_WIDTH * 0.5f), yPosition, BUTTON_WIDTH, 48);
-		if (GUI.Button(restartRect, "Restart Level"))
+		GUI.SetNextControlName ("restart");
+		if (GUI.Button(restartRect, "Restart Level") || (m_pressedOK && m_highlighted == "restart"))
 		{
+			m_pressedOK = false;
+			m_highlighted = "no";
 			m_pausedMenuState = PausedMenuState.Restart;
 			return;
 		}
 		
 		yPosition += 42;
 		Rect optionsRect = new Rect((Screen.width * 0.5f) - (BUTTON_WIDTH * 0.5f), yPosition, BUTTON_WIDTH, 48);
-		if (GUI.Button(optionsRect, "Options"))
+		GUI.SetNextControlName ("options");
+		if (GUI.Button(optionsRect, "Options") || (m_pressedOK && m_highlighted == "options"))
 		{
+			m_pressedOK = false;
+			m_highlighted = "continue";
 			m_pausedMenuState = PausedMenuState.Options;
 			return;
 		}
 		
 		yPosition += 84;
 		Rect mainMenuRect = new Rect((Screen.width * 0.5f) - (BUTTON_WIDTH * 0.5f), yPosition, BUTTON_WIDTH, 48);
-		if (GUI.Button(mainMenuRect, "Main Menu"))
+		GUI.SetNextControlName ("mainmenu");
+		if (GUI.Button(mainMenuRect, "Main Menu") || (m_pressedOK && m_highlighted == "mainmenu"))
 		{
+			m_pressedOK = false;
+			m_highlighted = "no";
 			m_pausedMenuState = PausedMenuState.MainMenu;
 			return;
 		}
 		
 		yPosition += 42;
 		Rect quitRect = new Rect((Screen.width * 0.5f) - (BUTTON_WIDTH * 0.5f), yPosition, BUTTON_WIDTH, 48);
-		if (GUI.Button(quitRect, "Quit"))
+		GUI.SetNextControlName ("quit");
+		if (GUI.Button(quitRect, "Quit") || (m_pressedOK && m_highlighted == "quit"))
 		{
+			m_pressedOK = false;
+			m_highlighted = "no";
 			m_pausedMenuState = PausedMenuState.Quit;
 			return;
 		}
 	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private void GoToNextConrol(float upDown, float leftRight)
+	{
+		if (m_pausedMenuState == PausedMenuState.Main)
+		{
+			GoToNextMainControl(upDown, leftRight);
+			return;
+		}
+		
+		if (m_pausedMenuState == PausedMenuState.MainMenu || m_pausedMenuState == PausedMenuState.Restart || m_pausedMenuState == PausedMenuState.Quit)
+		{
+			GoToNextYesNoControl(upDown, leftRight);
+			return;
+		}
+	}
+	
+	private void GoToNextYesNoControl(float upDown, float leftRight)
+	{
+		if (leftRight == 0.0f)
+			return;
+		
+		if (m_highlighted == "no")
+		{
+			m_highlighted = "yes";
+			return;
+		}
+		else
+		{
+			m_highlighted = "no";
+			return;
+		}
+	}
+		
+	private void GoToNextMainControl(float upDown, float leftRight)
+	{
+		if (upDown == 0.0f)
+			return;
+		
+		if (upDown < 0.0f)
+		{
+			if (m_highlighted == "continue")
+			{
+				m_highlighted = "restart";
+				return;
+			}
+			
+			if (m_highlighted == "restart")
+			{
+				m_highlighted = "options";
+				return;
+			}
+			
+			if (m_highlighted == "options")
+			{
+				m_highlighted = "mainmenu";
+				return;
+			}
+			
+			if (m_highlighted == "mainmenu")
+			{
+				m_highlighted = "quit";
+				return;
+			}
+			
+			if (m_highlighted == "quit")
+			{
+				m_highlighted = "continue";
+				return;
+			}
+		}
+		else
+		{
+			if (m_highlighted == "continue")
+			{
+				m_highlighted = "quit";
+				return;
+			}
+			
+			if (m_highlighted == "quit")
+			{
+				m_highlighted = "mainmenu";
+				return;
+			}
+			
+			if (m_highlighted == "mainmenu")
+			{
+				m_highlighted = "options";
+				return;
+			}
+			
+			if (m_highlighted == "options")
+			{
+				m_highlighted = "restart";
+				return;
+			}
+			
+			if (m_highlighted == "restart")
+			{
+				m_highlighted = "continue";
+				return;
+			}	
+		}
+	}
 }
+

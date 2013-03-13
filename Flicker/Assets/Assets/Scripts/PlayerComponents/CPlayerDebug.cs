@@ -33,8 +33,12 @@ public class CPlayerDebug : MonoBehaviour
 	
 	void OnGUI ()
 	{
-		if (!m_visible || m_player == null) return;
+		if (!m_visible || m_player == null) 
+			return;
 				
+		if (m_player.CurrentGameState == GameState.Paused)
+			return;
+		
 		m_information.Clear();
 		m_information.Add("FPS: " + m_fps);
 		m_information.Add("----------");

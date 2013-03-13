@@ -182,6 +182,13 @@ public class CCamera : MonoBehaviour {
 		this.SetLookAt( avgPosition );
 	}
 	
+	void Update() {
+		if (m_playerEntity.CurrentGameState == GameState.Running)
+			return;
+		
+		CGUIOptions.GetInstance().OnUpdate();
+	}
+	
 	public void TendToMaxOffset(float direction)
 	{	
 		if (direction != 0.0f) 
