@@ -58,7 +58,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
-  m_LocalRotation: {x: 0, y: .0490676761, z: -0, w: .99879545}
+  m_LocalRotation: {x: 0, y: .0490676798, z: -0, w: .998795509}
   m_LocalPosition: {x: 7.1054272e-17, y: 0, z: -1.13686835e-15}
   m_LocalScale: {x: 2.32223415, y: 2.32223415, z: 2.32223415}
   m_Children: []
@@ -167,6 +167,11 @@ MonoBehaviour:
   m_Name: 
   state: 0
   LeverType: 2
+  TimeDelaySecs: .150000006
+  ResetTime: 4
+  ForcedGameObject: {fileID: 0}
+  OnWall: 1
+  SendSignalDelay: 0
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -177,8 +182,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .400000006
-  m_Center: {x: -.0399999991, y: .330000013, z: -3}
+  m_Radius: .300000012
+  m_Center: {x: 0, y: .180000007, z: -2.88000011}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
