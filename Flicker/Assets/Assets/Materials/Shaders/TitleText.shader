@@ -38,7 +38,7 @@ SubShader {
 		{
 			v2f o;
 			o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
-			o.color = v.color * _Color;
+			o.color = v.color * fixed4(1, 1, 1, 1);
 			o.texcoord = TRANSFORM_TEX(v.texcoord, _MainTex);
 			return o;
 		}

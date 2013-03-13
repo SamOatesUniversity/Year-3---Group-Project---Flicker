@@ -100,8 +100,16 @@ class CDynamicTexture : MonoBehaviour
 			
 			xOffset *= size.x;
  			
+			Vector2 offset;
             //split into x and y indexes
-            Vector2 offset = new Vector2(xOffset, 1 - yOffset);
+			if(yOffset==0)
+			{
+				offset = new Vector2(xOffset, 0);
+			}
+			else
+			{
+            	offset = new Vector2(xOffset, 1 - yOffset);
+			}
 			
             renderer.sharedMaterial.SetTextureOffset("_MainTex", offset);
 			
