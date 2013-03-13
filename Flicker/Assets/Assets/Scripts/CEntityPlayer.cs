@@ -271,6 +271,11 @@ public class CEntityPlayer : CEntityPlayerBase {
 				float spin = Physics.InsideTower ? -180.0f : 0.0f;
 				m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + spin, 0));
 			}
+			else if (PullingLever(false))
+			{
+				float spin = Physics.InsideTower ? 0.0f : -180.0f;
+				m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + spin, 0));
+			}
 			else
 			{
 				if (m_physics.Direction > 0)
@@ -528,6 +533,9 @@ public class CEntityPlayer : CEntityPlayerBase {
 			return false;
 		
 		if (m_playerState == PlayerState.NormalFloorLever)
+			return true;
+		
+		if (m_playerState == PlayerState.KickFloorLever)
 			return true;
 		
 		return false;

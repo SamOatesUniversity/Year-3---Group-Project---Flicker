@@ -5358,7 +5358,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29a57befbf3b5dc4f8703a6e9b505e5c, type: 1}
   m_Name: 
   m_enabled: 0
-  isLevel1_3: 0
+  isLevel1_3: 1
   OnIsOn: 0
 --- !u!1 &284558999
 GameObject:
@@ -10151,6 +10151,7 @@ MonoBehaviour:
   ResetTime: 5
   ForcedGameObject: {fileID: 1941261396}
   OnWall: 0
+  AnimationName: RegularActivate
   SendSignalDelay: 2
 --- !u!1 &577044767
 GameObject:
@@ -15377,6 +15378,7 @@ MonoBehaviour:
   ResetTime: 5
   ForcedGameObject: {fileID: 783749242}
   OnWall: 0
+  AnimationName: RegularActivate
   SendSignalDelay: 2
 --- !u!1001 &907574416
 Prefab:
@@ -15695,7 +15697,8 @@ MonoBehaviour:
   ResetTime: 5
   ForcedGameObject: {fileID: 1242204994}
   OnWall: 0
-  SendSignalDelay: 1
+  AnimationName: RegularActivate
+  SendSignalDelay: 2
 --- !u!1 &920076497
 GameObject:
   m_ObjectHideFlags: 0
@@ -17461,6 +17464,7 @@ MonoBehaviour:
   ResetTime: 5
   ForcedGameObject: {fileID: 1545397889}
   OnWall: 0
+  AnimationName: RegularActivate
   SendSignalDelay: 2
 --- !u!1 &1015947216
 GameObject:
@@ -23939,6 +23943,7 @@ MonoBehaviour:
   ResetTime: 5
   ForcedGameObject: {fileID: 614596338}
   OnWall: 0
+  AnimationName: KickActivate
   SendSignalDelay: 1
 --- !u!1 &1368143778
 GameObject:
@@ -36156,6 +36161,7 @@ MonoBehaviour:
   ResetTime: 5
   ForcedGameObject: {fileID: 1453357183}
   OnWall: 0
+  AnimationName: RegularActivate
   SendSignalDelay: 2
 --- !u!1001 &2131106773
 Prefab:

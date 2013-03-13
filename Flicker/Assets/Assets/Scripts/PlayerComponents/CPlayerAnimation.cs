@@ -180,6 +180,20 @@ public class CPlayerAnimation : MonoBehaviour {
 				m_pulledLever = true;
 			}	
 		}
+		else if (playerState == PlayerState.KickFloorLever)
+		{
+			if (m_pulledLever && !m_animation.IsPlaying(m_currentAnimation))
+			{
+				playerState = PlayerState.Standing;
+				m_pulledLever = false;
+			}
+			m_currentAnimation = "bigswitch-kick";	
+			if (!m_animation.IsPlaying(m_currentAnimation))
+			{
+				m_animation.CrossFade(m_currentAnimation);	
+				m_pulledLever = true;
+			}	
+		}
 	}
 	
 	public string CurrentAnimation()
