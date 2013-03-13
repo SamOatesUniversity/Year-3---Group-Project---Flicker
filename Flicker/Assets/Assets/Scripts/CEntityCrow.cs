@@ -15,6 +15,7 @@ public class CEntityCrow : MonoBehaviour {
 	private bool		m_startled;
 	private bool		m_startedTakeoff;
 	private Animation 	m_animation = null;
+	private Animation	m_takeOffAnimation = null;
 	private string 		m_currentAnimation = null;
 	private float		m_timeTookoff = 0.0f;
 	private bool 		m_doneTakeoffMathCalcs = false;
@@ -40,7 +41,8 @@ public class CEntityCrow : MonoBehaviour {
 		m_startled = false;
 		m_state = CrowState.Resting;
 		m_startedTakeoff = false;
-		m_animation = GetComponentInChildren<Animation>();
+		m_animation = this.transform.FindChild("CrowAnims2").GetComponent<Animation>();
+		m_takeOffAnimation = GetComponent<Animation>();
 		MathHelp = GetComponent<MathHelpers>();
 		m_lastPos = this.transform.position;
 	}
@@ -54,6 +56,7 @@ public class CEntityCrow : MonoBehaviour {
 	{	
 		DoAnimations();
 		
+		/*
 		if( m_startled && !m_doneTakeoffMathCalcs )	
 		{
 			m_doneTakeoffMathCalcs = true;
@@ -83,6 +86,7 @@ public class CEntityCrow : MonoBehaviour {
 			Vector3 basicLookDirection = this.transform.position + ((this.transform.position-m_lastPos) * 20);
 			this.transform.LookAt( basicLookDirection + m_flightEnd );
 		}
+		*/
 	}
 	
 	void DoAnimations()
@@ -142,6 +146,7 @@ public class CEntityCrow : MonoBehaviour {
 			m_startled = true;
 			m_state = CrowState.Takeoff;
 			m_timeTookoff = Time.time;
+			m_takeOffAnimation.Play();
 		}
 	}
 }
