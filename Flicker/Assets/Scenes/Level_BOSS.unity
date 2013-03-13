@@ -10733,6 +10733,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1235811344}
   - {fileID: 1299977696}
   - {fileID: 166587974}
   - {fileID: 1080232799}
@@ -13481,6 +13482,58 @@ Prefab:
   m_RootGameObject: {fileID: 1092278694}
   m_IsPrefabParent: 0
   m_IsExploded: 1
+--- !u!1 &1235811343
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 1235811344}
+  - 135: {fileID: 1235811345}
+  - 114: {fileID: 1235811346}
+  m_Layer: 0
+  m_Name: checkpoint-0
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1235811344
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1235811343}
+  m_LocalRotation: {x: 0, y: .923880219, z: -0, w: -.382681996}
+  m_LocalPosition: {x: 1.20176637, y: 2.99329376, z: -3.38912511}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 995685248}
+--- !u!135 &1235811345
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1235811343}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: .5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1235811346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1235811343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b15afe172c52c3f4e957103eab4f00ec, type: 1}
+  m_Name: 
+  NextCheckPoint: {fileID: 1235811346}
+  IsLevelStart: 1
 --- !u!1 &1238410076
 GameObject:
   m_ObjectHideFlags: 0
@@ -16577,6 +16630,30 @@ Prefab:
       propertyPath: PauseMenuBackground
       value: 
       objectReference: {fileID: 2800000, guid: a3a49b4f88892ce4fac6b6519e572a15, type: 1}
+    - target: {fileID: 400056, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -2.99640965
+      objectReference: {fileID: 0}
+    - target: {fileID: 400056, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 4.2364521
+      objectReference: {fileID: 0}
+    - target: {fileID: 400056, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 3.01867686e-08
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400010, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: PlayerPathRadius
+      value: 3.5999999
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400006, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: InsideTower
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400010, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: StartCheckPoint
+      value: 
+      objectReference: {fileID: 1235811346}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
   m_RootGameObject: {fileID: 166587973}
@@ -18054,7 +18131,7 @@ Transform:
   m_PrefabInternal: {fileID: 1505257904}
   m_GameObject: {fileID: 1623792165}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.99640298, y: .319999993, z: 0}
+  m_LocalPosition: {x: -2.99640965, y: 4.2364521, z: 3.01867686e-08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 504236603}
@@ -18198,9 +18275,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49feef5ed08e08b4e94251534039562a, type: 1}
   m_Name: 
   MaxHealth: 100
-  PlayerPathRadius: 2.79999995
+  PlayerPathRadius: 3.5999999
   InitialAlphaPosition: 270
-  StartCheckPoint: {fileID: 0}
+  StartCheckPoint: {fileID: 1235811346}
   StartFacing: 1
   CurrentGameState: 0
 --- !u!114 &1623792174
@@ -18231,7 +18308,7 @@ MonoBehaviour:
   AccelerationRate: .0500000007
   MaxSpeed: .550000012
   JumpDelayMS: 500
-  InsideTower: 1
+  InsideTower: 0
 --- !u!114 &1623792176
 MonoBehaviour:
   m_ObjectHideFlags: 0
