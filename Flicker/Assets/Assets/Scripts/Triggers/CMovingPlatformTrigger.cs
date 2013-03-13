@@ -38,6 +38,8 @@ public class CMovingPlatformTrigger : CTriggerBase {
 	
 	new void Start() {
 	
+		if (AnimationName.Length == 0) AnimationName = "Take 001";
+		
 		if (ForcedGameObject != null)
 		{
 			m_animation = ForcedGameObject.GetComponent<Animation>();
