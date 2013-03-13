@@ -20609,6 +20609,10 @@ Prefab:
       propertyPath: StartFacing
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2000000, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: far clip plane
+      value: 500
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
   m_RootGameObject: {fileID: 952214177}
@@ -59049,7 +59053,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: .300000012
-  far clip plane: 10
+  far clip plane: 500
   field of view: 60
   orthographic: 0
   orthographic size: 100
