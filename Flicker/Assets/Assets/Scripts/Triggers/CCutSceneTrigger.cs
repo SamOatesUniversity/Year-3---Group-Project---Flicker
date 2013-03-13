@@ -109,7 +109,12 @@ public class CCutSceneTrigger : CSceneObjectBase {
 	void OnCutSceneEnd() {
 		if(!m_pingPongFlag)
 		{
-			GruntObject.GetComponent<CEntityGrunt>().SetGruntState(GruntState.Walking);
+			if (GruntObject != null) {
+				CEntityGrunt grunt = GruntObject.GetComponent<CEntityGrunt>();
+				if (grunt != null) {
+					grunt.SetGruntState(GruntState.Walking);
+				}
+			}
 			m_camera.ResetLookAtTransform();
 			m_player.SetPlayerState(PlayerState.Standing);
 			m_camera.DistanceFromPlayer = m_initialDistanceFromPlayer;

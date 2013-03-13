@@ -8241,10 +8241,10 @@ MonoBehaviour:
   tweakMode: 0
   screenBlendMode: 1
   hdr: 0
-  sepBlurSpread: 1.5
+  sepBlurSpread: 2
   useSrcAlphaAsMask: 0
-  bloomIntensity: 10
-  bloomThreshhold: .790000021
+  bloomIntensity: 2
+  bloomThreshhold: .800000012
   bloomBlurIterations: 2
   lensflares: 0
   hollywoodFlareBlurIterations: 2
@@ -16654,6 +16654,18 @@ Prefab:
       propertyPath: StartCheckPoint
       value: 
       objectReference: {fileID: 1235811346}
+    - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: bloomIntensity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: bloomThreshhold
+      value: .800000012
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: sepBlurSpread
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
   m_RootGameObject: {fileID: 166587973}
