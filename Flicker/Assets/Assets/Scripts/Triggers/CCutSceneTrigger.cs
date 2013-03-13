@@ -21,8 +21,6 @@ public class CCutSceneTrigger : CSceneObjectBase {
 	void Start () {
 	
 		m_animation = GetComponent<Animation>();
-		m_camera = CCamera.GetInstance();
-		m_player = CEntityPlayer.GetInstance();
 		
 	}
 	
@@ -154,6 +152,8 @@ public class CCutSceneTrigger : CSceneObjectBase {
 			
 		if (!m_active) {
 			enabled = true;
+			m_camera = CCamera.GetInstance();
+			m_player = CEntityPlayer.GetInstance();
 		}
 		
 	}
