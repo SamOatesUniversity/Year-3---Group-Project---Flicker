@@ -19,10 +19,25 @@ AnimationClip:
         inSlope: {x: -1.06261218, y: -.52859211, z: -.823966384}
         outSlope: {x: -1.06261218, y: -.52859211, z: -.823966384}
         tangentMode: -559038737
-      - time: 3
+      - time: 2
+        value: {x: -.74973917, y: 3.58789706, z: 3.58847761}
+        inSlope: {x: -2.54722309, y: -1.31249428, z: -1.73529613}
+        outSlope: {x: -2.54722309, y: -1.31249428, z: -1.73529613}
+        tangentMode: -559038737
+      - time: 3.5
+        value: {x: -3.06792903, y: 1.99096179, z: 1.11258745}
+        inSlope: {x: 0, y: -2.37107277, z: -5.91665506}
+        outSlope: {x: 0, y: -2.37107277, z: -5.91665506}
+        tangentMode: -559038737
+      - time: 4.75
         value: {x: -3.06792927, y: .886211872, z: -2.03214097}
-        inSlope: {x: -1.11706698, y: -.477910548, z: -.734699309}
-        outSlope: {x: -1.11706698, y: -.477910548, z: -.734699309}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: -559038737
+      - time: 6.5
+        value: {x: -3.06792927, y: .886211872, z: -2.03214097}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
         tangentMode: -559038737
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -30,7 +45,7 @@ AnimationClip:
   m_ScaleCurves: []
   m_FloatCurves: []
   m_SampleRate: 60
-  m_WrapMode: 0
+  m_WrapMode: 4
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
@@ -43,10 +58,25 @@ AnimationClip:
         inSlope: -1.06261218
         outSlope: -1.06261218
         tangentMode: 0
-      - time: 3
+      - time: 2
+        value: -.74973917
+        inSlope: -2.54722309
+        outSlope: -2.54722309
+        tangentMode: 0
+      - time: 3.5
+        value: -3.06792903
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 4.75
         value: -3.06792927
-        inSlope: -1.11706698
-        outSlope: -1.11706698
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 6.5
+        value: -3.06792927
+        inSlope: 0
+        outSlope: 0
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -62,10 +92,25 @@ AnimationClip:
         inSlope: -.52859211
         outSlope: -.52859211
         tangentMode: 0
-      - time: 3
+      - time: 2
+        value: 3.58789706
+        inSlope: -1.31249428
+        outSlope: -1.31249428
+        tangentMode: 0
+      - time: 3.5
+        value: 1.99096179
+        inSlope: -2.37107277
+        outSlope: -2.37107277
+        tangentMode: 0
+      - time: 4.75
         value: .886211872
-        inSlope: -.477910548
-        outSlope: -.477910548
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 6.5
+        value: .886211872
+        inSlope: 0
+        outSlope: 0
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -81,10 +126,25 @@ AnimationClip:
         inSlope: -.823966384
         outSlope: -.823966384
         tangentMode: 0
-      - time: 3
+      - time: 2
+        value: 3.58847761
+        inSlope: -1.73529613
+        outSlope: -1.73529613
+        tangentMode: 0
+      - time: 3.5
+        value: 1.11258745
+        inSlope: -5.91665506
+        outSlope: -5.91665506
+        tangentMode: 0
+      - time: 4.75
         value: -2.03214097
-        inSlope: -.734699309
-        outSlope: -.734699309
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+      - time: 6.5
+        value: -2.03214097
+        inSlope: 0
+        outSlope: 0
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -94,7 +154,21 @@ AnimationClip:
     script: {fileID: 0}
   m_EulerEditorCurves: []
   m_Events:
-  - time: 3
+  - time: 0
+    functionName: OnPingpongTrigger
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 3.66666675
+    functionName: OnMonkeyTrigger
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 6.5
     functionName: OnCutSceneEnd
     data: 
     objectReferenceParameter: {fileID: 0}

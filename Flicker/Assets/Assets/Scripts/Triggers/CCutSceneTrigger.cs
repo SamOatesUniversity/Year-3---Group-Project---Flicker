@@ -13,6 +13,9 @@ public class CCutSceneTrigger : CSceneObjectBase {
 	
 	public int						NumberOfLerpKeys = 60;
 	private int						m_maxPositionsStored = 20;
+	private bool 					m_pingPongFlag = false;
+	public bool 					IsMonkey18 = false;
+	public GameObject 				GruntObject = null;
 	
 	// Use this for initialization
 	void Start () {
@@ -56,6 +59,7 @@ public class CCutSceneTrigger : CSceneObjectBase {
 			return;
 				
 		m_player.SetPlayerState(PlayerState.InCutScene);
+		GruntObject.GetComponent<CEntityGrunt>().SetGruntState(GruntState.Standing);
 		
 		m_camera.ClearFrames();
 		m_initialDistanceFromPlayer = m_camera.DistanceFromPlayer;
@@ -103,15 +107,38 @@ public class CCutSceneTrigger : CSceneObjectBase {
 	
 	// Called once the cutscene has ended
 	void OnCutSceneEnd() {
+		if(!m_pingPongFlag)
+		{
+			GruntObject.GetComponent<CEntityGrunt>().SetGruntState(GruntState.Walking);
+			m_camera.ResetLookAtTransform();
+			m_player.SetPlayerState(PlayerState.Standing);
+			m_camera.DistanceFromPlayer = m_initialDistanceFromPlayer;
+			m_camera.MaxPositionsStored = m_maxPositionsStored;
+			m_active = false;
+			enabled = false;
+			GameObject.Destroy(this.gameObject);
+		}
 		
-		m_camera.ResetLookAtTransform();
-		m_player.SetPlayerState(PlayerState.Standing);
-		m_camera.DistanceFromPlayer = m_initialDistanceFromPlayer;
-		m_camera.MaxPositionsStored = m_maxPositionsStored;
-		m_active = false;
-		enabled = false;
-		GameObject.Destroy(this.gameObject);
-		
+	}
+	void OnPingpongTrigger() {
+		if(!m_pingPongFlag)
+		{
+			m_pingPongFlag = true;	
+		}
+		else
+		{
+			m_pingPongFlag = false;
+			OnCutSceneEnd();
+			m_animation.Stop();
+		}
+	}
+	
+	void OnMonkeyTrigger() 
+	{
+		if(IsMonkey18)
+		{
+			CEntityMonkey.GetInstance().DoAnimation();	
+		}
 	}
 	
 	public override void LogicStateChange(bool newState) {
