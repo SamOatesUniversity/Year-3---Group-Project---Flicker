@@ -21,6 +21,8 @@ public class CCutSceneTrigger : CSceneObjectBase {
 	void Start () {
 	
 		m_animation = GetComponent<Animation>();
+		m_camera = CCamera.GetInstance();
+		m_player = CEntityPlayer.GetInstance();
 		
 	}
 	
@@ -116,7 +118,7 @@ public class CCutSceneTrigger : CSceneObjectBase {
 				if (grunt != null) {
 					grunt.SetGruntState(GruntState.Walking);
 				}
-			}
+			}			
 			m_camera.ResetLookAtTransform();
 			m_player.SetPlayerState(PlayerState.Standing);
 			m_camera.DistanceFromPlayer = m_initialDistanceFromPlayer;
