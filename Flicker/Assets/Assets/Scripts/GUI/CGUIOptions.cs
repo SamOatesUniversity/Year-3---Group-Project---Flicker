@@ -173,9 +173,12 @@ public class CGUIOptions {
 		Rect backRect = new Rect((Screen.width * 0.5f) - (BUTTON_WIDTH * 0.5f), yPosition, BUTTON_WIDTH, 48);
 		if (mainMenuOption)
 			backRect = new Rect((Screen.width * 0.3f) - (BUTTON_WIDTH * 0.5f), yPosition + 120.0f, BUTTON_WIDTH, 48);
+		
 		GUI.SetNextControlName ("back");
-		if (GUI.Button(backRect, "Back"))
+		if (GUI.Button(backRect, "Back") || (m_pressedOK && m_highlighted == "back"))
 		{
+			m_pressedOK = false;
+			m_highlighted = "options";
 			m_pausedMenuState = PausedMenuState.Main;
 			return;
 		}
@@ -208,8 +211,11 @@ public class CGUIOptions {
 		
 		Rect yesRect = new Rect((Screen.width * 0.5f) - (BUTTON_WIDTH * 0.5f) - 5, yPosition, BUTTON_WIDTH * 0.5f, 48);
 		GUI.SetNextControlName ("yes");
-		if (GUI.Button(yesRect, "Yes") || (m_pressedOK && m_highlighted == "no"))
+		if (GUI.Button(yesRect, "Yes") || (m_pressedOK && m_highlighted == "yes"))
 		{
+			m_pressedOK = false;
+			m_highlighted = "continue";
+			
 			if (m_pausedMenuState == PausedMenuState.Quit)
 			{
 				Application.Quit();	
@@ -276,6 +282,7 @@ public class CGUIOptions {
 			m_highlighted = "continue";
 			CEntityPlayer.GetInstance().CurrentGameState = GameState.Running;
 			Time.timeScale = 1.0f;
+			CEntityPlayer.GetInstance().Physics.SkipNextJump();
 			return;
 		}
 		
@@ -296,7 +303,7 @@ public class CGUIOptions {
 		if (GUI.Button(optionsRect, "Options") || (m_pressedOK && m_highlighted == "options"))
 		{
 			m_pressedOK = false;
-			m_highlighted = "continue";
+			m_highlighted = "graphics";
 			m_pausedMenuState = PausedMenuState.Options;
 			return;
 		}
@@ -339,6 +346,37 @@ public class CGUIOptions {
 			GoToNextYesNoControl(upDown, leftRight);
 			return;
 		}
+		
+		if (m_pausedMenuState == PausedMenuState.Options)
+		{
+			GoToNextOptionsConrol(upDown, leftRight);
+			return;
+		}
+	}
+	
+	private void GoToNextOptionsConrol(float upDown, float leftRight)
+	{
+		
+		if (upDown != 0.0f)
+		{
+			if (m_highlighted == "graphics")
+			{
+				m_highlighted = "back";
+				return;
+			}
+			
+			if (m_highlighted == "back")
+			{
+				m_highlighted = "graphics";
+				return;
+			}
+		}
+		
+		if (m_highlighted == "graphics" && leftRight != 0.0f)
+		{
+			int newLevel = leftRight > 0.0f ? 1 : -1;
+			QualitySettings.SetQualityLevel(QualitySettings.GetQualityLevel() + newLevel);
+		}
 	}
 	
 	private void GoToNextYesNoControl(float upDown, float leftRight)
@@ -351,7 +389,8 @@ public class CGUIOptions {
 			m_highlighted = "yes";
 			return;
 		}
-		else
+		
+		if (m_highlighted == "yes")
 		{
 			m_highlighted = "no";
 			return;

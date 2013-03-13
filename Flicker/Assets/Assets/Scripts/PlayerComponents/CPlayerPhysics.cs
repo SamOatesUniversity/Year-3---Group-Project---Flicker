@@ -79,6 +79,8 @@ public class CPlayerPhysics : MonoBehaviour {
 	
 	public bool				InsideTower = true;
 	
+	private bool 			m_skipNextJump = false;
+	
 	/*
 	 * \brief Initialise anything we don't know at construct time
 	*/
@@ -189,6 +191,10 @@ public class CPlayerPhysics : MonoBehaviour {
 	public bool IsOnPlatform()
 	{
 		return m_platform != null;	
+	}
+	
+	public void SkipNextJump() {
+		m_skipNextJump = true;
 	}
 	
 	public eLedgeType GetLedgeGrabType() {
@@ -704,6 +710,12 @@ public class CPlayerPhysics : MonoBehaviour {
 	
 	private bool CanJump(PlayerState playerState)
 	{
+		if (m_skipNextJump) {
+			m_skipNextJump = false;
+			m_jumpTimer = Time.time * 1000.0f;
+			return false;
+		}
+		
 		if (playerState == PlayerState.LedgeHang)
 			return false;
 		

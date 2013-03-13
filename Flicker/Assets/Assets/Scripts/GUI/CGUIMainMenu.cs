@@ -472,7 +472,7 @@ public class CGUIMainMenu : MonoBehaviour {
 			}
 		}
 		
-		if (leftRight != 0.0f)
+		if (m_highlighted == "graphics" && leftRight != 0.0f)
 		{
 			int newLevel = leftRight > 0.0f ? 1 : -1;
 			QualitySettings.SetQualityLevel(QualitySettings.GetQualityLevel() + newLevel);
