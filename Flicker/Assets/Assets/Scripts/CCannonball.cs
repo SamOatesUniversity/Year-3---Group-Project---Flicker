@@ -8,6 +8,7 @@ public class CCannonball : MonoBehaviour {
 	public float 			YOffset = 1.2f;
 	
 	public GameObject		Marker = null;
+	public GameObject		Explosion = null;
 	
 	public float			DeathTimer = 0.5f;
 	
@@ -53,5 +54,7 @@ public class CCannonball : MonoBehaviour {
 		MeshRenderer mRenderer = cannonMesh.GetComponent<MeshRenderer>();
 		mRenderer.enabled = false;
 		m_exploded = true;
+		Object explosion = Instantiate(Explosion, this.transform.position, this.transform.rotation);
+		Destroy(explosion, 3.0f);
 	}
 }

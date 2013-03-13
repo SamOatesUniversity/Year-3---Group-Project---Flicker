@@ -48,7 +48,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.28307343, y: 1.38843346, z: 4.33036423}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 400002}
   m_Father: {fileID: 0}
@@ -61,7 +60,6 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1.39999998, y: 1.39999998, z: 1.39999998}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 400000}
 --- !u!23 &2300000
@@ -152,6 +150,7 @@ MonoBehaviour:
   Speed: .00100000005
   YOffset: 1.20000005
   Marker: {fileID: 100000, guid: 4fa5afc5cc50f4b468485bed081835d6, type: 2}
+  Explosion: {fileID: 100006, guid: d61fc1a7bf075604db01485c9b378728, type: 2}
   DeathTimer: .5
 --- !u!135 &13500000
 SphereCollider:
