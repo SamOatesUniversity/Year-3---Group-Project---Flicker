@@ -26910,6 +26910,14 @@ Prefab:
       propertyPath: m_LocalEulerAnglesHint.y
       value: -112.499695
       objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 3aa2e531b704082469f7bc085569c2c5, type: 2}
+      propertyPath: PeacefulSpeed
+      value: .300000012
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 3aa2e531b704082469f7bc085569c2c5, type: 2}
+      propertyPath: DetectedSpeed
+      value: .5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3aa2e531b704082469f7bc085569c2c5, type: 2}
   m_RootGameObject: {fileID: 14639644}
@@ -27859,8 +27867,8 @@ MonoBehaviour:
   MaxSpeed: .5
   JumpDelayMS: 500
   InsideTower: 0
-  PeacefulSpeed: .200000003
-  DetectedSpeed: .300000012
+  PeacefulSpeed: .300000012
+  DetectedSpeed: .5
 --- !u!114 &1007656979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34094,7 +34102,6 @@ GameObject:
   - 23: {fileID: 1217547399}
   - 111: {fileID: 1217547401}
   - 65: {fileID: 1217547402}
-  - 114: {fileID: 1217547403}
   m_Layer: 0
   m_Name: SM_O_ScaffoldingWooden1
   m_TagString: Untagged
@@ -34170,22 +34177,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .621246576, y: .762155294, z: .642095089}
   m_Center: {x: -3.53370357, y: -.000409804168, z: .321044087}
---- !u!114 &1217547403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1217547397}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
-  m_Name: 
-  CanWallJump: 1
-  IsLadder: 0
-  ExtraSlide: 1
-  CanLedgeGrab: 0
-  LedgeType: 1
-  KillPlayerOnTouch: 0
 --- !u!1 &1223573514
 GameObject:
   m_ObjectHideFlags: 0
@@ -35862,7 +35853,7 @@ MonoBehaviour:
   JumpDelayMS: 500
   InsideTower: 0
   PeacefulSpeed: .200000003
-  DetectedSpeed: .300000012
+  DetectedSpeed: .5
 --- !u!114 &1279247838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53202,7 +53193,6 @@ GameObject:
   - 23: {fileID: 1845080113}
   - 111: {fileID: 1845080115}
   - 65: {fileID: 1845080116}
-  - 114: {fileID: 1845080117}
   m_Layer: 0
   m_Name: SM_O_ScaffoldingWooden1
   m_TagString: Untagged
@@ -53278,22 +53268,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .62124747, y: .762156069, z: .642095923}
   m_Center: {x: -3.53370595, y: -.000411080342, z: .321043611}
---- !u!114 &1845080117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1845080111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
-  m_Name: 
-  CanWallJump: 1
-  IsLadder: 0
-  ExtraSlide: 1
-  CanLedgeGrab: 0
-  LedgeType: 1
-  KillPlayerOnTouch: 0
 --- !u!1 &1845186181
 GameObject:
   m_ObjectHideFlags: 0
@@ -56095,7 +56069,6 @@ GameObject:
   - 23: {fileID: 1935476946}
   - 111: {fileID: 1935476948}
   - 65: {fileID: 1935476949}
-  - 114: {fileID: 1935476950}
   m_Layer: 0
   m_Name: SM_O_ScaffoldingWooden1
   m_TagString: Untagged
@@ -56171,22 +56144,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .621246576, y: .762155294, z: .642095089}
   m_Center: {x: -3.53370333, y: -.000409690605, z: .321044534}
---- !u!114 &1935476950
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1935476944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
-  m_Name: 
-  CanWallJump: 1
-  IsLadder: 0
-  ExtraSlide: 1
-  CanLedgeGrab: 0
-  LedgeType: 1
-  KillPlayerOnTouch: 0
 --- !u!1 &1936360099
 GameObject:
   m_ObjectHideFlags: 0
@@ -60015,6 +59972,10 @@ Prefab:
     - target: {fileID: 11400000, guid: 3aa2e531b704082469f7bc085569c2c5, type: 2}
       propertyPath: StartFacing
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 3aa2e531b704082469f7bc085569c2c5, type: 2}
+      propertyPath: DetectedSpeed
+      value: .5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3aa2e531b704082469f7bc085569c2c5, type: 2}
