@@ -33,6 +33,9 @@ public class CPlayerDebug : MonoBehaviour
 	
 	void OnGUI ()
 	{
+		if (!Application.isEditor)
+			return;
+		
 		if (!m_visible || m_player == null) 
 			return;
 				

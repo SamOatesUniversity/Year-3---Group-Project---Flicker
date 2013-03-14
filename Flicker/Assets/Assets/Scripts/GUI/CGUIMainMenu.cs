@@ -101,7 +101,7 @@ public class CGUIMainMenu : MonoBehaviour {
 			break;
 			
 		case MenuState.Play:
-			Application.LoadLevel("Level_1-1");
+			Application.LoadLevel("CutScene");
 			break;
 			
 		case MenuState.Continue:
