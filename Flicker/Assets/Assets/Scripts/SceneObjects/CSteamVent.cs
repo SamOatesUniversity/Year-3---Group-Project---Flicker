@@ -72,6 +72,17 @@ public class CSteamVent : CSceneObjectBase
 		}
 	}
 	
+	void OnTriggerStay(Collider collider)
+	{
+		if (collider.name != "Player Spawn")
+			return;
+		
+		if (Enabled)
+		{
+			CEntityPlayer.GetInstance().PushPlayerFromTower();	
+		}
+	}
+	
 	public override void LogicStateChange(bool newState) {
 		if (newState)
 		{
