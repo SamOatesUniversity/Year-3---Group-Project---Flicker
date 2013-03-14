@@ -5,10 +5,9 @@ public class CSceneSetup : MonoBehaviour {
 	
 	private bool                        m_hasSetup = false;                     //! Have we setup the scene position, unity require one tick to update streamed level transforms
 	
-	public string                       ThisScene = null;                       //! The next scene to stream in
+	public string                       LastScene = null;						//! The name of the previous scene
+	public string                       ThisScene = null;                       //! The name of this scene
     public string                       NextScene = null;                       //! The next scene to stream in
-	
-	public int							NumberOfFloors = 1;
 	
 	public Texture 						LoadingScreenTexture = null;
 	private bool						m_showLoadingScreen = true;
@@ -35,7 +34,7 @@ public class CSceneSetup : MonoBehaviour {
             return;
         }
 		
-		Application.LoadLevelAdditiveAsync(NextScene);
+		Application.LoadLevelAdditive(NextScene);
     }
 	
 	void OnGUI() {
@@ -54,18 +53,12 @@ public class CSceneSetup : MonoBehaviour {
 			return;
 		
 		if (m_hasSetup) {
-			if (m_showLoadingScreen && (Time.time - m_loadCompleteTime > 2.0f)) {
+			if (m_showLoadingScreen && (Time.time - m_loadCompleteTime > 0.1f)) {
 				m_showLoadingScreen = false;	
 			}
 			return;
 		}
 		
-		GameObject scene = GameObject.Find(NextScene);
-		if (scene != null)
-		{
-			m_hasSetup = true;
-			m_loadCompleteTime = Time.time;
-			scene.transform.position = new Vector3(scene.transform.position.x, this.transform.position.y + (NumberOfFloors * 0.64f), scene.transform.position.z);
-		}
+		m_hasSetup = true;
 	}
 }
