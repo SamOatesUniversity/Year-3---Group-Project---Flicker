@@ -12,6 +12,10 @@ ModelImporter:
     7400004: MONKEY_idle //// MonkeyRigHaydn
     7400006: MONKEY_idle-to-attack //// MonkeyRigHaydn
     7400008: MONKEY_1-2_idle //// MonkeyRigHaydn
+    7400010: RIGHT_SIDE_IDLE //// MonkeyRigHaydn
+    7400012: LEFT_SIDE_IDLE //// MonkeyRigHaydn
+    7400014: RIGHT_TO_LEFT //// MonkeyRigHaydn
+    7400016: LEFT_TO_RIGHT //// MonkeyRigHaydn
   serializedVersion: 10
   materials:
     importMaterials: 1
@@ -47,6 +51,26 @@ ModelImporter:
       lastFrame: 178
       wrapMode: 2
       loop: 1
+    - name: RIGHT_SIDE_IDLE
+      firstFrame: 1031
+      lastFrame: 1155
+      wrapMode: 2
+      loop: 1
+    - name: LEFT_SIDE_IDLE
+      firstFrame: 1195
+      lastFrame: 1271
+      wrapMode: 2
+      loop: 1
+    - name: RIGHT_TO_LEFT
+      firstFrame: 1155
+      lastFrame: 1195
+      wrapMode: 0
+      loop: 0
+    - name: LEFT_TO_RIGHT
+      firstFrame: 1271
+      lastFrame: 1340
+      wrapMode: 0
+      loop: 0
   meshes:
     lODScreenPercentages: []
     globalScale: .00999999978

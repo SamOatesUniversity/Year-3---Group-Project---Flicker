@@ -159,7 +159,7 @@ public class CCutSceneTrigger : CSceneObjectBase {
 	{
 		if(IsMonkey18)
 		{
-			CEntityMonkey.GetInstance().DoAnimation();	
+			GameObject.FindGameObjectWithTag("Monkey1_8").GetComponent<CEntityMonkey>().DoAnimation();	
 		}
 	}
 	

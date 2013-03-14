@@ -26023,7 +26023,7 @@ SkinnedMeshRenderer:
   m_ScaleInLightmap: 1
   serializedVersion: 2
   m_Quality: 0
-  m_UpdateWhenOffscreen: 0
+  m_UpdateWhenOffscreen: 1
   m_Mesh: {fileID: 4300000, guid: 3d939548bd450744c988e90d6ef44b9d, type: 3}
   m_Bones:
   - {fileID: 626467706}
@@ -32681,6 +32681,14 @@ Prefab:
     - target: {fileID: 100162, guid: 5448ddf8576a40346918698806ab9cbe, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: 5448ddf8576a40346918698806ab9cbe, type: 2}
+      propertyPath: m_UpdateWhenOffscreen
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100138, guid: 5448ddf8576a40346918698806ab9cbe, type: 2}
+      propertyPath: m_TagString
+      value: Monkey1_8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5448ddf8576a40346918698806ab9cbe, type: 2}
@@ -59748,7 +59756,7 @@ GameObject:
   - 82: {fileID: 1910454159}
   m_Layer: 0
   m_Name: MonkeyRigHaydn
-  m_TagString: Untagged
+  m_TagString: Monkey1_8
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
