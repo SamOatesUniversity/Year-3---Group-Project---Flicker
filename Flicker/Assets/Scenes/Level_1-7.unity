@@ -41552,7 +41552,6 @@ GameObject:
   - 33: {fileID: 905768928}
   - 23: {fileID: 905768927}
   - 111: {fileID: 905768929}
-  - 64: {fileID: 905768930}
   - 114: {fileID: 905768931}
   m_Layer: 0
   m_Name: SM_I_BoxScaffolding
@@ -41617,19 +41616,6 @@ Animation:
   m_UserAABB:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
---- !u!64 &905768930
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 905768925}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_SmoothSphereCollisions: 1
-  m_Convex: 0
-  m_Mesh: {fileID: 4300008, guid: 5bddda1481fcf7e4991d6a75857086e0, type: 3}
 --- !u!114 &905768931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43174,7 +43160,6 @@ GameObject:
   - 33: {fileID: 943057883}
   - 23: {fileID: 943057882}
   - 111: {fileID: 943057884}
-  - 64: {fileID: 943057885}
   - 114: {fileID: 943057886}
   m_Layer: 0
   m_Name: SM_I_BoxScaffoldingSmall
@@ -43239,19 +43224,6 @@ Animation:
   m_UserAABB:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
---- !u!64 &943057885
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 943057880}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_SmoothSphereCollisions: 1
-  m_Convex: 0
-  m_Mesh: {fileID: 4300000, guid: 2b4ee7aaed505fb40bfcd57315244d5f, type: 3}
 --- !u!114 &943057886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44007,8 +43979,8 @@ GameObject:
   - 33: {fileID: 959369298}
   - 23: {fileID: 959369297}
   - 111: {fileID: 959369299}
-  - 64: {fileID: 959369300}
   - 114: {fileID: 959369301}
+  - 65: {fileID: 959369300}
   m_Layer: 0
   m_Name: SM_I_BoxScaffolding
   m_TagString: Untagged
@@ -44072,8 +44044,8 @@ Animation:
   m_UserAABB:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
---- !u!64 &959369300
-MeshCollider:
+--- !u!65 &959369300
+BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -44082,9 +44054,8 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 1
-  m_Convex: 0
-  m_Mesh: {fileID: 4300008, guid: 5bddda1481fcf7e4991d6a75857086e0, type: 3}
+  m_Size: {x: .546045005, y: .788016498, z: .622157753}
+  m_Center: {x: -1.4156102e-06, y: .339008212, z: -2.96862245}
 --- !u!114 &959369301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56857,7 +56828,6 @@ GameObject:
   - 33: {fileID: 1255457607}
   - 23: {fileID: 1255457606}
   - 111: {fileID: 1255457608}
-  - 64: {fileID: 1255457609}
   - 114: {fileID: 1255457610}
   m_Layer: 0
   m_Name: SM_I_BoxScaffolding
@@ -56922,19 +56892,6 @@ Animation:
   m_UserAABB:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
---- !u!64 &1255457609
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1255457604}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_SmoothSphereCollisions: 1
-  m_Convex: 0
-  m_Mesh: {fileID: 4300008, guid: 5bddda1481fcf7e4991d6a75857086e0, type: 3}
 --- !u!114 &1255457610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58800,8 +58757,8 @@ GameObject:
   - 33: {fileID: 1282979759}
   - 23: {fileID: 1282979758}
   - 111: {fileID: 1282979760}
-  - 64: {fileID: 1282979761}
   - 114: {fileID: 1282979762}
+  - 65: {fileID: 1282979761}
   m_Layer: 0
   m_Name: SM_I_BoxScaffolding
   m_TagString: Untagged
@@ -58865,8 +58822,8 @@ Animation:
   m_UserAABB:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
---- !u!64 &1282979761
-MeshCollider:
+--- !u!65 &1282979761
+BoxCollider:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
@@ -58875,9 +58832,8 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 1
-  m_Convex: 0
-  m_Mesh: {fileID: 4300008, guid: 5bddda1481fcf7e4991d6a75857086e0, type: 3}
+  m_Size: {x: .506044984, y: 2.94801593, z: .622157753}
+  m_Center: {x: -1.4156102e-06, y: .209008202, z: -2.96862245}
 --- !u!114 &1282979762
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77329,7 +77285,6 @@ GameObject:
   - 33: {fileID: 1758739442}
   - 23: {fileID: 1758739441}
   - 111: {fileID: 1758739443}
-  - 64: {fileID: 1758739444}
   - 114: {fileID: 1758739445}
   m_Layer: 0
   m_Name: SM_I_BoxScaffolding
@@ -77394,19 +77349,6 @@ Animation:
   m_UserAABB:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
---- !u!64 &1758739444
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1758739439}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_SmoothSphereCollisions: 1
-  m_Convex: 0
-  m_Mesh: {fileID: 4300008, guid: 5bddda1481fcf7e4991d6a75857086e0, type: 3}
 --- !u!114 &1758739445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88506,7 +88448,6 @@ GameObject:
   - 33: {fileID: 2065424726}
   - 23: {fileID: 2065424725}
   - 111: {fileID: 2065424727}
-  - 64: {fileID: 2065424728}
   - 114: {fileID: 2065424729}
   m_Layer: 0
   m_Name: SM_I_BoxScaffolding
@@ -88571,19 +88512,6 @@ Animation:
   m_UserAABB:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
---- !u!64 &2065424728
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2065424723}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_SmoothSphereCollisions: 1
-  m_Convex: 0
-  m_Mesh: {fileID: 4300008, guid: 5bddda1481fcf7e4991d6a75857086e0, type: 3}
 --- !u!114 &2065424729
 MonoBehaviour:
   m_ObjectHideFlags: 0
