@@ -9,6 +9,9 @@ public class CEndCredits : MonoBehaviour {
 	public float 					FadeInTimer = 1.0f;
 	private float					m_alphaIncrement = 0.0f;
 	public float					m_scrollSpeed = 1.0f;
+	
+	private float					m_endTime = 0.0f;
+	
 	// Use this for initialization
 	void Start () {
 		m_animation = GetComponent<Animation>();
@@ -52,7 +55,9 @@ public class CEndCredits : MonoBehaviour {
 			pos += increment;
 			this.transform.position = pos;
 			
-			if (pos.y > 56.3f)
+			if (m_endTime == 0.0f) m_endTime = Time.time;
+			
+			if (Time.time - m_endTime > 26.0f)
 			{
 				Application.LoadLevel("Main_Menu");	
 			}
@@ -62,7 +67,7 @@ public class CEndCredits : MonoBehaviour {
 	void OnTriggerEnter()
 	{
 		if(!m_active)
-		{
+		{			
 			CEntityPlayer player = CEntityPlayer.GetInstance();
 			if (player == null)
 				return;		

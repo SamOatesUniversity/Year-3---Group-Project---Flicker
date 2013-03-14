@@ -25,7 +25,9 @@ public class CTriggerAirship : MonoBehaviour {
 			m_airship.gameObject.SetActiveRecursively(true);
 			//m_airship.StartCutScene();
 			CEntityCaptain captain = CEntityCaptain.GetInstance();
-			captain.StartCutScene();
+			if (captain != null) {
+				captain.StartCutScene();
+			}
 		}
 		else
 		{
