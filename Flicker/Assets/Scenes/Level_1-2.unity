@@ -22184,6 +22184,7 @@ GameObject:
   - 135: {fileID: 518207929}
   - 114: {fileID: 518207930}
   - 114: {fileID: 518207931}
+  - 82: {fileID: 518207933}
   - 111: {fileID: 518207932}
   m_Layer: 0
   m_Name: Crow_1
@@ -22228,6 +22229,12 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fce1958731ed75b4dbce632138e1d05d, type: 1}
   m_Name: 
+  Caw: {fileID: 8300000, guid: 4fefaca972372ff49bfca12b22f598a0, type: 1}
+  CawAway: {fileID: 8300000, guid: e1ed80c760213c9418d29cbe7e4356f7, type: 1}
+  FlyAway: {fileID: 8300000, guid: 96b66cc605bdfe14f8ff530ddb9f0de9, type: 1}
+  Liftoff: {fileID: 8300000, guid: 153e064f74f3c33428b300d016104dd9, type: 1}
+  MeanTimeBetweenIdleAudio: 10
+  IdleAudioTimeVariance: 4
   Speed: .5
   TakeoffTime: 1
   EndDistance: 5
@@ -22264,6 +22271,63 @@ Animation:
   m_UserAABB:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
+--- !u!82 &518207933
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 8200000, guid: 91662718f223ac0418f77c0b6fb84d62,
+    type: 2}
+  m_PrefabInternal: {fileID: 1799459278}
+  m_GameObject: {fileID: 518207927}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!1001 &518825310
 Prefab:
   m_ObjectHideFlags: 0
@@ -38398,6 +38462,10 @@ Prefab:
     - target: {fileID: 5400000, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: m_CollisionDetection
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8200004, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: Mute
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
@@ -63968,7 +64036,7 @@ AudioSource:
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
-  Mute: 0
+  Mute: 1
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1

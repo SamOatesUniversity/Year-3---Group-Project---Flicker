@@ -11,6 +11,15 @@ public enum CrowState {
 
 public class CEntityCrow : MonoBehaviour {
 	
+	public AudioClip	Caw;
+	public AudioClip	CawAway;
+	public AudioClip	FlyAway;
+	public AudioClip	Liftoff;
+	public float		MeanTimeBetweenIdleAudio = 10.0f;
+	public float		IdleAudioTimeVariance = 4.0f;
+	private float 		m_idleAudioTimer = 5.0f;
+	private AudioSource m_audio;
+	
 	private CrowState	m_state;
 	private bool		m_startled;
 	private bool		m_startedTakeoff;
@@ -45,17 +54,33 @@ public class CEntityCrow : MonoBehaviour {
 		m_takeOffAnimation = GetComponent<Animation>();
 		MathHelp = GetComponent<MathHelpers>();
 		m_lastPos = this.transform.position;
+		m_audio = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		
 	}
 	
 	void FixedUpdate()
 	{	
 		DoAnimations();
-		
+		m_idleAudioTimer -= Time.deltaTime;
+		if(m_idleAudioTimer <= 0.0f)
+		{
+			int choice = Random.Range(0,1);
+			if(choice == 0)
+			{
+				PlayAudio(Caw);
+			}
+			else
+			{
+				PlayAudio(CawAway);
+			}
+			float split = IdleAudioTimeVariance/2;
+			float variance = Random.Range(-split, split);
+			m_idleAudioTimer = MeanTimeBetweenIdleAudio+variance;
+		}
 		/*
 		if( m_startled && !m_doneTakeoffMathCalcs )	
 		{
@@ -89,11 +114,25 @@ public class CEntityCrow : MonoBehaviour {
 		*/
 	}
 	
+	void PlayAudio(AudioClip clip)
+	{
+		m_audio.clip = clip;
+		m_audio.Play();
+		if(clip == FlyAway || clip == Liftoff)
+		{
+			m_idleAudioTimer = (float)MeanTimeBetweenIdleAudio;	
+		}
+	}
+	
 	void DoAnimations()
 	{
 		if( m_state == CrowState.Takeoff && m_timeTookoff + TakeoffTime < Time.time )
 		{
-			m_state = CrowState.Flying;	
+			m_state = CrowState.Flying;
+			PlayAudio(FlyAway);
+			MeanTimeBetweenIdleAudio = 30.0f;
+			IdleAudioTimeVariance = 10.0f;
+			
 		}
 		
 		if (m_state == CrowState.Resting)
@@ -113,6 +152,7 @@ public class CEntityCrow : MonoBehaviour {
 				m_startedTakeoff = true;
 				m_animation[m_currentAnimation].speed = 0.5f;
 				m_animation.CrossFade(m_currentAnimation, 0.2f);
+				PlayAudio(Liftoff);
 			}
 			else if (!m_animation.IsPlaying(m_currentAnimation))
 			{
