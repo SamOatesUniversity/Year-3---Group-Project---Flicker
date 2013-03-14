@@ -6313,7 +6313,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_Strength: 1
     m_Bias: .0500000007
@@ -14238,7 +14238,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: .639999866, z: .00999999978}
+  m_Size: {x: 1, y: .639999866, z: .0500000007}
   m_Center: {x: -3.2796011, y: .319999874, z: -8.2422955e-15}
 --- !u!1001 &489776337
 Prefab:
@@ -21430,7 +21430,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_Strength: 1
     m_Bias: .0500000007
@@ -21953,7 +21953,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: .639999866, z: .00999999978}
+  m_Size: {x: 1, y: .639999866, z: .0500000007}
   m_Center: {x: -3.27959991, y: .319999874, z: -9.77397079e-08}
 --- !u!114 &796510009
 MonoBehaviour:
@@ -22258,7 +22258,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_Strength: 1
     m_Bias: .0500000007
@@ -22548,7 +22548,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_Strength: 1
     m_Bias: .0500000007
@@ -23222,7 +23222,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_Strength: 1
     m_Bias: .0500000007
@@ -26605,7 +26605,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_Strength: 1
     m_Bias: .0500000007
@@ -27197,7 +27197,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_Strength: 1
     m_Bias: .0500000007
@@ -31297,7 +31297,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_Strength: 1
     m_Bias: .0500000007
@@ -31983,6 +31983,8 @@ GameObject:
   - 4: {fileID: 1135052807}
   - 33: {fileID: 1135052809}
   - 23: {fileID: 1135052808}
+  - 65: {fileID: 1135052810}
+  - 114: {fileID: 1135052811}
   m_Layer: 0
   m_Name: LadderTOP
   m_TagString: Untagged
@@ -32028,6 +32030,34 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1135052806}
   m_Mesh: {fileID: 4300000, guid: c0043c5097e95f6488cc709aa06ebd9f, type: 3}
+--- !u!65 &1135052810
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1135052806}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: .33675918, z: .200000003}
+  m_Center: {x: -3.2773459, y: .16837959, z: 1.49011683e-08}
+--- !u!114 &1135052811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1135052806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
+  m_Name: 
+  CanWallJump: 0
+  IsLadder: 1
+  ExtraSlide: 1
+  CanLedgeGrab: 0
+  LedgeType: 1
+  KillPlayerOnTouch: 0
 --- !u!1 &1136175742
 GameObject:
   m_ObjectHideFlags: 0
@@ -38589,7 +38619,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_Strength: 1
     m_Bias: .0500000007
@@ -43496,6 +43526,8 @@ GameObject:
   - 4: {fileID: 1506950899}
   - 33: {fileID: 1506950901}
   - 23: {fileID: 1506950900}
+  - 65: {fileID: 1506950902}
+  - 114: {fileID: 1506950903}
   m_Layer: 0
   m_Name: LadderMID
   m_TagString: Untagged
@@ -43541,6 +43573,34 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1506950898}
   m_Mesh: {fileID: 4300004, guid: c0043c5097e95f6488cc709aa06ebd9f, type: 3}
+--- !u!65 &1506950902
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1506950898}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: .639999866, z: .00999999978}
+  m_Center: {x: -3.279603, y: .319999874, z: -3.20426736e-14}
+--- !u!114 &1506950903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1506950898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
+  m_Name: 
+  CanWallJump: 0
+  IsLadder: 1
+  ExtraSlide: 1
+  CanLedgeGrab: 0
+  LedgeType: 1
+  KillPlayerOnTouch: 0
 --- !u!1 &1507296513
 GameObject:
   m_ObjectHideFlags: 0
@@ -52408,7 +52468,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_Strength: 1
     m_Bias: .0500000007
@@ -55618,7 +55678,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_Strength: 1
     m_Bias: .0500000007
@@ -56763,7 +56823,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: .639999866, z: .00999999978}
+  m_Size: {x: 1, y: .639999866, z: .0500000007}
   m_Center: {x: -3.27960038, y: .319999874, z: -1.42108547e-14}
 --- !u!114 &1960342797
 MonoBehaviour:
@@ -58268,7 +58328,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_Strength: 1
     m_Bias: .0500000007
@@ -61138,7 +61198,7 @@ Light:
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_Strength: 1
     m_Bias: .0500000007
