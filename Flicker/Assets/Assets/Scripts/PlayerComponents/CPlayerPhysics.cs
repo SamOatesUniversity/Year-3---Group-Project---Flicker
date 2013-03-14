@@ -67,6 +67,8 @@ public class CPlayerPhysics : MonoBehaviour {
 	
 	private bool			m_fakeJump = false;
 	
+	private bool			m_newWallJump = false;
+	
 	/* ----------------
 	    Public Members 
 	   ---------------- */		
@@ -318,6 +320,8 @@ public class CPlayerPhysics : MonoBehaviour {
 				m_body.constraints = RigidbodyConstraints.FreezeAll;
 				m_velocity = 0.0f;
 				m_wallJump.StartHangTime = Time.time * 1000.0f;
+				
+				if (m_isJumpDown) m_newWallJump = true;
 			}
 			// floor check
 			else if (isNearly(contact.normal.y, 1.0f, 0.8f))
@@ -491,7 +495,7 @@ public class CPlayerPhysics : MonoBehaviour {
 				playerState = PlayerState.Walking;
 				m_jumpState = JumpState.Landed;
 				m_collisionState = CollisionState.None;
-			} else if (m_isJumpDown && direction != 0 && direction != m_movingDirection) {
+			} else if (!m_newWallJump && m_isJumpDown && direction != 0 && direction != m_movingDirection) {
 				m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 				m_velocity = -(m_movingDirection * 0.5f); // kick it away from the wall
 				m_velocityLockTimer = (Time.time * 1000.0f) + 50; 
@@ -571,6 +575,12 @@ public class CPlayerPhysics : MonoBehaviour {
 		
 		bool wasJump = m_isJumpDown;
 		m_isJumpDown = Input.GetButton("Jump");
+		
+		if (!m_isJumpDown)
+		{
+			m_newWallJump = false;
+		}	
+		
 		if (Application.platform == RuntimePlatform.Android)
 			m_isJumpDown = Input.touchCount != 0;
 		
