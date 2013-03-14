@@ -19,6 +19,7 @@ public class CEntityAirship : MonoBehaviour {
 	private float 			testLength;
 	
 	private bool			m_isFiring;
+	public float 			CutsceneSpeedMod = 0.1f;
 	private float 			m_cutsceneSpeedMod = 1.0f;
 	
 	private static CEntityAirship INSTANCE = null;
@@ -64,7 +65,7 @@ public class CEntityAirship : MonoBehaviour {
 	
 	public void StartCutScene()
 	{
-		m_cutsceneSpeedMod = 0.2f;
+		m_cutsceneSpeedMod = CutsceneSpeedMod;
 	}
 	
 	public void EndCutScene()

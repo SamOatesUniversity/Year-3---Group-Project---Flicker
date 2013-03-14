@@ -129,6 +129,16 @@ public class CCutSceneTrigger : CSceneObjectBase {
 			m_active = false;
 			enabled = false;
 			GameObject.Destroy(this.gameObject);
+			
+			//only occurs if airship cutscene
+			if(CEntityAirship.GetInstance())
+			{
+				CEntityAirship.GetInstance().EndCutScene();
+			}
+			if(CEntityCaptain.GetInstance())
+			{
+				CEntityCaptain.GetInstance().EndCutScene();
+			}
 		}
 		
 	}
@@ -150,6 +160,15 @@ public class CCutSceneTrigger : CSceneObjectBase {
 		if(IsMonkey18)
 		{
 			CEntityMonkey.GetInstance().DoAnimation();	
+		}
+	}
+	
+	void OnAirshipTrigger()
+	{
+		if( m_pingPongFlag )
+		{
+			CEntityAirship.GetInstance().StartCutScene();
+			CEntityCaptain.GetInstance().StartCutScene();
 		}
 	}
 	
