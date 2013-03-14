@@ -256,6 +256,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 		float yPosition = transform.position.y + additionalY;
 		if (m_dead.didDie) {
 			yPosition = m_lastCheckpoint.transform.position.y;
+			CCamera.GetInstance().ClearFrames();
 			m_dead.didDie = false;
 		}
 		
@@ -355,6 +356,10 @@ public class CEntityPlayer : CEntityPlayerBase {
 				m_isCheckpointSkipDown = false;
 			}
 		}*/
+		
+		if (m_dead.didDie) {
+			CCamera.GetInstance().ClearFrames();
+		}
 		
 		if (Input.GetButton("Reset") && !m_isEscapeDown)
 		{

@@ -116,8 +116,12 @@ public class CCamera : MonoBehaviour {
 		Vector3 lastposition = (Vector3)m_storedPositions[m_storedPositions.Count-1];
 		m_storedPositions.Clear();
 		
+		Vector3 lastcamposition = (Vector3)m_storedCameraPositions[m_storedCameraPositions.Count-1];
+		m_storedCameraPositions.Clear();
+		
 		// keep one frame, so it smoothly changes, rather than jumping
 		m_storedPositions.Add(lastposition);
+		m_storedCameraPositions.Add(lastcamposition);
 	}
 
 	/*

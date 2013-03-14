@@ -9914,6 +9914,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15afe172c52c3f4e957103eab4f00ec, type: 1}
   m_Name: 
   LevelName: 
+  KillPlane: {fileID: 0}
+  KillYOffset: 2
 --- !u!1001 &240355664
 Prefab:
   m_ObjectHideFlags: 0
@@ -22244,10 +22246,10 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fce1958731ed75b4dbce632138e1d05d, type: 1}
   m_Name: 
-  Caw: {fileID: 0}
-  CawAway: {fileID: 0}
-  FlyAway: {fileID: 0}
-  Liftoff: {fileID: 0}
+  Caw: {fileID: 8300000, guid: 4fefaca972372ff49bfca12b22f598a0, type: 1}
+  CawAway: {fileID: 8300000, guid: e1ed80c760213c9418d29cbe7e4356f7, type: 1}
+  FlyAway: {fileID: 8300000, guid: 96b66cc605bdfe14f8ff530ddb9f0de9, type: 1}
+  Liftoff: {fileID: 8300000, guid: 153e064f74f3c33428b300d016104dd9, type: 1}
   MeanTimeBetweenIdleAudio: 10
   IdleAudioTimeVariance: 4
   Speed: .5
@@ -25598,6 +25600,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15afe172c52c3f4e957103eab4f00ec, type: 1}
   m_Name: 
   LevelName: 
+  KillPlane: {fileID: 0}
+  KillYOffset: 2
 --- !u!1 &593110546
 GameObject:
   m_ObjectHideFlags: 0
@@ -30014,6 +30018,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b15afe172c52c3f4e957103eab4f00ec, type: 1}
   m_Name: 
   LevelName: Level_1-2
+  KillPlane: {fileID: 100000, guid: b50aea95fdec24744a7406df3aee6fb1, type: 2}
+  KillYOffset: 2
 --- !u!1 &701539739
 GameObject:
   m_ObjectHideFlags: 0
@@ -34588,8 +34594,6 @@ GameObject:
   serializedVersion: 3
   m_Component:
   - 4: {fileID: 824936950}
-  - 65: {fileID: 824936951}
-  - 114: {fileID: 824936952}
   m_Layer: 0
   m_Name: group61
   m_TagString: Untagged
@@ -34609,34 +34613,6 @@ Transform:
   m_Children:
   - {fileID: 1887789543}
   m_Father: {fileID: 1597881503}
---- !u!65 &824936951
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 824936949}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 10, y: 1, z: 10}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &824936952
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 824936949}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
-  m_Name: 
-  CanWallJump: 0
-  IsLadder: 0
-  ExtraSlide: 1
-  CanLedgeGrab: 0
-  LedgeType: 1
-  KillPlayerOnTouch: 1
 --- !u!1 &825521520
 GameObject:
   m_ObjectHideFlags: 0
