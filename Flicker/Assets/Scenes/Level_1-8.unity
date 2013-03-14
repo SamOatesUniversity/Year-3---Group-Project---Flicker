@@ -38442,7 +38442,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b15afe172c52c3f4e957103eab4f00ec, type: 1}
   m_Name: 
-  LevelName: Level_1-8
+  LevelName: Main_Menu
 --- !u!1 &1248683906
 GameObject:
   m_ObjectHideFlags: 0
@@ -40312,7 +40312,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b15afe172c52c3f4e957103eab4f00ec, type: 1}
   m_Name: 
-  LevelName: 
+  LevelName: Main_Menu
 --- !u!1 &1282859730
 GameObject:
   m_ObjectHideFlags: 0
@@ -41961,7 +41961,7 @@ Transform:
   m_GameObject: {fileID: 1343477821}
   m_LocalRotation: {x: .296606064, y: .641892135, z: .641891122, w: -.296606064}
   m_LocalPosition: {x: 19.92276, y: -111.613007, z: -47.1115799}
-  m_LocalScale: {x: 1111.84448, y: 1111.84448, z: 1111.84448}
+  m_LocalScale: {x: 1472.02637, y: 1472.02637, z: 1472.02637}
   m_Children: []
   m_Father: {fileID: 1984142202}
 --- !u!23 &1343477823
@@ -56091,7 +56091,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b15afe172c52c3f4e957103eab4f00ec, type: 1}
   m_Name: 
-  LevelName: 
+  LevelName: Main_Menu
 --- !u!1 &1874357051
 GameObject:
   m_ObjectHideFlags: 0
@@ -56292,9 +56292,27 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ce48f1a681892e4db15930b6732a538, type: 1}
   m_Name: 
-  FootstepsStone: []
-  FootstepsWood: []
-  FootstepsMetal: []
+  FootstepsStone:
+  - {fileID: 8300000, guid: dd41bceee62c8494db1f7ef08bcde262, type: 1}
+  - {fileID: 8300000, guid: 2c7ec4b12610adb4e90740d00077384e, type: 1}
+  - {fileID: 8300000, guid: bdd47022b81322843ad39bf4a8b0edee, type: 1}
+  - {fileID: 8300000, guid: 00818c220d1d58f42af23735a108ccd1, type: 1}
+  FootstepsWood:
+  - {fileID: 8300000, guid: d5c007b77991118469e8d44f83a8f65a, type: 1}
+  - {fileID: 8300000, guid: 64a7ad53fc3751348879aa149ba09aee, type: 1}
+  - {fileID: 8300000, guid: e84b1f4d011647f4e85657a539673b3d, type: 1}
+  - {fileID: 8300000, guid: bef0422b6ce9a41438bf32c5104cce88, type: 1}
+  FootstepsMetal:
+  - {fileID: 8300000, guid: 89b9bf4eb0e3043439784fb3fcea3716, type: 1}
+  - {fileID: 8300000, guid: cef6ad05e813b2446988248978e88b56, type: 1}
+  - {fileID: 8300000, guid: 0e08c6d49fef13d4db0dea355c51c507, type: 1}
+  - {fileID: 8300000, guid: 2bf4fa4920207534bb78354044cfa11f, type: 1}
+  Attacks:
+  - {fileID: 8300000, guid: 980d47a00c4965b4ea7e593df54c318f, type: 1}
+  - {fileID: 8300000, guid: 5326e23d89948a646812f01b87623553, type: 1}
+  - {fileID: 8300000, guid: aa82da7fd0f286942b49bb7bafd59d71, type: 1}
+  PlayerDetected: {fileID: 8300000, guid: 8d5b21e05c130604884cc6cf4e95d073, type: 1}
+  GruntDeath: {fileID: 8300000, guid: d361f49520e311742812ebd413261d00, type: 1}
 --- !u!114 &1874357062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -56425,15 +56443,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d531fbc6540e3754eaef03460e0c447d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1111.84448
+      value: 1472.02637
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d531fbc6540e3754eaef03460e0c447d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1111.84448
+      value: 1472.02637
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d531fbc6540e3754eaef03460e0c447d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1111.84448
+      value: 1472.02637
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: d531fbc6540e3754eaef03460e0c447d, type: 3}
       propertyPath: m_ReceiveShadows
@@ -58158,15 +58176,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d531fbc6540e3754eaef03460e0c447d, type: 3}
       propertyPath: m_LocalScale.z
-      value: 979.043274
+      value: 1545.43237
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d531fbc6540e3754eaef03460e0c447d, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1006.05292
+      value: 1588.06726
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d531fbc6540e3754eaef03460e0c447d, type: 3}
       propertyPath: m_LocalScale.y
-      value: 704.6651
+      value: 1112.323
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: d531fbc6540e3754eaef03460e0c447d, type: 3}
       propertyPath: m_ReceiveShadows
@@ -62349,7 +62367,7 @@ Transform:
   m_GameObject: {fileID: 2064796706}
   m_LocalRotation: {x: -.693713427, y: .136976093, z: .136976093, w: .693712413}
   m_LocalPosition: {x: -26.6337891, y: -115.16494, z: 61.4761658}
-  m_LocalScale: {x: 1006.05292, y: 704.6651, z: 979.043274}
+  m_LocalScale: {x: 1588.06726, y: 1112.323, z: 1545.43237}
   m_Children: []
   m_Father: {fileID: 1984142202}
 --- !u!23 &2064796708

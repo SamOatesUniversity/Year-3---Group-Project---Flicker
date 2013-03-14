@@ -7,6 +7,10 @@ public class CGruntAnimation : MonoBehaviour {
 	public AudioClip[]		FootstepsWood;
 	public AudioClip[]		FootstepsMetal;
 	
+	public AudioClip[]		Attacks;
+	public AudioClip 		PlayerDetected;
+	public AudioClip		GruntDeath;
+	
 	//----------------------//
 	
 	Animation m_animation = null;
@@ -83,6 +87,7 @@ public class CGruntAnimation : MonoBehaviour {
 				m_startedAttacking = true;
 				m_animation["alert_attack1"].speed = 1.0f;
 				m_animation.CrossFade("alert_attack1");
+				PlayAttackSound();
 			}
 			else if (!m_animation.IsPlaying("alert_attack1"))
 			{
@@ -126,6 +131,23 @@ public class CGruntAnimation : MonoBehaviour {
 			m_currentAnimation = "falling";
 			if (!m_animation.IsPlaying("falling"))
 				m_animation.CrossFade("falling");
+		}
+	}
+	
+	public void PlayAudio(AudioClip clip)
+	{
+		m_audio.clip = clip;
+		m_audio.Play();
+	}
+	
+	void PlayAttackSound()
+	{
+		int noofAudioClips = Attacks.Length;
+		if (noofAudioClips != 0)
+		{
+			int audioIndex = Random.Range(0, noofAudioClips);
+			m_audio.clip = Attacks[audioIndex];
+			m_audio.Play();
 		}
 	}
 	

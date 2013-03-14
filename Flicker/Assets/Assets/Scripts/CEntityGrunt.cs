@@ -295,6 +295,7 @@ public class CEntityGrunt : CEntityPlayerBase {
 	public void SetGruntPlayerDetected(bool detected)
 	{
 		m_playerDetected = detected;
+		m_animation.PlayAudio(m_animation.PlayerDetected);
 	}
 	
 	/*
@@ -319,6 +320,7 @@ public class CEntityGrunt : CEntityPlayerBase {
 	*/
 	void OnDeath() 
 	{
+		m_animation.PlayAudio(m_animation.GruntDeath);
 	}
 		
 	/*
@@ -412,7 +414,12 @@ public class CEntityGrunt : CEntityPlayerBase {
 		if(collider.gameObject.name == "Ledge_Grab_Detection")
 		{
 			//Player should be detected now
-			m_playerDetected = true;
+			if(!m_playerDetected)
+			{
+				m_playerDetected = true;
+				m_animation.PlayAudio(m_animation.PlayerDetected);
+			}
+		
 			m_resetTimer = Time.time;
 			
 			if( !m_onBarrier )
