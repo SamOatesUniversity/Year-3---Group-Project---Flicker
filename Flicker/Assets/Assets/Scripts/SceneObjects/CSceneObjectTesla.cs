@@ -2,9 +2,13 @@ using UnityEngine;
 using System.Collections;
 
 public class CSceneObjectTesla : CSceneObject {
-
-	public bool m_enabled = false;
+	
+	public bool IsTimerDriven			= false;
+	public float TimeOn					= 2.0f;
+	public float TimeOff				= 1.5f;
+	public bool m_enabled 				= false;
 	private GameObject m_electricObject = null;
+	private float m_activityTimer		= 0.0f;
 	// Use this for initialization
 	void Start ()
 	{
@@ -21,7 +25,28 @@ public class CSceneObjectTesla : CSceneObject {
 	//fixed update
 	void FixedUpdate()
 	{
-		
+		if( IsTimerDriven )
+		{
+			m_activityTimer += Time.deltaTime;
+			if( m_enabled )
+			{
+				if( m_activityTimer >= TimeOn )
+				{
+					m_enabled = false;
+					m_electricObject.active = m_enabled;
+					m_activityTimer = 0.0f;
+				}
+			}
+			else
+			{
+				if( m_activityTimer >= TimeOff )
+				{
+					m_enabled = true;
+					m_electricObject.active = m_enabled;
+					m_activityTimer = 0.0f;
+				}
+			}
+		}
 	}
 	
 	public override void LogicStateChange(bool newState)
