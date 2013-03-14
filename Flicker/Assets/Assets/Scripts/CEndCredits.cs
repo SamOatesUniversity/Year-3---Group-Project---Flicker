@@ -51,6 +51,11 @@ public class CEndCredits : MonoBehaviour {
 			Vector3 increment = new Vector3(0.0f, scrollIncrement, 0.0f);
 			pos += increment;
 			this.transform.position = pos;
+			
+			if (pos.y > 56.3f)
+			{
+				Application.LoadLevel("Main_Menu");	
+			}
 		}
 	}
 	
