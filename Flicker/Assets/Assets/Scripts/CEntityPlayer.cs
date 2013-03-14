@@ -524,6 +524,13 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_playerState = PlayerState.FallingFromTower;
 		m_dead.y = transform.position.y;
 		m_dead.time = Time.time * 1000.0f;
+		
+		//try to get captain
+		CEntityCaptain captain = CEntityCaptain.GetInstance();
+		if(captain)
+		{
+			captain.PlayLaughAudio();	
+		}
 	}
 	
 	public bool PullingLever(bool wallonly)

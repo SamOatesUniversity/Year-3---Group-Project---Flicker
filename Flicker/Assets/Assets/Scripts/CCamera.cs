@@ -79,9 +79,18 @@ public class CCamera : MonoBehaviour {
 		m_storedCameraPositions = new ArrayList();
 		
 		m_credits = this.gameObject.GetComponentInChildren<CEndCredits>();
-		m_credits.gameObject.SetActiveRecursively(false);
-		m_creditsBackground = this.transform.FindChild("Background").gameObject;
-		m_creditsBackground.SetActiveRecursively(false);
+		if(m_credits)
+		{
+			m_credits.gameObject.SetActiveRecursively(false);
+		}
+		if(this.transform.FindChild("Background"))
+		{
+			m_creditsBackground = this.transform.FindChild("Background").gameObject;
+			if(m_creditsBackground)
+			{
+				m_creditsBackground.SetActiveRecursively(false);
+			}
+		}
 	}
 	
 	public void SetLookAtTransform(Transform newLookat)

@@ -9,7 +9,11 @@ public enum CaptainState {
 
 public class CEntityCaptain : MonoBehaviour {
 
-
+	public AudioClip[]		Yarr;
+	public AudioClip		RingBell;
+	public AudioClip		HitPlayer;
+	
+	private AudioSource 	m_audio;
 	
 	private CaptainState	m_state;
 	
@@ -22,6 +26,9 @@ public class CEntityCaptain : MonoBehaviour {
 	private int 			m_cutsceneAnimCounter = 0;
 	
 	private static CEntityCaptain INSTANCE = null;
+	
+	private bool 			m_playedCutscene = false;
+	private bool			m_playAudioClip = false;
 	
 	// Use this for initialization
 	void Start () {
@@ -47,6 +54,8 @@ public class CEntityCaptain : MonoBehaviour {
 		m_angryAnims.Add("fire");
 		
 		m_lastKnownIdle = "";
+		
+		m_audio = GetComponent<AudioSource>();
 	}
 	
 	public static CEntityCaptain GetInstance()
@@ -66,8 +75,18 @@ public class CEntityCaptain : MonoBehaviour {
 	
 	public void StartCutScene()
 	{
-		m_state = CaptainState.Cutscene;
-		m_lastKnownIdle = m_cutsceneAnims[0] as string;
+		if(!m_playedCutscene)
+		{
+			m_playedCutscene = true;
+			m_state = CaptainState.Cutscene;
+			m_lastKnownIdle = m_cutsceneAnims[0] as string;
+			if (!m_audio.isPlaying)
+			{
+				m_audio.clip = RingBell;
+				m_audio.Play();
+				m_audio.loop = false;
+			}
+		}
 	}
 	
 	public void EndCutScene()
@@ -103,6 +122,7 @@ public class CEntityCaptain : MonoBehaviour {
 				}
 				m_lastKnownIdle = m_currentAnimation;
 				m_animation.CrossFade(m_currentAnimation, 0.3f);
+				m_playAudioClip = true;
 			}				
 		}
 		else if ( m_state == CaptainState.Cutscene )
@@ -129,11 +149,51 @@ public class CEntityCaptain : MonoBehaviour {
 				}
 				m_lastKnownIdle = m_currentAnimation;
 				m_animation.CrossFade(m_currentAnimation, 0.3f);
+				m_playAudioClip = true;
 			}		
 		}
 		if(m_currentAnimation == "calmidle")
 		{
 			m_animation[m_currentAnimation].speed = 1.6f;
 		}
+		if(m_currentAnimation == "angryidle_0")
+		{
+			if (!m_audio.isPlaying)
+			{
+				m_audio.clip = HitPlayer;
+				m_audio.Play();
+				m_audio.loop = false;
+				m_playAudioClip = false;
+			}
+		}
+		if(m_playAudioClip)
+		{
+			RandPlayAudio();
+			m_playAudioClip = false;
+		}
+	}
+	
+	void RandPlayAudio()
+	{
+		int chancePlayAudio = 80;
+		if( Random.Range(0, 100) < chancePlayAudio )
+		{
+			int noofAudioClips = Yarr.Length;
+			if (noofAudioClips != 0)
+			{
+				int audioIndex = Random.Range(0, noofAudioClips);
+				if (!m_audio.isPlaying)
+				{
+					m_audio.clip = Yarr[audioIndex];
+					m_audio.Play();
+				}
+			}
+		}
+	}
+	
+	public void PlayLaughAudio()
+	{
+		m_audio.clip = HitPlayer;
+		m_audio.Play();
 	}
 }
