@@ -1,4 +1,4 @@
-using UnityEngine;
+ using UnityEngine;
 using System.Collections;
 
 public class CTriggerSecret : MonoBehaviour {
@@ -8,6 +8,9 @@ public class CTriggerSecret : MonoBehaviour {
 	
 	public Texture SecretLetter = null;
 	public Texture PressToContinue = null;
+	
+	private float m_flashTime = 0.0f;
+	private bool m_showX = true;
 	
 	// Use this for initialization
 	void Start () {
@@ -34,7 +37,19 @@ public class CTriggerSecret : MonoBehaviour {
 		
 		if (m_reading)
 		{
-			GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), SecretLetter);			
+			float scale = 0.8f;
+			GUI.DrawTexture(new Rect((Screen.width * 0.5f) - ((Screen.width * scale) * 0.5f), (Screen.height * 0.5f) - ((Screen.height * scale) * 0.5f) - (PressToContinue.height * 0.5f), Screen.width * scale, Screen.height * scale), SecretLetter);			
+			
+			if ((Time.realtimeSinceStartup - m_flashTime > 1.0f))
+			{
+				m_showX = !m_showX;
+				m_flashTime = Time.realtimeSinceStartup;
+			}
+			
+			if (PressToContinue != null && m_showX)
+			{
+				GUI.DrawTexture(new Rect((Screen.width * 0.5f) - (PressToContinue.width * 0.5f), Screen.height - PressToContinue.height, PressToContinue.width, PressToContinue.height), PressToContinue);	
+			}
 		}
 	
 	}
@@ -46,6 +61,7 @@ public class CTriggerSecret : MonoBehaviour {
 		
 		m_reading = true;
 		Time.timeScale = 0.0f;
+		m_flashTime = Time.realtimeSinceStartup;
 		
 	}
 }
