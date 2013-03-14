@@ -357,10 +357,6 @@ public class CEntityPlayer : CEntityPlayerBase {
 			}
 		}*/
 		
-		if (m_dead.didDie) {
-			CCamera.GetInstance().ClearFrames();
-		}
-		
 		if (Input.GetButton("Reset") && !m_isEscapeDown)
 		{
 			m_isEscapeDown = true;
@@ -424,29 +420,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	*/
 	public void OnDeath() 
 	{
-		if (m_lastCheckpoint != null)
-		{
-			m_lastPlayerPositionAlpha = m_playerPositionAlpha = m_lastCheckpoint.PlayerCheckPointAlpha;
-			m_physics.Direction = m_lastCheckpoint.Direction;	
-		}
-		else
-		{
-			m_physics.Direction = 1;
-			m_physics.MovingDirection = 1;
-			m_lastPlayerPositionAlpha = m_playerPositionAlpha = InitialAlphaPosition;
-		}
-		
-		m_playerState = PlayerState.Standing;
-		m_physics.JumpType = JumpState.Landed;
-		m_playerHealth = MaxHealth;
-		m_additionalRadius = 0.0f;
-		m_dead.didDie = true;
-		rigidbody.velocity = Vector3.zero;
-		
-		CCamera.GetInstance().ClearFrames();
-		
-		m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));
-		m_ledgeGrabBox.localPosition = new Vector3(0.18f, m_ledgeGrabBox.localPosition.y, m_ledgeGrabBox.localPosition.z);
+		Application.LoadLevel(CurrentLevel);
 	}
 		
 	/*
