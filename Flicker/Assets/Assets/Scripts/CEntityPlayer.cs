@@ -438,6 +438,8 @@ public class CEntityPlayer : CEntityPlayerBase {
 		m_dead.didDie = true;
 		rigidbody.velocity = Vector3.zero;
 		
+		CCamera.GetInstance().ClearFrames();
+		
 		m_characterMesh.rotation = Quaternion.Euler(new Vector3(0, this.transform.rotation.eulerAngles.y + 90, 0));
 		m_ledgeGrabBox.localPosition = new Vector3(0.18f, m_ledgeGrabBox.localPosition.y, m_ledgeGrabBox.localPosition.z);
 	}
