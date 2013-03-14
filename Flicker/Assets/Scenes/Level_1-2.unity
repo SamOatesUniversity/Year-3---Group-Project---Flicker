@@ -1239,7 +1239,7 @@ Animation:
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
-  m_CullingType: 1
+  m_CullingType: 0
   m_UserAABB:
     m_Center: {x: -8.39796829, y: -.783918738, z: 2.64928842}
     m_Extent: {x: 1.3387661, y: .82461834, z: 1.05115342}
@@ -2253,6 +2253,10 @@ Prefab:
     - target: {fileID: 100004, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 11100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
+      propertyPath: m_CullingType
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
@@ -5896,7 +5900,7 @@ Animation:
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
-  m_CullingType: 1
+  m_CullingType: 0
   m_UserAABB:
     m_Center: {x: -8.39796829, y: -.783918738, z: 2.64928842}
     m_Extent: {x: 1.3387661, y: .82461834, z: 1.05115342}
@@ -8450,7 +8454,7 @@ Animation:
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
-  m_CullingType: 1
+  m_CullingType: 0
   m_UserAABB:
     m_Center: {x: -8.39796829, y: -.783918738, z: 2.64928842}
     m_Extent: {x: 1.3387661, y: .82461834, z: 1.05115342}
@@ -9965,6 +9969,10 @@ Prefab:
     - target: {fileID: 100008, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 11100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
+      propertyPath: m_CullingType
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
@@ -15899,7 +15907,7 @@ Animation:
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
-  m_CullingType: 1
+  m_CullingType: 0
   m_UserAABB:
     m_Center: {x: -8.39796829, y: -.783918738, z: 2.64928842}
     m_Extent: {x: 1.3387661, y: .82461834, z: 1.05115342}
@@ -17696,7 +17704,7 @@ Animation:
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
-  m_CullingType: 1
+  m_CullingType: 0
   m_UserAABB:
     m_Center: {x: -8.39796829, y: -.783918738, z: 2.64928842}
     m_Extent: {x: 1.3387661, y: .82461834, z: 1.05115342}
@@ -19511,7 +19519,7 @@ Animation:
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
-  m_CullingType: 1
+  m_CullingType: 0
   m_UserAABB:
     m_Center: {x: -8.39796829, y: -.783918738, z: 2.64928842}
     m_Extent: {x: 1.3387661, y: .82461834, z: 1.05115342}
@@ -21501,6 +21509,10 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 11100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
+      propertyPath: m_CullingType
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
   m_RootGameObject: {fileID: 2121274352}
@@ -22229,10 +22241,10 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fce1958731ed75b4dbce632138e1d05d, type: 1}
   m_Name: 
-  Caw: {fileID: 8300000, guid: 4fefaca972372ff49bfca12b22f598a0, type: 1}
-  CawAway: {fileID: 8300000, guid: e1ed80c760213c9418d29cbe7e4356f7, type: 1}
-  FlyAway: {fileID: 8300000, guid: 96b66cc605bdfe14f8ff530ddb9f0de9, type: 1}
-  Liftoff: {fileID: 8300000, guid: 153e064f74f3c33428b300d016104dd9, type: 1}
+  Caw: {fileID: 0}
+  CawAway: {fileID: 0}
+  FlyAway: {fileID: 0}
+  Liftoff: {fileID: 0}
   MeanTimeBetweenIdleAudio: 10
   IdleAudioTimeVariance: 4
   Speed: .5
@@ -32534,6 +32546,10 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 11100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
+      propertyPath: m_CullingType
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
   m_RootGameObject: {fileID: 211166897}
@@ -34343,7 +34359,7 @@ Animation:
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
-  m_CullingType: 1
+  m_CullingType: 0
   m_UserAABB:
     m_Center: {x: -8.39796829, y: -.783918738, z: 2.64928842}
     m_Extent: {x: 1.3387661, y: .82461834, z: 1.05115342}
@@ -38924,6 +38940,10 @@ Prefab:
     - target: {fileID: 100004, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 11100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
+      propertyPath: m_CullingType
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
@@ -50467,6 +50487,7 @@ MonoBehaviour:
   LastScene: 
   ThisScene: Level_1-2
   NextScene: Level_1-3
+  RequiresDummyLevel: 0
   LoadingScreenTexture: {fileID: 2800000, guid: f30f85dc2a86a9741af240c5407deebd,
     type: 1}
 --- !u!1001 &1187507993
@@ -50707,7 +50728,7 @@ Animation:
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
-  m_CullingType: 1
+  m_CullingType: 0
   m_UserAABB:
     m_Center: {x: -8.39796829, y: -.783918738, z: 2.64928842}
     m_Extent: {x: 1.3387661, y: .82461834, z: 1.05115342}
@@ -65191,7 +65212,7 @@ Animation:
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
-  m_CullingType: 1
+  m_CullingType: 0
   m_UserAABB:
     m_Center: {x: -8.39796829, y: -.783918738, z: 2.64928842}
     m_Extent: {x: 1.3387661, y: .82461834, z: 1.05115342}
@@ -69355,6 +69376,10 @@ Prefab:
     - target: {fileID: 100008, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 11100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
+      propertyPath: m_CullingType
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
@@ -74750,7 +74775,7 @@ Animation:
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
-  m_CullingType: 1
+  m_CullingType: 0
   m_UserAABB:
     m_Center: {x: -8.39796829, y: -.783918738, z: 2.64928842}
     m_Extent: {x: 1.3387661, y: .82461834, z: 1.05115342}
@@ -75093,6 +75118,10 @@ Prefab:
     - target: {fileID: 100006, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 11100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
+      propertyPath: m_CullingType
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
@@ -75676,6 +75705,10 @@ Prefab:
     - target: {fileID: 100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 11100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
+      propertyPath: m_CullingType
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
@@ -82144,6 +82177,10 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 11100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
+      propertyPath: m_CullingType
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
   m_RootGameObject: {fileID: 819981718}
@@ -85490,7 +85527,7 @@ Animation:
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
-  m_CullingType: 1
+  m_CullingType: 0
   m_UserAABB:
     m_Center: {x: -8.39796829, y: -.783918738, z: 2.64928842}
     m_Extent: {x: 1.3387661, y: .82461834, z: 1.05115342}
@@ -86985,6 +87022,10 @@ Prefab:
     - target: {fileID: 100006, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 11100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
+      propertyPath: m_CullingType
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
@@ -89641,6 +89682,10 @@ Prefab:
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
+    - target: {fileID: 11100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
+      propertyPath: m_CullingType
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
   m_RootGameObject: {fileID: 390919587}
@@ -89806,7 +89851,7 @@ Animation:
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
-  m_CullingType: 1
+  m_CullingType: 0
   m_UserAABB:
     m_Center: {x: -8.39796829, y: -.783918738, z: 2.64928842}
     m_Extent: {x: 1.3387661, y: .82461834, z: 1.05115342}
@@ -90105,6 +90150,10 @@ Prefab:
     - target: {fileID: 100002, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 11100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
+      propertyPath: m_CullingType
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8bb852c0c1ce0b14ca3d955f12e18fc9, type: 2}
