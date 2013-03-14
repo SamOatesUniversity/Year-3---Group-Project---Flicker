@@ -13571,6 +13571,61 @@ Animation:
   m_UserAABB:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
+--- !u!1 &376852250
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 100002, guid: f590e01c7de8c3b41b6271141d4c63b4, type: 3}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 3
+  m_Component:
+  - 4: {fileID: 376852251}
+  - 33: {fileID: 376852253}
+  - 23: {fileID: 376852252}
+  m_Layer: 0
+  m_Name: SM_CylinderWall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &376852251
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 400002, guid: f590e01c7de8c3b41b6271141d4c63b4, type: 3}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 376852250}
+  m_LocalRotation: {x: 0, y: .707106173, z: 0, w: .707107484}
+  m_LocalPosition: {x: 0, y: 2.56000042, z: 0}
+  m_LocalScale: {x: 1.24068499, y: 1.24068499, z: 1.24068487}
+  m_Children: []
+  m_Father: {fileID: 1034372258}
+--- !u!23 &376852252
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 2300000, guid: f590e01c7de8c3b41b6271141d4c63b4,
+    type: 3}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 376852250}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 2100000, guid: 3764984d74b707147ac6de5c3446b0ff, type: 2}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+--- !u!33 &376852253
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 3300000, guid: f590e01c7de8c3b41b6271141d4c63b4,
+    type: 3}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 376852250}
+  m_Mesh: {fileID: 4300000, guid: f590e01c7de8c3b41b6271141d4c63b4, type: 3}
 --- !u!1 &377007684
 GameObject:
   m_ObjectHideFlags: 0
@@ -25418,7 +25473,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .5, y: .639999866, z: .00999999978}
+  m_Size: {x: .5, y: .639999866, z: .0500000007}
   m_Center: {x: 3.19750881, y: .319999874, z: 2.32828368e-10}
 --- !u!114 &655875955
 MonoBehaviour:
@@ -29235,7 +29290,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .5, y: .481577754, z: 0}
+  m_Size: {x: .5, y: .481577754, z: .00999999978}
   m_Center: {x: 3.19489145, y: .399210989, z: -4.49363178e-08}
 --- !u!114 &777863410
 MonoBehaviour:
@@ -37181,7 +37236,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .5, y: .639999866, z: 0}
+  m_Size: {x: .5, y: .639999866, z: .0500000007}
   m_Center: {x: 3.19750881, y: .319999874, z: 2.32828368e-10}
 --- !u!114 &952318696
 MonoBehaviour:
@@ -40619,6 +40674,7 @@ Transform:
   - {fileID: 1505712477}
   - {fileID: 2049239988}
   - {fileID: 2034546142}
+  - {fileID: 376852251}
   m_Father: {fileID: 888193709}
 --- !u!111 &1034372259
 Animation:
@@ -50550,7 +50606,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .5, y: .33675918, z: .100000001}
+  m_Size: {x: .5, y: .33675918, z: .200000003}
   m_Center: {x: 3.19976592, y: .16837959, z: 1.49011603e-08}
 --- !u!114 &1298434801
 MonoBehaviour:
@@ -52197,7 +52253,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .5, y: .639999866, z: 0}
+  m_Size: {x: .5, y: .639999866, z: .00999999978}
   m_Center: {x: 3.19751024, y: .319999874, z: -6.98489544e-10}
 --- !u!114 &1343908166
 MonoBehaviour:
@@ -76762,7 +76818,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .5, y: .639999866, z: 0}
+  m_Size: {x: .5, y: .639999866, z: .00999999978}
   m_Center: {x: 3.19751024, y: .319999874, z: -4.65658928e-10}
 --- !u!114 &2071654955
 MonoBehaviour:
@@ -77809,7 +77865,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .5, y: .639999866, z: 0}
+  m_Size: {x: .5, y: .639999866, z: .00999999978}
   m_Center: {x: 3.19751024, y: .319999874, z: -6.98489544e-10}
 --- !u!114 &2094882627
 MonoBehaviour:
