@@ -17,6 +17,8 @@ public class CTriggerSteamVentLever : CTriggerBase {
 	
 	public GameObject						ForcedGameObject = null;
 	
+	private AudioSource						m_audio = null;
+	
 	// Use this for initialization
 	void Start () {
 		if (ForcedGameObject != null)
@@ -26,6 +28,8 @@ public class CTriggerSteamVentLever : CTriggerBase {
 		
 		m_animation["Take 001"].speed = 0.0f;
 		m_animation.Play("Take 001");
+		
+		m_audio = GetComponent<AudioSource>();
 		
 		state = false;
 	}
@@ -61,6 +65,11 @@ public class CTriggerSteamVentLever : CTriggerBase {
 				m_leverState = eLeverState.InUse;
 				m_timePulled = Time.time;
 				m_animation["Take 001"].speed = 1.0f;
+				
+				if (m_audio != null)
+				{
+					m_audio.Play();
+				}
 			}
 		}
 		
