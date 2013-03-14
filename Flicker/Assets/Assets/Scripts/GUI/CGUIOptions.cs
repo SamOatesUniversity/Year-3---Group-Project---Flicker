@@ -232,24 +232,10 @@ public class CGUIOptions {
 			}		
 			else if (m_pausedMenuState == PausedMenuState.Restart)
 			{
-				CCheckPoint cp = CEntityPlayer.GetInstance().LastCheckPoint;
-				CCheckPoint startCp = cp;
-				while (cp.IsLevelStart == false)
-				{
-					cp = cp.NextCheckPoint;
-					if (cp == startCp)
-					{
-						Debug.LogError("No check points in list where marked as level start");
-						return;
-					}
-				}
-				
-				m_pausedMenuState = PausedMenuState.Main;
-				
+				string currentLevel = CEntityPlayer.GetInstance().CurrentLevel;
 				Time.timeScale = 1.0f;
-				CEntityPlayer.GetInstance().CurrentGameState = GameState.Running;
-				CEntityPlayer.GetInstance().LastCheckPoint = cp;
-				CEntityPlayer.GetInstance().OnDeath();
+				Application.LoadLevel(currentLevel);
+				m_pausedMenuState = PausedMenuState.Main;
 			}
 			
 			return;

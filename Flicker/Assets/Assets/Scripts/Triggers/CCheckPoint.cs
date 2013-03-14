@@ -6,8 +6,7 @@ public class CCheckPoint : MonoBehaviour {
 	private float m_playerAlpha = 0.0f;
 	private int m_direction = 1;
 	
-	public CCheckPoint NextCheckPoint = null;
-	public bool	IsLevelStart = false;
+	public string LevelName = "Main_Menu";
 	
 	void Start() {
 		m_playerAlpha = calculateAlphaAngle();
@@ -21,6 +20,24 @@ public class CCheckPoint : MonoBehaviour {
 		if (player != null)
 		{
 			player.LastCheckPoint = this;
+			player.CurrentLevel = LevelName;
+			m_playerAlpha = player.CurrentPlayerAlpha;
+			m_direction = player.Physics.Direction;
+			if (m_direction == 0)
+				m_direction = player.Physics.MovingDirection;
+		}	
+		
+	}
+	
+	void OnTriggerStay(Collider collision) {
+		
+		GameObject gObject = collision.collider.gameObject;		
+		CEntityPlayer player = gObject.GetComponent<CEntityPlayer>();
+		
+		if (player != null)
+		{
+			player.LastCheckPoint = this;
+			player.CurrentLevel = LevelName;
 			m_playerAlpha = player.CurrentPlayerAlpha;
 			m_direction = player.Physics.Direction;
 			if (m_direction == 0)

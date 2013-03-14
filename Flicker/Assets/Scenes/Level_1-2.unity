@@ -5312,6 +5312,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 10302, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 100000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
@@ -9847,7 +9851,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &239444785
 Transform:
   m_ObjectHideFlags: 0
@@ -9909,8 +9913,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b15afe172c52c3f4e957103eab4f00ec, type: 1}
   m_Name: 
-  NextCheckPoint: {fileID: 699939655}
-  IsLevelStart: 0
+  LevelName: 
 --- !u!1001 &240355664
 Prefab:
   m_ObjectHideFlags: 0
@@ -18180,7 +18183,7 @@ MonoBehaviour:
   m_Name: 
   MaxHealth: 100
   PlayerPathRadius: 3.5999999
-  InitialAlphaPosition: 237
+  InitialAlphaPosition: 252
   StartCheckPoint: {fileID: 699939655}
   StartFacing: 1
   CurrentGameState: 0
@@ -23933,6 +23936,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 10302, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 100000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
@@ -25528,7 +25535,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &591439267
 Transform:
   m_ObjectHideFlags: 0
@@ -25590,8 +25597,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b15afe172c52c3f4e957103eab4f00ec, type: 1}
   m_Name: 
-  NextCheckPoint: {fileID: 239444789}
-  IsLevelStart: 0
+  LevelName: 
 --- !u!1 &593110546
 GameObject:
   m_ObjectHideFlags: 0
@@ -29953,7 +29959,7 @@ Transform:
   m_PrefabInternal: {fileID: 842851902}
   m_GameObject: {fileID: 699939650}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -53.57341, y: 2.59583044, z: -16.2352982}
+  m_LocalPosition: {x: -54.1648903, y: 2.59583044, z: -15.0636835}
   m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children: []
   m_Father: {fileID: 2125995019}
@@ -29993,7 +29999,7 @@ SphereCollider:
   m_GameObject: {fileID: 699939650}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: .5
   m_Center: {x: 5.96046448e-08, y: 0, z: -8.94069672e-08}
@@ -30007,8 +30013,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b15afe172c52c3f4e957103eab4f00ec, type: 1}
   m_Name: 
-  NextCheckPoint: {fileID: 591439271}
-  IsLevelStart: 1
+  LevelName: Level_1-2
 --- !u!1 &701539739
 GameObject:
   m_ObjectHideFlags: 0
@@ -35505,7 +35510,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -53.57341
+      value: -54.1648903
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
       propertyPath: m_LocalPosition.y
@@ -35513,7 +35518,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -16.2352982
+      value: -15.0636835
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
       propertyPath: m_LocalRotation.x
@@ -35533,7 +35538,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 13500000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
       propertyPath: m_Name
@@ -38348,7 +38353,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400010, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: InitialAlphaPosition
-      value: 237
+      value: 252
       objectReference: {fileID: 0}
     - target: {fileID: 4500000, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: m_Enabled

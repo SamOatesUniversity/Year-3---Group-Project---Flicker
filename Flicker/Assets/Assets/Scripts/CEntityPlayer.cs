@@ -73,9 +73,11 @@ public class CEntityPlayer : CEntityPlayerBase {
 	
 	private Transform			m_ledgeGrabBox = null;
 	
-	private bool 				m_isCheckpointSkipDown = false;
+	//private bool 				m_isCheckpointSkipDown = false;
 	
 	private bool				m_isEscapeDown = false;
+	
+	private string				m_currentLevel = "Main_Menu";
 	
 	/* ----------------
 	    Public Members 
@@ -148,6 +150,15 @@ public class CEntityPlayer : CEntityPlayerBase {
 		}
 		
 		m_pelvisOffset = this.transform.Find("Player_Mesh/Bip001/Bip001 Pelvis").position - this.transform.position;
+	}
+	
+	public string CurrentLevel {
+		get { 
+			return m_currentLevel; 
+		}
+		set { 
+			m_currentLevel = value; 
+		}
 	}
 	
 	public int GetCurrentHealth()
@@ -326,7 +337,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 	public override void Update()
 	{
 		// only allow dev cheats in the editor
-		if (Application.isEditor && CurrentGameState != GameState.Paused)
+		/*if (Application.isEditor && CurrentGameState != GameState.Paused)
 		{
 			if (Input.GetButton("CheckpointNext") && !m_isCheckpointSkipDown)
 			{
@@ -343,7 +354,7 @@ public class CEntityPlayer : CEntityPlayerBase {
 			{
 				m_isCheckpointSkipDown = false;
 			}
-		}
+		}*/
 		
 		if (Input.GetButton("Reset") && !m_isEscapeDown)
 		{

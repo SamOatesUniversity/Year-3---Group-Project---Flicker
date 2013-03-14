@@ -61,6 +61,8 @@ public class CPlayerDebug : MonoBehaviour
 		m_information.Add("Moving Direction: " + m_player.Physics.MovingDirection.ToString ());
 		m_information.Add("----------");
 		m_information.Add("Animation: " + m_player.CurrentAnimation());
+		m_information.Add("----------");
+		m_information.Add("Current Level: " + m_player.CurrentLevel);
 		
 		Rect labelPosition = new Rect(4, 4, 512, 512);
 		GUI.Label(labelPosition, "Player Debug Information");

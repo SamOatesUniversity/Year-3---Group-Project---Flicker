@@ -15837,7 +15837,7 @@ Transform:
   m_PrefabInternal: {fileID: 1031426931}
   m_GameObject: {fileID: 421037575}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.62166023, y: 1.01497984, z: .368221313}
+  m_LocalPosition: {x: -3.53955698, y: .775402069, z: -.664557695}
   m_LocalScale: {x: .5, y: .5, z: .5}
   m_Children: []
   m_Father: {fileID: 98757690}
@@ -15877,9 +15877,9 @@ SphereCollider:
   m_GameObject: {fileID: 421037575}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .5
+  m_Radius: 1.13999999
   m_Center: {x: 5.96046448e-08, y: 0, z: -8.94069672e-08}
 --- !u!114 &421037580
 MonoBehaviour:
@@ -15891,8 +15891,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b15afe172c52c3f4e957103eab4f00ec, type: 1}
   m_Name: 
-  NextCheckPoint: {fileID: 1517912863}
-  IsLevelStart: 1
+  LevelName: Level_1-4
 --- !u!1 &421699265
 GameObject:
   m_ObjectHideFlags: 0
@@ -38557,15 +38556,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -3.62166023
+      value: -3.53955698
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1.01497984
+      value: .775402069
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
       propertyPath: m_LocalPosition.z
-      value: .368221313
+      value: -.664557695
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
       propertyPath: m_LocalRotation.x
@@ -38585,7 +38584,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 13500000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
       propertyPath: m_Name
@@ -38602,6 +38601,10 @@ Prefab:
     - target: {fileID: 11400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
       propertyPath: IsLevelStart
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 13500000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
+      propertyPath: m_Radius
+      value: 1.13999999
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
@@ -45606,7 +45609,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1223175451
 Transform:
   m_ObjectHideFlags: 0
@@ -45668,8 +45671,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b15afe172c52c3f4e957103eab4f00ec, type: 1}
   m_Name: 
-  NextCheckPoint: {fileID: 421037580}
-  IsLevelStart: 0
+  LevelName: 
 --- !u!1 &1225646194
 GameObject:
   m_ObjectHideFlags: 0
@@ -47193,6 +47195,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 10302, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 100000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
@@ -57537,7 +57543,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1517912859
 Transform:
   m_ObjectHideFlags: 0
@@ -57599,8 +57605,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b15afe172c52c3f4e957103eab4f00ec, type: 1}
   m_Name: 
-  NextCheckPoint: {fileID: 1223175455}
-  IsLevelStart: 0
+  LevelName: 
 --- !u!1001 &1518070810
 Prefab:
   m_ObjectHideFlags: 0
@@ -67472,6 +67477,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 10302, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 100000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11400000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 09cbe6347af347940b18200acbde18e3, type: 2}
