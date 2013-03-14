@@ -37,6 +37,10 @@ public class CCamera : MonoBehaviour {
 	private Vector3				m_averagePos;
 	private int 				m_countIgnoredFrames;
 	
+	private bool				m_showingCredits = false;
+	private CEndCredits 		m_credits = null;
+	private GameObject			m_creditsBackground = null;
+	
 	public int 					MaxPositionsStored = 10;
 	public int 					MaxCamPositionsStored = 10;
 	
@@ -73,6 +77,11 @@ public class CCamera : MonoBehaviour {
 		m_countIgnoredFrames = 0;
 		
 		m_storedCameraPositions = new ArrayList();
+		
+		m_credits = this.gameObject.GetComponentInChildren<CEndCredits>();
+		m_credits.gameObject.SetActiveRecursively(false);
+		m_creditsBackground = this.transform.FindChild("Background").gameObject;
+		m_creditsBackground.SetActiveRecursively(false);
 	}
 	
 	public void SetLookAtTransform(Transform newLookat)
@@ -83,6 +92,14 @@ public class CCamera : MonoBehaviour {
 	public void ResetLookAtTransform()
 	{
 		m_currentTransform = m_playerPelvis;	
+	}
+	
+	public void ShowCredits()
+	{
+		m_showingCredits = true;
+		m_credits.gameObject.SetActiveRecursively(true);
+		m_credits.SetActive(true);
+		m_creditsBackground.SetActiveRecursively(true);
 	}
 	
 	public void ClearFrames()

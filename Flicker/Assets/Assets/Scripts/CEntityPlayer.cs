@@ -485,7 +485,12 @@ public class CEntityPlayer : CEntityPlayerBase {
 		{
 			//Kill player
 			PushPlayerFromTower();
-		}		
+		}
+		if(collider.gameObject.name == "EndGameTrigger")
+		{
+			this.transform.parent.gameObject.GetComponentInChildren<CCamera>().ShowCredits();
+			m_playerState = PlayerState.InCutScene;
+		}
 	}
 	
 	void OnTriggerStay(Collider collision) {
