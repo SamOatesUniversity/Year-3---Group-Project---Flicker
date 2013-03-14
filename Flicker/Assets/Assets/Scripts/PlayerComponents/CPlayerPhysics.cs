@@ -420,7 +420,7 @@ public class CPlayerPhysics : MonoBehaviour {
 			velocity = m_velocity;
 		}
 		
-		if (velocity != 0.0f && m_ladder.state != LadderState.AtBase)
+		if (velocity != 0.0f && (m_ladder.state != LadderState.AtBase || m_ladder.state != LadderState.JumpingOff))
 		{
 			m_ladder.state = LadderState.None;	
 		}
