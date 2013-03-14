@@ -15,7 +15,12 @@ public enum MonkeyLevel {
 
 public class CEntityMonkey : MonoBehaviour {
 
+	public AudioClip		Casual;
+	public AudioClip		Loud;
+	public float			MeanTimeBetweenIdleAudio = 14.0f;
+	public float			IdleAudioTimeVariance = 4.0f;
 	
+	private AudioSource 	m_audio;
 	
 	private MonkeyState		m_state;
 	public MonkeyLevel		m_level = MonkeyLevel.Unspecified;
@@ -24,6 +29,7 @@ public class CEntityMonkey : MonoBehaviour {
 	private string 			m_currentAnimation = null;
 	private string			m_lastKnownIdle;
 	private bool			m_startedMainAnim = false;
+	private float 			m_idleAudioTimer = 5.0f;
 
 	
 	private static CEntityMonkey INSTANCE = null;
@@ -36,6 +42,7 @@ public class CEntityMonkey : MonoBehaviour {
 		m_animation = GetComponentInChildren<Animation>();
 		
 		m_lastKnownIdle = "";
+		m_audio = GetComponent<AudioSource>();
 	}
 	
 	public static CEntityMonkey GetInstance()
@@ -45,7 +52,8 @@ public class CEntityMonkey : MonoBehaviour {
 	
 	public void DoAnimation()
 	{
-		m_state = MonkeyState.Animate;	
+		m_state = MonkeyState.Animate;
+		PlayAudio(Loud);
 	}
 	
 	// Update is called once per frame
@@ -56,6 +64,24 @@ public class CEntityMonkey : MonoBehaviour {
 	void FixedUpdate()
 	{	
 		DoAnimations();
+		m_idleAudioTimer -= Time.deltaTime;
+		if(m_idleAudioTimer <= 0.0f)
+		{
+			PlayAudio(Casual);
+			float split = IdleAudioTimeVariance/2;
+			float variance = Random.Range(-split, split);
+			m_idleAudioTimer = MeanTimeBetweenIdleAudio+variance;
+		}
+	}
+	
+	void PlayAudio(AudioClip clip)
+	{
+		m_audio.clip = clip;
+		m_audio.Play();
+		if(clip == Loud)
+		{
+			m_idleAudioTimer = (float)MeanTimeBetweenIdleAudio;	
+		}
 	}
 
 	void DoAnimations()
