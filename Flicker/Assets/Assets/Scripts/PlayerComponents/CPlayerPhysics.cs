@@ -65,6 +65,8 @@ public class CPlayerPhysics : MonoBehaviour {
 	
 	private CPlayerLadder	m_ladder = null;
 	
+	private bool			m_fakeJump = false;
+	
 	/* ----------------
 	    Public Members 
 	   ---------------- */		
@@ -555,6 +557,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		if (playerState == PlayerState.Standing)
 		{
 			m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+			m_fakeJump = false;
 			
 			if (GetLadder.state != LadderState.AtBase)
 			{
@@ -597,7 +600,7 @@ public class CPlayerPhysics : MonoBehaviour {
 			if ((Time.time * 1000.0f) - m_jumpTimer > 2000.0f)
 			{
 				playerState = PlayerState.FallJumping;
-				if ((Time.time * 1000.0f) - m_jumpTimer > 3000.0f)
+				if (!m_fakeJump && ((Time.time * 1000.0f) - m_jumpTimer > 3000.0f))
 				{
 					m_player.PushPlayerFromTower();	
 				}
@@ -747,7 +750,8 @@ public class CPlayerPhysics : MonoBehaviour {
 	
 	public void MakeJump() 
 	{
-		m_jumpTimer = ((Time.time + 10) * 1000.0f);
+		m_fakeJump = true;
+		m_jumpTimer = ((Time.time) * 1000.0f);
 		m_jumpState = JumpState.Jumping;
 		CEntityPlayer.GetInstance().SetPlayerState(PlayerState.Jumping);
 		m_collisionState = CollisionState.None;	
