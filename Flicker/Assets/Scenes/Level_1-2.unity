@@ -5246,7 +5246,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
   m_Name: 
-  CanWallJump: 1
+  CanWallJump: 0
   IsLadder: 0
   ExtraSlide: 1
   CanLedgeGrab: 0
@@ -38094,12 +38094,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d35a90bed98554f4d8b92c9cd3cfbafa, type: 1}
   m_Name: 
   tweakMode: 0
-  screenBlendMode: 1
+  screenBlendMode: 0
   hdr: 0
-  sepBlurSpread: 2.5
+  sepBlurSpread: 6
   useSrcAlphaAsMask: 0
-  bloomIntensity: 1.5
-  bloomThreshhold: .699999988
+  bloomIntensity: 1
+  bloomThreshhold: .800000012
   bloomBlurIterations: 4
   lensflares: 0
   hollywoodFlareBlurIterations: 2
@@ -39000,7 +39000,7 @@ Prefab:
       objectReference: {fileID: 703475675}
     - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: bloomIntensity
-      value: 1.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11400018, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: screenBlendMode
@@ -39028,7 +39028,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: bloomThreshhold
-      value: .699999988
+      value: .800000012
       objectReference: {fileID: 0}
     - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: bloomBlurIterations
@@ -39036,7 +39036,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: sepBlurSpread
-      value: 2.5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 13700008, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: m_Materials.Array.data[0]
@@ -39090,6 +39090,10 @@ Prefab:
     - target: {fileID: 8200004, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: Mute
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: screenBlendMode
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
@@ -70298,7 +70302,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7dda0308d43dbf04a9f15153cc4b18e4, type: 1}
   m_Name: 
-  CanWallJump: 1
+  CanWallJump: 0
   IsLadder: 0
   ExtraSlide: 1
   CanLedgeGrab: 0
