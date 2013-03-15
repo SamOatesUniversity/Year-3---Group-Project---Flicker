@@ -312,12 +312,15 @@ public class CPlayerPhysics : MonoBehaviour {
 			// wall jumping
 			if (obj != null && obj.CanWallJump == true && m_jumpState != JumpState.Landed && !isNearly(contact.normal.y, 1.0f, 0.2f) && !isNearly(contact.normal.y, -1.0f, 0.1f))
 			{
-				m_collisionState = CollisionState.OnWall;
-				playerState = PlayerState.WallJumpStart;
-				m_jumpTimer = (Time.time * 1000.0f); 
-				m_body.constraints = RigidbodyConstraints.FreezeAll;
-				m_velocity = 0.0f;
-				m_wallJump.StartHangTime = Time.time * 1000.0f;
+				if (playerState != PlayerState.WallJumpStart) {
+					m_collisionState = CollisionState.OnWall;
+					playerState = PlayerState.WallJumpStart;
+					m_jumpTimer = (Time.time * 1000.0f); 
+					m_body.constraints = RigidbodyConstraints.FreezeAll;
+					m_velocity = 0.0f;
+					m_wallJump.StartHangTime = Time.time;
+					m_wallJump.WallJumpDirection = m_movingDirection;
+				}
 			}
 			// floor check
 			else if (isNearly(contact.normal.y, 1.0f, 0.8f))
@@ -410,7 +413,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		////////////////////////
 		
 		bool wasJump = m_isJumpDown;
-		m_isJumpDown = Input.GetButton("Jump");
+		m_isJumpDown = Input.GetButtonDown("Jump");
 			
 		if (Application.platform == RuntimePlatform.Android)
 			m_isJumpDown = Input.touchCount != 0;
@@ -540,23 +543,23 @@ public class CPlayerPhysics : MonoBehaviour {
 		
 		if (playerState == PlayerState.WallJumpStart)
 		{
-			if ((Time.time * 1000.0f) - m_wallJump.StartHangTime > 400.0f) {
+			if (Time.time - m_wallJump.StartHangTime > 1.0f) {
 				m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-				m_velocity = -m_movingDirection;
+				m_velocity = -m_wallJump.WallJumpDirection;
 				playerState = PlayerState.Walking;
 				m_jumpState = JumpState.Landed;
 				m_collisionState = CollisionState.None;
-			} else if (m_isJumpDown && direction != 0 && direction != m_movingDirection) {
+			} else if (Input.GetButton("Jump") && (direction != 0 && direction != m_wallJump.WallJumpDirection)) {
 				m_body.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-				m_velocity = -(m_movingDirection * 0.5f); // kick it away from the wall
+				m_velocity = -(m_wallJump.WallJumpDirection * 0.5f); // kick it away from the wall
 				m_velocityLockTimer = (Time.time * 1000.0f) + 50; 
 				m_body.AddForce(new Vector3(0, PlayerJumpHeight * 1.1f, 0), ForceMode.Impulse);	
 				playerState = PlayerState.Jumping;
 				m_jumpState = JumpState.Jumping;
 				m_jumpTimer = (Time.time * 1000.0f); 
 				m_collisionState = CollisionState.None;
-				m_movingDirection *= -1;
-				m_direction *= -1;	
+				m_movingDirection = m_wallJump.WallJumpDirection;
+				m_direction = m_wallJump.WallJumpDirection;	
 			}
 			return;
 		}
@@ -625,7 +628,7 @@ public class CPlayerPhysics : MonoBehaviour {
 		}
 		
 		bool wasJump = m_isJumpDown;
-		m_isJumpDown = Input.GetButton("Jump");
+		m_isJumpDown = Input.GetButtonDown("Jump");
 			
 		if (Application.platform == RuntimePlatform.Android)
 			m_isJumpDown = Input.touchCount != 0;
@@ -674,7 +677,7 @@ public class CPlayerPhysics : MonoBehaviour {
 			m_collisionState = CollisionState.None;	
 			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 		}
-		
+				
 		// LADDER CODE
 		
 		float updown = (Input.GetAxis("Vertical") * 0.001f);

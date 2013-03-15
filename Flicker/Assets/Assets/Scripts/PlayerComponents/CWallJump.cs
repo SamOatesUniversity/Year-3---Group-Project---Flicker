@@ -11,4 +11,6 @@ public class CWallJump : MonoBehaviour {
 		
 	public float			StartHangTime = 0;
 	
+	public int				WallJumpDirection = 0;
+	
 }
