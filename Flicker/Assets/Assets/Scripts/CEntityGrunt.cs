@@ -83,6 +83,8 @@ public class CEntityGrunt : CEntityPlayerBase {
 	public LeftRight		StartFacing = LeftRight.Left;
 	
 	public bool				StartMoving = true;
+	
+	private int				m_ticksInContactWithPlayer = 0;
 		
 	/*
 	 * \brief Called when the object is created. At the start.
@@ -158,6 +160,12 @@ public class CEntityGrunt : CEntityPlayerBase {
 	*/
 	public override void FixedUpdate () 
 	{
+		if( m_ticksInContactWithPlayer > 1 )
+		{
+			CEntityPlayer.GetInstance().PushPlayerFromTower();
+			m_ticksInContactWithPlayer = 0;
+			m_playerDetected = false;
+		}
 		if( m_playerDetected )
 		{
 			if(m_resetTimer + TimeToReset < Time.time)
@@ -341,9 +349,17 @@ public class CEntityGrunt : CEntityPlayerBase {
 				{
 					//Debug.Log("Collided with player");
 					m_playerState = GruntState.Attacking;
+					m_ticksInContactWithPlayer++;
 				}
 			}
+			if(contact.thisCollider.gameObject.name == "Bip001 L Hand001" && contact.otherCollider.gameObject.name == "Player Spawn")
+			{
+				Debug.Log("Hit player");
+				CEntityPlayer.GetInstance().PushPlayerFromTower();
+				m_playerDetected = false;
+			}
 		}
+		
 		
 		m_physics.CallOnCollisionEnter(collision, m_playerDetected);
 		

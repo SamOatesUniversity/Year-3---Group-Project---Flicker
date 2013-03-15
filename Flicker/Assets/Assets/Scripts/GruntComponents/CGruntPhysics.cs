@@ -341,7 +341,7 @@ public class CGruntPhysics : MonoBehaviour {
 		
 		if (obj != null && obj.KillPlayerOnTouch)
 		{
-			m_grunt.PushPlayerFromTower();
+			//m_grunt.PushPlayerFromTower();
 		}
 	}
 	

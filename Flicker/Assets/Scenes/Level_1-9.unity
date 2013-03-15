@@ -44843,6 +44843,7 @@ MonoBehaviour:
   m_Name: 
   WallHangTime: 100
   StartHangTime: 0
+  WallJumpDirection: 0
 --- !u!114 &1472211418
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55740,7 +55741,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: .00800000038
+  m_Radius: .00999999978
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1837131286
 GameObject:
@@ -63361,6 +63362,10 @@ Prefab:
     - target: {fileID: 100074, guid: 3aa2e531b704082469f7bc085569c2c5, type: 2}
       propertyPath: m_StaticEditorFlags
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 13500000, guid: 3aa2e531b704082469f7bc085569c2c5, type: 2}
+      propertyPath: m_Radius
+      value: .00999999978
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3aa2e531b704082469f7bc085569c2c5, type: 2}
