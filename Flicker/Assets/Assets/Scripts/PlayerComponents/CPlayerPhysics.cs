@@ -407,6 +407,61 @@ public class CPlayerPhysics : MonoBehaviour {
 		if (playerState == PlayerState.FallingFromTower)
 			return;
 		
+		////////////////////////
+		
+		bool wasJump = m_isJumpDown;
+		m_isJumpDown = Input.GetButton("Jump");
+			
+		if (Application.platform == RuntimePlatform.Android)
+			m_isJumpDown = Input.touchCount != 0;
+		
+		if (m_isJumpDown && !wasJump)
+		{
+			m_canJumpFromLedge = true;	
+		}
+		else
+		{
+			m_canJumpFromLedge = false;
+		}
+		
+		if (m_isJumpDown && m_jumpState == JumpState.Landed && CanJump(playerState))
+		{
+			if ((Time.time * 1000.0f) - m_jumpTimer > JumpDelayMS)
+			{
+				m_jumpTimer = (Time.time * 1000.0f);
+				m_body.AddForce(new Vector3(0, PlayerJumpHeight, 0), ForceMode.Impulse);	
+				m_jumpState = JumpState.Jumping;
+				playerState = PlayerState.Jumping;
+				m_collisionState = CollisionState.None;
+			}
+		}		
+		
+		if (m_jumpState == JumpState.Jumping && playerState == PlayerState.Jumping)
+		{
+			if ((Time.time * 1000.0f) - m_jumpTimer > 2000.0f)
+			{
+				playerState = PlayerState.FallJumping;
+				if (!m_fakeJump && ((Time.time * 1000.0f) - m_jumpTimer > 3000.0f))
+				{
+					m_player.PushPlayerFromTower();	
+				}
+			}
+		}	
+		
+		if (m_isJumpDown == true && (GetLadder.state == LadderState.OnMiddle || GetLadder.state == LadderState.OnTop))		
+		{
+			GetLadder.state = LadderState.JumpingOff;
+			m_jumpTimer = (Time.time * 1000.0f);
+			m_body.velocity = Vector3.zero;
+			m_body.AddForce(new Vector3(0, PlayerJumpHeight, 0), ForceMode.Impulse);	
+			m_jumpState = JumpState.Jumping;
+			playerState = PlayerState.Jumping;
+			m_collisionState = CollisionState.None;	
+			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+		}
+		
+		////////////////////////
+		
 		float velocity = (Input.GetAxis("Horizontal") * MaxSpeed) * m_invert;
 		if (Application.platform == RuntimePlatform.Android)
 			velocity = Input.acceleration.y;
