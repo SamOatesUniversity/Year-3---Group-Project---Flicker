@@ -11,8 +11,14 @@ public class CCheckPoint : MonoBehaviour {
 	public GameObject KillPlane = null;
 	public float KillYOffset = 2.0f;
 	
+	private GameObject m_spritesheet = null;
+	
 	void Start() {
 		m_playerAlpha = calculateAlphaAngle();
+		Transform childSprite = this.transform.FindChild("SM_SpriteSheetPlane");
+		if (childSprite != null) {
+			m_spritesheet = childSprite.gameObject;	
+		}
 	}
 	
 	void OnTriggerEnter(Collider collision) {
@@ -52,6 +58,10 @@ public class CCheckPoint : MonoBehaviour {
 		if (KillPlane != null && m_killPlane == null) {
 			Vector3 yPos = new Vector3(0, transform.position.y - KillYOffset, 0);
 			m_killPlane = Instantiate(KillPlane, yPos, Quaternion.identity);
+		}
+		
+		if (m_spritesheet != null) {
+			m_spritesheet.active = true;	
 		}
 	}
 	
