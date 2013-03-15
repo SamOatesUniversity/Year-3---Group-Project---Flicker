@@ -192,7 +192,7 @@ public class CCamera : MonoBehaviour {
 		}
 		
 		m_storedCameraPositions.Add(camPosition);
-		removeAmount = 1;
+		removeAmount = 2;
 		while( m_storedCameraPositions.Count > MaxCamPositionsStored )
 		{
 			m_storedCameraPositions.RemoveAt(0);
