@@ -319,7 +319,7 @@ public class CPlayerPhysics : MonoBehaviour {
 					m_body.constraints = RigidbodyConstraints.FreezeAll;
 					m_velocity = 0.0f;
 					m_wallJump.StartHangTime = Time.time;
-					m_wallJump.WallJumpDirection = m_movingDirection;
+					m_wallJump.WallJumpDirection = m_direction != 0 ? m_direction : m_movingDirection;
 				}
 			}
 			// floor check
@@ -560,7 +560,7 @@ public class CPlayerPhysics : MonoBehaviour {
 				m_collisionState = CollisionState.None;
 				m_movingDirection = m_wallJump.WallJumpDirection;
 				m_direction = m_wallJump.WallJumpDirection;	
-			}
+			}			
 			return;
 		}
 						
@@ -677,7 +677,7 @@ public class CPlayerPhysics : MonoBehaviour {
 			m_collisionState = CollisionState.None;	
 			rigidbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 		}
-				
+						
 		// LADDER CODE
 		
 		float updown = (Input.GetAxis("Vertical") * 0.001f);

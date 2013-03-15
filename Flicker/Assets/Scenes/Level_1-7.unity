@@ -16673,7 +16673,7 @@ AudioSource:
   serializedVersion: 3
   m_audioClip: {fileID: 8300000, guid: 561241e6e0086964a8fda26ced3ad68a, type: 1}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: .200000003
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -22471,6 +22471,10 @@ Prefab:
     - target: {fileID: 2000000, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: m_ClearFlags
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8200004, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: m_Volume
+      value: .200000003
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
@@ -38402,6 +38406,7 @@ MonoBehaviour:
   m_Name: 
   WallHangTime: 100
   StartHangTime: 0
+  WallJumpDirection: 0
 --- !u!114 &836917037
 MonoBehaviour:
   m_ObjectHideFlags: 0
