@@ -28575,7 +28575,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: bloomIntensity
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: bloomThreshhold
@@ -28583,11 +28583,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: bloomBlurIterations
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: sepBlurSpread
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 13700000, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
       propertyPath: m_Materials.Array.data[0]
@@ -28646,6 +28646,10 @@ Prefab:
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: eb145bd454824d0439a21ce802a77b1c, type: 1}
+    - target: {fileID: 11400020, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
+      propertyPath: screenBlendMode
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f301f10cebedbcd4fafec1297f3b7c9e, type: 2}
   m_RootGameObject: {fileID: 1262749207}
@@ -39493,13 +39497,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d35a90bed98554f4d8b92c9cd3cfbafa, type: 1}
   m_Name: 
   tweakMode: 0
-  screenBlendMode: 1
+  screenBlendMode: 0
   hdr: 0
-  sepBlurSpread: 2
+  sepBlurSpread: 5
   useSrcAlphaAsMask: 0
-  bloomIntensity: 2
+  bloomIntensity: 1
   bloomThreshhold: .800000012
-  bloomBlurIterations: 2
+  bloomBlurIterations: 4
   lensflares: 0
   hollywoodFlareBlurIterations: 2
   lensflareMode: 1
