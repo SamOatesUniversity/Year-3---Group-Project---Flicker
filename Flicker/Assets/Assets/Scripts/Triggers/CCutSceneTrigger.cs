@@ -17,9 +17,17 @@ public class CCutSceneTrigger : CSceneObjectBase {
 	public bool 					IsMonkey18 = false;
 	public GameObject 				GruntObject = null;
 	
+		
+	private static bool 			m_hasBeenWatched = false;
+	
 	// Use this for initialization
 	void Start () {
 	
+		if (m_hasBeenWatched)
+		{
+			this.enabled = false;	
+		}
+		
 		m_animation = GetComponent<Animation>();
 		
 	}
@@ -129,6 +137,8 @@ public class CCutSceneTrigger : CSceneObjectBase {
 			m_active = false;
 			enabled = false;
 			GameObject.Destroy(this.gameObject);
+			
+			m_hasBeenWatched = true;
 			
 			//only occurs if airship cutscene
 			if(CEntityAirship.GetInstance())
