@@ -18,12 +18,12 @@ public class CCutSceneTrigger : CSceneObjectBase {
 	public GameObject 				GruntObject = null;
 	
 		
-	private static bool 			m_hasBeenWatched = false;
+	private static bool 			m_hasSeenAirshipCutscene = false;
 	
 	// Use this for initialization
 	void Start () {
 	
-		if (m_hasBeenWatched)
+		if (m_hasSeenAirshipCutscene && this.gameObject.name == "AirshipTriggerStart")
 		{
 			this.enabled = false;	
 		}
@@ -138,7 +138,10 @@ public class CCutSceneTrigger : CSceneObjectBase {
 			enabled = false;
 			GameObject.Destroy(this.gameObject);
 			
-			m_hasBeenWatched = true;
+			if( this.gameObject.name == "AirshipTriggerStart" )
+			{
+				m_hasSeenAirshipCutscene = true;
+			}
 			
 			//only occurs if airship cutscene
 			if(CEntityAirship.GetInstance())
